@@ -503,28 +503,28 @@
     number: 1,
     question: 'いつから (___) この町に音楽を愛する若者が集まるようになった。',
     options: ['とはいえ', 'といえども', 'ともなく', 'ともなると'],
-    answer: '2',
+    answer: '3',
     isReading: false
   },
   {
     number: 2,
     question: '5億円 (___) ヨットが売りに出されたが、一瞬で買い手が決まったそうだ。',
     options: ['からくる', 'からする', 'からいる', 'からある'],
-    answer: '1',
+    answer: '4',
     isReading: false
   },
   {
     number: 3,
     question: 'この小説はとらえ (___) 、さまざまな解釈が成り立つと言われている。',
     options: ['にかかわる', 'にあって', 'ようととらえまいと', 'ようによって'],
-    answer: '2',
+    answer: '3',
     isReading: false
   },
   {
     number: 4,
     question: '裁判員は裁判 (___) 話は家族にさえも話してはいけない。',
     options: ['に反する', 'に先立つ', 'にかかわる', 'にわたる'],
-    answer: '4',
+    answer: '3',
     isReading: false
   },
   {
@@ -538,7 +538,7 @@
     number: 6,
     question: 'あの嬉しそうな様子 (___) 、彼の合格は確実だ。',
     options: ['からといって', 'からあって', 'からには', 'からみると'],
-    answer: '1',
+    answer: '2',
     isReading: false
   },
   {
@@ -559,7 +559,7 @@
     number: 9,
     question: 'この学校は、着物が主流だった__ __ <span style="color:red;font-style:italic">★</span> __制服に洋装を取り入れた。',
     options: ['批判を', '受けつつも', '時代', 'にあって'],
-    answer: '3',
+    answer: '2',
     isReading: false
   },
   {
@@ -570,13 +570,13 @@
         number: 10,
         subQuestion: '問1「火事場の馬鹿力」とはどういうことか。',
         options: ['平常時に発揮される特殊な力', '非常時に発揮される特殊な力', '平常時に出すと非難される特殊な力', '非常時に出すと非難される特殊な力'],
-        answer: '4'
+        answer: '1'
       },
       {
         number: 11,
         subQuestion: '問2筆者が最も言いたいことは何か。',
         options: ['経営者は労働者に常に平常時の「全力」以上の力を求めるべきではない。', '経営者は労働者に常に平常時の「全力」以上の力を出させるべきだ。', '経営者は労働者に短期的な生産性を上げさせるべきだ。', '経営者は労働者に非常時の生産性を上げさせるべきだ。'],
-        answer: '1'
+        answer: '3'
       }
     ]
   },
@@ -588,13 +588,13 @@
         number: 12,
         subQuestion: '問1 ①「<span style="color:red;font-style:italic">思う</span>」のはだれか。',
         options: ['漁師', 'とった魚', '敵である魚', 'この話を聞いた人'],
-        answer: '4'
+        answer: '1'
       },
       {
         number: 13,
         subQuestion: '問2 この文章によると( ② )に入る言葉として、最も適当なものはどれか。',
         options: ['社長の考えを理解できる', '社員の間の調整ができる', '社風に合わない型破りな', '社風に合う意志の強い'],
-        answer: '3'
+        answer: '4'
       }
     ]
   }
@@ -934,27 +934,14 @@ function findAncestor(el, fn) {
                 
                 if (selected && selected.value === correct) {
                     correctAnswers++;
-                    // Đánh dấu câu trả lời đúng
-                    const labels = form.querySelectorAll(`input[name='${name}']`);
-                    labels.forEach(input => {
-                        if (input.value === correct) {
-                            input.parentElement.innerHTML += ' <span class="correct-answer">✅ Đúng</span>';
-                        }
-                    });
-                } else {
-                    // Đánh dấu câu trả lời sai (nếu có chọn)
-                    if (selected) {
-                        selected.parentElement.innerHTML += ' <span class="wrong-answer">❌ Sai</span>';
-                        // Hiển thị đáp án đúng
-                        const correctInput = form.querySelector(`input[name='${name}'][value='${correct}']`);
-                        //if (correctInput) {
-                          //  correctInput.parentElement.innerHTML += ' <span class="correct-answer">✅ Đáp án đúng</span>';
-                        //}
-                    }
+                    // Chỉ đánh dấu ✅ cho câu trả lời đúng
+                    selected.parentElement.innerHTML += ' <span class="correct-answer">✅ Đúng</span>';
+                 } else if (selected) {
+                   // Chỉ đánh dấu ❌ cho câu trả lời sai (không hiển thị đáp án đúng)
+                    selected.parentElement.innerHTML += ' <span class="wrong-answer">❌ Sai</span>';
                 }
             });
         } else {
-            // Xử lý câu hỏi thường
             totalQuestions++;
             const name = `q${index + 1}`;
             const selected = form.querySelector(`input[name='${name}']:checked`);
@@ -962,23 +949,11 @@ function findAncestor(el, fn) {
             
             if (selected && selected.value === correct) {
                 correctAnswers++;
-                // Đánh dấu câu trả lời đúng
-                const labels = form.querySelectorAll(`input[name='${name}']`);
-                labels.forEach(input => {
-                    if (input.value === correct) {
-                        input.parentElement.innerHTML += ' <span class="correct-answer">✅ Đúng</span>';
-                    }
-                });
-            } else {
-                // Đánh dấu câu trả lời sai (nếu có chọn)
-                if (selected) {
-                    selected.parentElement.innerHTML += ' <span class="wrong-answer">❌ Sai</span>';
-                    // Hiển thị đáp án đúng
-                    const correctInput = form.querySelector(`input[name='${name}'][value='${correct}']`);
-                    if (correctInput) {
-                        correctInput.parentElement.innerHTML += ' <span class="correct-answer">✅ Đáp án đúng</span>';
-                    }
-                }
+                // Chỉ đánh dấu ✅ cho câu trả lời đúng
+                selected.parentElement.innerHTML += ' <span class="correct-answer">✅ Đúng</span>';
+            } else if (selected) {
+                // Chỉ đánh dấu ❌ cho câu trả lời sai (không hiển thị đáp án đúng)
+                selected.parentElement.innerHTML += ' <span class="wrong-answer">❌ Sai</span>';
             }
         }
     });
@@ -1044,9 +1019,10 @@ function findAncestor(el, fn) {
                 const name = `q${idx + 1}_${subIdx}`;
                 const correct = (window.answers && window.answers[name]) || quizAnswers[name];
                 const labels = document.querySelectorAll(`input[name='${name}']`);
+                
                 labels.forEach(input => {
                     const label = input.parentElement;
-                    // Nếu đáp án đúng, chưa có span đúng thì thêm vào
+                    // Hiển thị ✅ cho tất cả đáp án đúng (kể cả câu bỏ trống hoặc sai)
                     if (input.value === correct && !label.innerHTML.includes('✅ Đúng')) {
                         label.innerHTML += ' <span class="correct-answer">✅ Đáp án đúng</span>';
                     }
@@ -1056,6 +1032,7 @@ function findAncestor(el, fn) {
             const name = `q${idx + 1}`;
             const correct = (window.answers && window.answers[name]) || quizAnswers[name];
             const labels = document.querySelectorAll(`input[name='${name}']`);
+            
             labels.forEach(input => {
                 const label = input.parentElement;
                 if (input.value === correct && !label.innerHTML.includes('✅ Đúng')) {
@@ -1064,6 +1041,8 @@ function findAncestor(el, fn) {
             });
         }
     });
+    // Vô hiệu hóa nút sau khi nhấn
+    document.getElementById('showAnswersBtn').disabled = true;
 }
 
 
@@ -1097,8 +1076,11 @@ function findAncestor(el, fn) {
       closeResultPopup();
       document.getElementById('quizResult').innerHTML = '';
       document.getElementById('showAnswersBtn').style.display = 'none';
+
+      showAnswersBtn.disabled = false;
       resetTimer();
     }
+    
       function findKeyBySubQNumber(number) {
         for (let i = 0; i < quizData.length; i++) {
             const q = quizData[i];

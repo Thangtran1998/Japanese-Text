@@ -513,13 +513,13 @@
         number: 2,
         subQuestion: '問2 ②<span style="color:red;font-style:italic">ネットと携帯メール全盛の世の中、新聞を購読しなくてもニュースを知ることはできるが、プロの取材と編集を経た新聞は読み応えがある</span>とあるが、筆者の考えに近いものはどれか。',
         options: ['新聞以外のメディアでもニュースを読めるのはありがたいことである', '編集者の目が通っていない、書き手の視点のみからのニュースは信用できない', '新聞のニュースには新聞のニュースにしかない優れた点がある', 'ネットの情報と新聞の情報を比べて読む習慣を身に付けたい'],
-        answer: '1'
+        answer: '3'
       },
       {
         number: 3,
         subQuestion: '問3③教室は水を打ったごとく静まり返った理由は何か。',
         options: ['牧師の言葉に感動したから', '阪神の大震災のことを思い出したから', '母親の言葉に心を打たれたから', '神戸大学の学生の死を知って驚いたから'],
-        answer: '2'
+        answer: '4'
       }
     ]
   }
@@ -859,27 +859,14 @@ function findAncestor(el, fn) {
                 
                 if (selected && selected.value === correct) {
                     correctAnswers++;
-                    // Đánh dấu câu trả lời đúng
-                    const labels = form.querySelectorAll(`input[name='${name}']`);
-                    labels.forEach(input => {
-                        if (input.value === correct) {
-                            input.parentElement.innerHTML += ' <span class="correct-answer">✅ Đúng</span>';
-                        }
-                    });
-                } else {
-                    // Đánh dấu câu trả lời sai (nếu có chọn)
-                    if (selected) {
-                        selected.parentElement.innerHTML += ' <span class="wrong-answer">❌ Sai</span>';
-                        // Hiển thị đáp án đúng
-                        const correctInput = form.querySelector(`input[name='${name}'][value='${correct}']`);
-                        //if (correctInput) {
-                          //  correctInput.parentElement.innerHTML += ' <span class="correct-answer">✅ Đáp án đúng</span>';
-                        //}
-                    }
+                    // Chỉ đánh dấu ✅ cho câu trả lời đúng
+                    selected.parentElement.innerHTML += ' <span class="correct-answer">✅ Đúng</span>';
+                 } else if (selected) {
+                   // Chỉ đánh dấu ❌ cho câu trả lời sai (không hiển thị đáp án đúng)
+                    selected.parentElement.innerHTML += ' <span class="wrong-answer">❌ Sai</span>';
                 }
             });
         } else {
-            // Xử lý câu hỏi thường
             totalQuestions++;
             const name = `q${index + 1}`;
             const selected = form.querySelector(`input[name='${name}']:checked`);
@@ -887,23 +874,11 @@ function findAncestor(el, fn) {
             
             if (selected && selected.value === correct) {
                 correctAnswers++;
-                // Đánh dấu câu trả lời đúng
-                const labels = form.querySelectorAll(`input[name='${name}']`);
-                labels.forEach(input => {
-                    if (input.value === correct) {
-                        input.parentElement.innerHTML += ' <span class="correct-answer">✅ Đúng</span>';
-                    }
-                });
-            } else {
-                // Đánh dấu câu trả lời sai (nếu có chọn)
-                if (selected) {
-                    selected.parentElement.innerHTML += ' <span class="wrong-answer">❌ Sai</span>';
-                    // Hiển thị đáp án đúng
-                    const correctInput = form.querySelector(`input[name='${name}'][value='${correct}']`);
-                    if (correctInput) {
-                        correctInput.parentElement.innerHTML += ' <span class="correct-answer">✅ Đáp án đúng</span>';
-                    }
-                }
+                // Chỉ đánh dấu ✅ cho câu trả lời đúng
+                selected.parentElement.innerHTML += ' <span class="correct-answer">✅ Đúng</span>';
+            } else if (selected) {
+                // Chỉ đánh dấu ❌ cho câu trả lời sai (không hiển thị đáp án đúng)
+                selected.parentElement.innerHTML += ' <span class="wrong-answer">❌ Sai</span>';
             }
         }
     });
@@ -969,9 +944,10 @@ function findAncestor(el, fn) {
                 const name = `q${idx + 1}_${subIdx}`;
                 const correct = (window.answers && window.answers[name]) || quizAnswers[name];
                 const labels = document.querySelectorAll(`input[name='${name}']`);
+                
                 labels.forEach(input => {
                     const label = input.parentElement;
-                    // Nếu đáp án đúng, chưa có span đúng thì thêm vào
+                    // Hiển thị ✅ cho tất cả đáp án đúng (kể cả câu bỏ trống hoặc sai)
                     if (input.value === correct && !label.innerHTML.includes('✅ Đúng')) {
                         label.innerHTML += ' <span class="correct-answer">✅ Đáp án đúng</span>';
                     }
@@ -981,6 +957,7 @@ function findAncestor(el, fn) {
             const name = `q${idx + 1}`;
             const correct = (window.answers && window.answers[name]) || quizAnswers[name];
             const labels = document.querySelectorAll(`input[name='${name}']`);
+            
             labels.forEach(input => {
                 const label = input.parentElement;
                 if (input.value === correct && !label.innerHTML.includes('✅ Đúng')) {
@@ -989,6 +966,8 @@ function findAncestor(el, fn) {
             });
         }
     });
+    // Vô hiệu hóa nút sau khi nhấn
+    document.getElementById('showAnswersBtn').disabled = true;
 }
 
 
@@ -1022,8 +1001,11 @@ function findAncestor(el, fn) {
       closeResultPopup();
       document.getElementById('quizResult').innerHTML = '';
       document.getElementById('showAnswersBtn').style.display = 'none';
+
+      showAnswersBtn.disabled = false;
       resetTimer();
     }
+    
       function findKeyBySubQNumber(number) {
         for (let i = 0; i < quizData.length; i++) {
             const q = quizData[i];

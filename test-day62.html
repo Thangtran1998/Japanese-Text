@@ -507,19 +507,19 @@
         number: 1,
         subQuestion: '問1 筆者が①<span style="color:red;font-style:italic">再び、問うてしまう</span>のはなぜか。',
         options: ['友人や知人の女性がどんどん結婚していくのを見て、焦ってしまったため', '周りに「この人のために生きてきた」と思えるような男性がいなかったため', '周りの女性と違い、自分は唯一の存在ではなく取り替えのできる存在だと思ったため', '自分の仕事が誰でもできる仕事だと気づき、つまらなく感じたため'],
-        answer: '3'
+        answer: '1'
       },
       {
         number: 2,
         subQuestion: '問2 ②<span style="color:red;font-style:italic">そういった問題意識</span>とはどういう意味か。',
         options: ['がんとどう向き合うか', 'どのように年をとっていくか', 'ほかの人がどんな悩みを抱えているのか', '何のために生きていくのか'],
-        answer: '4'
+        answer: '2'
       },
       {
         number: 3,
         subQuestion: '問3 この文章中で筆者が述べていることはどれか',
         options: ['人は結婚をすると、いつの間にか、生きている意味を考えなくなるものだ', '死ぬかもしれないと思ったら、生きる意味や目的は二の次になるものだ', '幸せそうに見えても、皆、自分と同じような悩みを持って生きているものだ', '人は死ぬまで「何のために生きているのか」と疑問を繰り返すものだ'],
-        answer: '4'
+        answer: '3'
       }
     ]
   },
@@ -531,19 +531,19 @@
         number: 4,
         subQuestion: '問1 ①<span style="color:red;font-style:italic">そのとき、自己抑制を要求する</span>とは、どういうことか。',
         options: ['自分の利益追求が他者の利益を妨げるという状況の中で我慢をすること', '互いに自分の利益を主張すると争いになるので、一度冷静になること', '他者に最適なことが自分にはそうではなく、我慢を強いられること', '自分の欲求を実現させようとするときには、妥協も必要だということ'],
-        answer: '4'
+        answer: '2'
       },
       {
         number: 5,
         subQuestion: '問2 ②<span style="color:red;font-style:italic">「個人」対「個人」が出発点</span>とは、どういうことか。',
         options: ['個人の利害がぶつかったときにどういう行動をとるかを考えることが基本である', '集団に対してよりも、まず他者に対して思いやりの気持ちを持つことが第一だ', '自分より集団を優先させるという考え方の原点にあるのは、他者への共感である', '物事を適切に判断することは重要だが、一人一人の人間に対する理解はもっと重要だ'],
-        answer: '4'
+        answer: '1'
       },
       {
         number: 6,
         subQuestion: '問3 筆者が道徳的と考えているのはどれか。',
         options: ['自己の適応度の最適化がはかられるように、絶えず努力を続けること', '他者を理解し思いやる気持ちから素直に行動すること', '集団の利益を最大限に高められるように、「個」を犠牲にすること', '自分の利益と集団の利益のバランスをうまくとること'],
-        answer: '3'
+        answer: '2'
       }
     ]
   }
@@ -883,27 +883,14 @@ function findAncestor(el, fn) {
                 
                 if (selected && selected.value === correct) {
                     correctAnswers++;
-                    // Đánh dấu câu trả lời đúng
-                    const labels = form.querySelectorAll(`input[name='${name}']`);
-                    labels.forEach(input => {
-                        if (input.value === correct) {
-                            input.parentElement.innerHTML += ' <span class="correct-answer">✅ Đúng</span>';
-                        }
-                    });
-                } else {
-                    // Đánh dấu câu trả lời sai (nếu có chọn)
-                    if (selected) {
-                        selected.parentElement.innerHTML += ' <span class="wrong-answer">❌ Sai</span>';
-                        // Hiển thị đáp án đúng
-                        const correctInput = form.querySelector(`input[name='${name}'][value='${correct}']`);
-                        //if (correctInput) {
-                          //  correctInput.parentElement.innerHTML += ' <span class="correct-answer">✅ Đáp án đúng</span>';
-                        //}
-                    }
+                    // Chỉ đánh dấu ✅ cho câu trả lời đúng
+                    selected.parentElement.innerHTML += ' <span class="correct-answer">✅ Đúng</span>';
+                 } else if (selected) {
+                   // Chỉ đánh dấu ❌ cho câu trả lời sai (không hiển thị đáp án đúng)
+                    selected.parentElement.innerHTML += ' <span class="wrong-answer">❌ Sai</span>';
                 }
             });
         } else {
-            // Xử lý câu hỏi thường
             totalQuestions++;
             const name = `q${index + 1}`;
             const selected = form.querySelector(`input[name='${name}']:checked`);
@@ -911,23 +898,11 @@ function findAncestor(el, fn) {
             
             if (selected && selected.value === correct) {
                 correctAnswers++;
-                // Đánh dấu câu trả lời đúng
-                const labels = form.querySelectorAll(`input[name='${name}']`);
-                labels.forEach(input => {
-                    if (input.value === correct) {
-                        input.parentElement.innerHTML += ' <span class="correct-answer">✅ Đúng</span>';
-                    }
-                });
-            } else {
-                // Đánh dấu câu trả lời sai (nếu có chọn)
-                if (selected) {
-                    selected.parentElement.innerHTML += ' <span class="wrong-answer">❌ Sai</span>';
-                    // Hiển thị đáp án đúng
-                    const correctInput = form.querySelector(`input[name='${name}'][value='${correct}']`);
-                    if (correctInput) {
-                        correctInput.parentElement.innerHTML += ' <span class="correct-answer">✅ Đáp án đúng</span>';
-                    }
-                }
+                // Chỉ đánh dấu ✅ cho câu trả lời đúng
+                selected.parentElement.innerHTML += ' <span class="correct-answer">✅ Đúng</span>';
+            } else if (selected) {
+                // Chỉ đánh dấu ❌ cho câu trả lời sai (không hiển thị đáp án đúng)
+                selected.parentElement.innerHTML += ' <span class="wrong-answer">❌ Sai</span>';
             }
         }
     });
@@ -993,9 +968,10 @@ function findAncestor(el, fn) {
                 const name = `q${idx + 1}_${subIdx}`;
                 const correct = (window.answers && window.answers[name]) || quizAnswers[name];
                 const labels = document.querySelectorAll(`input[name='${name}']`);
+                
                 labels.forEach(input => {
                     const label = input.parentElement;
-                    // Nếu đáp án đúng, chưa có span đúng thì thêm vào
+                    // Hiển thị ✅ cho tất cả đáp án đúng (kể cả câu bỏ trống hoặc sai)
                     if (input.value === correct && !label.innerHTML.includes('✅ Đúng')) {
                         label.innerHTML += ' <span class="correct-answer">✅ Đáp án đúng</span>';
                     }
@@ -1005,6 +981,7 @@ function findAncestor(el, fn) {
             const name = `q${idx + 1}`;
             const correct = (window.answers && window.answers[name]) || quizAnswers[name];
             const labels = document.querySelectorAll(`input[name='${name}']`);
+            
             labels.forEach(input => {
                 const label = input.parentElement;
                 if (input.value === correct && !label.innerHTML.includes('✅ Đúng')) {
@@ -1013,6 +990,8 @@ function findAncestor(el, fn) {
             });
         }
     });
+    // Vô hiệu hóa nút sau khi nhấn
+    document.getElementById('showAnswersBtn').disabled = true;
 }
 
 
@@ -1046,8 +1025,11 @@ function findAncestor(el, fn) {
       closeResultPopup();
       document.getElementById('quizResult').innerHTML = '';
       document.getElementById('showAnswersBtn').style.display = 'none';
+
+      showAnswersBtn.disabled = false;
       resetTimer();
     }
+    
       function findKeyBySubQNumber(number) {
         for (let i = 0; i < quizData.length; i++) {
             const q = quizData[i];

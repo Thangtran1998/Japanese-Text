@@ -503,28 +503,28 @@
     number: 1,
     question: '友人が会社をクビになったというから、さぞかし金に困っているだろう (___) 、毎日外車を乗り回して遊んでいるというのだ。',
     options: ['といえども', 'とはいえ', 'というものの', 'と思いきや'],
-    answer: '4',
+    answer: '1',
     isReading: false
   },
   {
     number: 2,
     question: '大統領の熱のこもった演説が終わる (___) 、会場は割れんばかりの拍手と歓声に包まれました。',
     options: ['や否や', 'かたわら', 'そばから', 'とあって'],
-    answer: '1',
+    answer: '4',
     isReading: false
   },
   {
     number: 3,
     question: 'これは、差別や貧困 (___) 、一代で国際的な実業家となった男の生涯を描いたドキュメンタリーである。',
     options: ['を問わず', 'を皮切りにして', 'をものともせず', 'をもとにして'],
-    answer: '1',
+    answer: '2',
     isReading: false
   },
   {
     number: 4,
     question: 'この神社の境内は、桜の名所として知られる (___) 、梅雨の季節にはあじさいの花も楽しめます。',
     options: ['かたがた', '一方', 'かたわら', '限り'],
-    answer: '4',
+    answer: '2',
     isReading: false
   },
   {
@@ -545,7 +545,7 @@
     number: 7,
     question: 'この薬を飲むようになってからというもの、 (___) んですよ。',
     options: ['ずっと体調がいい', '突然倒れた', '前と体調が変わらない', 'すぐに退院した'],
-    answer: '1',
+    answer: '4',
     isReading: false
   },
   {
@@ -559,21 +559,21 @@
     number: 9,
     question: '日本の労働者の多くが、周囲に配慮するあまり、__ __ _<span style="color:red;font-style:italic">★_</span> __と考えてしまう。',
     options: ['休めない', '頭痛', 'たかが', 'ごときで'],
-    answer: '1',
+    answer: '4',
     isReading: false
   },
   {
     number: 10,
     question: 'これからも、皆様の__ __ <span style="color:red;font-style:italic">★</span><span style="color:red;font-style:italic"></span> __努めてまいります。',
     options: ['べく', '沿う', 'ご期待に', 'サービス向上に'],
-    answer: '4',
+    answer: '3',
     isReading: false
   },
   {
     number: 11,
     question: 'これだけ精巧にできていると、__ __ <span style="color:red;font-style:italic">★</span><span style="color:red;font-style:italic"></span> __のではないでしょうか。',
     options: ['本物か', 'つきかねる', 'どちらが', '判断が'],
-    answer: '2',
+    answer: '1',
     isReading: false
   },
   {
@@ -584,7 +584,7 @@
         number: 12,
         subQuestion: '問1「俺」が教師になったのはなぜか。',
         options: ['高校生が好きだから', '研究室が嫌になったから', '生活が苦しかったから', '先輩にお世話になっているから'],
-        answer: '4'
+        answer: '1'
       },
       {
         number: 13,
@@ -602,13 +602,13 @@
         number: 14,
         subQuestion: '問1①<span style="color:red;font-style:italic">自分</span>とはだれを指すか。',
         options: ['人間', '日本民族', '森に住む人', '筆者'],
-        answer: '2'
+        answer: '1'
       },
       {
         number: 15,
         subQuestion: '問2 ②<span style="color:red;font-style:italic">そういう視点</span>とは、どういう視点か。',
         options: ['過酷な砂漠から生まれたWHY文化の視点', '器用な日本人を育てたHOW文化の視点', 'WHY文化であるかHOW文化であるか、という視点', '生物学的かつ遺伝子学的に文化を研究する視点'],
-        answer: '3'
+        answer: '1'
       }
     ]
   }
@@ -948,27 +948,14 @@ function findAncestor(el, fn) {
                 
                 if (selected && selected.value === correct) {
                     correctAnswers++;
-                    // Đánh dấu câu trả lời đúng
-                    const labels = form.querySelectorAll(`input[name='${name}']`);
-                    labels.forEach(input => {
-                        if (input.value === correct) {
-                            input.parentElement.innerHTML += ' <span class="correct-answer">✅ Đúng</span>';
-                        }
-                    });
-                } else {
-                    // Đánh dấu câu trả lời sai (nếu có chọn)
-                    if (selected) {
-                        selected.parentElement.innerHTML += ' <span class="wrong-answer">❌ Sai</span>';
-                        // Hiển thị đáp án đúng
-                        const correctInput = form.querySelector(`input[name='${name}'][value='${correct}']`);
-                        //if (correctInput) {
-                          //  correctInput.parentElement.innerHTML += ' <span class="correct-answer">✅ Đáp án đúng</span>';
-                        //}
-                    }
+                    // Chỉ đánh dấu ✅ cho câu trả lời đúng
+                    selected.parentElement.innerHTML += ' <span class="correct-answer">✅ Đúng</span>';
+                 } else if (selected) {
+                   // Chỉ đánh dấu ❌ cho câu trả lời sai (không hiển thị đáp án đúng)
+                    selected.parentElement.innerHTML += ' <span class="wrong-answer">❌ Sai</span>';
                 }
             });
         } else {
-            // Xử lý câu hỏi thường
             totalQuestions++;
             const name = `q${index + 1}`;
             const selected = form.querySelector(`input[name='${name}']:checked`);
@@ -976,23 +963,11 @@ function findAncestor(el, fn) {
             
             if (selected && selected.value === correct) {
                 correctAnswers++;
-                // Đánh dấu câu trả lời đúng
-                const labels = form.querySelectorAll(`input[name='${name}']`);
-                labels.forEach(input => {
-                    if (input.value === correct) {
-                        input.parentElement.innerHTML += ' <span class="correct-answer">✅ Đúng</span>';
-                    }
-                });
-            } else {
-                // Đánh dấu câu trả lời sai (nếu có chọn)
-                if (selected) {
-                    selected.parentElement.innerHTML += ' <span class="wrong-answer">❌ Sai</span>';
-                    // Hiển thị đáp án đúng
-                    const correctInput = form.querySelector(`input[name='${name}'][value='${correct}']`);
-                    if (correctInput) {
-                        correctInput.parentElement.innerHTML += ' <span class="correct-answer">✅ Đáp án đúng</span>';
-                    }
-                }
+                // Chỉ đánh dấu ✅ cho câu trả lời đúng
+                selected.parentElement.innerHTML += ' <span class="correct-answer">✅ Đúng</span>';
+            } else if (selected) {
+                // Chỉ đánh dấu ❌ cho câu trả lời sai (không hiển thị đáp án đúng)
+                selected.parentElement.innerHTML += ' <span class="wrong-answer">❌ Sai</span>';
             }
         }
     });
@@ -1058,9 +1033,10 @@ function findAncestor(el, fn) {
                 const name = `q${idx + 1}_${subIdx}`;
                 const correct = (window.answers && window.answers[name]) || quizAnswers[name];
                 const labels = document.querySelectorAll(`input[name='${name}']`);
+                
                 labels.forEach(input => {
                     const label = input.parentElement;
-                    // Nếu đáp án đúng, chưa có span đúng thì thêm vào
+                    // Hiển thị ✅ cho tất cả đáp án đúng (kể cả câu bỏ trống hoặc sai)
                     if (input.value === correct && !label.innerHTML.includes('✅ Đúng')) {
                         label.innerHTML += ' <span class="correct-answer">✅ Đáp án đúng</span>';
                     }
@@ -1070,6 +1046,7 @@ function findAncestor(el, fn) {
             const name = `q${idx + 1}`;
             const correct = (window.answers && window.answers[name]) || quizAnswers[name];
             const labels = document.querySelectorAll(`input[name='${name}']`);
+            
             labels.forEach(input => {
                 const label = input.parentElement;
                 if (input.value === correct && !label.innerHTML.includes('✅ Đúng')) {
@@ -1078,6 +1055,8 @@ function findAncestor(el, fn) {
             });
         }
     });
+    // Vô hiệu hóa nút sau khi nhấn
+    document.getElementById('showAnswersBtn').disabled = true;
 }
 
 
@@ -1111,8 +1090,11 @@ function findAncestor(el, fn) {
       closeResultPopup();
       document.getElementById('quizResult').innerHTML = '';
       document.getElementById('showAnswersBtn').style.display = 'none';
+
+      showAnswersBtn.disabled = false;
       resetTimer();
     }
+    
       function findKeyBySubQNumber(number) {
         for (let i = 0; i < quizData.length; i++) {
             const q = quizData[i];

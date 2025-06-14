@@ -503,42 +503,42 @@
     number: 1,
     question: 'いくら言い訳 (___) 、失った信頼はなかなか取り戻せない。',
     options: ['したところへ', 'したところで', 'にしたところで', 'にしたら'],
-    answer: '1',
+    answer: '4',
     isReading: false
   },
   {
     number: 2,
     question: 'いざとなったら、この土地を売って借金を返す (___) 。',
     options: ['しまつだ', 'ものを', 'といったらない', 'までだ'],
-    answer: '1',
+    answer: '2',
     isReading: false
   },
   {
     number: 3,
     question: '運動は健康維持に欠かせない。高齢者に限らず、若者 (___) 同じことだ。',
     options: ['にすれば', 'にしたところで', 'に先立って', 'に対して'],
-    answer: '4',
+    answer: '3',
     isReading: false
   },
   {
     number: 4,
     question: '山桜は人が (___) 、春になれば咲くということを繰り返してきた。',
     options: ['見ようと見るまいと', '見るなり聞くなり', '見れば見るほど', '見るやら聞くやら'],
-    answer: '1',
+    answer: '3',
     isReading: false
   },
   {
     number: 5,
     question: 'VIPが訪れる (___) 、留学生がホームステイに来るくらいで、大騒ぎするなよ。',
     options: ['わけにはいかないのに', 'わりには', 'わけもなかったのに', 'わけじゃあるまいし'],
-    answer: '4',
+    answer: '2',
     isReading: false
   },
   {
     number: 6,
     question: 'A:カラオケ発明した人、特許取らなかったんだって? B:特許を取っていれば、大儲けできた (___) 。',
     options: ['ものだ', 'ものではない', 'ものを', 'ものか'],
-    answer: '2',
+    answer: '4',
     isReading: false
   },
   {
@@ -552,28 +552,28 @@
     number: 8,
     question: '電車の中でお年寄りが立っていても、周りの若者はそれを無視してゲームや携帯に夢中だ。嘆かわしい (___) 。',
     options: ['とは言い切れない', 'というものでもない', 'といったらない', 'というに決まっている'],
-    answer: '2',
+    answer: '4',
     isReading: false
   },
   {
     number: 9,
     question: 'テレビドラマの__ __ _<span style="color:red;font-style:italic">★_</span> __、事件が解決できるわけがない。',
     options: ['ではあるまいし', '刑事', '足らずで', '一時間'],
-    answer: '1',
+    answer: '3',
     isReading: false
   },
   {
     number: 10,
     question: 'A:就職まだ決まってないの?まただめだったらどうする気?',
     options: ['までのことだ', '次の', '会社を', '受ける'],
-    answer: '1',
+    answer: '3',
     isReading: false
   },
   {
     number: 11,
     question: '日本は食料自給率が低く、代表的な日本食の一つである__ __ _<span style="color:red;font-style:italic">★_</span>',
     options: ['程度', '20%', 'にしたところで', 'そば'],
-    answer: '1',
+    answer: '4',
     isReading: false
   },
   {
@@ -584,19 +584,19 @@
         number: 12,
         subQuestion: '問1母親はどんな気持ちで①「<span style="color:red;font-style:italic">子どもじゃあるまいし、またレゴ遊び</span>。」と言っているか。',
         options: ['子供ではないのに、ずっとレゴ遊びを続けているのは評価できる。', 'レゴ遊びは大人がするものではないからやめてほしい。', '子どもでも大人でも夢中でレゴ遊びをするのは気がかりだ。', '子どもではないから、夜遅くまで自由にレゴ遊びをしてもかまわない。'],
-        answer: '2'
+        answer: '4'
       },
       {
         number: 13,
         subQuestion: '問2②「<span style="color:red;font-style:italic">母さんにはわからないよ</span>。」とあるが、母親に何がわからないと思っているか。',
         options: ['レゴの世界の魅力', 'レゴの作り方', '今何を作っているか', '姉が心配していること'],
-        answer: '1'
+        answer: '3'
       },
       {
         number: 14,
         subQuestion: '問3相談者は、どんなことを一番心配しているか。',
         options: ['親子関係が悪化すること', 'レゴばかりして働かないこと', 'ストレスで自分が病気になること', '弟の健康や将来のこと'],
-        answer: '4'
+        answer: '2'
       }
     ]
   },
@@ -608,7 +608,7 @@
         number: 15,
         subQuestion: '問1文章の内容と最も合っているものはどれか。',
         options: ['イジメは昔からあったが、今のイジメと同じようなものであった', '今のイジメは子供社会の中で起こっており、バランスが取れている', '今の先生はいじめられる側ではなく、いじめる側に責任があると考えている', '今の学校社会で行われているイジメはいずれ、社会全体に悪影響を与える'],
-        answer: '4'
+        answer: '2'
       }
     ]
   }
@@ -948,27 +948,14 @@ function findAncestor(el, fn) {
                 
                 if (selected && selected.value === correct) {
                     correctAnswers++;
-                    // Đánh dấu câu trả lời đúng
-                    const labels = form.querySelectorAll(`input[name='${name}']`);
-                    labels.forEach(input => {
-                        if (input.value === correct) {
-                            input.parentElement.innerHTML += ' <span class="correct-answer">✅ Đúng</span>';
-                        }
-                    });
-                } else {
-                    // Đánh dấu câu trả lời sai (nếu có chọn)
-                    if (selected) {
-                        selected.parentElement.innerHTML += ' <span class="wrong-answer">❌ Sai</span>';
-                        // Hiển thị đáp án đúng
-                        const correctInput = form.querySelector(`input[name='${name}'][value='${correct}']`);
-                        //if (correctInput) {
-                          //  correctInput.parentElement.innerHTML += ' <span class="correct-answer">✅ Đáp án đúng</span>';
-                        //}
-                    }
+                    // Chỉ đánh dấu ✅ cho câu trả lời đúng
+                    selected.parentElement.innerHTML += ' <span class="correct-answer">✅ Đúng</span>';
+                 } else if (selected) {
+                   // Chỉ đánh dấu ❌ cho câu trả lời sai (không hiển thị đáp án đúng)
+                    selected.parentElement.innerHTML += ' <span class="wrong-answer">❌ Sai</span>';
                 }
             });
         } else {
-            // Xử lý câu hỏi thường
             totalQuestions++;
             const name = `q${index + 1}`;
             const selected = form.querySelector(`input[name='${name}']:checked`);
@@ -976,23 +963,11 @@ function findAncestor(el, fn) {
             
             if (selected && selected.value === correct) {
                 correctAnswers++;
-                // Đánh dấu câu trả lời đúng
-                const labels = form.querySelectorAll(`input[name='${name}']`);
-                labels.forEach(input => {
-                    if (input.value === correct) {
-                        input.parentElement.innerHTML += ' <span class="correct-answer">✅ Đúng</span>';
-                    }
-                });
-            } else {
-                // Đánh dấu câu trả lời sai (nếu có chọn)
-                if (selected) {
-                    selected.parentElement.innerHTML += ' <span class="wrong-answer">❌ Sai</span>';
-                    // Hiển thị đáp án đúng
-                    const correctInput = form.querySelector(`input[name='${name}'][value='${correct}']`);
-                    if (correctInput) {
-                        correctInput.parentElement.innerHTML += ' <span class="correct-answer">✅ Đáp án đúng</span>';
-                    }
-                }
+                // Chỉ đánh dấu ✅ cho câu trả lời đúng
+                selected.parentElement.innerHTML += ' <span class="correct-answer">✅ Đúng</span>';
+            } else if (selected) {
+                // Chỉ đánh dấu ❌ cho câu trả lời sai (không hiển thị đáp án đúng)
+                selected.parentElement.innerHTML += ' <span class="wrong-answer">❌ Sai</span>';
             }
         }
     });
@@ -1058,9 +1033,10 @@ function findAncestor(el, fn) {
                 const name = `q${idx + 1}_${subIdx}`;
                 const correct = (window.answers && window.answers[name]) || quizAnswers[name];
                 const labels = document.querySelectorAll(`input[name='${name}']`);
+                
                 labels.forEach(input => {
                     const label = input.parentElement;
-                    // Nếu đáp án đúng, chưa có span đúng thì thêm vào
+                    // Hiển thị ✅ cho tất cả đáp án đúng (kể cả câu bỏ trống hoặc sai)
                     if (input.value === correct && !label.innerHTML.includes('✅ Đúng')) {
                         label.innerHTML += ' <span class="correct-answer">✅ Đáp án đúng</span>';
                     }
@@ -1070,6 +1046,7 @@ function findAncestor(el, fn) {
             const name = `q${idx + 1}`;
             const correct = (window.answers && window.answers[name]) || quizAnswers[name];
             const labels = document.querySelectorAll(`input[name='${name}']`);
+            
             labels.forEach(input => {
                 const label = input.parentElement;
                 if (input.value === correct && !label.innerHTML.includes('✅ Đúng')) {
@@ -1078,6 +1055,8 @@ function findAncestor(el, fn) {
             });
         }
     });
+    // Vô hiệu hóa nút sau khi nhấn
+    document.getElementById('showAnswersBtn').disabled = true;
 }
 
 
@@ -1111,8 +1090,11 @@ function findAncestor(el, fn) {
       closeResultPopup();
       document.getElementById('quizResult').innerHTML = '';
       document.getElementById('showAnswersBtn').style.display = 'none';
+
+      showAnswersBtn.disabled = false;
       resetTimer();
     }
+    
       function findKeyBySubQNumber(number) {
         for (let i = 0; i < quizData.length; i++) {
             const q = quizData[i];

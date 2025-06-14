@@ -507,31 +507,31 @@
         number: 1,
         subQuestion: '問1 ①<span style="color:red;font-style:italic">「組織の中にあって、上司から出された命令や指示をやり過ごしてしまうなどということはあってはならないことである」</span>とあるが、これはだれの言葉か。',
         options: ['ある大企業の部長', 'あとで話を聞きに来た人', 'やり過ごしのできない部下は無能だと言った人', '筆者'],
-        answer: '3'
+        answer: '1'
       },
       {
         number: 2,
         subQuestion: '問2 「やり過ごし」という言葉を筆者はどういう意味で使っているか。',
         options: ['上司に言われたこと以上のことをすること', '上司に言われたことをうっかり忘れてしまうこと', '上司に言われたことのいくつかは聞き流して、しないこと', '上司の目を盗んで、できるだけ怠けること'],
-        answer: '4'
+        answer: '3'
       },
       {
         number: 3,
         subQuestion: '問3 ②「<span style="color:red;font-style:italic">世の中厳しいものです」</span>と言っているが、それはどういう理由からか。',
         options: ['上司の命令がどんなものであろうと絶対に従わなければいけないから', '業務量の多い忙しい職場では上司の命令すべてに従うことは不可能だから', '上司に言われたことだけをやるのでは能力がないとされるから', '時間と労力を節約して業務をこなすとあまり評価されないから'],
-        answer: '2'
+        answer: '4'
       },
       {
         number: 4,
         subQuestion: '問4 ③<span style="color:red;font-style:italic">そんな場合</span>とは、どんな場合か。',
         options: ['部下が職人としての知識をもっている場合', '上司の指示がナンセンスで不適切な場合', '部下が上司の不適切な指示を立証した場合', '上司が部下の意見を受け入れようとしない場合'],
-        answer: '2'
+        answer: '3'
       },
       {
         number: 5,
         subQuestion: '問5 筆者がこの文章で言いたいことは何か。',
         options: ['管理者の人事異動が頻繁な企業での業務がいかに大変かということ', '組織の中での「やり過ごし」には重要な機能があるということ', '業務における知識や能力よりも上司との人間関係こそが重要であるということ', '上司の「バカ殿」ぶりが与える部下への精神的苦痛がどんなに大きいかということ'],
-        answer: '3'
+        answer: '1'
       }
     ]
   }
@@ -871,27 +871,14 @@ function findAncestor(el, fn) {
                 
                 if (selected && selected.value === correct) {
                     correctAnswers++;
-                    // Đánh dấu câu trả lời đúng
-                    const labels = form.querySelectorAll(`input[name='${name}']`);
-                    labels.forEach(input => {
-                        if (input.value === correct) {
-                            input.parentElement.innerHTML += ' <span class="correct-answer">✅ Đúng</span>';
-                        }
-                    });
-                } else {
-                    // Đánh dấu câu trả lời sai (nếu có chọn)
-                    if (selected) {
-                        selected.parentElement.innerHTML += ' <span class="wrong-answer">❌ Sai</span>';
-                        // Hiển thị đáp án đúng
-                        const correctInput = form.querySelector(`input[name='${name}'][value='${correct}']`);
-                        //if (correctInput) {
-                          //  correctInput.parentElement.innerHTML += ' <span class="correct-answer">✅ Đáp án đúng</span>';
-                        //}
-                    }
+                    // Chỉ đánh dấu ✅ cho câu trả lời đúng
+                    selected.parentElement.innerHTML += ' <span class="correct-answer">✅ Đúng</span>';
+                 } else if (selected) {
+                   // Chỉ đánh dấu ❌ cho câu trả lời sai (không hiển thị đáp án đúng)
+                    selected.parentElement.innerHTML += ' <span class="wrong-answer">❌ Sai</span>';
                 }
             });
         } else {
-            // Xử lý câu hỏi thường
             totalQuestions++;
             const name = `q${index + 1}`;
             const selected = form.querySelector(`input[name='${name}']:checked`);
@@ -899,23 +886,11 @@ function findAncestor(el, fn) {
             
             if (selected && selected.value === correct) {
                 correctAnswers++;
-                // Đánh dấu câu trả lời đúng
-                const labels = form.querySelectorAll(`input[name='${name}']`);
-                labels.forEach(input => {
-                    if (input.value === correct) {
-                        input.parentElement.innerHTML += ' <span class="correct-answer">✅ Đúng</span>';
-                    }
-                });
-            } else {
-                // Đánh dấu câu trả lời sai (nếu có chọn)
-                if (selected) {
-                    selected.parentElement.innerHTML += ' <span class="wrong-answer">❌ Sai</span>';
-                    // Hiển thị đáp án đúng
-                    const correctInput = form.querySelector(`input[name='${name}'][value='${correct}']`);
-                    if (correctInput) {
-                        correctInput.parentElement.innerHTML += ' <span class="correct-answer">✅ Đáp án đúng</span>';
-                    }
-                }
+                // Chỉ đánh dấu ✅ cho câu trả lời đúng
+                selected.parentElement.innerHTML += ' <span class="correct-answer">✅ Đúng</span>';
+            } else if (selected) {
+                // Chỉ đánh dấu ❌ cho câu trả lời sai (không hiển thị đáp án đúng)
+                selected.parentElement.innerHTML += ' <span class="wrong-answer">❌ Sai</span>';
             }
         }
     });
@@ -981,9 +956,10 @@ function findAncestor(el, fn) {
                 const name = `q${idx + 1}_${subIdx}`;
                 const correct = (window.answers && window.answers[name]) || quizAnswers[name];
                 const labels = document.querySelectorAll(`input[name='${name}']`);
+                
                 labels.forEach(input => {
                     const label = input.parentElement;
-                    // Nếu đáp án đúng, chưa có span đúng thì thêm vào
+                    // Hiển thị ✅ cho tất cả đáp án đúng (kể cả câu bỏ trống hoặc sai)
                     if (input.value === correct && !label.innerHTML.includes('✅ Đúng')) {
                         label.innerHTML += ' <span class="correct-answer">✅ Đáp án đúng</span>';
                     }
@@ -993,6 +969,7 @@ function findAncestor(el, fn) {
             const name = `q${idx + 1}`;
             const correct = (window.answers && window.answers[name]) || quizAnswers[name];
             const labels = document.querySelectorAll(`input[name='${name}']`);
+            
             labels.forEach(input => {
                 const label = input.parentElement;
                 if (input.value === correct && !label.innerHTML.includes('✅ Đúng')) {
@@ -1001,6 +978,8 @@ function findAncestor(el, fn) {
             });
         }
     });
+    // Vô hiệu hóa nút sau khi nhấn
+    document.getElementById('showAnswersBtn').disabled = true;
 }
 
 
@@ -1034,8 +1013,11 @@ function findAncestor(el, fn) {
       closeResultPopup();
       document.getElementById('quizResult').innerHTML = '';
       document.getElementById('showAnswersBtn').style.display = 'none';
+
+      showAnswersBtn.disabled = false;
       resetTimer();
     }
+    
       function findKeyBySubQNumber(number) {
         for (let i = 0; i < quizData.length; i++) {
             const q = quizData[i];
