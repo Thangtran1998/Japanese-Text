@@ -456,6 +456,7 @@
         <input type="text" id="editKey" placeholder="q1">
         <input type="text" id="editValue" placeholder="3">
         <button onclick="updateAnswer()">Cập nhật đáp án</button>
+        <button type="button" id="clearAnswersBtn">Xóa cập nhật đáp án</button>
     </div>
 </div>
 
@@ -473,6 +474,8 @@
   </div>
 
   <script>
+      // đọc về, nếu chưa có thì khởi thành object rỗng
+      window.answers = JSON.parse(localStorage.getItem('customAnswers') || '{}');
           let lastScrollPosition = 0;
 
       window.addEventListener('scroll', function() {
@@ -1213,9 +1216,31 @@ function findAncestor(el, fn) {
 
     if (keyOrNumber && value) {
         window.answers[keyOrNumber] = value;
+        localStorage.setItem('customAnswers', JSON.stringify(window.answers));
         alert(`✅ Đáp án của ${keyOrNumber} đã được cập nhật thành ${value}.`);
     }
 }
+
+
+// Hàm xử lý khi nhấn "Xóa cập nhật đáp án"
+function clearUpdatedAnswers() {
+  // hiện hộp thoại native confirm với hai nút OK/Cancel
+  const ok = confirm('Bạn có chắc muốn xóa cập nhật đáp án không?');
+  if (!ok) return;
+  // nếu chọn "OK" (tương đương "Có")
+  // xoá toàn bộ đáp án đã lưu trong localStorage
+  localStorage.removeItem('answers');
+  // nếu bạn lưu version data, có thể cũng xoá luôn
+  // localStorage.removeItem('quizDataVersion');
+  // reset biến lưu phía trang
+  window.answers = {};
+  alert('✅ Đã xóa hết các cập nhật đáp án.');
+}
+
+// gắn listener vào nút mới
+document.getElementById('clearAnswersBtn')
+        .addEventListener('click', clearUpdatedAnswers);
+
 
 
     function setTimer() {

@@ -456,6 +456,7 @@
         <input type="text" id="editKey" placeholder="q1">
         <input type="text" id="editValue" placeholder="3">
         <button onclick="updateAnswer()">Cập nhật đáp án</button>
+        <button type="button" id="clearAnswersBtn">Xóa cập nhật đáp án</button>
     </div>
 </div>
 
@@ -473,6 +474,8 @@
   </div>
 
   <script>
+      // đọc về, nếu chưa có thì khởi thành object rỗng
+      window.answers = JSON.parse(localStorage.getItem('customAnswers') || '{}');
           let lastScrollPosition = 0;
 
       window.addEventListener('scroll', function() {
@@ -503,77 +506,77 @@
     number: 1,
     question: '英語ができると言った (___) 、余計な仕事まで押し付けられた。',
     options: ['とおりに', 'だけに', 'ばかりに', 'ところに'],
-    answer: '1',
+    answer: '3',
     isReading: false
   },
   {
     number: 2,
     question: '彼の話を聞いていると、まるで私が犯人だと (___) 。',
     options: ['言うまでもない', '言いがたい', '言わんばかりだ', '言わなくもない'],
-    answer: '1',
+    answer: '3',
     isReading: false
   },
   {
     number: 3,
     question: 'あの歌手は髪は長いし、化粧はしているし、女の人だ (___) 思っていた。',
     options: ['んばかりに', 'とばかりに', 'ばかりに', 'とばかり'],
-    answer: '3',
+    answer: '4',
     isReading: false
   },
   {
     number: 4,
     question: '夢___ ___ <span style="color:red;font-style:italic">★</span> ___では、成功できる可能性などありはしない。',
     options: ['努力しないよう', '大きくても', 'ばかり', '少しも'],
-    answer: '1',
+    answer: '3',
     isReading: false
   },
   {
     number: 5,
     question: 'タンカーが事故を起こすたびに、重油が生みに流れ出し、鳥や海の生き物が油',
     options: ['ずくめ', 'まみれ', 'っぽく', 'だけ'],
-    answer: '4',
+    answer: '2',
     isReading: false
   },
   {
     number: 6,
     question: '簡単な原理を見せ方を変えたり___ ___ <span style="color:red;font-style:italic">★</span> ___大人をも引きつける。',
     options: ['子ども', 'によって', 'ばかりでなく', '体験させること'],
-    answer: '2',
+    answer: '3',
     isReading: false
   },
   {
     number: 7,
     question: '峠を越えたあたりから雨が降り出したが、__ <span style="color:red;font-style:italic">★</span> __ __ 。',
     options: ['だけ', '雪でない', 'ましだ', 'まだ'],
-    answer: '4',
+    answer: '1',
     isReading: false
   },
   {
     number: 8,
     question: '家事で家が燃えてしまったのは気の毒だけど、命が助かった (___) 。',
     options: ['きいがある', 'ほどではない', 'までのことだ', 'だけましだ'],
-    answer: '3',
+    answer: '4',
     isReading: false
   },
   {
     number: 9,
     question: 'まったくつまらない会議だ (___) 彼女にこっそり会場を立ち去った。',
     options: ['とばかりに', 'というのに', 'が最後', 'がごとく'],
-    answer: '4',
+    answer: '1',
     isReading: false
   },
   {
     number: 10,
     question: '山田さんは胃が痛いと言って、 (___) んばかりに苦しんでいる。',
     options: ['死んで', '死な', '死んだ', '死なない'],
-    answer: '3',
+    answer: '2',
     isReading: false
   },
   {
     number: 11,
     question: '実験の成功を聞いて、彼は跳び上がらん (___) 喜んだ。',
     options: ['ゆえに', 'ばかりに', 'かぎりに', 'ところに'],
-    answer: '4',
+    answer: '2',
     isReading: false
   },
   {
@@ -601,42 +604,42 @@
     number: 15,
     question: '彼女の声を聞くか聞かないかのうちに__ __ <span style="color:red;font-style:italic">★</span> __。',
     options: ['彼は部屋を', '待っていた', '飛び出していった', 'と言わんばかりに'],
-    answer: '2',
+    answer: '3',
     isReading: false
   },
   {
     number: 16,
     question: '妊娠を口にした社員を辞めさせるとは時代 (___) もはなはだしい。',
     options: ['誤解', '誤差', '錯覚', '錯誤'],
-    answer: '2',
+    answer: '4',
     isReading: false
   },
   {
     number: 17,
     question: '失恋した彼は (___) 心を抱いて日々を送ってきたそうだ。',
     options: ['なめらかな', 'おろそかな', 'うつろな', 'おろか'],
-    answer: '1',
+    answer: '3',
     isReading: false
   },
   {
     number: 18,
     question: '世の中の人間関係は (___) 付き合いに疲れる。',
     options: ['ひらたくて', 'たやすくて', '煩わしくて', '切なくて'],
-    answer: '2',
+    answer: '3',
     isReading: false
   },
   {
     number: 19,
     question: 'こんなに蒸し暑いんじゃ、仕事の能率が落ちてさっぱり (___) 。',
     options: ['たどらない', 'たまわらない', 'さとらない', 'はかどらない'],
-    answer: '2',
+    answer: '4',
     isReading: false
   },
   {
     number: 20,
     question: 'いろいろ困難にぶつかったが、 (___) 一行は無事に山頂にたどり着いた。',
     options: ['どうやら', 'なにやら', 'なにしろ', 'なるたけ'],
-    answer: '3',
+    answer: '1',
     isReading: false
   },
   {
@@ -650,21 +653,21 @@
     number: 22,
     question: '朝食を抜いて、昼食と一緒に食べるブランチ (___) が増えてきたようだ。',
     options: ['群', '陣', '族', '者'],
-    answer: '2',
+    answer: '3',
     isReading: false
   },
   {
     number: 23,
     question: 'それは<span style="color:red;font-style:italic">人情味</span>あふれる行いだ。',
     options: ['なじみ', 'なれ', 'なぐさめ', 'なさけ'],
-    answer: '1',
+    answer: '4',
     isReading: false
   },
   {
     number: 24,
     question: '企画会議は長時間に及んだが、<span style="color:red;font-style:italic">月並み</span>な案しか出なかった。',
     options: ['慣例', '慣習', '平常', '平凡'],
-    answer: '2',
+    answer: '4',
     isReading: false
   },
   {
@@ -685,14 +688,14 @@
     number: 27,
     question: '定期的に試験を行うのが必要だ。<span style="color:red;font-style:italic">ともすれば</span>、学生は怠けがちになる。',
     options: ['どうかすると', 'かならずしも', 'なにからなにまで', '手当たり次第に'],
-    answer: '3',
+    answer: '1',
     isReading: false
   },
   {
     number: 28,
     question: '彼の<span style="color:red;font-style:italic">ナンセンス</span>な発言は聞くに値しません。',
     options: ['くだらない', 'おさない', 'にくらしい', 'かなしい'],
-    answer: '3',
+    answer: '1',
     isReading: false
   },
   {
@@ -703,7 +706,7 @@
         number: 29,
         subQuestion: '問1「<span style="color:red;font-style:italic">動物を見下ろす</span>」とは、文章の中でどのようなことを言っているか。',
         options: ['堀の上に立って、大きな声で話しながら動物を楽しませること。', '人間が優位に立って動物を <ruby>鑑賞 物<rt>かんしょうもの</rt></ruby> として楽しむこと。', '動物の生息地の環境を再現する生態的展示。', '今までの動物園で行なわれた動物展示の姿。'],
-        answer: '1'
+        answer: '2'
       },
       {
         number: 30,
@@ -1229,9 +1232,31 @@ function findAncestor(el, fn) {
 
     if (keyOrNumber && value) {
         window.answers[keyOrNumber] = value;
+        localStorage.setItem('customAnswers', JSON.stringify(window.answers));
         alert(`✅ Đáp án của ${keyOrNumber} đã được cập nhật thành ${value}.`);
     }
 }
+
+
+// Hàm xử lý khi nhấn "Xóa cập nhật đáp án"
+function clearUpdatedAnswers() {
+  // hiện hộp thoại native confirm với hai nút OK/Cancel
+  const ok = confirm('Bạn có chắc muốn xóa cập nhật đáp án không?');
+  if (!ok) return;
+  // nếu chọn "OK" (tương đương "Có")
+  // xoá toàn bộ đáp án đã lưu trong localStorage
+  localStorage.removeItem('answers');
+  // nếu bạn lưu version data, có thể cũng xoá luôn
+  // localStorage.removeItem('quizDataVersion');
+  // reset biến lưu phía trang
+  window.answers = {};
+  alert('✅ Đã xóa hết các cập nhật đáp án.');
+}
+
+// gắn listener vào nút mới
+document.getElementById('clearAnswersBtn')
+        .addEventListener('click', clearUpdatedAnswers);
+
 
 
     function setTimer() {

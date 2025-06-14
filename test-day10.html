@@ -456,6 +456,7 @@
         <input type="text" id="editKey" placeholder="q1">
         <input type="text" id="editValue" placeholder="3">
         <button onclick="updateAnswer()">Cập nhật đáp án</button>
+        <button type="button" id="clearAnswersBtn">Xóa cập nhật đáp án</button>
     </div>
 </div>
 
@@ -473,6 +474,8 @@
   </div>
 
   <script>
+      // đọc về, nếu chưa có thì khởi thành object rỗng
+      window.answers = JSON.parse(localStorage.getItem('customAnswers') || '{}');
           let lastScrollPosition = 0;
 
       window.addEventListener('scroll', function() {
@@ -503,28 +506,28 @@
     number: 1,
     question: 'うちの子供は、家族の期待を (___) 、毎日ゲームに熱中している。',
     options: ['もとに', 'きっかけに', 'よそに', 'めぐって'],
-    answer: '1',
+    answer: '3',
     isReading: false
   },
   {
     number: 2,
     question: 'ファンの期待を (___) 、チームは負け続けた。',
     options: ['よそに', 'そとに', 'あとに', 'ほかに'],
-    answer: '2',
+    answer: '1',
     isReading: false
   },
   {
     number: 3,
     question: '激しい荒波を (___) 、豪華客船は世界一周の旅を続けた。',
     options: ['かぎりに', 'ものともせず', 'かわきりに', 'あいまって'],
-    answer: '4',
+    answer: '2',
     isReading: false
   },
   {
     number: 4,
     question: 'これからの努力 (___) で、成功できるかどうかは、決まるのである。',
     options: ['いかん', 'まみれ', 'がてら', 'かぎり'],
-    answer: '2',
+    answer: '1',
     isReading: false
   },
   {
@@ -538,21 +541,21 @@
     number: 6,
     question: '同窓会の件ですが、出席欠席の (___) 、一週間以内にお返事くださるようお願いします。',
     options: ['そばから', 'ないまでも', '次第にしては', 'いかんによらず'],
-    answer: '3',
+    answer: '4',
     isReading: false
   },
   {
     number: 7,
     question: '理由の (___) 、一度おさめた授業料が返金されることはない。',
     options: ['いかんによらず', 'いかんによっては', 'いかんによると', 'いかんせん'],
-    answer: '2',
+    answer: '1',
     isReading: false
   },
   {
     number: 8,
     question: 'このホールでは本日夜の部を (___) 、連日、昼と夜の二回、ミュージカルの公演が予定されている。',
     options: ['かわきりに', 'かえりみず', '前にして', '禁じえず'],
-    answer: '4',
+    answer: '1',
     isReading: false
   },
   {
@@ -566,14 +569,14 @@
     number: 10,
     question: 'あの二人が結婚するなんて、予想 (___) しなかった。',
     options: ['こそ', 'ばかり', 'しか', 'だに'],
-    answer: '2',
+    answer: '4',
     isReading: false
   },
   {
     number: 11,
     question: '歩行者天国の人波にトラックで突っ込み、何人も轢き殺し、さらに通行人をナイフで刺し殺すという、考える (___) 恐ろしい事件が起こった。',
     options: ['だの', 'でも', 'だに', 'では'],
-    answer: '2',
+    answer: '3',
     isReading: false
   },
   {
@@ -587,7 +590,7 @@
     number: 13,
     question: '道の試合では、一瞬 (___) 油断はできない。',
     options: ['ばかりも', 'だけさえ', 'たりとも', 'どころか'],
-    answer: '2',
+    answer: '3',
     isReading: false
   },
   {
@@ -601,7 +604,7 @@
     number: 15,
     question: '秋になって、野山があざやかに色 (___) きた。',
     options: ['めいて', 'まみれに', 'ずくめで', 'すぎて'],
-    answer: '2',
+    answer: '1',
     isReading: false
   },
   {
@@ -615,56 +618,56 @@
     number: 17,
     question: '彼は、そのことを知らないはずなのに、まるで見ていたかの (___) 上手に話した。',
     options: ['ごとく', 'すえに', 'らしく', 'まじく'],
-    answer: '4',
+    answer: '1',
     isReading: false
   },
   {
     number: 18,
     question: '取引先の対応 (___) 、今回の契約を解除する可能性もある。',
     options: ['いかんにかかわらず', 'いかんによっては', 'かぎりでは', 'をものともせずに'],
-    answer: '1',
+    answer: '2',
     isReading: false
   },
   {
     number: 19,
     question: '薬というのは飲み方 (___) 、薬にも毒にもなる。(TQ p151)',
     options: ['がてら', 'がはやいか', 'はおろか', 'いかんによっては'],
-    answer: '1',
+    answer: '4',
     isReading: false
   },
   {
     number: 20,
     question: '兄は事業の失敗をものともせず、 (___) 。',
     options: ['相変わらず借金を繰り返した', '会社を辞めてしまった', '新しい仕事に取り組んでいる', 'x'],
-    answer: '2',
+    answer: '3',
     isReading: false
   },
   {
     number: 21,
     question: '岸さんは電車でお年寄りに席を<span style="color:red;font-style:italic">譲る</span>ような優しい人だ。(kj master p23)',
     options: ['ゆうる', 'ゆずる', 'ゆるず', 'ゆうず'],
-    answer: '1',
+    answer: '2',
     isReading: false
   },
   {
     number: 22,
     question: '毎晩、隣の部屋からテレビの音が聞こえてきて<span style="color:red;font-style:italic">迷惑</span>だ。',
     options: ['めいかん', 'べいわく', 'めいわく', 'べいかん'],
-    answer: '1',
+    answer: '3',
     isReading: false
   },
   {
     number: 23,
     question: 'インフルエンザが流行しているため、クラス全員に注意を<span style="color:red;font-style:italic">促した</span>。',
     options: ['うながした', 'さながした', 'きながした', 'いながした'],
-    answer: '4',
+    answer: '1',
     isReading: false
   },
   {
     number: 24,
     question: '彼の説明は<span style="color:red;font-style:italic">抽象的</span>で具体性に欠ける。',
     options: ['ちゅうしょうてき', 'ちゅうしょてき', 'ちゅうしゅうてき', 'ちゅうしゅてき'],
-    answer: '4',
+    answer: '1',
     isReading: false
   },
   {
@@ -678,14 +681,14 @@
     number: 26,
     question: '大好きな歌手のライブで、<span style="color:red;font-style:italic">興奮</span>のあまり泣いてしまった。',
     options: ['きょうふん', 'きょふん', 'こふん', 'こうふん'],
-    answer: '1',
+    answer: '4',
     isReading: false
   },
   {
     number: 27,
     question: '画家を目指している彼は、<span style="color:red;font-style:italic">挿し絵</span>のアルバイトをしている。',
     options: ['はしえ', 'さしえ', 'そうしえ', 'そしかい'],
-    answer: '4',
+    answer: '2',
     isReading: false
   },
   {
@@ -706,14 +709,14 @@
     number: 30,
     question: '同僚の妙に明るく振る舞っている姿に、<span style="color:red;font-style:italic">一抹</span>の不安を感じた。',
     options: ['いちまい', 'いっまつ', 'いちまつ', 'いっまい'],
-    answer: '1',
+    answer: '3',
     isReading: false
   },
   {
     number: 31,
     question: '周囲の人に<span style="color:red;font-style:italic">諭されて</span>、病院で検査を受ける決心をした。',
     options: ['うとされて', 'さとうされて', 'きうされて', 'さとされて'],
-    answer: '1',
+    answer: '4',
     isReading: false
   },
   {
@@ -727,14 +730,14 @@
     number: 33,
     question: '定職に就かず、<span style="color:red;font-style:italic">自由奔放な</span>生活を送る若者が増えている。',
     options: ['じゆうほんぽうな', 'じゆうほうぽんな', 'じゆうほんぼうな', 'じゅゆうほうぼんな'],
-    answer: '3',
+    answer: '1',
     isReading: false
   },
   {
     number: 34,
     question: '学生の頃に<span style="color:red;font-style:italic">貪る</span>ように本を読んだものだ。',
     options: ['むたぼる', 'さむぼる', 'むさぼる', 'たさぼる'],
-    answer: '4',
+    answer: '3',
     isReading: false
   },
   {
@@ -752,7 +755,7 @@
         number: 36,
         subQuestion: '問い この文で、筆者が最も言いたいことは何か。',
         options: ['「見える化」された生産現場は、問題が起きても解決策が打たれるのが早い。', 'ビジネスの「見える化」が企業内だけでなく、対ユーザーの分野にも広がっている。', '環境問題はこの「見える化」のように、全てのデータを公表しなければならない', '「見える化」により生産された商品は、環境にも影響が少ないことがわかる'],
-        answer: '1'
+        answer: '2'
       }
     ]
   }
@@ -1272,9 +1275,31 @@ function findAncestor(el, fn) {
 
     if (keyOrNumber && value) {
         window.answers[keyOrNumber] = value;
+        localStorage.setItem('customAnswers', JSON.stringify(window.answers));
         alert(`✅ Đáp án của ${keyOrNumber} đã được cập nhật thành ${value}.`);
     }
 }
+
+
+// Hàm xử lý khi nhấn "Xóa cập nhật đáp án"
+function clearUpdatedAnswers() {
+  // hiện hộp thoại native confirm với hai nút OK/Cancel
+  const ok = confirm('Bạn có chắc muốn xóa cập nhật đáp án không?');
+  if (!ok) return;
+  // nếu chọn "OK" (tương đương "Có")
+  // xoá toàn bộ đáp án đã lưu trong localStorage
+  localStorage.removeItem('answers');
+  // nếu bạn lưu version data, có thể cũng xoá luôn
+  // localStorage.removeItem('quizDataVersion');
+  // reset biến lưu phía trang
+  window.answers = {};
+  alert('✅ Đã xóa hết các cập nhật đáp án.');
+}
+
+// gắn listener vào nút mới
+document.getElementById('clearAnswersBtn')
+        .addEventListener('click', clearUpdatedAnswers);
+
 
 
     function setTimer() {

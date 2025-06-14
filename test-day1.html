@@ -456,6 +456,7 @@
         <input type="text" id="editKey" placeholder="q1">
         <input type="text" id="editValue" placeholder="3">
         <button onclick="updateAnswer()">Cập nhật đáp án</button>
+        <button type="button" id="clearAnswersBtn">Xóa cập nhật đáp án</button>
     </div>
 </div>
 
@@ -473,6 +474,8 @@
   </div>
 
   <script>
+      // đọc về, nếu chưa có thì khởi thành object rỗng
+      window.answers = JSON.parse(localStorage.getItem('customAnswers') || '{}');
           let lastScrollPosition = 0;
 
       window.addEventListener('scroll', function() {
@@ -503,14 +506,14 @@
     number: 1,
     question: '家は買えない (___) 、せめてもう少し広い部屋に住みたいものだ。',
     options: ['ところが', 'ところで', 'までも', 'までもなく'],
-    answer: '2',
+    answer: '3',
     isReading: false
   },
   {
     number: 2,
     question: '今になってはいくら奥さんに謝った (___) 、どうにもならないから、離婚の要求を受けるしかないだろう。',
     options: ['ところが', 'ところで', 'ところに', 'ところを'],
-    answer: '4',
+    answer: '2',
     isReading: false
   },
   {
@@ -524,14 +527,14 @@
     number: 4,
     question: 'A:「新しい社長を選べば、企業の再建ができるかもしれないと思う。」 B:「私はそう思っていない。新しい社長を選ぶ (___) 、どうせ社長の親族から後継者が出るのだから、社風が一変することなんかありえない。」',
     options: ['にさきだって', 'にあたって', 'とすれば', 'としたところで'],
-    answer: '2',
+    answer: '4',
     isReading: false
   },
   {
     number: 5,
     question: '最近、田中さんは何の断りもなくよく学校を休む。勝手というか、わがままというか (___) 。',
     options: ['いずれにしてももってのほかだ', 'なんとかして処分しなければならない', 'どちらども言えないぐらいだ', '今になった以上、もうこれまでだ'],
-    answer: '2',
+    answer: '1',
     isReading: false
   },
   {
@@ -545,28 +548,28 @@
     number: 7,
     question: '主役を降ろされた俳優が、不満を涙 (___) 演出家に訴えた。',
     options: ['次第で', 'を問わず', 'ながらに', 'たりとも'],
-    answer: '4',
+    answer: '3',
     isReading: false
   },
   {
     number: 8,
     question: '全面返還とはいか (___) 、基地問題を解決すべきだという意見が多い。',
     options: ['ない限り', 'ないものを', 'ないまでも', 'ないばかりか'],
-    answer: '4',
+    answer: '3',
     isReading: false
   },
   {
     number: 9,
     question: '締め切りを1週間延ばしてもらったところで、 (___) 。',
     options: ['後1週間延ばしてもらおう', '間に合うとは思えない', '一生懸命仕上げようと思う', 'やる気がわいてきた'],
-    answer: '4',
+    answer: '2',
     isReading: false
   },
   {
     number: 10,
     question: 'あの町はうるさいイメージがあり (___) 、美術館なども複数ある。',
     options: ['ながらも', 'がちで', 'かけては', 'ように'],
-    answer: '3',
+    answer: '1',
     isReading: false
   },
   {
@@ -580,21 +583,21 @@
     number: 12,
     question: '花粉症の問題はあるが、杉が重要な林木なのは言う (___) 。',
     options: ['ことではない', 'までもない', 'に過ぎない', 'ほどではない'],
-    answer: '3',
+    answer: '2',
     isReading: false
   },
   {
     number: 13,
     question: '彼が失礼な態度を取り続けるなら、絶交する (___) 。',
     options: ['かぎりだ', 'までだ', 'とたんに', 'がはやいか'],
-    answer: '3',
+    answer: '2',
     isReading: false
   },
   {
     number: 14,
     question: '無理なダイエットや美容整形 (___) 女性というものは美しくなりたいのか。',
     options: ['からして', 'までして', 'ほどして', 'だけして'],
-    answer: '1',
+    answer: '2',
     isReading: false
   },
   {
@@ -608,70 +611,70 @@
     number: 16,
     question: '手作りのカードは、ささやか (___) 心の温まる贈り物だ。',
     options: ['ながらに', 'ながらも', 'ならでは', 'にあって'],
-    answer: '3',
+    answer: '2',
     isReading: false
   },
   {
     number: 17,
     question: '文楽の世界に弟子入りしてから10年、ようやく独り立ち (___) 。',
     options: ['というところだ', 'というだけだ', 'というはずだ', 'というまでだ'],
-    answer: '2',
+    answer: '1',
     isReading: false
   },
   {
     number: 18,
     question: 'お忙しい (___) おいでくださいまして、誠にありがとうございます。',
     options: ['せいで', 'うちに', 'にかかわらず', 'ところを'],
-    answer: '2',
+    answer: '4',
     isReading: false
   },
   {
     number: 19,
     question: 'プレゼントは何か残るものをあげたいと思う。食べ物は食べてしまえば (___) だからだ。',
     options: ['そのまま', 'それほど', 'そのかぎり', 'それまで'],
-    answer: '2',
+    answer: '4',
     isReading: false
   },
   {
     number: 20,
     question: '今回クラスで起きた出来事はわざわざ会議で取り上げる (___) だろう。',
     options: ['かなない', '足らない', 'すぎない', 'までもない'],
-    answer: '1',
+    answer: '4',
     isReading: false
   },
   {
     number: 21,
     question: '台風10号は今晩 (___) する見通しです。',
     options: ['定着', '着陸', '上達', '上陸'],
-    answer: '3',
+    answer: '4',
     isReading: false
   },
   {
     number: 22,
     question: 'もめないように柔軟で、かつ (___) な態度で交渉に臨む。',
     options: ['真上', '真剣', '真心', '真理'],
-    answer: '3',
+    answer: '2',
     isReading: false
   },
   {
     number: 23,
     question: '梅雨に入ってから毎日のように雨が降り続いて (___) と言ったらありはしない。',
     options: ['おっかない', 'ものたりない', 'うっとうしい', 'そっけない'],
-    answer: '4',
+    answer: '3',
     isReading: false
   },
   {
     number: 24,
     question: '試験の直前になって本に書いてあることを一度に頭に (___) としても無理だ。',
     options: ['組み込もう', '飲み込もう', '詰め込もう', '取り込もう'],
-    answer: '4',
+    answer: '3',
     isReading: false
   },
   {
     number: 25,
     question: '入院して手術をしてもらったが、病状が (___) 悪化した。',
     options: ['まして', 'ひいては', 'ともあれ', 'かえって'],
-    answer: '1',
+    answer: '4',
     isReading: false
   },
   {
@@ -706,28 +709,28 @@
     number: 30,
     question: 'この計画は<span style="color:red;font-style:italic">はばひろい</span>市民の支持を得た。',
     options: ['広範な', '膨大な', '多様な', '旺盛な'],
-    answer: '4',
+    answer: '1',
     isReading: false
   },
   {
     number: 31,
     question: '少し暖かくなったと思ったのに、次の日には寒さが<span style="color:red;font-style:italic">ぶり返した</span>。',
     options: ['もどった', 'かわった', 'ふえた', 'さわった'],
-    answer: '4',
+    answer: '1',
     isReading: false
   },
   {
     number: 32,
     question: '彼は日本の詩、<span style="color:red;font-style:italic">とりわけ</span>俳句に興味を持っている。',
     options: ['いっそ', 'いっそう', 'とっくに', 'とくに'],
-    answer: '3',
+    answer: '4',
     isReading: false
   },
   {
     number: 33,
     question: 'ダイエット中だから、 食べる量を<span style="color:red;font-style:italic">コントロールして</span>いる。',
     options: ['ふまえて', 'ひかえて', 'ささえて', 'ととのえて'],
-    answer: '1',
+    answer: '2',
     isReading: false
   },
   {
@@ -741,35 +744,35 @@
     number: 35,
     question: '<ruby>証<rt>あかし</rt></ruby>',
     options: ['いつまでも君を愛すると彼は<span style="color:red;font-style:italic">証</span>をした。', '飛行機が海に墜落したかどうか<span style="color:red;font-style:italic">証</span>が分からない。', '被告が無罪だと彼は<span style="color:red;font-style:italic">証</span>を立てて弁護した。', '一概にゲーム遊びは悪いこととは<span style="color:red;font-style:italic">証</span>できない。'],
-    answer: '1',
+    answer: '3',
     isReading: false
   },
   {
     number: 36,
     question: 'ありのまま',
     options: ['<span style="color:red;font-style:italic">ありのまま</span>の私を認めてくれる人と結婚したい。', 'そのことに関しては私に<span style="color:red;font-style:italic">ありのまま</span>責任がない。', '強盗に襲われ、お金は<span style="color:red;font-style:italic">ありのまま</span>に取られてしまった。', '酔っ払った父は服も脱がないで、<span style="color:red;font-style:italic">ありのまま</span>寝てしまった。'],
-    answer: '3',
+    answer: '1',
     isReading: false
   },
   {
     number: 37,
     question: 'もめる',
     options: ['この頃、天候が<span style="color:red;font-style:italic">もめ</span>、雨だったり、曇りだったりだ。', '利益の配分をめぐって会議は<span style="color:red;font-style:italic">もめ</span>はじめた。', '社会に出て、世の荒波に<span style="color:red;font-style:italic">もめられ</span>てこそ、成長するのだ。', '人が川なんかで溺れた場合、<span style="color:red;font-style:italic">もめる</span>ほど沈んでしまうという。'],
-    answer: '3',
+    answer: '2',
     isReading: false
   },
   {
     number: 38,
     question: 'やたらに',
     options: ['よく勉強したので、 成績が<span style="color:red;font-style:italic">やたらに</span>よかった。', 'いくらお金があるからって、<span style="color:red;font-style:italic">やたらに</span>使うなよ。', '仕事で忙しくて、<span style="color:red;font-style:italic">やたらに</span>食事をとる時間がない。', '彼女を<span style="color:red;font-style:italic">やたらに</span>愛しているので、諦めはしない。'],
-    answer: '4',
+    answer: '2',
     isReading: false
   },
   {
     number: 39,
     question: 'オーバー',
     options: ['彼はいつも<span style="color:red;font-style:italic">オーバー</span>な反応を返してくるから参っちゃうよ。', 'あの山を<span style="color:red;font-style:italic">オーバー</span>すると、憧れている国へ着く。', '新型パソコンは今、市販されているのより品質が<span style="color:red;font-style:italic">オーバー</span>だ。', '<span style="color:red;font-style:italic">オーバー</span>な希望を抱いている彼の将来は明るいだろう。'],
-    answer: '2',
+    answer: '1',
     isReading: false
   },
   {
@@ -780,7 +783,7 @@
         number: 40,
         subQuestion: '筆者のダイエット理念について、正しいものはどれか。',
         options: ['痩せたいと思うなら、思い切り食事制限をすること。', '痩せたくても健康を害するダイエット方法はやめること。', 'ダイエットで節約した食料を発展途上国の方へ回すこと。', '単に食べる量を減らすだけでなく、適当な運動もすること。'],
-        answer: '1'
+        answer: '2'
       }
     ]
   }
@@ -1300,9 +1303,31 @@ function findAncestor(el, fn) {
 
     if (keyOrNumber && value) {
         window.answers[keyOrNumber] = value;
+        localStorage.setItem('customAnswers', JSON.stringify(window.answers));
         alert(`✅ Đáp án của ${keyOrNumber} đã được cập nhật thành ${value}.`);
     }
 }
+
+
+// Hàm xử lý khi nhấn "Xóa cập nhật đáp án"
+function clearUpdatedAnswers() {
+  // hiện hộp thoại native confirm với hai nút OK/Cancel
+  const ok = confirm('Bạn có chắc muốn xóa cập nhật đáp án không?');
+  if (!ok) return;
+  // nếu chọn "OK" (tương đương "Có")
+  // xoá toàn bộ đáp án đã lưu trong localStorage
+  localStorage.removeItem('answers');
+  // nếu bạn lưu version data, có thể cũng xoá luôn
+  // localStorage.removeItem('quizDataVersion');
+  // reset biến lưu phía trang
+  window.answers = {};
+  alert('✅ Đã xóa hết các cập nhật đáp án.');
+}
+
+// gắn listener vào nút mới
+document.getElementById('clearAnswersBtn')
+        .addEventListener('click', clearUpdatedAnswers);
+
 
 
     function setTimer() {

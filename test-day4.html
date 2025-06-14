@@ -456,6 +456,7 @@
         <input type="text" id="editKey" placeholder="q1">
         <input type="text" id="editValue" placeholder="3">
         <button onclick="updateAnswer()">Cập nhật đáp án</button>
+        <button type="button" id="clearAnswersBtn">Xóa cập nhật đáp án</button>
     </div>
 </div>
 
@@ -473,6 +474,8 @@
   </div>
 
   <script>
+      // đọc về, nếu chưa có thì khởi thành object rỗng
+      window.answers = JSON.parse(localStorage.getItem('customAnswers') || '{}');
           let lastScrollPosition = 0;
 
       window.addEventListener('scroll', function() {
@@ -503,28 +506,28 @@
     number: 1,
     question: '妹はまだ幼い (___) 失礼がありましたら、どうかお許しください。',
     options: ['からといって', 'こととて', 'とはいえ', 'ながらも'],
-    answer: '1',
+    answer: '2',
     isReading: false
   },
   {
     number: 2,
     question: '何だその格好は・・・。遊びに行くの (___) 、もう少しましな服を着ろ。',
     options: ['ではあるまいし', 'と思いきや', 'にひきかえ', 'に比べて'],
-    answer: '4',
+    answer: '1',
     isReading: false
   },
   {
     number: 3,
     question: '法律の上では___ ___ <span style="color:red;font-style:italic">★</span> ___残っている。',
     options: ['同権になった', '女性差別が', 'とはいえ', '男女が'],
-    answer: '1',
+    answer: '3',
     isReading: false
   },
   {
     number: 4,
     question: '日本は___ ___ <span style="color:red;font-style:italic">★</span> ___、最近は、海の汚染で漁獲量が減っている。',
     options: ['昔から', '島国ゆえに', '四方を生みに囲まれた', '漁業が盛んだった'],
-    answer: '3',
+    answer: '2',
     isReading: false
   },
   {
@@ -538,35 +541,35 @@
     number: 6,
     question: '人は外見ではわからない。いつも __ __ <span style="color:red;font-style:italic">★</span> __ まったく反対の先生だった。',
     options: ['先生のことだから', 'ニコニコしている', 'さぞ優しい先生だろう', 'と思いきや'],
-    answer: '4',
+    answer: '3',
     isReading: false
   },
   {
     number: 7,
     question: '終電に乗り遅れて、公園で寝たのか。なぜ、電話をかけてこないんだ。知っていれば、迎えに行ってやった (___) 。',
     options: ['ことで', 'ものを', 'もので', 'わけを'],
-    answer: '3',
+    answer: '2',
     isReading: false
   },
   {
     number: 8,
     question: '財布を盗まれ、困っている (___) 通りかかったやさしいおじいさんが助けてくれた。',
     options: ['ところを', 'かぎりに', 'ものを', 'ことを'],
-    answer: '3',
+    answer: '1',
     isReading: false
   },
   {
     number: 9,
     question: '日本は天然資源に欠けているが (___) 、加工貿易に力を入れてきた。(Toreningu p120)',
     options: ['ゆえに', 'ものの', 'からこそ', '最後'],
-    answer: '4',
+    answer: '3',
     isReading: false
   },
   {
     number: 10,
     question: '久しぶりに帰省したが、7年ぶりの (___) 田舎はずいぶん変わっていた。',
     options: ['かたわら', 'しまつで', 'ごとく', 'こととて'],
-    answer: '2',
+    answer: '4',
     isReading: false
   },
   {
@@ -587,70 +590,70 @@
     number: 13,
     question: '彼に友だちが少ないのは、一人っ子 (___) わがままが原因だ。',
     options: ['こその', 'せいの', 'ゆえの', 'のあまり'],
-    answer: '4',
+    answer: '3',
     isReading: false
   },
   {
     number: 14,
     question: 'いくら金持ち (___) 、旅行に1,000万円も使うなんて信じられない。',
     options: ['とはいえ', 'というより', 'というと', 'といえば'],
-    answer: '3',
+    answer: '1',
     isReading: false
   },
   {
     number: 15,
     question: '看病の (___) があって、病人は3日目には意識を取り戻した。',
     options: ['ゆえ', 'ため', 'かい', 'せい'],
-    answer: '4',
+    answer: '3',
     isReading: false
   },
   {
     number: 16,
     question: '手をつないでいいと言ってしまった (___) 、今さら駄目だなんて言えない。',
     options: ['ものの', 'ところ', 'ままに', 'てまえ'],
-    answer: '1',
+    answer: '4',
     isReading: false
   },
   {
     number: 17,
     question: '___ <span style="color:red;font-style:italic">★</span> ___ ___、彼は警官の顔をしばらく見つめたあと、屋上から飛び降りてしまった。',
     options: ['懸命の', '説得の', '警官の', 'かいもなく'],
-    answer: '4',
+    answer: '1',
     isReading: false
   },
   {
     number: 18,
     question: '先ほどのオペレーターに、___ ___ <span style="color:red;font-style:italic">★</span> ___、今さら「間違いでした」とも言えない。',
     options: ['文句を', '言ってしまった', 'てまえ', 'さんざん'],
-    answer: '2',
+    answer: '3',
     isReading: false
   },
   {
     number: 19,
     question: '威張るのはよくないと思っている人が多い。しかし、部長としては威張ればこそ、',
     options: ['生意気な人間だと思われているのである', '人々に嫌われてしまうおそれがある', '自分の役割に忠実になるのである', '自分のことばかり考えてはいられないのである'],
-    answer: '2',
+    answer: '3',
     isReading: false
   },
   {
     number: 20,
     question: '帰り道で (___) 強盗に<ruby>襲<rt>おそ</rt></ruby>われ、アクセサリーや所持金は全部奪われた。',
     options: ['素顔', '似顔', '工面', '覆面'],
-    answer: '3',
+    answer: '4',
     isReading: false
   },
   {
     number: 21,
     question: 'きちんと理解していなかったから、試験では (___) な答案しか書けなかった。',
     options: ['ゆるやか', 'だぶだぶ', 'あやふや', 'なごやか'],
-    answer: '2',
+    answer: '3',
     isReading: false
   },
   {
     number: 22,
     question: '人間は一般の動物より (___) もので、何でもほしがる。',
     options: ['ものたりない', 'なにげない', 'こころづよい', 'よくぶかい'],
-    answer: '3',
+    answer: '4',
     isReading: false
   },
   {
@@ -664,7 +667,7 @@
     number: 24,
     question: '家が揺れたので (___) 地震かと思ったが、大きなトラックが通ったのだった。',
     options: ['じっくり', 'てっきり', 'きっかり', 'がっちり'],
-    answer: '1',
+    answer: '2',
     isReading: false
   },
   {
@@ -685,21 +688,21 @@
     number: 27,
     question: '選挙が近づいてきたので、政治家の<span style="color:red;font-style:italic">動き</span>が大分激しくなってきた。',
     options: ['運動', '騒動', '作動', '起動'],
-    answer: '4',
+    answer: '1',
     isReading: false
   },
   {
     number: 28,
     question: '彼女は目が合うと<span style="color:red;font-style:italic">和やかに</span>微笑んだ。',
     options: ['たのもしく', 'のぞましく', 'したしく', 'こいしく'],
-    answer: '2',
+    answer: '3',
     isReading: false
   },
   {
     number: 29,
     question: '祖父がなくなったとたん、遺産をめぐって兄弟の間で<span style="color:red;font-style:italic">浅ましい</span>争いが始まった。',
     options: ['まぎらわしい', 'なやましい', 'なげかわしい', 'ややこしい'],
-    answer: '4',
+    answer: '3',
     isReading: false
   },
   {
@@ -713,7 +716,7 @@
     number: 31,
     question: 'ずっと黙っていた彼女は<span style="color:red;font-style:italic">ひょっと</span>口に出した。',
     options: ['かすかに', 'ふいに', 'もしかして', 'けっして'],
-    answer: '3',
+    answer: '2',
     isReading: false
   },
   {
@@ -727,28 +730,28 @@
     number: 33,
     question: '斡旋',
     options: ['寝たきりの老人を<span style="color:red;font-style:italic">斡旋</span>するのはたいへんな仕事だ。', 'ガイドさんは観光客にその土地の歴史を<span style="color:red;font-style:italic">斡旋</span>した。', 'この土地にうとい私は就職の<span style="color:red;font-style:italic">斡旋</span>を友人に頼んだ。', '激しく流れている水は大きな<span style="color:red;font-style:italic">斡旋</span>を巻いている。'],
-    answer: '4',
+    answer: '3',
     isReading: false
   },
   {
     number: 34,
     question: '圧迫',
     options: ['空気入れで空気をタイヤに<span style="color:red;font-style:italic">圧迫</span>する。', 'ぼくは課長につまらない仕事を<span style="color:red;font-style:italic">圧迫</span>させられた。', '教育費やローンで家計が<span style="color:red;font-style:italic">圧迫</span>されて苦しい。', '急停車で私は倒れたうえ、数人に<span style="color:red;font-style:italic">圧迫</span>された。'],
-    answer: '2',
+    answer: '3',
     isReading: false
   },
   {
     number: 35,
     question: '質素',
     options: ['この物は質素がよくないので、買う人が少ないわけだ。', 'いろいろな本を読むことによって、質素な人間になる。', '彼女は質素な性格で、めったに人の前で怒らない。', '定年のあと、夫婦二人は毎日質素に暮らしている。'],
-    answer: '3',
+    answer: '4',
     isReading: false
   },
   {
     number: 36,
     question: 'おとろえる',
     options: ['3時間もテニスをやって、すっかり体がおとろえてきた。', '天気がおとろえてきて、あすは雨になるだろう。', 'この橋はだいぶおとろえたので、 修繕しよう。', '一晩吹き捲った台風も朝になると、おとろえた。'],
-    answer: '2',
+    answer: '3',
     isReading: false
   },
   {
@@ -762,7 +765,7 @@
     number: 38,
     question: 'コメント',
     options: ['授業中、先生は助詞の使い分けを細かくコメントしてくださった。', '悩みや困ることがあったら、たいてい親にコメントする。', '災害直後に出された大臣のコメントは市民の怒りを買った。', '日本の電気製品のコメントは分厚くて、内容も細かすぎる。'],
-    answer: '1',
+    answer: '3',
     isReading: false
   },
   {
@@ -773,7 +776,7 @@
         number: 39,
         subQuestion: '問1デジタル教材についておとうさん、おかあさんが期待しているのはどの点ですか。',
         options: ['子どもが喜んで学校に行くようになる点', '子どもが性格に関係なく学力が付けられる点', '子どもと先生のコミュニケーションが深まる点', '子供が自分のことを自分ですますようになる点'],
-        answer: '3'
+        answer: '2'
       }
     ]
   }
@@ -1293,9 +1296,31 @@ function findAncestor(el, fn) {
 
     if (keyOrNumber && value) {
         window.answers[keyOrNumber] = value;
+        localStorage.setItem('customAnswers', JSON.stringify(window.answers));
         alert(`✅ Đáp án của ${keyOrNumber} đã được cập nhật thành ${value}.`);
     }
 }
+
+
+// Hàm xử lý khi nhấn "Xóa cập nhật đáp án"
+function clearUpdatedAnswers() {
+  // hiện hộp thoại native confirm với hai nút OK/Cancel
+  const ok = confirm('Bạn có chắc muốn xóa cập nhật đáp án không?');
+  if (!ok) return;
+  // nếu chọn "OK" (tương đương "Có")
+  // xoá toàn bộ đáp án đã lưu trong localStorage
+  localStorage.removeItem('answers');
+  // nếu bạn lưu version data, có thể cũng xoá luôn
+  // localStorage.removeItem('quizDataVersion');
+  // reset biến lưu phía trang
+  window.answers = {};
+  alert('✅ Đã xóa hết các cập nhật đáp án.');
+}
+
+// gắn listener vào nút mới
+document.getElementById('clearAnswersBtn')
+        .addEventListener('click', clearUpdatedAnswers);
+
 
 
     function setTimer() {

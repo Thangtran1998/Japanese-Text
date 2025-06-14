@@ -456,6 +456,7 @@
         <input type="text" id="editKey" placeholder="q1">
         <input type="text" id="editValue" placeholder="3">
         <button onclick="updateAnswer()">Cập nhật đáp án</button>
+        <button type="button" id="clearAnswersBtn">Xóa cập nhật đáp án</button>
     </div>
 </div>
 
@@ -473,6 +474,8 @@
   </div>
 
   <script>
+      // đọc về, nếu chưa có thì khởi thành object rỗng
+      window.answers = JSON.parse(localStorage.getItem('customAnswers') || '{}');
           let lastScrollPosition = 0;
 
       window.addEventListener('scroll', function() {
@@ -510,21 +513,21 @@
     number: 2,
     question: 'あの人の無礼 (___) 言葉に怒りを禁じえなかった。',
     options: ['あたらない', 'かたくない', 'かぎらない', 'きわまりない'],
-    answer: '2',
+    answer: '4',
     isReading: false
   },
   {
     number: 3,
     question: '視聴料の横領事件が (___) 、視聴料から抗議の電話がかかってきて、スタッフがその対応に追われた。',
     options: ['情報の是非を問わず', '情報されるや否や', '情報すればこそ', '情報してまで'],
-    answer: '1',
+    answer: '2',
     isReading: false
   },
   {
     number: 4,
     question: 'パトカーのサイレンの音を聞く (___) 「逃げろ」とばかりに、彼は猛スピードで車を走らせた。',
     options: ['すら', 'とて', 'なり', 'だの'],
-    answer: '4',
+    answer: '2',
     isReading: false
   },
   {
@@ -552,7 +555,7 @@
     number: 8,
     question: '相手 (___) の交渉だから、自分の主張だけを通そうとするのはよくない。',
     options: ['だけの', 'あっての', 'かぎりの', 'による'],
-    answer: '3',
+    answer: '2',
     isReading: false
   },
   {
@@ -566,14 +569,14 @@
     number: 10,
     question: 'インターネットが普及した現代 (___) 、情報管理体制の強化が急務とされている。',
     options: ['にひきかえ', 'にとって', 'にあって', 'とあって'],
-    answer: '2',
+    answer: '3',
     isReading: false
   },
   {
     number: 11,
     question: '優勝を目の前にして逆転負けしたときのあの悔しさ (___) 。',
     options: ['といったらなかった', 'わけがなかった', 'といってもなかった', 'といえばなかった'],
-    answer: '4',
+    answer: '1',
     isReading: false
   },
   {
@@ -587,7 +590,7 @@
     number: 13,
     question: '山の頂上でみた朝日の美しさ (___) なかった。',
     options: ['といったら', 'ときたら', 'ではあるまいし', 'いかんでは'],
-    answer: '4',
+    answer: '1',
     isReading: false
   },
   {
@@ -601,35 +604,35 @@
     number: 15,
     question: '30歳の若さで部長になるなんて、うらやましい (___) 。',
     options: ['あまりだ', 'に限る', '限りだ', 'ほどだ'],
-    answer: '4',
+    answer: '3',
     isReading: false
   },
   {
     number: 16,
     question: '社長にあっても挨拶もろくにしない失礼 (___) 新入社員がいる。',
     options: ['極める', '極めない', '極まる', '極まっている'],
-    answer: '1',
+    answer: '3',
     isReading: false
   },
   {
     number: 17,
     question: '初めての授業 (___) 、クラスのみんなは静かに先生を待っていた。',
     options: ['とはいえ', 'としたら', 'とすれば', 'とあって'],
-    answer: '3',
+    answer: '4',
     isReading: false
   },
   {
     number: 18,
     question: '挨拶したのに無視するなんて、失礼 (___) 。',
     options: ['きらいがある', 'かぎりである', 'にかたくない', 'きわまりない'],
-    answer: '3',
+    answer: '4',
     isReading: false
   },
   {
     number: 19,
     question: '待ちに待っていた電話のベルが鳴る (___) 、彼はすぐに受話器を取った。',
     options: ['やいなや', 'が最後', 'ともなしに', 'ときたら'],
-    answer: '4',
+    answer: '1',
     isReading: false
   },
   {
@@ -643,35 +646,35 @@
     number: 21,
     question: '年のせいか、このごろは本を読んだ (___) 忘れてしまう。',
     options: ['そばまで', 'が最後', 'そばから', 'あとでは'],
-    answer: '4',
+    answer: '3',
     isReading: false
   },
   {
     number: 22,
     question: '地下鉄がホームに着くが (___) 、並んでいた乗客は先を争って乗り込もうとした。',
     options: ['いなや', 'とたんに', 'はやいか', 'しだいに'],
-    answer: '3',
+    answer: '2',
     isReading: false
   },
   {
     number: 23,
     question: '休日には映画を見る (___) 、買い物する (___) して、ストレスを解消しています。',
     options: ['し/し', 'だの/だの', 'やら/やら', 'なり/なり'],
-    answer: '1',
+    answer: '2',
     isReading: false
   },
   {
     number: 24,
     question: '授業終了のベルが鳴る (___) 、学生たちはすぐに教室を飛び出した。',
     options: ['次第', 'やいなか', 'がはやいか', 'そばから'],
-    answer: '4',
+    answer: '3',
     isReading: false
   },
   {
     number: 25,
     question: 'この案は自分 (___) 考えに考えた上でのものです。出来上がり次第、Eメールでお送りします。ご検討ください。',
     options: ['ぞいに', 'に即して', 'をふまえ', 'なりに'],
-    answer: '4',
+    answer: '3',
     isReading: false
   },
   {
@@ -685,7 +688,7 @@
     number: 27,
     question: '日本社会の (___) にある学歴重視、一流志向をなくさないかぎり、日本の教育はかわらないだろう。',
     options: ['根底', '根拠', '徹底', '依拠'],
-    answer: '2',
+    answer: '1',
     isReading: false
   },
   {
@@ -699,7 +702,7 @@
     number: 29,
     question: '交通や通信が (___) 進歩を遂げている今日、地球が狭くなったような気がする。',
     options: ['あさましい', 'なだかい', 'めざましい', 'こころよい'],
-    answer: '4',
+    answer: '3',
     isReading: false
   },
   {
@@ -713,14 +716,14 @@
     number: 31,
     question: '友人からEメールが届いたので、 (___) 返事を書く。',
     options: ['引き出し', '引きずり', '折り返し', '折り畳み'],
-    answer: '1',
+    answer: '3',
     isReading: false
   },
   {
     number: 32,
     question: '取り締りが (___) なので、交通違反がなかなか減りません。',
     options: ['ルール', 'レール', 'ルーズ', 'ゴール'],
-    answer: '4',
+    answer: '3',
     isReading: false
   },
   {
@@ -741,28 +744,28 @@
     number: 35,
     question: '外国語が<span style="color:red;font-style:italic">流暢</span>に話せるが、母国語となると、舌が回らなくなる人がいるそうだ。',
     options: ['ずるずる', 'ぞくぞく', 'かるがる', 'すらすら'],
-    answer: '3',
+    answer: '4',
     isReading: false
   },
   {
     number: 36,
     question: 'あのお客はお金に<span style="color:red;font-style:italic">しぶくて</span>、代金をなかなか払ってくれない。',
     options: ['けちで', 'おおまかで', 'あいまいで', 'たくみで'],
-    answer: '3',
+    answer: '1',
     isReading: false
   },
   {
     number: 37,
     question: '長い冬に備えるために、野菜を<span style="color:red;font-style:italic">かこって</span>おく。',
     options: ['育成して', '栽培して', 'たくわえて', 'とどめて'],
-    answer: '1',
+    answer: '3',
     isReading: false
   },
   {
     number: 38,
     question: 'この仕事は<span style="color:red;font-style:italic">いたって</span>スムーズに運んでいるから、安心したまえ。',
     options: ['やや', 'ごく', 'もろに', 'ろくに'],
-    answer: '4',
+    answer: '2',
     isReading: false
   },
   {
@@ -783,35 +786,35 @@
     number: 41,
     question: '対面',
     options: ['彼とは始めて<span style="color:red;font-style:italic">対面</span>したが、すぐに打ち解けた。', '60年前、原爆が広島と長崎で世界の人と<span style="color:red;font-style:italic">対面</span>した。', '乾ききった木と火が<span style="color:red;font-style:italic">対面</span>になったら、ぱっと燃え始めた。', '今までぼくはずっと大通りの<span style="color:red;font-style:italic">対面</span>に住んでいた。'],
-    answer: '2',
+    answer: '1',
     isReading: false
   },
   {
     number: 42,
     question: '簡潔',
     options: ['ニュースは内容と<span style="color:red;font-style:italic">簡潔</span>が大切なことである。', '文章は<span style="color:red;font-style:italic">簡潔</span>した言葉遣いを使ったほうがいい。', '忙しいので、<span style="color:red;font-style:italic">簡潔</span>的な報告書を提出してほしい。', '発言者の発言を<span style="color:red;font-style:italic">簡潔</span>にまとめさせていただきます。'],
-    answer: '3',
+    answer: '4',
     isReading: false
   },
   {
     number: 43,
     question: 'となえる',
     options: ['小鳥が歌を<span style="color:red;font-style:italic">となえ</span>ながら、枝から枝へと飛んでいる。', '彼は議会でその議案に対して、<ruby>愚痴<rt>ぐち</rt></ruby>をひどく<span style="color:red;font-style:italic">となえた</span>。', 'あたしも旅行したいわと、妹は<span style="color:red;font-style:italic">となえた</span>が、許されなかった。', '入学試験廃止を<span style="color:red;font-style:italic">となえる</span>学者もいるらしい。'],
-    answer: '3',
+    answer: '4',
     isReading: false
   },
   {
     number: 44,
     question: 'まるっきり',
     options: ['今日の天気予報は<span style="color:red;font-style:italic">まるっきり</span>外れだね。', 'あのおばあさんは<span style="color:red;font-style:italic">まるっきり</span>ぼくをかわいがってくれた。', '上海蟹は<span style="color:red;font-style:italic">まるっきり</span>蒸してから食べるのが普通である。', 'じっと見ると、<span style="color:red;font-style:italic">まるっきり</span>私の落としたカバンだった。'],
-    answer: '4',
+    answer: '1',
     isReading: false
   },
   {
     number: 45,
     question: 'カテゴリー',
     options: ['私は大学院の日本語学という<span style="color:red;font-style:italic">カテゴリー</span>へ進学した。', '小さな店だが、たくさんの<span style="color:red;font-style:italic">カテゴリー</span>の商品が揃っている。', '社員を男女<span style="color:red;font-style:italic">カテゴリー</span>に分けずに、交互に座る。', '書籍を<span style="color:red;font-style:italic">カテゴリー</span>別に分類すれば、分かりやすい。'],
-    answer: '1',
+    answer: '4',
     isReading: false
   },
   {
@@ -1342,9 +1345,31 @@ function findAncestor(el, fn) {
 
     if (keyOrNumber && value) {
         window.answers[keyOrNumber] = value;
+        localStorage.setItem('customAnswers', JSON.stringify(window.answers));
         alert(`✅ Đáp án của ${keyOrNumber} đã được cập nhật thành ${value}.`);
     }
 }
+
+
+// Hàm xử lý khi nhấn "Xóa cập nhật đáp án"
+function clearUpdatedAnswers() {
+  // hiện hộp thoại native confirm với hai nút OK/Cancel
+  const ok = confirm('Bạn có chắc muốn xóa cập nhật đáp án không?');
+  if (!ok) return;
+  // nếu chọn "OK" (tương đương "Có")
+  // xoá toàn bộ đáp án đã lưu trong localStorage
+  localStorage.removeItem('answers');
+  // nếu bạn lưu version data, có thể cũng xoá luôn
+  // localStorage.removeItem('quizDataVersion');
+  // reset biến lưu phía trang
+  window.answers = {};
+  alert('✅ Đã xóa hết các cập nhật đáp án.');
+}
+
+// gắn listener vào nút mới
+document.getElementById('clearAnswersBtn')
+        .addEventListener('click', clearUpdatedAnswers);
+
 
 
     function setTimer() {
