@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Trang học tiếng Nhật N1</title>
+<style>
+  body { font-family: Arial; padding: 20px; max-width: 900px; margin: auto; }
+  h1, h2, h3 { color: #2c3e50; }
+  .nav a { display: block; margin: 10px 0; font-size: 18px; text-decoration: none; color: #007acc; }
+  .section { display: none; border: 1px solid #ccc; padding: 20px; margin-bottom: 30px; border-radius: 10px; }
+  ul.submenu { list-style-type: square; margin-top: 15px; padding-left: 20px; }
+  ul.submenu li {
+    margin: 6px 0;
+    cursor: pointer;
+  }
+  li.clickable {
+    cursor: pointer;
+  }
+  .modal {
+    display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%;
+    overflow: auto; background-color: rgba(0, 0, 0, 0.4);
+  }
+  .modal-content {
+    background-color: #fff; margin: 15% auto; padding: 20px; border: 1px solid #888;
+    width: 80%; max-width: 400px; text-align: center; border-radius: 10px;
+  }
+  .close { color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
+  li.clickable.done::after { content: ' ✅'; color: green; }
+  .score-display {
+    color: #2e7d32;
+    font-weight: bold;
+    font-size: 0.9em;
+    margin-left: 5px;
+  }
+  li[onclick]:hover {
+  cursor: pointer;
+  color: #1e88e5;
+  }
+  #testList li:hover {
+    cursor: pointer;
+    color: #1e88e5;
+  }
+  #resetHistoryBtn {
+    margin: 15px 0;
+    padding: 10px 15px;
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+  <div id="customModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <p id="modalMessage">Thông báo</p>
+    </div>
+  </div>
+
+  <h1>📚 Trang học tiếng Nhật N1</h1>
+  <div class="nav">
+    <a href="#" onclick="showSection('s1')">1️⃣ Luyện thi N1 giai đoạn 1</a>
+    <a href="#" onclick="showSection('s2')">2️⃣ Luyện thi N1 giai đoạn 2</a>
+    <a href="#" onclick="showSection('s3')">3️⃣ Khóa Zoom N1 - Tháng 12/2024</a>
+  </div>
+  <button id="resetHistoryBtn" onclick="resetHistory()">🗑 Xóa toàn bộ lịch sử làm bài</button>
+
+  <div class="section" id="s1">
+    <h2>1️⃣ Luyện thi N1 giai đoạn 1</h2>
+    <ul class="submenu">
+      <li onclick="showSection('testday1')">📝 Bài test theo ngày của lộ trình 100 ngày</li>
+      <li onclick="showModal('Không có bài test nào trong thư mục này, vui lòng xem tài liệu đã tải về trên máy tính')">📝 Tài liệu và lộ trình khóa N1 giai đoạn 1</li>
+      <li onclick="showSection('grammarTests')">📝 Ngữ pháp phân loại theo chủ điểm</li>
+      <li onclick="showModal('Đang cập nhật nội dung...')">📝 Ôn tập ngữ pháp cấp tốc N1</li>
+      <li onclick="showSection('Trynguphap')">📝 Luyện nghe Try ngữ pháp</li>
+      <li onclick="showModal('Đang cập nhật nội dung...')">📝 Từ vựng theo chủ điểm</li>
+      <li onclick="showModal('Đang cập nhật nội dung...')">📝 Nghe từ vựng Tango mỗi ngày</li>
+      <li onclick="showModal('Đang cập nhật nội dung...')">📝 Kanji</li>
+      <li onclick="showModal('Đang cập nhật nội dung...')">📝 Kanji Master</li>
+      <li onclick="showModal('Đang cập nhật nội dung...')">📝 Hack não Kanji</li>
+      <li onclick="showModal('Đang cập nhật nội dung...')">📝 Kanji dễ nhầm lẫn (Update 12/2023)</li>
+      <li onclick="showModal('Đang cập nhật nội dung...')">📝 Chữa đề thi JLPT các năm - phần từ vựng, ngữ pháp</li>
+      <li onclick="showModal('Đang cập nhật nội dung...')">📝 Test kanji tổng hợp</li>
+      <li onclick="showModal('Đang cập nhật nội dung...')">📝 Test từ vựng tổng hợp</li>
+      <li onclick="showModal('Đang cập nhật nội dung...')">📝 Text tổng hợp kanji từ vựng</li>
+      <li onclick="showModal('Đang cập nhật nội dung...')">📝 Thi chuyên đề (hàng tuần) (12/2023)</li>
+      <li onclick="showModal('Đang cập nhật nội dung...')">📝 Thi thử tháng update 12/2023</li>
+      <li onclick="showModal('Đang cập nhật nội dung...')">📝 Học Zoom 7/2024</li>
+    </ul>
+  </div>
+
+  <div class="section" id="grammarTests">
+    <h2>📂 Ngữ pháp phân loại theo chủ điểm</h2>
+    <ul>
+      <!--  <li class="clickable" onclick="openTestInNewTab('N1_Test 1_Ngữ pháp ～まで.html', this)">📄 N1_Test 1_Ngữ pháp ～まで</li>  -->
+    </ul>
+  </div>
+
+  <div class="section" id="Trynguphap">
+    <h2>🎧 Luyện nghe Try ngữ pháp</h2>
+    <ul id="testList1"></ul>
+  </div>
+
+  <div class="section" id="testday1">
+    <h2>📘 Bài test theo ngày</h2>
+    <ul id="testList"></ul>
+  </div>
+
+
+
+
+
+  <div class="section" id="s2"><h2>2️⃣ Luyện thi N1 giai đoạn 2</h2><p>Đang cập nhật nội dung...</p></div>
+  <div class="section" id="s3"><h2>3️⃣ Khóa Zoom N1</h2><p>Đang cập nhật nội dung...</p></div>
+
+  <script>
+
+
+
+
+
+    // Luyện nghe Try ngữ pháp
+const testData1 = [
+  { id: "1", name: "📘 Ngữ pháp ～まで" },
+  //{ id: "grammar-kekka", name: "📘 Ngữ pháp ～た結果" },
+  //{ id: "reading-1", name: "📗 Đọc hiểu N1 - bài 1" },
+  //{ id: "listen-practice", name: "🎧 Nghe hiểu N1 - luyện tập" },
+  //{ id: "vocab-advance", name: "📒 Từ vựng nâng cao" }
+];
+
+let currentTestId1 = null;
+
+function renderCustomTestList() {
+  // Lấy phần tử HTML có id testList1
+  const testList1 = document.getElementById("testList1");
+
+  // Lấy dữ liệu từ localStorage
+  const doneTests1 = JSON.parse(localStorage.getItem("doneTests") || "[]");
+  const testScores1 = JSON.parse(localStorage.getItem("testScores") || "{}");
+
+  // Xóa danh sách cũ
+  testList1.innerHTML = "";
+
+  // Duyệt qua từng bài test
+  testData1.forEach((test1) => {
+    const li1 = document.createElement("li");
+    li1.textContent = test1.name;
+    li1.classList.add("clickable");
+
+    if (doneTests1.includes(test1.id)) {
+      li1.classList.add("done");
+      const scoreData1 = testScores1[test1.id] || { score: 0, total: 1 };
+      const percentage1 = Math.round((scoreData1.score / scoreData1.total) * 100);
+      li1.innerHTML += ` <span class="score-display">${percentage1}%</span>`;
+    }
+
+    li1.onclick = () => {
+      currentTestId1 = test1.id;
+      openTestInNewTab(encodeURIComponent(`${test1.id}.html`), li1);
+
+    };
+
+    testList1.appendChild(li1);
+  });
+}
+  
+
+
+
+//Bài test theo ngày của lộ trình 100 ngày
+    const testData = Array.from({ length: 62 }, (_, i) => `📘Bài test ngày ${i + 1}`);
+    let currentTestId = null;
+
+    function renderTestList() {
+      //Lấy phần tử HTML có id testList.
+      const testList = document.getElementById("testList"); //const : Khai báo biến
+
+      //Lấy dữ liệu lịch sử từ localStorage:
+      //doneTests: danh sách testId đã làm xong.
+      //testScores: điểm số đã lưu { testId: { score, total } }.
+      const doneTests = JSON.parse(localStorage.getItem("doneTests") || "[]");
+      const testScores = JSON.parse(localStorage.getItem("testScores") || "{}");
+      
+      //Xóa toàn bộ danh sách cũ trước khi render lại.
+      testList.innerHTML = "";
+
+      //Lặp qua từng bài test trong testData, tạo phần tử <li> tương ứng, gán class="clickable".
+      testData.forEach((test, idx) => {
+        const testId = `test-day${idx + 1}`;
+        const li = document.createElement("li");
+        li.textContent = test;
+        li.classList.add("clickable");
+        
+
+        //Nếu bài test nằm trong danh sách đã làm:
+        //Thêm class done (để hiển thị dấu ✅ bằng CSS).
+        //Tính phần trăm điểm và hiển thị.
+        if (doneTests.includes(testId)) {
+          li.classList.add("done");
+          const scoreData = testScores[testId] || { score: 0, total: 1 };
+          const percentage = Math.round((scoreData.score / scoreData.total) * 100);
+          li.innerHTML += ` <span class="score-display">${percentage}%</span>`;
+        }
+        //Gán sự kiện click
+        li.onclick = () => {
+          currentTestId = testId;
+          openTestInNewTab(`${testId}.html`, li);
+        };
+        //Gắn vào DOM
+        testList.appendChild(li);
+      });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    function openTestInNewTab(testFile, listItem) {
+  window.open(testFile, '_blank');
+  const testId = testFile.replace('.html', '');
+
+  // ✅ Ghi nhớ bài test đã mở
+  let doneTests = JSON.parse(localStorage.getItem("doneTests") || "[]");
+  if (!doneTests.includes(testId)) {
+    doneTests.push(testId);
+    localStorage.setItem("doneTests", JSON.stringify(doneTests));
+  }
+      
+      if (listItem) {
+        listItem.classList.add("done");
+        // Chưa hiển thị % vì chưa có điểm
+      }
+    }
+
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(sec => sec.style.display = 'none');
+      const section = document.getElementById(id);
+      if (section) section.style.display = 'block';
+    }
+
+    function resetHistory() {
+      localStorage.removeItem("doneTests");
+      localStorage.removeItem("testScores");
+      document.querySelectorAll('li.clickable.done').forEach(el => {
+        el.classList.remove("done");
+        const scoreDisplay = el.querySelector('.score-display');
+        if (scoreDisplay) scoreDisplay.remove();
+      });
+      alert("Đã xóa toàn bộ lịch sử làm bài.");
+    }
+
+    function showModal(msg) {
+      document.getElementById('modalMessage').innerText = msg;
+      document.getElementById('customModal').style.display = 'block';
+    }
+
+    function closeModal() {
+      document.getElementById('customModal').style.display = 'none';
+    }
+
+    // Lắng nghe message từ các tab bài test
+    window.addEventListener('message', function(event) {
+      if (event.data && event.data.type === 'updateScore') {
+        const { testId, score, total } = event.data;
+        let testScores = JSON.parse(localStorage.getItem("testScores") || "{}");
+        testScores[testId] = { score: score, total: total };
+        localStorage.setItem("testScores", JSON.stringify(testScores));
+        
+        // Cập nhật hiển thị điểm
+        document.querySelectorAll('li.clickable').forEach(li => {
+          if (li.getAttribute('onclick') && li.getAttribute('onclick').includes(testId)) {
+            li.classList.add("done");
+            const percentage = Math.round((score / total) * 100);
+            
+            // Xóa phần hiển thị điểm cũ nếu có
+            const oldDisplay = li.querySelector('.score-display');
+            if (oldDisplay) oldDisplay.remove();
+            
+            // Thêm phần hiển thị điểm mới
+            const scoreSpan = document.createElement('span');
+            scoreSpan.className = 'score-display';
+            scoreSpan.textContent = `${percentage}%`;
+            li.appendChild(scoreSpan);
+          }
+        });
+      }
+    });
+
+    window.addEventListener("DOMContentLoaded", function() {
+      renderTestList();
+      renderCustomTestList();
+   
+      
+      // Khôi phục trạng thái section đang mở
+      const lastSection = sessionStorage.getItem("lastSection");
+      if (lastSection) showSection(lastSection);
+    });
+
+    // Lưu trạng thái khi đóng trang
+    window.addEventListener('beforeunload', function() {
+      const currentSection = [...document.querySelectorAll('.section')].find(s => s.style.display === 'block');
+      if (currentSection) sessionStorage.setItem("lastSection", currentSection.id);
+    });
+    
+    
+    
+
+  </script>
+</body>
+</html>

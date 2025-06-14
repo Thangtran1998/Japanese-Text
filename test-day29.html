@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>N1 Bài test ngày 29</title>
+<style>
+  
+  body { 
+    font-family: Arial; 
+    padding: 20px; 
+    max-width: 900px; 
+    margin: auto; 
+    overflow-x: hidden;
+  }
+  h1, h2, h3 { 
+    color: #2c3e50; 
+  }
+  .nav a { 
+    display: block; 
+    margin: 10px 0; 
+    font-size: 18px; 
+    text-decoration: none; 
+    color: #007acc; 
+  }
+  .section { 
+    border: 1px solid #ccc; 
+    padding: 20px; 
+    margin-bottom: 30px; 
+    border-radius: 10px; 
+  }
+  .question-block { 
+    margin-bottom: 20px; 
+    position: relative; /* Cho phép chứa các control góc phải */
+  }
+  .answer-option { 
+    display: block; 
+    margin-bottom: 5px; 
+  }
+  .answer-option:hover {
+    cursor: pointer;/* Di chuột vào đáp án sẽ thành biểu tượng bàn tay */
+  }
+  .answer-option:hover {
+    cursor: pointer;
+    color: #1e88e5;/* Di chuột vào đáp án sẽ có màu xanh */
+  }
+  .score-display {
+    color: #2e7d32;
+    font-weight: bold;
+    font-size: 0.9em;
+    margin-left: 5px;
+  }
+  .correct-answer { 
+    color: #2e7d32; 
+  }
+  .wrong-answer { 
+    color: #c62828; 
+  }
+  #quizResult {
+    margin: 15px 0;
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+  }
+  .show-answers-btn {
+    margin: 10px 0;
+    padding: 8px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .show-answers-btn:hover {
+    background-color: #45a049;
+  }
+  .timer-container {
+    position: sticky;
+    top: 10px;
+    z-index: 100;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: inline-block;
+    float: right;
+    margin-left: 20px;
+    transition: all 0.3s ease;
+  }
+  .timer-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  .timer-input {
+    width: 50px;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  .timer-btn {
+    padding: 5px 10px;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .timer-btn:hover {
+    background-color: #0b7dda;
+  }
+  .timer-display {
+    font-size: 24px;
+    font-weight: bold;
+    color: #d32f2f;
+    margin-left: 10px;
+    min-width: 80px;
+    display: inline-block;
+    text-align: center;
+  }
+  .time-up-alert {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #d32f2f;
+    color: white;
+    padding: 20px 40px;
+    border-radius: 5px;
+    font-size: 24px;
+    z-index: 1000;
+    display: none;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+  .result-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 1001;
+    width: 80%;
+    max-width: 500px;
+    display: none;
+    text-align: center;
+  }
+  .result-popup h3 {
+    color: #2c3e50;
+    margin-top: 0;
+    font-size: 24px;
+  }
+  .result-popup .score {
+    font-size: 28px;
+    font-weight: bold;
+    color: #2196F3;
+    margin: 15px 0;
+  }
+  .result-popup .comment {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  .close-popup {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #777;
+  }
+  .close-popup:hover {
+    color: #333;
+  }
+  /* Thêm CSS cho phần đọc hiểu */
+  .reading-comprehension {
+    background-color: #e6f7ff;
+    border-left: 4px solid #1890ff;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    position: relative; /* Cho phép đặt timer & highlight controls */
+  }
+  .reading-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #bae7ff;
+  }
+  .reading-label {
+    background-color: #1890ff;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  .reading-content {
+    line-height: 1.6;
+    margin-top: 10px;
+  }
+  .sub-question-container {
+    margin: 15px 0;
+    padding-left: 20px;
+    border-left: 3px solid #e0e0e0;
+}
+
+.sub-question-box {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    padding: 12px;
+    margin-top: 8px;
+}
+
+.sub-question-box p {
+    margin: 0 0 10px 0;
+    font-weight: bold;
+    color: #495057;
+}
+
+.sub-question-options {
+    margin-top: 10px;
+}
+  /* ---- Style cho timer nhỏ bên trong khối đọc hiểu ---- */
+  .reading-timer-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    z-index: 10;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+  .reading-timer-input {
+    width: 40px;
+    padding: 3px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 12px;
+  }
+  .reading-timer-btn {
+    padding: 3px 6px;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+  }
+  .reading-timer-btn:hover {
+    background-color: #0b7dda;
+  }
+  .reading-timer-display {
+    font-size: 14px;
+    font-weight: bold;
+    color: #d32f2f;
+    min-width: 50px;
+    text-align: center;
+  }
+  /* ---- Style cho bộ nút highlight ---- */
+  .highlight-controls {
+    position: absolute;
+    top: 50px; /* Nằm dưới timer */
+    right: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    z-index: 10;
+    display: flex;
+    gap: 5px;
+    .highlight-controls {
+  pointer-events: none;
+}
+.highlight-controls .highlight-btn {
+  pointer-events: auto;
+}
+  }
+  .highlight-btn {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  .highlight-btn.red    { background-color: #e53935; }  /* Đỏ */
+  .highlight-btn.blue   { background-color: #1e88e5; }  /* Xanh */
+  .highlight-btn.purple { background-color: #8e24aa; }  /* Tím */
+  .highlight-btn.black  { background-color: #000000; }  /* Đen */
+  .highlight-btn:hover  { opacity: 0.8; }
+
+  .highlight-btn.remove-btn {
+  background-color: #f5f5f5;
+  color: #ff0000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 12px;
+}
+/* Thêm vào phần style */
+#quizControlsContainer {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 250px;
+    z-index: 100;
+}
+
+#quizControls {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+#quizControls button {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#quizControls button:hover {
+    background-color: #0b7dda;
+}
+
+.show-answers-btn {
+    background-color: #4CAF50 !important;
+}
+
+.show-answers-btn:hover {
+    background-color: #45a049 !important;
+}
+
+#quizHistory {
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 5px;
+    margin: 10px 0;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    border: 1px solid #dee2e6;
+}
+
+#quizHistory li {
+    margin-bottom: 8px;
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;    /* CĂN GIỮA CHIỀU DỌC */
+    padding: 5px;
+    background-color: white;
+    border-radius: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+#quizHistory li button {
+    background: none !important;
+    border: none !important;
+    color: #e53935 !important;
+    font-size: 20px !important;   /* Có thể tăng giảm tùy ý */
+    font-weight: bold;
+    padding: 0 6px 0 8px !important;
+    margin: 0 !important;
+    cursor: pointer;
+    box-shadow: none !important;
+    outline: none !important;
+    display: flex;
+    align-items: center;   /* Đảm bảo chính giữa */
+    line-height: 1;
+}
+
+#quizHistory li button:hover {
+    color: #b71c1c !important;
+    text-decoration: underline;
+    background: none !important;
+}
+
+#quizControls {
+    width: 200px; /* Tăng width để chứa nội dung tốt hơn */
+    /* Giữ nguyên các thuộc tính khác */
+}
+#editKey, #editValue {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 5px;
+    box-sizing: border-box;
+}
+#quizControlsContainer {
+    position: fixed;
+    right: 20px;
+    top: 100px; /* Vị trí ban đầu */
+    width: 250px;
+    z-index: 100;
+    transition: all 0.3s ease; /* Hiệu ứng mượt mà */
+}
+
+#quizControls {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+</style>
+</head>
+<body>
+  <h1>📚 N1 Bài test ngày 29<h1>(Tổng số câu hỏi: 31 câu)</h1>
+  
+  <div class="timer-container">
+    <div class="timer-controls">
+      <input type="number" id="setTimeInput" class="timer-input" placeholder="20" min="1" max="120">
+      <button class="timer-btn" onclick="setTimer()">Đặt thời gian &#9200;</button>
+      <button class="timer-btn" onclick="startTimer()">Bắt đầu &#8987;</button>
+      <span id="timerDisplay" class="timer-display">20:00</span>
+    </div>
+  </div>
+  
+  <div class="section" id="testday1">
+    <h2>📝 N1 Bài test ngày 29</h2>
+    <form id="quizForm"></form>
+
+    <div id="quizControlsContainer">
+    <div id="quizControls">
+        <button type="button" onclick="submitQuiz()">Nộp bài</button>
+        <button type="button" onclick="resetQuiz()">Làm lại</button>
+        <button id="showAnswersBtn" class="show-answers-btn" onclick="showCorrectAnswers()" style="display: none;">Hiện đáp án đúng</button>
+        <div id="quizResult"></div>
+        <h4>Lịch sử làm bài</h4>
+        <ul id="quizHistory"></ul>
+        <h4>Cập nhật đáp án</h4>
+        <input type="text" id="editKey" placeholder="q1">
+        <input type="text" id="editValue" placeholder="3">
+        <button onclick="updateAnswer()">Cập nhật đáp án</button>
+    </div>
+</div>
+
+    
+  <div id="timeUpAlert" class="time-up-alert">
+    ⏰ Hết thời gian làm bài ròi bạn ưi &#129402;
+  </div>
+
+  <div id="resultPopup" class="result-popup">
+    <span class="close-popup" onclick="closeResultPopup()">×</span>
+    <h3>Kết quả của bạn đây</h3>
+    <div class="score" id="popupScore"></div>
+    <div class="comment" id="popupComment"></div>
+    <button class="show-answers-btn" onclick="closeResultPopup()">Đóng</button>
+  </div>
+
+  <script>
+          let lastScrollPosition = 0;
+
+      window.addEventListener('scroll', function() {
+          const controlsContainer = document.getElementById('quizControlsContainer');
+          const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+          
+          // Điều chỉnh vị trí khi cuộn
+          if (currentScrollPosition > 100) {
+              controlsContainer.style.top = '20px'; // Khi cuộn xuống, dính sát top
+          } else {
+              controlsContainer.style.top = '100px'; // Vị trí ban đầu
+          }
+          
+          // Hiệu ứng mờ nhẹ khi cuộn xuống
+          if (currentScrollPosition > lastScrollPosition) {
+              // Đang cuộn xuống
+              controlsContainer.style.opacity = '0.95';
+          } else {
+              // Đang cuộn lên
+              controlsContainer.style.opacity = '1';
+          }
+          
+          lastScrollPosition = currentScrollPosition;
+      });
+    const quizAnswers = {};
+    const quizData = [
+  {
+    number: 1,
+    question: '出世のため (___) どんなことでもするという人たちがいるのだ。',
+    options: ['とあれば', 'とあって', 'にすれば', 'にあって'],
+    answer: '2',
+    isReading: false
+  },
+  {
+    number: 2,
+    question: '個人的な利害関係で市政を行った前の市長 (___) 、今度の市長は住民との話し合いをモットーにしている。',
+    options: ['に並んで', 'に照らして', 'にひきかえ', 'にもまして'],
+    answer: '3',
+    isReading: false
+  },
+  {
+    number: 3,
+    question: '彼の立腹の原因が何なの (___) 、全く理解できなかった。',
+    options: ['とて', 'とも', 'とか', 'やら'],
+    answer: '2',
+    isReading: false
+  },
+  {
+    number: 4,
+    question: '学生に人気のこの食堂は、毎日昼時 (___) 、学生でいっぱいになる。',
+    options: ['ならでは', 'ともなると', 'をもって', 'となっては'],
+    answer: '3',
+    isReading: false
+  },
+  {
+    number: 5,
+    question: '彼が出場していれば、優勝 (___) 、1勝ぐらいはできただろう。',
+    options: ['いかんにかかわらず', 'もさることながら', 'とはいかないまでも', 'はもとより'],
+    answer: '3',
+    isReading: false
+  },
+  {
+    number: 6,
+    question: 'ミカは周りの子にどんな悪口を (___) 、じっと耐えた。',
+    options: ['言わせようにも', '言われようにも', '言わせようが', '言われようが'],
+    answer: '3',
+    isReading: false
+  },
+  {
+    number: 7,
+    question: 'A「例の件、勇気をもって社長に言ってみたらあっさり受け入れてくれましたよ。」',
+    options: ['言ってみるもの', '言ってみたもの', '言ってみるところ', '言ってみたところ'],
+    answer: '2',
+    isReading: false
+  },
+  {
+    number: 8,
+    question: '恐れ入りますが、この修理は当店ではお引き受け (___) 。',
+    options: ['するべくもありません', 'するものでもありません', 'いたしかねます', 'しかねないのです'],
+    answer: '3',
+    isReading: false
+  },
+  {
+    number: 9,
+    question: '他人を (___) 、本当の幸せはやってこないと思う。',
+    options: ['うらやまんばかりのようでは', 'うらやんでばかりいるようでは', 'うらやまんばかりだとしても', 'うらやんでばかりいるとしても'],
+    answer: '3',
+    isReading: false
+  },
+  {
+    number: 10,
+    question: 'A「すみません。お皿を落としてしまって...。」',
+    options: ['割れたんですよ', '割れていますよ', '割れていませんよ', '割れそうもないですよ'],
+    answer: '4',
+    isReading: false
+  },
+  {
+    number: 11,
+    question: 'ベテランといえども (___) 。',
+    options: ['皆から信頼されている', '確かな技術がないとは限らない', '新人を教育しなければならない', 'ミスをすることがないとは言えない'],
+    answer: '2',
+    isReading: false
+  },
+  {
+    number: 12,
+    question: '何度も書き直したかいがあって、その報告書は (___) 。',
+    options: ['提出が遅れてしまった', '忘れられない', '上司にほめられた', 'また書き直しをさせられた'],
+    answer: '2',
+    isReading: false
+  },
+  {
+    number: 13,
+    question: '会社の経営状態が悪いからといって、ボーナスが減るならまだしも、 (___) 。',
+    options: ['基本給が減るなんて', '基本給が上がるのだろうか', '基本給が減る方がましだ', '基本給が減るよりはいい'],
+    answer: '3',
+    isReading: false
+  },
+  {
+    number: 14,
+    question: 'たとえ親であれ、 (___) 。',
+    options: ['子どもにとっては大切な存在だ', '子どもを育てるのは義務である', '子どもの人生をよく考えているものだ', '子どもあての手紙を勝手に見るのは問題だ'],
+    answer: '1',
+    isReading: false
+  },
+  {
+    number: 15,
+    question: '事故原因が商品の欠陥にあるということがわかるに至っても、 (___) 。',
+    options: ['被害者の一日も早い救済が望まれる', '会社はなお、その非を認めようとしなかった', '被害者たちは裁判に訴えた', '会社はやっと被害者に謝罪した'],
+    answer: '2',
+    isReading: false
+  },
+  {
+    number: 16,
+    question: 'この件についてはすぐに決まると思いきや、 (___) 。',
+    options: ['10分もかからなかった', '会議は3時間にも及んだ', 'よく話し合うまでのことだ', '話し合うには及ばなかった'],
+    answer: '1',
+    isReading: false
+  },
+  {
+    number: 17,
+    question: '「うさぎじゃあるまいし、 (___) 」',
+    options: ['ちゃんと野菜も食べなさい', '犬には肉も食べさせた方がいいよ', 'そんなに野菜が好きだなんて', 'そんなに生野菜ばっかり食べられないよ'],
+    answer: '4',
+    isReading: false
+  },
+  {
+    number: 18,
+    question: 'インフルエンザが大流行し、子どもやお年寄りはおろか、 (___) 。',
+    options: ['体力があればだいじょうぶだろう', '体力がないと死亡する恐れがある', '20代、30代にも重症患者が増えている', 'むしろ若い人のほうが症状が重いようだ'],
+    answer: '4',
+    isReading: false
+  },
+  {
+    number: 19,
+    question: '話してくれれば、アドバイスはできないまでも、 (___) 。',
+    options: ['慰めてあげました', '慰めてあげられませんでした', '慰めてあげることしかできませんでした', '慰めてあげることくらいはできたのに'],
+    answer: '3',
+    isReading: false
+  },
+  {
+    number: 20,
+    question: '進学先や就職先を決めるにあたっては、親の希望もさることながら、 (___) 。',
+    options: ['本人の意思と違うと難しい', '本人の意思が一番大切だろう', 'それを最も大切にするべきだろう', 'よく話し合うことが大切だ'],
+    answer: '3',
+    isReading: false
+  },
+  {
+    number: 21,
+    question: '彼はマラソンで、5年ぶりの新記録を<span style="color:red;font-style:italic">樹立</span>した。',
+    options: ['しゅりつ', 'じゅりつ', 'じゅうりつ', 'きだち'],
+    answer: '3',
+    isReading: false
+  },
+  {
+    number: 22,
+    question: '被害者の死因は、ネクタイで首を絞められたことによる<span style="color:red;font-style:italic">窒息</span>死と思われる。',
+    options: ['ちっそく', 'ちつそく', 'ちついき', 'ちつしょう'],
+    answer: '3',
+    isReading: false
+  },
+  {
+    number: 23,
+    question: 'ハイキング中に<span style="color:red;font-style:italic">蜂</span>に刺される人が多いですから、注意してください。',
+    options: ['はじ', 'はつ', 'はっち', 'はち'],
+    answer: '4',
+    isReading: false
+  },
+  {
+    number: 24,
+    question: '<span style="color:red;font-style:italic">雀</span>の鳴き声で目が覚めた。',
+    options: ['すすめ', 'すずめ', 'つつめ', 'つづめ'],
+    answer: '1',
+    isReading: false
+  },
+  {
+    number: 25,
+    question: 'ロープウェイから眼下の<span style="color:red;font-style:italic">渓谷</span>を眺めることができる。',
+    options: ['きょうこく', 'けいたに', 'けいこく', 'けいや'],
+    answer: '1',
+    isReading: false
+  },
+  {
+    number: 26,
+    question: '息子は子供の頃から動物が好きで、<span style="color:red;font-style:italic">じゅうい</span>を目指して勉強している。',
+    options: ['従医', '上医', '獣医', '重医'],
+    answer: '4',
+    isReading: false
+  },
+  {
+    number: 27,
+    question: '<span style="color:red;font-style:italic">しゅりょう</span>のため犬を飼うことにした。',
+    options: ['趣猟', '狩猟', '狩漁', '取猟'],
+    answer: '2',
+    isReading: false
+  },
+  {
+    number: 28,
+    question: '<span style="color:red;font-style:italic">けいこう</span>灯が切れたので、新しいものに取り換えた。',
+    options: ['蛍光', '経光', '景光', '軽光'],
+    answer: '1',
+    isReading: false
+  },
+  {
+    number: 29,
+    question: '自分の命を犠牲にして、人々を助けた彼は国民的<span style="color:red;font-style:italic">えいゆう</span>となった。',
+    options: ['栄雄', '英勇', '栄有', '英雄'],
+    answer: '3',
+    isReading: false
+  },
+  {
+    number: 30,
+    question: '醤油のしみを取るために、シャツを<span style="color:red;font-style:italic">ひょうはく</span>する。',
+    options: ['漂白', '漂泊', '表白', '標白'],
+    answer: '1',
+    isReading: false
+  },
+  {
+    question: '読解1<br>四十五(45)歳を過ぎたある休日の朝のことだった。私は、いつものように朝食後、新聞を読んでいて、ふと我に返った。新聞の活字が妙に見づらく、メガネ(もちろん近視)をはずして読んでいる自分に気がついたのだ。一瞬、「老化」という言葉が頭に浮かんで、暗い気持ちになった。知らぬ間に身体は、衰えへと向かっている。意識はそれに追いつかない。むしろ逆行したままだ。忙しさは年々加速していくようにさえ思える。<span style="color:red;font-style:italic">このギャップ</span>が広がりゆくことこそが「老化」なのではないか、そう思うようになった。',
+    isReading: true,
+    subQuestions: [
+      {
+        number: 31,
+        subQuestion: '問1 <span style="color:red;font-style:italic">このギャップ</span>とあるが、どういうことか。',
+        options: ['視力の衰えが気持ちを暗くさせること', '身体の衰えの速度', '忙しさからくる疲労度', '意識と身体の差'],
+        answer: '4'
+      }
+    ]
+  }
+]; 
+
+    let timerInterval;
+    let defaultTime = 20;
+    let remainingTime = defaultTime * 60;
+    let isTimerRunning = false;
+    let readingComprehensionCount = 0;
+
+    // Lưu trữ timer riêng cho mỗi block đọc hiểu
+    const readingTimers = {};
+    // Lưu range đã chọn gần nhất cho mỗi block (mặc định null)
+    //const savedRanges = {};
+
+    function renderQuiz() {
+    const form = document.getElementById('quizForm');
+    form.innerHTML = '';
+    readingComprehensionCount = 0;
+    
+    quizData.forEach((q, index) => {
+        const div = document.createElement('div');
+        div.classList.add('question-block');
+
+        if (q.isReading) {
+            readingComprehensionCount++;
+
+            // Tách phần số thứ tự trước dấu ". "
+            const dotIndex = q.question.indexOf(". ");
+            let numPart = "", restText = q.question;
+            if (dotIndex > 0) {
+                numPart = q.question.substring(0, dotIndex + 1);
+                restText = q.question.substring(dotIndex + 2);
+            }
+
+            // Tạo HTML cho các câu hỏi phụ
+            let subQuestionsHtml = '';
+            if (q.subQuestions && q.subQuestions.length > 0) {
+                subQuestionsHtml = q.subQuestions.map((subQ, subIndex) => `
+                    <div class="sub-question-container">
+                        <div class="sub-question-box">
+                            
+                            <p><strong>${subQ.number}.</strong> ${subQ.subQuestion.replace(/\n/g, '<br>')}</p>
+                            <span style="font-size:12px;color:#888">[key: q${index + 1}_${subIndex}]</span>
+                            <div class="sub-question-options">
+                                ${subQ.options.map((opt, optIndex) => `
+                                    <label class="answer-option">
+                                        <input type="radio" name="q${index + 1}_${subIndex}" value="${optIndex + 1}">
+                                        ${opt}
+                                    </label>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+          div.innerHTML = `
+            <div class="reading-comprehension" data-index="${index}">
+              <div class="reading-title">
+                <span class="reading-label">Đọc hiểu ${readingComprehensionCount}</span>
+              </div>
+              <!-- Timer riêng cho reading block -->
+              <div class="reading-timer-container" data-timer-index="${index}">
+                <input type="number" class="reading-timer-input" id="readTimeInput-${index}" placeholder="1" min="1" max="120">
+                <button type="button" class="reading-timer-btn" onclick="setReadingTimer(${index}); event.preventDefault();">Đặt</button>
+                <button type="button" class="reading-timer-btn" onclick="startReadingTimer(${index}); event.preventDefault();">Bắt đầu</button>
+                <button type="button" class="reading-timer-btn" onclick="resetReadingTimer(${index}); event.preventDefault();">Reset</button>
+                <span class="reading-timer-display" id="readingTimerDisplay-${index}">00:00</span>
+              </div>
+              <!-- Nút highlight màu -->
+              <div class="highlight-controls" data-highlight-index="${index}">
+                <div class="highlight-btn red"    title="Đỏ"   onclick="highlightSelection(${index}, 'red'); event.preventDefault();"></div>
+                <div class="highlight-btn blue"   title="Xanh" onclick="highlightSelection(${index}, 'blue'); event.preventDefault();"></div>
+                <div class="highlight-btn purple" title="Tím"  onclick="highlightSelection(${index}, 'purple'); event.preventDefault();"></div>
+                <div class="highlight-btn black"  title="Đen"  onclick="highlightSelection(${index}, 'black'); event.preventDefault();"></div>
+                <div class="highlight-btn remove-btn" title="Xóa highlight" onclick="removeHighlights(${index}, 'red'); event.preventDefault();">❌</div>
+              </div>
+              <div class="reading-content" id="readingContent-${index}">
+                <p>
+                  ${ numPart ? `<strong>${numPart}</strong><br>` : '' }
+                  <span id="readingText-${index}">${restText.replace(/\n/g, '<br>')}</span>
+                </p>
+                     ${subQuestionsHtml}
+                    </div>
+                </div>
+            `;
+        // Lưu đáp án cho từng câu hỏi phụ
+            if (q.subQuestions && q.subQuestions.length > 0) {
+                q.subQuestions.forEach((subQ, subIndex) => {
+                    quizAnswers[`q${index + 1}_${subIndex}`] = subQ.answer;
+                });
+            }
+        } else {
+            // Xử lý câu hỏi thường
+            div.innerHTML = `<p><strong>${q.number}. ${q.question}</strong></p>`;
+            q.options.forEach((opt, i) => {
+                const label = document.createElement('label');
+                label.classList.add('answer-option');
+                label.innerHTML = `<input type="radio" name="q${index + 1}" value="${i + 1}"> ${opt}`;
+                div.appendChild(label);
+            });
+            quizAnswers[`q${index + 1}`] = q.answer;
+        }
+        
+        form.appendChild(div);
+    });
+}
+
+    /***=== CHỨC NĂNG TIMER RIÊNG CHO MỖI BLOCK ===***/
+    function setReadingTimer(idx) {
+      const inputEl = document.getElementById(`readTimeInput-${idx}`);
+      const minutes = parseInt(inputEl.value);
+      if (isNaN(minutes) || minutes <= 0) {
+        alert('Nhập số phút ≥ 1.');
+        return;
+      }
+      readingTimers[idx] = {
+        remaining: minutes * 60,
+        original: minutes * 60,
+        intervalId: null
+      };
+      updateReadingTimerDisplay(idx);
+    }
+
+    function startReadingTimer(idx) {
+      if (!readingTimers[idx]) {
+        readingTimers[idx] = { remaining: 60, original: 60, intervalId: null };
+      }
+      if (readingTimers[idx].intervalId) return;
+      readingTimers[idx].intervalId = setInterval(() => {
+        const timerObj = readingTimers[idx];
+        timerObj.remaining--;
+        updateReadingTimerDisplay(idx);
+        if (timerObj.remaining <= 0) {
+          clearInterval(timerObj.intervalId);
+          timerObj.intervalId = null;
+          showTimeUpAlert(idx);
+        }
+      }, 1000);
+    }
+
+    function resetReadingTimer(idx) {
+      const timerObj = readingTimers[idx];
+      if (timerObj) {
+        if (timerObj.intervalId) {
+          clearInterval(timerObj.intervalId);
+          timerObj.intervalId = null;
+        }
+        timerObj.remaining = timerObj.original || 0;
+        updateReadingTimerDisplay(idx);
+      }
+    }
+
+    function updateReadingTimerDisplay(idx) {
+      const disp = document.getElementById(`readingTimerDisplay-${idx}`);
+      const timerObj = readingTimers[idx] || { remaining: 0 };
+      let sec = timerObj.remaining;
+      if (sec < 0) sec = 0;
+      const m = Math.floor(sec / 60);
+      const s = sec % 60;
+      disp.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    }
+
+    function showTimeUpAlert(idx) {
+      const readingBlock = document.querySelector(`.reading-comprehension[data-index='${idx}']`);
+      if (!readingBlock) return;
+        // Lấy số/thứ tự hoặc tên đọc hiểu
+        const readingLabel = readingBlock.querySelector('.reading-label');
+        let readingName = '';
+        if (readingLabel) {
+          readingName = readingLabel.textContent.trim(); // Ví dụ: "Đọc hiểu 3"
+        } else {
+          readingName = `Đọc hiểu ${idx + 1}`;
+        }
+      
+      // Tạo alert div với style giống thông báo chính
+      const alertDiv = document.createElement('div');
+      alertDiv.innerHTML = `⏰ Hết thời gian của <strong>${readingName}</strong> roy bạn ưi!`;
+      alertDiv.style.position = 'fixed';
+      alertDiv.style.top = '50%';
+      alertDiv.style.left = '50%';
+      alertDiv.style.transform = 'translate(-50%, -50%)';
+      alertDiv.style.backgroundColor = '#d32f2f';
+      alertDiv.style.color = 'white';
+      alertDiv.style.padding = '20px 40px';
+      alertDiv.style.borderRadius = '5px';
+      alertDiv.style.fontSize = '24px';
+      alertDiv.style.zIndex = '1000';
+      alertDiv.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2)';
+      
+      // Thêm vào body thay vì vào reading block
+      document.body.appendChild(alertDiv);
+      
+      setTimeout(() => {
+        alertDiv.remove();
+      }, 3000);
+    }
+
+    /***=== CHỨC NĂNG HIGHLIGHT SAU KHI CHỌN VĂN BẢN RỒI NHẤN NÚT MÀU ===***/
+    // Biến lưu trữ các range đã chọn
+const savedRanges = {};
+
+// Hàm highlight mới
+// Hàm highlightSelection sửa đổi để cho phép re-highlight
+function highlightSelection(idx, color) {
+  // Lấy range đã lưu hoặc từ selection hiện tại
+  const selection = window.getSelection();
+  const range = savedRanges[idx] || (selection.rangeCount > 0 ? selection.getRangeAt(0).cloneRange() : null);
+  
+  if (!range || range.collapsed) {
+    alert('Vui lòng bôi đen văn bản trong phần đọc hiểu trước khi đổi màu.');
+    return;
+  }
+
+  // Kiểm tra có nằm trong phần đọc hiểu đúng không
+  const readingBlock = document.querySelector(`.reading-comprehension[data-index="${idx}"]`);
+  if (!readingBlock || !readingBlock.contains(range.commonAncestorContainer)) {
+    alert('Vui lòng chọn văn bản trong phần đọc hiểu tương ứng.');
+    return;
+  }
+
+  // Tạo document fragment mới
+  const fragment = range.extractContents();
+  
+  // Tạo span mới với style
+  const span = document.createElement('span');
+  span.style.color = color;
+  span.style.fontWeight = 'bold';
+  
+  // Thêm nội dung vào span
+  span.appendChild(fragment);
+  
+  // Chèn span vào vị trí cũ
+  range.insertNode(span);
+  
+  // Xóa range đã lưu
+  savedRanges[idx] = null;
+  
+  // Clear selection
+  selection.removeAllRanges();
+}
+
+// Sự kiện lưu selection khi bôi đen
+document.addEventListener('mouseup', function(e) {
+  const sel = window.getSelection();
+  if (sel.isCollapsed) return;
+  
+  const range = sel.getRangeAt(0);
+  const readingBlock = findAncestor(range.commonAncestorContainer, el => 
+    el.classList && el.classList.contains('reading-comprehension')
+  );
+  
+  if (readingBlock) {
+    const idx = parseInt(readingBlock.getAttribute('data-index'));
+    savedRanges[idx] = range.cloneRange();
+  }
+});
+// Hàm xóa tất cả highlight trong block
+function removeHighlights(idx) {
+  const readingBlock = document.querySelector(`.reading-comprehension[data-index="${idx}"]`);
+  if (!readingBlock) return;
+
+  // Lấy tất cả span highlight
+  const highlightedSpans = readingBlock.querySelectorAll('span[style*="color:"]');
+  
+  // Xóa đệ quy từ trong ra ngoài
+  highlightedSpans.forEach(span => {
+    // Lưu nội dung bên trong
+    const content = document.createDocumentFragment();
+    while (span.firstChild) {
+      content.appendChild(span.firstChild);
+    }
+    
+    // Thay thế span bằng nội dung
+    const parent = span.parentNode;
+    parent.insertBefore(content, span);
+    parent.removeChild(span);
+  });
+  
+  // Xử lý các span còn sót lại (nếu có)
+  const remainingSpans = readingBlock.querySelectorAll('span[style*="color:"]');
+  if (remainingSpans.length > 0) {
+    removeHighlights(idx); // Gọi đệ quy nếu còn span
+  }
+}
+
+
+// Hàm helper tìm ancestor
+function findAncestor(el, fn) {
+  while (el) {
+    if (fn(el)) return el;
+    el = el.parentNode;
+  }
+  return null;
+}
+    // Lắng nghe mouseup để lưu selection nếu trong reading-content, giữ highlight xanh
+    document.addEventListener('mouseup', function(e) {
+      const sel = window.getSelection();
+      if (sel.isCollapsed) return;
+      const range = sel.getRangeAt(0);
+      const ancestry = findAncestor(range.commonAncestorContainer, el => 
+        el.classList && el.classList.contains('reading-content')
+      );
+      if (!ancestry) return;
+      const readingBlock = ancestry.closest('.reading-comprehension');
+      if (!readingBlock) return;
+      const idx = parseInt(readingBlock.getAttribute('data-index'));
+      // Lưu tạm range, không clear selection để giữ highlight native màu xanh
+      savedRanges[idx] = range.cloneRange();
+    });
+
+    function findAncestor(el, fn) {
+      while (el) {
+        if (fn(el)) return el;
+        el = el.parentNode;
+      }
+      return null;
+    }
+
+    /***=== CÁC CHỨC NĂNG QUIZ & TIMER CHUNG ===***/
+    function submitQuiz() {
+    const form = document.getElementById('quizForm');
+    let score = 0;
+    let totalQuestions = 0;
+    let correctAnswers = 0;
+    
+    // Tính tổng số câu hỏi và kiểm tra đáp án
+    quizData.forEach((q, index) => {
+        if (q.isReading && q.subQuestions) {
+            // Xử lý câu hỏi đọc hiểu có nhiều câu hỏi phụ
+            q.subQuestions.forEach((subQ, subIndex) => {
+                totalQuestions++;
+                const name = `q${index + 1}_${subIndex}`;
+                const selected = form.querySelector(`input[name='${name}']:checked`);
+                const correct = (window.answers && window.answers[name]) || quizAnswers[name];
+                
+                if (selected && selected.value === correct) {
+                    correctAnswers++;
+                    // Đánh dấu câu trả lời đúng
+                    const labels = form.querySelectorAll(`input[name='${name}']`);
+                    labels.forEach(input => {
+                        if (input.value === correct) {
+                            input.parentElement.innerHTML += ' <span class="correct-answer">✅ Đúng</span>';
+                        }
+                    });
+                } else {
+                    // Đánh dấu câu trả lời sai (nếu có chọn)
+                    if (selected) {
+                        selected.parentElement.innerHTML += ' <span class="wrong-answer">❌ Sai</span>';
+                        // Hiển thị đáp án đúng
+                        const correctInput = form.querySelector(`input[name='${name}'][value='${correct}']`);
+                        //if (correctInput) {
+                          //  correctInput.parentElement.innerHTML += ' <span class="correct-answer">✅ Đáp án đúng</span>';
+                        //}
+                    }
+                }
+            });
+        } else {
+            // Xử lý câu hỏi thường
+            totalQuestions++;
+            const name = `q${index + 1}`;
+            const selected = form.querySelector(`input[name='${name}']:checked`);
+            const correct = (window.answers && window.answers[name]) || quizAnswers[name];
+            
+            if (selected && selected.value === correct) {
+                correctAnswers++;
+                // Đánh dấu câu trả lời đúng
+                const labels = form.querySelectorAll(`input[name='${name}']`);
+                labels.forEach(input => {
+                    if (input.value === correct) {
+                        input.parentElement.innerHTML += ' <span class="correct-answer">✅ Đúng</span>';
+                    }
+                });
+            } else {
+                // Đánh dấu câu trả lời sai (nếu có chọn)
+                if (selected) {
+                    selected.parentElement.innerHTML += ' <span class="wrong-answer">❌ Sai</span>';
+                    // Hiển thị đáp án đúng
+                    const correctInput = form.querySelector(`input[name='${name}'][value='${correct}']`);
+                    if (correctInput) {
+                        correctInput.parentElement.innerHTML += ' <span class="correct-answer">✅ Đáp án đúng</span>';
+                    }
+                }
+            }
+        }
+    });
+
+    // Tính điểm và hiển thị kết quả
+    const percentage = Math.round((correctAnswers / totalQuestions) * 100);
+    const resultComment = getResultComment(percentage);
+    
+    // Lưu kết quả vào localStorage
+    const testId = window.location.pathname.split("/").pop().replace(".html", "");
+    let testScores = JSON.parse(localStorage.getItem("testScores") || "{}");
+    testScores[testId] = { score: correctAnswers, total: totalQuestions };
+    localStorage.setItem("testScores", JSON.stringify(testScores));
+    
+    // Gửi kết quả về trang chính (nếu có)
+    try {
+        if (window.opener && !window.opener.closed) {
+            window.opener.postMessage({ 
+                type: 'updateScore', 
+                testId: testId,
+                score: correctAnswers,
+                total: totalQuestions
+            }, '*');
+        }
+    } catch (e) {
+        console.log("Không thể gửi thông báo đến trang chính");
+    }
+    
+    // Hiển thị kết quả
+    document.getElementById('popupScore').textContent = `${correctAnswers}/${totalQuestions} (${percentage}%)`;
+    document.getElementById('popupComment').innerHTML = resultComment;
+    document.getElementById('resultPopup').style.display = 'block';
+    
+    document.getElementById('quizResult').innerHTML = `
+        <p><strong>Kết quả:</strong> ${correctAnswers}/${totalQuestions} (${percentage}%)</p>
+        <p><strong>Nhận xét:</strong> ${resultComment}</p>
+    `;
+    
+    // Lưu lịch sử làm bài
+    saveQuizHistory(correctAnswers, percentage);
+    
+    // Hiển thị nút "Hiện đáp án đúng"
+    document.getElementById('showAnswersBtn').style.display = 'block';
+    
+    // Vô hiệu hóa tất cả input
+    form.querySelectorAll('input').forEach(input => {
+        input.disabled = true;
+    });
+    
+    // Dừng timer
+    stopTimer();
+}
+
+
+    function closeResultPopup() {
+      document.getElementById('resultPopup').style.display = 'none';
+    }
+
+    function showCorrectAnswers() {
+    quizData.forEach((q, idx) => {
+        if (q.isReading && q.subQuestions) {
+            q.subQuestions.forEach((subQ, subIdx) => {
+                const name = `q${idx + 1}_${subIdx}`;
+                const correct = (window.answers && window.answers[name]) || quizAnswers[name];
+                const labels = document.querySelectorAll(`input[name='${name}']`);
+                labels.forEach(input => {
+                    const label = input.parentElement;
+                    // Nếu đáp án đúng, chưa có span đúng thì thêm vào
+                    if (input.value === correct && !label.innerHTML.includes('✅ Đúng')) {
+                        label.innerHTML += ' <span class="correct-answer">✅ Đáp án đúng</span>';
+                    }
+                });
+            });
+        } else {
+            const name = `q${idx + 1}`;
+            const correct = (window.answers && window.answers[name]) || quizAnswers[name];
+            const labels = document.querySelectorAll(`input[name='${name}']`);
+            labels.forEach(input => {
+                const label = input.parentElement;
+                if (input.value === correct && !label.innerHTML.includes('✅ Đúng')) {
+                    label.innerHTML += ' <span class="correct-answer">✅ Đáp án đúng</span>';
+                }
+            });
+        }
+    });
+}
+
+
+
+    function getResultComment(percentage) {
+      if (percentage >= 90) return "Ghê vầy nè, đúng là Me iu của anh &#128525; &#128525; &#128525;";
+      if (percentage >= 70) return "Giỏi ghê ta ưi &#128525;";
+      if (percentage >= 50) return "Tốt rồi đó bạn ưi &#128512;";
+      return "Hông sao nè, lần sau cố gắng thêm ha &#129402;";
+    }
+
+    function saveQuizHistory(score, percentage) {
+      const list = document.getElementById('quizHistory');
+      const time = new Date().toLocaleTimeString();
+      const li = document.createElement('li');
+      li.innerHTML = `
+        ${time}: ${score}/${Object.keys(quizAnswers).length} (${percentage}%)
+        <button onclick="this.parentElement.remove()">❌</button>
+      `;
+      list.prepend(li);
+    }
+
+    function resetQuiz() {
+      const form = document.getElementById('quizForm');
+      form.reset();
+      // Dừng hết timer reading trước khi render lại
+      Object.values(readingTimers).forEach(obj => {
+        if (obj.intervalId) clearInterval(obj.intervalId);
+      });
+      renderQuiz();
+      closeResultPopup();
+      document.getElementById('quizResult').innerHTML = '';
+      document.getElementById('showAnswersBtn').style.display = 'none';
+      resetTimer();
+    }
+      function findKeyBySubQNumber(number) {
+        for (let i = 0; i < quizData.length; i++) {
+            const q = quizData[i];
+            if (!q.isReading) {
+                if (q.number == number) return `q${i+1}`;
+            } else if (q.subQuestions) {
+                for (let j = 0; j < q.subQuestions.length; j++) {
+                    const subQ = q.subQuestions[j];
+                    if (subQ.number == number) return `q${i+1}_${j}`;
+                }
+            }
+        }
+        return null;
+    }
+
+
+    function updateAnswer() {
+    let keyOrNumber = document.getElementById("editKey").value.trim();
+    const value = document.getElementById("editValue").value.trim();
+    if (!window.answers) window.answers = {};
+
+    // Nếu nhập số, tự động dò key theo subQ.number
+    if (/^\d+$/.test(keyOrNumber)) {
+        const mappedKey = findKeyBySubQNumber(keyOrNumber);
+        if (!mappedKey) {
+            alert(`❌ Không tìm thấy câu hỏi số ${keyOrNumber}!`);
+            return;
+        }
+        keyOrNumber = mappedKey;
+    }
+
+    if (keyOrNumber && value) {
+        window.answers[keyOrNumber] = value;
+        alert(`✅ Đáp án của ${keyOrNumber} đã được cập nhật thành ${value}.`);
+    }
+}
+
+
+    function setTimer() {
+      const inputMinutes = parseInt(document.getElementById('setTimeInput').value);
+      if (!isNaN(inputMinutes) && inputMinutes > 0) {
+        defaultTime = inputMinutes;
+        remainingTime = defaultTime * 60;
+        updateTimerDisplay();
+        alert(`Đã đặt thời gian làm bài là ${defaultTime} phút`);
+      } else {
+        alert('Nhập cho đúng coi nào');
+      }
+    }
+
+    function startTimer() {
+      if (isTimerRunning) return;
+      isTimerRunning = true;
+      timerInterval = setInterval(() => {
+        remainingTime--;
+        updateTimerDisplay();
+        if (remainingTime <= 0) {
+          stopTimer();
+          document.getElementById('timeUpAlert').style.display = 'block';
+          setTimeout(() => {
+            document.getElementById('timeUpAlert').style.display = 'none';
+          }, 3000);
+        }
+      }, 1000);
+    }
+
+    function stopTimer() {
+      clearInterval(timerInterval);
+      isTimerRunning = false;
+    }
+
+    function resetTimer() {
+      stopTimer();
+      remainingTime = defaultTime * 60;
+      updateTimerDisplay();
+    }
+
+    function updateTimerDisplay() {
+      const minutes = Math.floor(remainingTime / 60);
+      const seconds = remainingTime % 60;
+      document.getElementById('timerDisplay').textContent = 
+        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+
+    window.addEventListener('scroll', function() {
+      const timerContainer = document.querySelector('.timer-container');
+      const scrollY = window.scrollY;
+      if (scrollY > 100) {
+        timerContainer.style.opacity = '0.9';
+        timerContainer.style.transform = 'scale(0.95)';
+      } else {
+        timerContainer.style.opacity = '1';
+        timerContainer.style.transform = 'scale(1)';
+      }
+    });
+
+    window.onload = function() {
+      renderQuiz();
+      updateTimerDisplay();
+    };
+  </script>
+</body>
+</html>
