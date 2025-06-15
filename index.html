@@ -13,6 +13,14 @@
     margin: 6px 0;
     cursor: pointer;
   }
+  ul.submenu li {
+  color: #007acc; /* xanh dương mặc định */
+  }
+  ul.submenu li:hover {
+  cursor: pointer;
+    color: #d9534f; /*chuyển sang đỏ khi rê chuột */
+  }
+  
   li.clickable {
     cursor: pointer;
   }
@@ -36,9 +44,19 @@
   cursor: pointer;
   color: #1e88e5;
   }
+  #testList li {
+  color: #007acc; /* màu xanh mặc định */
+  }
   #testList li:hover {
     cursor: pointer;
-    color: #1e88e5;
+    color: #d9534f;
+  }
+  #grammarTestList li {
+  color: #007acc; /* màu xanh mặc định */
+  }
+  #grammarTestList li:hover {
+  cursor: pointer;
+    color: #d9534f;
   }
   #resetHistoryBtn {
     margin: 15px 0;
@@ -70,8 +88,8 @@
   <div class="section" id="s1">
     <h2>1️⃣ Luyện thi N1 giai đoạn 1</h2>
     <ul class="submenu">
-      <li onclick="showSection('testday1')">📝 Bài test theo ngày của lộ trình 100 ngày</li>
       <li onclick="showModal('Không có bài test nào trong thư mục này, vui lòng xem tài liệu đã tải về trên máy tính')">📝 Tài liệu và lộ trình khóa N1 giai đoạn 1</li>
+      <li onclick="showSection('testday1')">📝 Bài test theo ngày của lộ trình 100 ngày</li>
       <li onclick="showSection('grammarTests')">📝 Ngữ pháp phân loại theo chủ điểm</li>
       <li onclick="showModal('Đang cập nhật nội dung...')">📝 Ôn tập ngữ pháp cấp tốc N1</li>
       <li onclick="showSection('Trynguphap')">📝 Luyện nghe Try ngữ pháp</li>
@@ -91,17 +109,24 @@
     </ul>
   </div>
 
-  <div class="section" id="grammarTests">
-    <h2>📂 Ngữ pháp phân loại theo chủ điểm</h2>
-    <ul>
-      <!--  <li class="clickable" onclick="openTestInNewTab('N1_Test 1_Ngữ pháp ～まで.html', this)">📄 N1_Test 1_Ngữ pháp ～まで</li>  -->
-    </ul>
+
+
+  
   </div>
+    <div class="section" id="grammarTests">
+    <h2>📂 Ngữ pháp phân loại theo chủ điểm</h2>
+    <ul id="grammarTestList"></ul>
+  </div>
+
+
+
 
   <div class="section" id="Trynguphap">
     <h2>🎧 Luyện nghe Try ngữ pháp</h2>
     <ul id="testList1"></ul>
   </div>
+
+
 
   <div class="section" id="testday1">
     <h2>📘 Bài test theo ngày</h2>
@@ -113,6 +138,8 @@
 
 
   <div class="section" id="s2"><h2>2️⃣ Luyện thi N1 giai đoạn 2</h2><p>Đang cập nhật nội dung...</p></div>
+
+
   <div class="section" id="s3"><h2>3️⃣ Khóa Zoom N1</h2><p>Đang cập nhật nội dung...</p></div>
 
   <script>
@@ -129,8 +156,48 @@ const testData1 = [
   //{ id: "listen-practice", name: "🎧 Nghe hiểu N1 - luyện tập" },
   //{ id: "vocab-advance", name: "📒 Từ vựng nâng cao" }
 ];
+const grammarTestsData = [
+  { id: "test-NguPhapPhanLoaiTheoChuDiem1", name: "📄 N1_Test 1_Ngữ pháp ～まで" },
+  { id: "test-NguPhapPhanLoaiTheoChuDiem2", name: "📄 N1_Test 2_Ngữ pháp まで・ところ・ながら" },
+  { id: "test-NguPhapPhanLoaiTheoChuDiem3", name: "📄 N1_Test 3_Ngữ pháp ～ところ・～ながら" },
+  { id: "test-NguPhapPhanLoaiTheoChuDiem4", name: "📄 N1_Test 4_Ngữ pháp gần giống nh" },
+  { id: "test-NguPhapPhanLoaiTheoChuDiem5", name: "📄 N1_Test 5_ Ngữ pháp gần giống n" },
+  { id: "test-NguPhapPhanLoaiTheoChuDiem6", name: "📄 N1_Test 6_mẫu itaru và cấu trúc" },
+  { id: "test-NguPhapPhanLoaiTheoChuDiem7", name: "📄 N1_Test 7_Ngữ pháp itaru và cấu" },
+  { id: "test-NguPhapPhanLoaiTheoChuDiem8", name: "📄 N1_Test 8_Ngữ pháp_kagiri và mo" },
+  { id: "test-NguPhapPhanLoaiTheoChuDiem9", name: "📄 N1_Test 9_Ngữ pháp thể hiện kết" },
+  { id: "test-NguPhapPhanLoaiTheoChuDiem10", name: "📄 N1_Test 10_Mẫu 限り＋をもって Mẫu ngữ" },
+  { id: "test-NguPhapPhanLoaiTheoChuDiem11", name: "📄 N1_Test 11_Mẫu ngữ pháp thể hiệ" },
+  { id: "test-NguPhapPhanLoaiTheoChuDiem12", name: "📄 N1_Test 12_Ngữ pháp thể hiện tr" },
+  { id: "test-NguPhapPhanLoaiTheoChuDiem13", name: "📄 N1_Test 13_Mẫu ngữ pháp thể hiệ" },
+  { id: "test-NguPhapPhanLoaiTheoChuDiem14", name: "📄 N1_Test 14_Ngữ pháp thể hiện lý" },
+  { id: "test-NguPhapPhanLoaiTheoChuDiem15", name: "📄 N1_Test 15_Ngữ pháp liên quan đ" },
+  { id: "test-NguPhapPhanLoaiTheoChuDiem16", name: "📄 N1_Test 16_Mẫu câu giới hạn" },
+  { id: "test-NguPhapPhanLoaiTheoChuDiem17", name: "📄 N1_Test 17_Ngữ pháp mẫu câu giớ" },
+  { id: "test-NguPhapPhanLoaiTheoChuDiem18", name: "📄 N1_Test 18_Ngữ pháp đuôi câu 1" },
+  { id: "test-NguPhapPhanLoaiTheoChuDiem19", name: "📄 N1_Test 19_Ngữ pháp đuôi câu 2" },
+  { id: "test-NguPhapPhanLoaiTheoChuDiem20", name: "📄 N1_Test 20_Ngữ pháp đuôi câu 3" },
+  { id: "test-NguPhapPhanLoaiTheoChuDiem21", name: "📄 N1_Test 21_Ngữ pháp đuôi câu 4" },
+  { id: "test-NguPhapPhanLoaiTheoChuDiem22", name: "📄 N1_Test 22_Ngữ pháp とは" },
+  { id: "test-NguPhapPhanLoaiTheoChuDiem23", name: "📄 N1_Test 23_Ngữ pháp ときたら" },
+  { id: "test-NguPhapPhanLoaiTheoChuDiem24", name: "📄 N1_Test 24_Ngữ pháp 1" },
+  { id: "test-NguPhapPhanLoaiTheoChuDiem25", name: "📄 N1_Test 25_Ngữ pháp 2" },
+  { id: "test-NguPhapPhanLoaiTheoChuDiem26", name: "📄 N1_Test 26_Ngữ pháp 3" },
+  { id: "test-NguPhapPhanLoaiTheoChuDiem27", name: "📄 N1_Test 27_Ngữ pháp 4" },
+  { id: "test-NguPhapPhanLoaiTheoChuDiem28", name: "📄 N1_Test 28_ôn tập kiến thức N2" },
+  { id: "test-NguPhapPhanLoaiTheoChuDiem29", name: "📄 N1_Test 29_ôn tập kiến thức N2" },
+  { id: "test-NguPhapPhanLoaiTheoChuDiem30", name: "📄 N1_Test 30_Ôn tập Ngữ pháp N1" },
+  { id: "test-NguPhapPhanLoaiTheoChuDiem31", name: "📄 N1_Test 31_điền dấu sao_1" },
+  { id: "test-NguPhapPhanLoaiTheoChuDiem32", name: "📄 N1_Test 32_Điền dấu sao_2" },
+  { id: "test-NguPhapPhanLoaiTheoChuDiem33", name: "📄 N1_Test 33_đọc hiểu ngữ pháp.xlsx" },
+];
+
 
 let currentTestId1 = null;
+
+
+
+// Luyện nghe Try ngữ pháp
 
 function renderCustomTestList() {
   // Lấy phần tử HTML có id testList1
@@ -148,24 +215,50 @@ function renderCustomTestList() {
     const li1 = document.createElement("li");
     li1.textContent = test1.name;
     li1.classList.add("clickable");
-
     if (doneTests1.includes(test1.id)) {
       li1.classList.add("done");
       const scoreData1 = testScores1[test1.id] || { score: 0, total: 1 };
       const percentage1 = Math.round((scoreData1.score / scoreData1.total) * 100);
       li1.innerHTML += ` <span class="score-display">${percentage1}%</span>`;
     }
-
     li1.onclick = () => {
       currentTestId1 = test1.id;
       openTestInNewTab(encodeURIComponent(`${test1.id}.html`), li1);
-
     };
-
     testList1.appendChild(li1);
   });
 }
-  
+
+
+//Ngữ pháp phân loại theo chủ điểm 
+function renderGrammarTests() {
+  const grammarList = document.getElementById("grammarTestList");
+  const doneTests = JSON.parse(localStorage.getItem("doneTests") || "[]");
+  const testScores = JSON.parse(localStorage.getItem("testScores") || "{}");
+
+  grammarList.innerHTML = "";
+
+  grammarTestsData.forEach(test => {
+    const li = document.createElement("li");
+    li.textContent = test.name;
+    li.classList.add("clickable");
+
+    if (doneTests.includes(test.id)) {
+      li.classList.add("done");
+      const scoreData = testScores[test.id] || { score: 0, total: 1 };
+      const percentage = Math.round((scoreData.score / scoreData.total) * 100);
+      li.innerHTML += ` <span class="score-display">${percentage}%</span>`;
+    }
+
+    li.onclick = () => {
+      currentTestId = test.id;
+      openTestInNewTab(`${test.id}.html`, li);
+    };
+
+    grammarList.appendChild(li);
+  });
+}
+
 
 
 
@@ -315,6 +408,7 @@ function renderCustomTestList() {
     window.addEventListener("DOMContentLoaded", function() {
       renderTestList();
       renderCustomTestList();
+      renderGrammarTests();
    
       
       // Khôi phục trạng thái section đang mở
