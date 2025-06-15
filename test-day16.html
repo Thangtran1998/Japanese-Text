@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>N1 Bài test ngày 14</title>
+<title>N1 Bài test ngày 16</title>
 <style>
   
   body { 
@@ -429,7 +429,7 @@
 </style>
 </head>
 <body>
-  <h1>📚 N1 Bài test ngày 14<h1>(Tổng số câu hỏi: 47 câu)</h1>
+  <h1>📚 N1 Bài test ngày 16<h1>(Tổng số câu hỏi: 36 câu)</h1>
   
   <div class="timer-container">
     <div class="timer-controls">
@@ -441,7 +441,7 @@
   </div>
   
   <div class="section" id="testday1">
-    <h2>📝 N1 Bài test ngày 14</h2>
+    <h2>📝 N1 Bài test ngày 16</h2>
     <form id="quizForm"></form>
 
     <div id="quizControlsContainer">
@@ -504,335 +504,258 @@
     const quizData = [
   {
     number: 1,
-    question: '宝くじの1等が当たった。当たる (___) 、思ってもみなかった。',
-    options: ['なんか', 'なんと', 'なんて', 'なんでも'],
-    answer: '3',
+    question: 'プロポーズの言葉を__ __ <span style="color:red;font-style:italic"></span><span style="color:red;font-style:italic">★</span><span style="color:red;font-style:italic"></span> __だった。',
+    options: ['もし断られたらと', '結局言わずじまい', '考えておいたのだが', '思うとこわくて'],
+    answer: '4',
     isReading: false
   },
   {
     number: 2,
-    question: '両親が立派な学者だから、その息子も優秀な学生に (___) 。',
-    options: ['相違ない', '限らない', '応じない', 'すぎない'],
+    question: 'あとは出発の日を__ __ <span style="color:red;font-style:italic"></span><span style="color:red;font-style:italic">★</span><span style="color:red;font-style:italic"></span> __気がついた。',
+    options: ['待つばかり', 'パスポートが', '切れていることに', 'というときになって'],
     answer: '2',
     isReading: false
   },
   {
     number: 3,
-    question: '好きな人からプレゼントをもらって、どんなに (___) 。',
-    options: ['うれしかったにすぎない', 'うれしかったことか', 'うれしかったものだ', 'うれしいことだ'],
+    question: 'うちの会社は__ __ <span style="color:red;font-style:italic"></span><span style="color:red;font-style:italic">★</span><span style="color:red;font-style:italic"></span> __、本当に居心地がいい。',
+    options: ['さることながら', 'とりやすく', '休みも', '給料も'],
     answer: '2',
     isReading: false
   },
   {
     number: 4,
-    question: '今週中に終わらせなかればならない仕事なのに、なかなか進まない。今日は残業を',
-    options: ['しないことはない', 'しようがない', 'しようではないか', 'せざるをえない'],
-    answer: '4',
-    isReading: false
-  },
-  {
-    number: 5,
-    question: '合格の知らせを受けたときはうれしくて、泣きたい (___) でした。',
-    options: ['わけ', 'くらい', 'かぎり', 'あまり'],
-    answer: '2',
-    isReading: false
-  },
-  {
-    number: 6,
-    question: 'この仕事を全部、私一人でやるなんて、そんなこと (___) 。',
-    options: ['できるものだ', 'できかねない', 'できっこない', 'できようがない'],
+    question: '姉は勉強家で__ __ <span style="color:red;font-style:italic"></span><span style="color:red;font-style:italic">★</span><span style="color:red;font-style:italic"></span> __、私は心配ばかりかけている。',
+    options: ['厚いのに', '家族からの', 'ひきかえ', '信頼も'],
     answer: '3',
     isReading: false
   },
   {
+    number: 5,
+    question: '制限時速を 40 キロもオーバーして走っていたとすれば、あの事故は__ __ <span style="color:red;font-style:italic">★</span><span style="color:red;font-style:italic"></span> __と言えよう。',
+    options: ['起こった', 'して', '起こる', 'べく'],
+    answer: '3',
+    isReading: false
+  },
+  {
+    number: 6,
+    question: '__ <span style="color:red;font-style:italic"></span><span style="color:red;font-style:italic">★</span><span style="color:red;font-style:italic"></span> __ __行くがいい。',
+    options: ['どこへでも', '言うのなら', '勝手に', 'それほど'],
+    answer: '2',
+    isReading: false
+  },
+  {
     number: 7,
-    question: '戦い始めた以上は、最後まで全力を出して戦うのが、真のスポーツ精神 (___) 。',
-    options: ['というものだ', 'にすぎない', 'になっている', 'でしかない'],
-    answer: '1',
+    question: '皆さんが__ <span style="color:red;font-style:italic"></span><span style="color:red;font-style:italic">★</span><span style="color:red;font-style:italic"></span> __ __今週中に連絡をください。',
+    options: ['準備の都合上', 'しまいと', '参加しようと', '自由ですが'],
+    answer: '3',
     isReading: false
   },
   {
     number: 8,
-    question: '便利な機能を備えたパソコンがいい (___) 。機能が多すぎて使いにくい場合もある。',
-    options: ['ということだ', 'というものだ', 'ということにほかならない', 'というものではない'],
-    answer: '4',
+    question: '彼女は__ __ <span style="color:red;font-style:italic"></span><span style="color:red;font-style:italic">★</span><span style="color:red;font-style:italic"></span> __まわっていた。',
+    options: ['ものと見え', 'よほどうれしかった', 'だれかれかまわず', '握手して'],
+    answer: '2',
     isReading: false
   },
   {
     number: 9,
-    question: '「すみませんが、今日の6時の予約を7時に変えていただくことはできませんか。」',
-    options: ['できかねる', 'できないことはない', 'できかねない', 'できないものではない'],
+    question: 'グローバル化の進みつつある__ __ <span style="color:red;font-style:italic"></span><span style="color:red;font-style:italic">★</span><span style="color:red;font-style:italic"></span> __いられない。',
+    options: ['地方の小さな会社の', '世界情勢と無縁では', '経営者といえども', '現代においては'],
     answer: '2',
     isReading: false
   },
   {
     number: 10,
-    question: '彼の不誠実な態度を見て、私は不信感を (___) 。',
-    options: ['抱きえた', '抱いたに相違ない', '抱かずにはいられなかった', '抱かないことはなかった'],
-    answer: '3',
+    question: '政治家たるもの、家族が不正なことをしたのなら、__ __ <span style="color:red;font-style:italic"></span><span style="color:red;font-style:italic">★</span><span style="color:red;font-style:italic"></span> __と考える。',
+    options: ['たとえ', '責任をとって', 'しかるべきだ', '知らなかったにせよ'],
+    answer: '2',
     isReading: false
   },
   {
     number: 11,
-    question: 'この作曲家の音楽はクラシック愛好家 (___) 、ジャズやロックが好きな人にもよく聞かれているということだ。',
-    options: ['に限らず', 'にもかかわらず', 'にしては', 'にかけては'],
-    answer: '1',
+    question: '家族に__ __ <span style="color:red;font-style:italic"></span><span style="color:red;font-style:italic">★</span><span style="color:red;font-style:italic"></span> __する決心に変わりはない。',
+    options: ['どれほど', '家を出て', '一人暮らしを', '反対されようと'],
+    answer: '3',
     isReading: false
   },
   {
     number: 12,
-    question: '彼女が国際試合で優勝できたのは、日々の努力があったから (___) 。',
-    options: ['にすぎない', 'にほかならない', 'に限る', 'しかない'],
+    question: '日本では__ __ <span style="color:red;font-style:italic"></span><span style="color:red;font-style:italic">★</span><span style="color:red;font-style:italic"></span> __ができてとてもなつかしい。',
+    options: ['アジアの国々を旅すると', '田園風景を', '失われつつある', '目にすること'],
     answer: '2',
     isReading: false
   },
   {
     number: 13,
-    question: '今日は久しぶりにレストランで二人で食事をしようよ。結婚記念日 (___) 。',
-    options: ['だものだから', 'に決まっている', 'だもの', 'にほかならない'],
+    question: '締め切りを__ __ <span style="color:red;font-style:italic"></span><span style="color:red;font-style:italic">★</span><span style="color:red;font-style:italic"></span> __受け付けません。',
+    options: ['によらず', 'レポートは', '理由のいかん', '過ぎた'],
     answer: '3',
     isReading: false
   },
   {
     number: 14,
-    question: '彼女の話し方は、落着いてはいるが、何か冷たさを (___) 。',
-    options: ['感じさせないことはない', '感じさせようがない', '感じさせざるをえない', '感じさせるものがある'],
-    answer: '4',
+    question: '皆さまの__ __ <span style="color:red;font-style:italic"></span><span style="color:red;font-style:italic">★</span><span style="color:red;font-style:italic"></span> __進めていくことはできません。',
+    options: ['得る', 'ご理解を', 'ことなしに', 'マンションの建設計画を'],
+    answer: '3',
     isReading: false
   },
   {
     number: 15,
-    question: 'お金 (___) 何でも手に入るという考えは間違っている。お金では買えないものもあるからだ。',
-    options: ['こそあれば', 'だけあると', 'ほどあると', 'さえあれば'],
-    answer: '4',
-    isReading: false
-  },
-  {
-    number: 16,
-    question: '小学校のクラスメートに外国で偶然 (___) 、信じられない思いだった。',
-    options: ['会うことなしでは', '会うなんて', '会うものの', '会うわりには'],
+    question: '社会が豊かになり、収入が増えたので、__ __ <span style="color:red;font-style:italic"></span><span style="color:red;font-style:italic">★</span><span style="color:red;font-style:italic"></span> __であろう。',
+    options: ['驚くにはあたらない', '当たり前', '車が家に一(いち)台は', '二台あると言っても'],
     answer: '2',
     isReading: false
   },
   {
+    number: 16,
+    question: '部品__ __ <span style="color:red;font-style:italic"></span><span style="color:red;font-style:italic">★</span><span style="color:red;font-style:italic"></span> __のですが、ただお時間がかかりますよ。',
+    options: ['直せない', 'さえ', 'ものでもない', 'あれば'],
+    answer: '1',
+    isReading: false
+  },
+  {
     number: 17,
-    question: '駅の中の案内は、外国人にもわかる (___) 、4か国語で書いてある。',
-    options: ['ために', 'らしく', 'ように', 'とおりに'],
+    question: 'この新商品の__ __ <span style="color:red;font-style:italic"></span><span style="color:red;font-style:italic">★</span><span style="color:red;font-style:italic"></span> __決まる。',
+    options: ['売れ行き', '出るかどうかが', 'ボーナスが', 'いかんで'],
     answer: '3',
     isReading: false
   },
   {
     number: 18,
-    question: '今日は車で来ているので、お酒を (___) 。',
-    options: ['飲まないわけにはいきません', '飲むわけにはいきません', '飲まないわけがありません', '飲むほかありません'],
-    answer: '2',
+    question: 'ころんだ__ __ __ <span style="color:red;font-style:italic"></span><span style="color:red;font-style:italic">★</span><span style="color:red;font-style:italic"></span> 骨は折れていなかった。',
+    options: ['手をついて', 'けがをしたが', 'ひょうしに', 'さいわい'],
+    answer: '3',
     isReading: false
   },
   {
     number: 19,
-    question: 'たとえ100万円払うと (___) 、あんな仕事はしたくない。',
-    options: ['言われたら', '言われれば', '言われたが', '言われても'],
-    answer: '4',
+    question: '一言二言のあいさつ__ __ <span style="color:red;font-style:italic"></span><span style="color:red;font-style:italic">★</span><span style="color:red;font-style:italic"></span> __緊張してしまう。',
+    options: ['話せだなんて', 'だけならいざしらず', '人前で十分も', '考えただけでも'],
+    answer: '3',
     isReading: false
   },
   {
     number: 20,
-    question: '毎日、会社で夜遅くまで仕事があるので、ストレスがたまる (___) 。',
-    options: ['きりだ', '気味だ', '一方だ', '次第だ'],
+    question: 'どこのチームが__ __ <span style="color:red;font-style:italic"></span><span style="color:red;font-style:italic">★</span><span style="color:red;font-style:italic"></span> __ことだ。',
+    options: ['漢字', '関係のない', '優勝しようが', 'サッカーに興味のない問題'],
     answer: '3',
     isReading: false
   },
   {
     number: 21,
-    question: '何か言い (___) やめるという彼女のくせは、よくないと思う。',
-    options: ['ぬいて', 'かけて', '気味で', 'えて'],
+    question: 'この地域では、学校の<span style="color:red;font-style:italic">垣根</span>を越えた交流が盛んだ。',
+    options: ['えんね', 'かきね', 'えんこん', 'かきこん'],
     answer: '2',
     isReading: false
   },
   {
     number: 22,
-    question: '大型スーパーの建設計画が急に中止になった。 (___) 、地元の商店街の激しい反対運動があったからだ。',
-    options: ['といっても', 'というのは', 'つまり', 'ゆえに'],
-    answer: '3',
+    question: '父の<span style="color:red;font-style:italic">書斎</span>には約五千冊の本が置かれている。',
+    options: ['しょとき', 'しょざい', 'しょけい', 'しょさい'],
+    answer: '4',
     isReading: false
   },
   {
     number: 23,
-    question: '「安くて料理がおいしい店を知っている」と言った (___) 、今度のクラス会の準備は、私がすることになってしまった。',
-    options: ['だけあって', 'ばかりか', 'ばかりに', 'だけに'],
+    question: '新学期の前に、ノートやペンなどの<span style="color:red;font-style:italic">文房具</span>を新調した。',
+    options: ['ぶんぽうぐ', 'ぷんぼうぐ', 'ぶんぼうぐ', 'ぷんぽうぐ'],
     answer: '3',
     isReading: false
   },
   {
     number: 24,
-    question: '昨日は電車に乗り遅れた (___) 財布もなくして最悪の一日だった。',
-    options: ['うえで', 'うえに', 'うえの', 'うえは問題'],
-    answer: '2',
+    question: '男は店員に<span style="color:red;font-style:italic">刃物</span>を突きつけ、現金を奪って逃げていった。',
+    options: ['はもの', 'じんぶつ', 'はぶつ', 'じんもの'],
+    answer: '1',
     isReading: false
   },
   {
     number: 25,
-    question: '暗闇から突然目の前に人が現れ、びっくり<span style="color:red;font-style:italic">仰天</span>した。',
-    options: ['ぎょうてん', 'こうてん', 'ごうてん', 'ぎょてん'],
+    question: '<span style="color:red;font-style:italic">暖炉</span>があるおしゃれな家に住むのが私の夢だ。',
+    options: ['だんろ', 'だんと', 'だんろう', 'だんそう'],
     answer: '1',
     isReading: false
   },
   {
     number: 26,
-    question: '社長である父親が<span style="color:red;font-style:italic">急逝</span>し、息子が跡を継いだ。',
-    options: ['きゅういく', 'きょうせい', 'きゅうせい', 'きょういく'],
-    answer: '3',
+    question: '燃料代や原材料の<span style="color:red;font-style:italic">こうとう</span>で、食料や日用品も値上がりした。',
+    options: ['高騰', '高頭', '交騰', '交頭'],
+    answer: '1',
     isReading: false
   },
   {
     number: 27,
-    question: '彼は会議中の自らの失言で<span style="color:red;font-style:italic">墓穴</span>を掘った。',
-    options: ['はかあな', 'はかけつ', 'ぼうけつ', 'ぼけつ'],
-    answer: '4',
+    question: '友人がプールつきの立派な<span style="color:red;font-style:italic">ていたく</span>をかまえたそうだ。',
+    options: ['低宅', '邸宅', '亭宅', '停宅'],
+    answer: '2',
     isReading: false
   },
   {
     number: 28,
-    question: '彼は酔っ払って喧嘩をし、数日間の自宅<span style="color:red;font-style:italic">謹慎</span>を受けた。',
-    options: ['きんしん', 'つつしん', 'ぎんしん', 'きんげん'],
-    answer: '1',
+    question: '海外から輸入した製品を一時的に<span style="color:red;font-style:italic">そうこ</span>に保管する。',
+    options: ['層庫', '総庫', '倉庫', '蔵庫'],
+    answer: '3',
     isReading: false
   },
   {
     number: 29,
-    question: '「路上で人が倒れている」と<span style="color:red;font-style:italic">とくめい</span>で通報があった。',
-    options: ['匿名', '匿各', '督名', '督各'],
-    answer: '1',
+    question: '緊急の場合の<span style="color:red;font-style:italic">れんらくもう</span>を作成する。',
+    options: ['連絡綱', '連絡縄', '連絡網', '連絡継'],
+    answer: '3',
     isReading: false
   },
   {
     number: 30,
-    question: 'この庭園は入り口正面から見て左右<span style="color:red;font-style:italic">たいしょう</span>になっている。',
-    options: ['対象', '対照', '対症', '対称'],
-    answer: '4',
+    question: '最近は、空気の熱を利用して湯を<span style="color:red;font-style:italic">わかす</span>給湯器もある。',
+    options: ['沸かす', '湧かす', '乾かす', '沈かず'],
+    answer: '1',
     isReading: false
   },
   {
     number: 31,
-    question: '<span style="color:red;font-style:italic">老婆心</span>ながら忠告させてください。',
-    options: ['ろはしん', 'ろばしん', 'ろうはしん', 'ろうばしん'],
-    answer: '4',
+    question: '水泳の国際大会の表彰式で国旗が<span style="color:red;font-style:italic">掲揚</span>された。',
+    options: ['けいよう', 'けいじょう', 'けよう', 'けじょう'],
+    answer: '1',
     isReading: false
   },
   {
     number: 32,
-    question: '大勢の人々の拍手に包まれながら、<span style="color:red;font-style:italic">新郎</span>新婦が登場した。',
-    options: ['しんぷ', 'しんし', 'しんろ', 'しんろう'],
-    answer: '4',
+    question: 'オリンピック選手団が<span style="color:red;font-style:italic">宿舎</span>用のホテルに到着した。',
+    options: ['しゅうしゃ', 'しゅくしゃ', 'じゅうしゃ', 'じゅくしゃ'],
+    answer: '2',
     isReading: false
   },
   {
     number: 33,
-    question: '健康のため食事や睡眠などの<span style="color:red;font-style:italic">じこ</span>管理を怠らないようにする。',
-    options: ['自記', '自己', '自慰', '自画'],
-    answer: '2',
+    question: '法隆寺の世界最古の五重<span style="color:red;font-style:italic">とう</span>は、世界遺産として有名だ。',
+    options: ['塔', '棟', '党', '糖'],
+    answer: '1',
     isReading: false
   },
   {
     number: 34,
-    question: '有名人の結婚式がテレビで<span style="color:red;font-style:italic">ちゅうけい</span>された。',
-    options: ['中継', '忠敬', '中経', '中径'],
-    answer: '1',
-    isReading: false
-  },
-  {
-    number: 35,
-    question: '卒業したら早く自立し、親<span style="color:red;font-style:italic">こうこう</span>をしたいと思っている。',
-    options: ['老行', '孝行', '教行', '数行'],
-    answer: '2',
-    isReading: false
-  },
-  {
-    number: 36,
-    question: '仲間と楽しく過ごしていても、<span style="color:red;font-style:italic">こどく</span>を感じることがある。',
-    options: ['孤独', '派独', '脈独', '狐独'],
-    answer: '1',
-    isReading: false
-  },
-  {
-    number: 37,
-    question: '財布を落としてしまい、警察に<span style="color:red;font-style:italic">いしつぶつ</span>届を出した。',
-    options: ['貴失物', '遣失物', '遺失物', '慣失物'],
-    answer: '3',
-    isReading: false
-  },
-  {
-    number: 38,
-    question: '事件の真相は闇に<span style="color:red;font-style:italic">ほうむられた</span>。',
-    options: ['葬られた', '慎られた', '逝られた', '徳られた'],
-    answer: '1',
-    isReading: false
-  },
-  {
-    number: 39,
-    question: '<span style="color:red;font-style:italic">こじん</span>と近しい人だけで見送る家族葬が広まっている。',
-    options: ['個人', '古人', '故人', '胡人'],
-    answer: '3',
-    isReading: false
-  },
-  {
-    number: 40,
-    question: '日頃お世話になっているお礼を一言、<span style="color:red;font-style:italic">ねんがじょう</span>に添える。',
-    options: ['年迦状', '年加状', '年架状', '年賀状'],
+    question: '市民病院は老朽化が進んだ<span style="color:red;font-style:italic">びょうとう</span>を建て替えた。',
+    options: ['症棟', '症東', '病東', '病棟'],
     answer: '4',
     isReading: false
   },
   {
-    number: 41,
-    question: 'このドラマは原作に<span style="color:red;font-style:italic">ちゅうじつ</span>に再現されている。',
-    options: ['中失', '中実', '忠実', '忠失'],
+    number: 35,
+    question: '毎朝、ベランダの<span style="color:red;font-style:italic">はち</span>植えを手入れするのは私の日課だ。',
+    options: ['蜂', '鍵', '鉢', '棚'],
     answer: '3',
     isReading: false
   },
   {
-    number: 42,
-    question: '最近彼の成績はどうも<span style="color:red;font-style:italic">芳しく</span>ない。心配だ。',
-    options: ['かんばしく', 'こうばしく', 'かぐわしく', 'かくばしく'],
-    answer: '1',
-    isReading: false
-  },
-  {
-    number: 43,
-    question: 'A大学では<span style="color:red;font-style:italic">奉仕</span>活動を授業科目として積極的に取り入れている。',
-    options: ['ぼうし', 'ほうし', 'もうし', 'どうし'],
-    answer: '2',
-    isReading: false
-  },
-  {
-    number: 44,
-    question: '作家の<span style="color:red;font-style:italic">魂</span>が込められた作品という評判でベストセラーになった。',
-    options: ['たましい', 'まやしい', 'かたしい', 'やましい'],
-    answer: '1',
-    isReading: false
-  },
-  {
-    number: 45,
-    question: '父が生前愛用していた時計も一緒に<span style="color:red;font-style:italic">棺</span>桶に入れた。',
-    options: ['たる', 'はこ', 'かん', 'き'],
-    answer: '3',
-    isReading: false
-  },
-  {
-    number: 46,
-    question: 'ゴールを外した田中選手は、思わず天を<span style="color:red;font-style:italic">あおいだ</span>。',
-    options: ['仰いだ', '柳いだ', '卯いだ', '迎いだ'],
-    answer: '1',
-    isReading: false
-  },
-  {
-    question: '問題3 読解<br>ある本に、「恋」は脳のどこでするのか、について書かれてあった、大変興味深いテーマなので、大いに期待して読んでみた。すると、脳の中の「扁桃体」という部分が重要な役割を果たしており、好みの異性に会ったときの感情が扁桃体から「視床下部」というところへ送られ、性欲を起こさせるという。脳の「視床下部」というところは本能の司令塔であり、性行動の中枢(注)となるいくつかの神経系核が備わっているということだ。<br>これを読むかぎり、「恋」とは、本能の指令によって異性に対して性欲を起こすこと、ということになる。<span style="color:red;font-style:italic">なんだ、そんなことなのか</span>。人間の脳だから、何か神秘的な作用があって、「恋」に落ちさせるのかと思ったが。<br>(注)中枢:主要な部分',
+    question: '問題3 読解<br>世界四大文明はどれも雄大な川の周りにおこった。エジプト文明もそうである。ナイル川の定期な氾濫が上流の肥沃な土を運んできて、農業に豊かな実りをもたらし、その上に豊かな文明が生まれたのである。その文明が発展し、やがて、ナイル川の氾濫をとめるために、護岸工事が行われた。ナイル川の定期的な氾濫はなくなり、豊かな土地の供給が止まった。<span style="color:red;font-style:italic">土の養分を補給する自然の仕組み</span>を維持しなければ、地力は下がり、農業は破綻する。そして、エジプト文明は滅亡したのである。',
     isReading: true,
     subQuestions: [
       {
-        number: 47,
-        subQuestion: '問い 「<span style="color:red;font-style:italic">なんだ、そんなことなのか</span>」とあるが、筆者は何が言いたいのか。',
-        options: ['なるほど、人間の脳はよくできている', 'そうか、「恋」というものは複雑なのだ', '「恋」とは何なんだろう', 'ずいぶん単純なんだなあ'],
-        answer: '4'
+        number: 36,
+        subQuestion: '問1 「<span style="color:red;font-style:italic">土の養分を補給する自然の仕組み</span>」とは何か。',
+        options: ['文明の発生', '豊かな実り', 'ナイルの氾濫', '護岸工事'],
+        answer: '3'
       }
     ]
   }

@@ -513,35 +513,35 @@
     number: 2,
     question: '旅行中のトラブルは、ない (___) が、案外それがいい思い出になることもある。',
     options: ['きらいがある', 'ほかしかたがない', 'にもほどがある', 'に越したことはない'],
-    answer: '1',
+    answer: '4',
     isReading: false
   },
   {
     number: 3,
     question: 'いくらビタミンが豊富 (___) 、毎日こればかり食べているのはどうかなあ......。',
     options: ['といおうか', 'ならいざしらず', 'とはいえ', 'ならまだしも'],
-    answer: '1',
+    answer: '3',
     isReading: false
   },
   {
     number: 4,
     question: 'A:なんで社長があんなこと言うのか理解できないよ。',
     options: ['にひきかえ', '以前に', 'をいいことに', 'にかこつけて'],
-    answer: '1',
+    answer: '4',
     isReading: false
   },
   {
     number: 5,
     question: '儲けは少ないが、値上げ (___) 、客はみんな向こうの店に行ってしまう。',
     options: ['しないものか', 'しようものなら', 'とはいえ', 'ならまだしも'],
-    answer: '1',
+    answer: '2',
     isReading: false
   },
   {
     number: 6,
     question: 'マザー・テレサは、貧困に苦しむ人々を黙って (___) のです。',
     options: ['見るにもほどがあった', '見るに越したことはなかった', '見てはいられなかった', '見たが最後だった'],
-    answer: '1',
+    answer: '3',
     isReading: false
   },
   {
@@ -555,21 +555,21 @@
     number: 8,
     question: '昨日買ったメロンは、__ __ <span style="color:red;font-style:italic">★</span><span style="color:red;font-style:italic"></span> __が、結構おいしかった。',
     options: ['期待していなかった', 'あまり', '値段だけに', '値段が'],
-    answer: '1',
+    answer: '3',
     isReading: false
   },
   {
     number: 9,
     question: 'テレビでもパソコンでも、__ __ _<span style="color:red;font-style:italic">★_</span> __よ。',
     options: ['なんとか', 'なかったら', 'なるものだ', 'なかったで'],
-    answer: '1',
+    answer: '3',
     isReading: false
   },
   {
     number: 10,
     question: '君がイチゴのショートケーキが食べたいと言うから、走って買いに行ってきたのに、もう__ __ _<span style="color:red;font-style:italic">★_</span> __よ。',
     options: ['にもほどがある', 'なんて', 'わがまま', 'いらない'],
-    answer: '1',
+    answer: '3',
     isReading: false
   },
   {
@@ -586,19 +586,19 @@
         number: 12,
         subQuestion: '問2(2)',
         options: ['一人', '仲間と一緒', '砂や土', '金やダイヤモンド'],
-        answer: '1'
+        answer: '4'
       },
       {
         number: 13,
         subQuestion: '問3(3)',
         options: ['というわけだ', 'というわけにはいかない', 'に決まっている', 'に越したことはない'],
-        answer: '1'
+        answer: '2'
       },
       {
         number: 14,
         subQuestion: '問4(4)',
         options: ['選ぶに選べない', '選んだり選ばれたりする', '選ぶことは選ぶ', '選ばれるべくして選ばれた'],
-        answer: '1'
+        answer: '4'
       }
     ]
   },
@@ -610,13 +610,13 @@
         number: 15,
         subQuestion: '問1<span style="color:red;font-style:italic">部下のアイデアを全然認めないという上司</span>は何の例か。',
         options: ['失敗を恐れない例', '消極的な態度の例', '責任を負おうとする例', '組織を成長させる例'],
-        answer: '1'
+        answer: '2'
       },
       {
         number: 16,
         subQuestion: '問2この人が一番伝えたいことは何か。',
         options: ['トラブルを起こさないことが一番大事だ。', '新しいことをやってみるのはリスクがある。', 'リスクや責任はないほうがいい。', 'リスクを避けてばかりではよくない。'],
-        answer: '1'
+        answer: '4'
       }
     ]
   }
@@ -1149,7 +1149,7 @@ function clearUpdatedAnswers() {
   if (!ok) return;
   // nếu chọn "OK" (tương đương "Có")
   // xoá toàn bộ đáp án đã lưu trong localStorage
-  localStorage.removeItem('answers');
+  localStorage.removeItem('customAnswers');
   // nếu bạn lưu version data, có thể cũng xoá luôn
   // localStorage.removeItem('quizDataVersion');
   // reset biến lưu phía trang
