@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Trang học tiếng Nhật N1</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 <style>
   body { font-family: Arial; padding: 20px; max-width: 900px; margin: auto; }
   h1, h2, h3 { color: #2c3e50; }
@@ -58,6 +60,13 @@
   cursor: pointer;
     color: #d9534f;
   }
+  #tryGrammarList li {
+  color: #007acc; /* màu xanh mặc định */
+  }
+  #tryGrammarList li:hover {
+  cursor: pointer;
+    color: #d9534f;
+  }
   #resetHistoryBtn {
     margin: 15px 0;
     padding: 10px 15px;
@@ -67,6 +76,20 @@
     border-radius: 6px;
     cursor: pointer;
   }
+  .pdf-header {
+  color: #007acc;
+  font-weight: normal;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.pdf-header:hover {
+  color: #d9534f;
+  font-weight: normal; /* đảm bảo không đậm lên khi hover */
+}
+
+
+
 </style>
 </head>
 <body>
@@ -82,16 +105,17 @@
     <a href="#" onclick="showSection('s1')">1️⃣ Luyện thi N1 giai đoạn 1</a>
     <a href="#" onclick="showSection('s2')">2️⃣ Luyện thi N1 giai đoạn 2</a>
     <a href="#" onclick="showSection('s3')">3️⃣ Khóa Zoom N1 - Tháng 12/2024</a>
+    <a href="#" onclick="showSection('s4')">4️⃣ Từ vựng</a>
   </div>
   <button id="resetHistoryBtn" onclick="resetHistory()">🗑 Xóa toàn bộ lịch sử làm bài</button>
 
-  <div class="section" id="s1">
+<div class="section" id="s1">
     <h2>1️⃣ Luyện thi N1 giai đoạn 1</h2>
     <ul class="submenu">
       <li onclick="showModal('Không có bài test nào trong thư mục này, vui lòng xem tài liệu đã tải về trên máy tính')">📝 Tài liệu và lộ trình khóa N1 giai đoạn 1</li>
       <li onclick="showSection('testday1')">📝 Bài test theo ngày của lộ trình 100 ngày</li>
       <li onclick="showSection('grammarTests')">📝 Ngữ pháp phân loại theo chủ điểm</li>
-      <li onclick="showModal('Đang cập nhật nội dung...')">📝 Ôn tập ngữ pháp cấp tốc N1</li>
+      <li onclick="showSection('NguPhapCapTocN1')">📝 Ôn tập ngữ pháp cấp tốc N1</li>
       <li onclick="showSection('Trynguphap')">📝 Luyện nghe Try ngữ pháp</li>
       <li onclick="showModal('Đang cập nhật nội dung...')">📝 Từ vựng theo chủ điểm</li>
       <li onclick="showModal('Đang cập nhật nội dung...')">📝 Nghe từ vựng Tango mỗi ngày</li>
@@ -107,7 +131,21 @@
       <li onclick="showModal('Đang cập nhật nội dung...')">📝 Thi thử tháng update 12/2023</li>
       <li onclick="showModal('Đang cập nhật nội dung...')">📝 Học Zoom 7/2024</li>
     </ul>
-  </div>
+</div>
+
+
+<div class="section" id="s4">
+    <h2>4️⃣ Từ vựng</h2>
+    <ul class="submenu">
+      <li onclick="showModal('Không có bài test nào trong thư mục này, vui lòng xem tài liệu đã tải về trên máy tính')">📝 N1 Mimikara</li>
+      <li onclick="showSection('vocabulary')">📝 Test từ vựng 30 ngày_ThaoLeJP</li>
+    </ul>
+</div>
+
+<div class="section" id="vocabulary">
+    <h2>📚 30 ngày test từ vựng ThaoLeJp</h2>
+    <ul id="vocabularyList"></ul>
+</div>
 
 
 
@@ -118,14 +156,22 @@
     <ul id="grammarTestList"></ul>
   </div>
 
-
+  <div class="section" id="NguPhapCapTocN1">
+    <a href="Thaolejp_Tong hop ngu phap N1.pdf" target="_blank" style="text-decoration: none;">
+      <h2 class="pdf-header"><i class="fas fa-file-pdf"></i> Tổng hợp ngữ pháp N1</h2>
+    </a>
+  </div>
 
 
   <div class="section" id="Trynguphap">
     <h2>🎧 Luyện nghe Try ngữ pháp</h2>
-    <ul id="testList1"></ul>
+    <ul id="tryGrammarList"></ul> 
   </div>
 
+   <div class="section" id="tuvung_coThao">
+    <h2>🎧 Tổng hợp 30 bài test từ vựng ThaoLeJP</h2>
+    <ul id="tuvung_coThao_List"></ul> 
+  </div>
 
 
   <div class="section" id="testday1">
@@ -146,16 +192,44 @@
 
 
 
-
-
     // Luyện nghe Try ngữ pháp
-const testData1 = [
-  { id: "1", name: "📘 Ngữ pháp ～まで" },
-  //{ id: "grammar-kekka", name: "📘 Ngữ pháp ～た結果" },
-  //{ id: "reading-1", name: "📗 Đọc hiểu N1 - bài 1" },
-  //{ id: "listen-practice", name: "🎧 Nghe hiểu N1 - luyện tập" },
-  //{ id: "vocab-advance", name: "📒 Từ vựng nâng cao" }
+const tryGrammarTestsData = [ 
+  { id: "TryTest-1", name: "📄 N1_Try Test 1.1" },
+  { id: "TryTest-21", name: "📄 N1_Try Test 1.2" },
+  { id: "TryTest-2", name: "📄 N1_Try Test 1.3" },
+  { id: "TryTest-3", name: "📄 N1_Try Test 2.1" },
+  { id: "TryTest-22", name: "📄 N1_Try Test 2.2" },
+  { id: "TryTest-4", name: "📄 N1_Try Test 2.3" },
+  { id: "TryTest-5", name: "📄 N1_Try Test 3.1" },
+  { id: "TryTest-23", name: "📄 N1_Try Test 3.2" },
+  { id: "TryTest-6", name: "📄 N1_Try Test 3.3" },
+  { id: "TryTest-7", name: "📄 N1_Try Test 4.1" },
+  { id: "TryTest-24", name: "📄 N1_Try Test 4.2" },
+  { id: "TryTest-8", name: "📄 N1_Try Test 4.3" },
+  { id: "TryTest-9", name: "📄 N1_Try Test 5.1" },
+  { id: "TryTest-25", name: "📄 N1_Try Test 5.2" },
+  { id: "TryTest-26", name: "📄 N1_Try Test 5.3" },
+  { id: "TryTest-10", name: "📄 N1_Try Test 5.4" },
+  { id: "TryTest-11", name: "📄 N1_Try Test 6.1" },
+  { id: "TryTest-27", name: "📄 N1_Try Test 6.2" },
+  { id: "TryTest-12", name: "📄 N1_Try Test 6.3" },
+  { id: "TryTest-13", name: "📄 N1_Try Test 7.1" },
+  { id: "TryTest-28", name: "📄 N1_Try Test 7.2" },
+  { id: "TryTest-14", name: "📄 N1_Try Test 7.3" },
+  { id: "TryTest-15", name: "📄 N1_Try Test 8.1" },
+  { id: "TryTest-29", name: "📄 N1_Try Test 8.2" },
+  { id: "TryTest-16", name: "📄 N1_Try Test 8.3" },
+  { id: "TryTest-17", name: "📄 N1_Try Test 9.1" },
+  { id: "TryTest-30", name: "📄 N1_Try Test 9.2" },
+  { id: "TryTest-18", name: "📄 N1_Try Test 9.3" },
+  { id: "TryTest-19", name: "📄 N1_Try Test 10.1" },
+  { id: "TryTest-31", name: "📄 N1_Try Test 10.2" },
+  { id: "TryTest-20", name: "📄 N1_Try Test 10.3" },
 ];
+
+let currentTryGrammarTestId = null;
+
+
 const grammarTestsData = [
   { id: "test-NguPhapPhanLoaiTheoChuDiem1", name: "📄 N1_Test 1_Ngữ pháp ～まで" },
   { id: "test-NguPhapPhanLoaiTheoChuDiem2", name: "📄 N1_Test 2_Ngữ pháp まで・ところ・ながら" },
@@ -197,37 +271,91 @@ let currentTestId1 = null;
 
 
 
-// Luyện nghe Try ngữ pháp
+// Dữ liệu từ vựng theo chủ điểm
+    const vocabularyTestsData = [ 
+      { id: "vocab-1", name: "📄 Ngày 1" },
+      { id: "vocab-2", name: "📄 Ngày 2" },
+      { id: "vocab-3", name: "📄 Ngày 3" },
+      { id: "vocab-4", name: "📄 Ngày 4" },
+      { id: "vocab-5", name: "📄 Ngày 5" },
+      { id: "vocab-6", name: "📄 Ngày 6" },
+      { id: "vocab-7", name: "📄 Ngày 7" },
+      { id: "vocab-8", name: "📄 Ngày 8" },
+      { id: "vocab-9", name: "📄 Ngày 9" },
+      { id: "vocab-10", name: "📄 Ngày 10" },
+      { id: "vocab-11", name: "📄 Ngày 11" },
+      { id: "vocab-12", name: "📄 Ngày 12" },
+      { id: "vocab-13", name: "📄 Ngày 13" },
+      { id: "vocab-14", name: "📄 Ngày 14" },
+      { id: "vocab-15", name: "📄 Ngày 15" },
+    ];
 
-function renderCustomTestList() {
-  // Lấy phần tử HTML có id testList1
-  const testList1 = document.getElementById("testList1");
+    let currentVocabularyTestId = null;
 
-  // Lấy dữ liệu từ localStorage
-  const doneTests1 = JSON.parse(localStorage.getItem("doneTests") || "[]");
-  const testScores1 = JSON.parse(localStorage.getItem("testScores") || "{}");
+    // Hiển thị danh sách từ vựng
+    function renderVocabularyTests() {
+      const vocabularyList = document.getElementById("vocabularyList");
 
-  // Xóa danh sách cũ
-  testList1.innerHTML = "";
+      const doneTests = JSON.parse(localStorage.getItem("doneTests") || "[]");
+      const testScores = JSON.parse(localStorage.getItem("testScores") || "{}");
 
-  // Duyệt qua từng bài test
-  testData1.forEach((test1) => {
-    const li1 = document.createElement("li");
-    li1.textContent = test1.name;
-    li1.classList.add("clickable");
-    if (doneTests1.includes(test1.id)) {
-      li1.classList.add("done");
-      const scoreData1 = testScores1[test1.id] || { score: 0, total: 1 };
-      const percentage1 = Math.round((scoreData1.score / scoreData1.total) * 100);
-      li1.innerHTML += ` <span class="score-display">${percentage1}%</span>`;
+      vocabularyList.innerHTML = "";
+
+      vocabularyTestsData.forEach(test => {
+        const li = document.createElement("li");
+        li.textContent = test.name;
+        li.classList.add("clickable");
+
+        if (doneTests.includes(test.id)) {
+          li.classList.add("done");
+          const scoreData = testScores[test.id] || { score: 0, total: 1 };
+          const percentage = Math.round((scoreData.score / scoreData.total) * 100);
+          li.innerHTML += ` <span class="score-display">${percentage}%</span>`;
+        }
+
+        li.onclick = () => {
+          currentVocabularyTestId = test.id;
+          openTestInNewTab(`${test.id}.html`, li);
+        };
+
+        vocabularyList.appendChild(li);
+      });
     }
-    li1.onclick = () => {
-      currentTestId1 = test1.id;
-      openTestInNewTab(encodeURIComponent(`${test1.id}.html`), li1);
+
+
+
+
+// Luyện nghe Try ngữ pháp
+function renderTryGrammarTests() {
+  const tryGrammarList = document.getElementById("tryGrammarList");
+
+  const doneTests = JSON.parse(localStorage.getItem("doneTests") || "[]");
+  const testScores = JSON.parse(localStorage.getItem("testScores") || "{}");
+
+  tryGrammarList.innerHTML = "";
+
+  tryGrammarTestsData.forEach(test => {
+    const li = document.createElement("li");
+    li.textContent = test.name;
+    li.classList.add("clickable");
+
+    if (doneTests.includes(test.id)) {
+      li.classList.add("done");
+      const scoreData = testScores[test.id] || { score: 0, total: 1 };
+      const percentage = Math.round((scoreData.score / scoreData.total) * 100);
+      li.innerHTML += ` <span class="score-display">${percentage}%</span>`;
+    }
+
+    li.onclick = () => {
+      currentTryGrammarTestId = test.id;
+      openTestInNewTab(`${test.id}.html`, li);
     };
-    testList1.appendChild(li1);
+
+    tryGrammarList.appendChild(li);
   });
 }
+
+
 
 
 //Ngữ pháp phân loại theo chủ điểm 
@@ -407,8 +535,9 @@ function renderGrammarTests() {
 
     window.addEventListener("DOMContentLoaded", function() {
       renderTestList();
-      renderCustomTestList();
+      renderTryGrammarTests(); 
       renderGrammarTests();
+      renderVocabularyTests() 
    
       
       // Khôi phục trạng thái section đang mở

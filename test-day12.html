@@ -313,6 +313,8 @@
   font-weight: bold;
   font-size: 12px;
 }
+
+
 /* Thêm vào phần style */
 #quizControlsContainer {
     position: absolute;
@@ -343,6 +345,79 @@
 
 #quizControls button:hover {
     background-color: #0b7dda;
+}
+
+
+
+
+
+/* Thanh điều khiển chính */
+#quizControlsContainer {
+    position: fixed;
+    right: 0;
+    top: 100px;
+    width: 250px;
+    height: auto;
+    z-index: 100;
+    transition: width 0.3s ease;
+    background-color: white;
+    border-radius: 8px 0 0 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Trạng thái thu gọn */
+#quizControlsContainer.collapsed {
+    width: 15px;
+}
+
+/* Nội dung bên trong */
+#quizControls {
+    padding: 15px;
+    transition: opacity 0.3s ease;
+}
+
+#quizControlsContainer.collapsed #quizControls {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Nút mũi tên - QUAN TRỌNG */
+.toggle-collapse-btn {
+    position: absolute;
+    left: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 15px;
+    height: 30px;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 4px 0 0 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 101;
+    padding: 0;
+    margin: 0;
+}
+
+/* Mũi tên */
+.toggle-collapse-btn .arrow {
+    font-size: 10px;
+    transition: transform 0.3s ease;
+    display: block;
+}
+
+/* Xoay mũi tên khi thu gọn */
+#quizControlsContainer.collapsed .toggle-collapse-btn .arrow {
+    transform: rotate(180deg);
+}
+
+/* Đảm bảo nút không di chuyển */
+#quizControlsContainer.collapsed .toggle-collapse-btn {
+    left: -15px;
+    transform: translateY(-50%);
 }
 
 .show-answers-btn {
@@ -426,9 +501,184 @@
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
+/* Thanh điều khiển trái - Đồng bộ với thanh phải */
+#leftControlsContainer {
+    position: fixed;
+    left: 0;
+    top: 100px;
+    width: 250px;
+    z-index: 100;
+    transition: all 0.3s ease;
+    background-color: white;
+    border-radius: 0 8px 8px 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Nút toggle thanh trái - Giống thanh phải */
+.toggle-left-btn {
+    position: absolute;
+    right: -15px; /* Đổi từ left sang right */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 15px;
+    height: 30px;
+    background-color: #2196F3; /* Màu xanh giống thanh phải */
+    color: white;
+    border: none;
+    border-radius: 0 4px 4px 0; /* Bo góc ngược lại */
+    cursor: pointer;
+    z-index: 101;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toggle-left-btn .arrow {
+    font-size: 10px;
+    transition: transform 0.3s ease;
+}
+
+/* Trạng thái thu gọn */
+#leftControlsContainer.collapsed {
+    width: 15px;
+}
+
+#leftControlsContainer.collapsed #leftControls {
+    opacity: 0;
+    pointer-events: none;
+    padding: 0;
+}
+
+/* Xoay mũi tên khi thu gọn - Ngược chiều thanh phải */
+#leftControlsContainer:not(.collapsed) .toggle-left-btn .arrow {
+    transform: rotate(0deg); /* ◀ khi mở rộng */
+}
+
+#leftControlsContainer.collapsed .toggle-left-btn .arrow {
+    transform: rotate(180deg); /* ▶ khi thu gọn */
+}
+
+/* Nội dung bên trong */
+#leftControls {
+    padding: 15px;
+    transition: opacity 0.3s ease;
+}
+
+/* Style riêng cho phần câu sai */
+#wrongAnswersSection {
+    margin-top: 10px;
+}
+
+#wrongAnswersSection button {
+    display: block;
+    width: 100%;
+    margin-bottom: 8px;
+    padding: 8px;
+    background-color: #2196F3; /* Màu xanh đồng bộ */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#wrongAnswersSection button:hover {
+    background-color: #0b7dda; /* Màu hover đồng bộ */
+}
+
+#practiceWrongBtn {
+    background-color: #1976D2; /* Màu xanh đậm hơn */
+}
+
+#wrongAnswersList {
+    margin-top: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+}
+@media (max-width: 768px) {
+    #leftControlsContainer, #quizControlsContainer {
+        width: 200px;
+        top: 80px;
+    }
+    
+    #leftControls {
+        height: calc(100vh - 100px);
+    }
+    
+    #leftControlsContainer.collapsed, #quizControlsContainer.collapsed {
+        width: 15px;
+    }
+}
+
+/* CSS cho bảng hiển thị câu sai */
+.wrong-answers-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 12px;
+    background-color: white;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.wrong-answers-table th {
+    background-color: #f44336;
+    color: white;
+    padding: 8px 4px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.wrong-answers-table td {
+    padding: 6px 4px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.wrong-answers-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.wrong-answers-table tr:hover {
+    background-color: #ffebee;
+}
+
+.question-preview {
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 11px;
+    text-align: left;
+}
+
+.answer-cell {
+    font-weight: bold;
+    color: #d32f2f;
+}
+
+.correct-answer-cell {
+    font-weight: bold;
+    color: #2e7d32;
+}
+
+.time-cell {
+    font-size: 10px;
+    color: #666;
+}
+
+
 </style>
 </head>
 <body>
+
+  
   <h1>📚 N1 Bài test ngày 12<h1>(Tổng số câu hỏi: 35 câu)</h1>
   
   <div class="timer-container">
@@ -444,8 +694,30 @@
     <h2>📝 N1 Bài test ngày 12</h2>
     <form id="quizForm"></form>
 
+
+      <!-- Thanh điều khiển trái -->
+    <div id="leftControlsContainer">
+        <div id="leftControls">
+            <div id="wrongAnswersSection">
+                <h4>Câu đã sai ❌</h4>
+                <button onclick="showWrongAnswers()">Xem câu sai</button>
+                <button onclick="practiceWrongAnswers()" id="practiceWrongBtn">Luyện tập</button>
+                <button onclick="clearWrongAnswers()">Xóa lịch sử</button>
+                <div id="wrongAnswersList" class="hidden"></div>
+            </div>
+        </div>
+        <button class="toggle-left-btn" onclick="toggleLeftControls()">
+            <span class="arrow">◀</span> <!-- Đổi thành ◀ -->
+        </button>
+    </div>
+
     <div id="quizControlsContainer">
+    <button class="toggle-collapse-btn" onclick="toggleControls()">
+        <span class="arrow">▶</span>
+    </button>
     <div id="quizControls">
+
+
         <button type="button" onclick="submitQuiz()">Nộp bài</button>
         <button type="button" onclick="resetQuiz()">Làm lại</button>
         <button id="showAnswersBtn" class="show-answers-btn" onclick="showCorrectAnswers()" style="display: none;">Hiện đáp án đúng</button>
@@ -504,119 +776,119 @@
     const quizData = [
   {
     number: 1,
-    question: '何回失敗してもやる。これがしぶとい性質 (___) 。',
+    question: '何回失敗してもやる。これがしぶとい性質<span style="color:red">(___)</span>。',
     options: ['にかぎったことはない', 'でなくてなんだろう', 'によるところが大きい', 'ではあるまいし'],
     answer: '2',
     isReading: false
   },
   {
     number: 2,
-    question: 'こんな夜中に<ruby>塀<rt>へい</rt></ruby>を乗り越えて入ってくるなんて、泥棒を (___) 。',
+    question: 'こんな夜中に<ruby>塀<rt>へい</rt></ruby>を乗り越えて入ってくるなんて、泥棒を<span style="color:red">(___)</span>。',
     options: ['働かないも同然だ', '働いたも同然だ', '働かなくてそもそもだ', '働いてそもそもだ'],
     answer: '2',
     isReading: false
   },
   {
     number: 3,
-    question: 'われわれ人間は世の中で持ちつ (___) つの関係にあります。',
+    question: 'われわれ人間は世の中で持ちつ<span style="color:red">(___)</span>つの関係にあります。',
     options: ['持ち', '持たせ', '持たされ', '持たれ'],
     answer: '4',
     isReading: false
   },
   {
     number: 4,
-    question: '日本語を勉強するなら、ことばは言うに (___) 、基本的な日本の事情も身につけなければならない。',
+    question: '日本語を勉強するなら、ことばは言うに<span style="color:red">(___)</span>、基本的な日本の事情も身につけなければならない。',
     options: ['およばず', 'かまわず', 'かぎらず', 'やらず'],
     answer: '1',
     isReading: false
   },
   {
     number: 5,
-    question: '戦場での戦いのごとく、スポーツ大会の試合は (___) 。',
+    question: '戦場での戦いのごとく、スポーツ大会の試合は<span style="color:red">(___)</span>。',
     options: ['選手たちは兵士同様に見なすべからず', '勝ち負けは審査員の気持ち次第である', '相手を負かすなんてどういうつもりなのか', '食いつ食われつの勝負といわざるをえない'],
     answer: '4',
     isReading: false
   },
   {
     number: 6,
-    question: '結婚してからというもの、妻に向かって怒った (___) がない。',
+    question: '結婚してからというもの、妻に向かって怒った<span style="color:red">(___)</span>がない。',
     options: ['こころざし', 'ためし', 'めざし', 'こころみ'],
     answer: '2',
     isReading: false
   },
   {
     number: 7,
-    question: '外国人の就労者をどんどん受け入れればいいとは一概に (___) 。',
+    question: '外国人の就労者をどんどん受け入れればいいとは一概に<span style="color:red">(___)</span>。',
     options: ['主張したい', '主張できる', '決めてほしい', '決められない'],
     answer: '4',
     isReading: false
   },
   {
     number: 8,
-    question: '父は立ち (___) 座り (___) しながら、不安そうに警官の来るのを待っている。',
+    question: '父は立ち<span style="color:red">(___)</span>座り<span style="color:red">(___)</span>しながら、不安そうに警官の来るのを待っている。',
     options: ['つ/つ', 'つつ/つつ', 'ながら/ながら', 'も/も'],
     answer: '1',
     isReading: false
   },
   {
     number: 9,
-    question: '明日は一日中休みだから、午前なり午後なり、いついらっしゃっても (___) 。',
+    question: '明日は一日中休みだから、午前なり午後なり、いついらっしゃっても<span style="color:red">(___)</span>。',
     options: ['しようがない', 'やむをえない', 'さしつかえない', 'むりもない'],
     answer: '3',
     isReading: false
   },
   {
     number: 10,
-    question: 'いくら私が日本語ができるからといっても、日本生まれ日本育ちの日本人には  (___) んだから、対等に話せるようになるには5年かかるだろう。',
+    question: 'いくら私が日本語ができるからといっても、日本生まれ日本育ちの日本人には <span style="color:red">(___)</span>んだから、対等に話せるようになるには5年かかるだろう。',
     options: ['たまらない', 'やりきれない', 'しかたがない', 'およばない'],
     answer: '4',
     isReading: false
   },
   {
     number: 11,
-    question: '確かに金持ちになりたいですが、上を見れば (___) がないからね。',
+    question: '確かに金持ちになりたいですが、上を見れば<span style="color:red">(___)</span>がないからね。',
     options: ['だけ', 'きり', 'のみ', 'しか'],
     answer: '2',
     isReading: false
   },
   {
     number: 12,
-    question: '成績が (___) 一応学生を卒業させようと考えている先生がいるらしい。',
+    question: '成績が<span style="color:red">(___)</span>一応学生を卒業させようと考えている先生がいるらしい。',
     options: ['良いというか悪いというか', '良かれ悪しかれ', '良いにつき悪いにつき', '良かろう悪かろう'],
     answer: '2',
     isReading: false
   },
   {
     number: 13,
-    question: 'わたしは幼いころ父母と死に別れ、年の離れた姉に育てられたので、姉は私にとって親も (___) 。',
+    question: 'わたしは幼いころ父母と死に別れ、年の離れた姉に育てられたので、姉は私にとって親も<span style="color:red">(___)</span>。',
     options: ['当然です', '漠然です', '全然です', '同然です'],
     answer: '4',
     isReading: false
   },
   {
     number: 14,
-    question: '君の言うとおりに何回もやってみたが、成功した (___) 。',
+    question: '君の言うとおりに何回もやってみたが、成功した<span style="color:red">(___)</span>。',
     options: ['ためしがない', 'べくもない', 'わけがない', 'このみがない'],
     answer: '1',
     isReading: false
   },
   {
     number: 15,
-    question: '風に吹き、飛ばされた赤い帽子は木の葉のように浮き (___) 沈み (___) 、川を流れていった。',
+    question: '風に吹き、飛ばされた赤い帽子は木の葉のように浮き<span style="color:red">(___)</span>沈み<span style="color:red">(___)</span>、川を流れていった。',
     options: ['つ/つ', 'の/の', 'やら/やら', 'だの/だの'],
     answer: '1',
     isReading: false
   },
   {
     number: 16,
-    question: '毎年バレンタインデーに彼からバラの花をもらう。それは愛情のシンボル (___) 。',
+    question: '毎年バレンタインデーに彼からバラの花をもらう。それは愛情のシンボル<span style="color:red">(___)</span>。',
     options: ['でなくてなんでしょうか', 'でなくてはなりません', 'でなけれななりません', 'でならないでしょうか'],
     answer: '1',
     isReading: false
   },
   {
     number: 17,
-    question: '犯人は自転車を奪って逃げた (___) 思われる。',
+    question: '犯人は自転車を奪って逃げた<span style="color:red">(___)</span>思われる。',
     options: ['ことに', 'ことと', 'ものと', 'ものに'],
     answer: '3',
     isReading: false
@@ -1090,10 +1362,15 @@ function findAncestor(el, fn) {
                     correctAnswers++;
                     // Chỉ đánh dấu ✅ cho câu trả lời đúng
                     selected.parentElement.innerHTML += ' <span class="correct-answer">✅ Đúng</span>';
-                 } else if (selected) {
-                   // Chỉ đánh dấu ❌ cho câu trả lời sai (không hiển thị đáp án đúng)
+                } else if (selected) {
+                    // Chỉ đánh dấu ❌ cho câu trả lời sai (không hiển thị đáp án đúng)
                     selected.parentElement.innerHTML += ' <span class="wrong-answer">❌ Sai</span>';
+                    
+                    // Lưu câu sai vào localStorage
+                  const questionText = subQ.subQuestion;
+                  saveWrongAnswer(name, questionText, selected.value, correct);
                 }
+
             });
         } else {
             totalQuestions++;
@@ -1108,6 +1385,9 @@ function findAncestor(el, fn) {
             } else if (selected) {
                 // Chỉ đánh dấu ❌ cho câu trả lời sai (không hiển thị đáp án đúng)
                 selected.parentElement.innerHTML += ' <span class="wrong-answer">❌ Sai</span>';
+                   // Lưu câu sai vào localStorage
+                const questionText = q.question;
+                saveWrongAnswer(name, questionText, selected.value, correct);
             }
         }
     });
@@ -1160,6 +1440,63 @@ function findAncestor(el, fn) {
     // Dừng timer
     stopTimer();
 }
+
+
+    // Hàm toggle thanh trái
+    function toggleLeftControls() {
+        const container = document.getElementById('leftControlsContainer');
+        container.classList.toggle('collapsed');
+        localStorage.setItem('leftControlsCollapsed', container.classList.contains('collapsed'));
+    }
+
+    // Khởi tạo
+    window.addEventListener('DOMContentLoaded', function() {
+        // Thanh trái
+        const isLeftCollapsed = localStorage.getItem('leftControlsCollapsed') === 'true';
+        if (isLeftCollapsed) {
+            document.getElementById('leftControlsContainer').classList.add('collapsed');
+        }
+        
+        // Thanh phải (giữ nguyên)
+        const isRightCollapsed = localStorage.getItem('quizControlsCollapsed') === 'true';
+        if (isRightCollapsed) {
+            document.getElementById('quizControlsContainer').classList.add('collapsed');
+        }
+    });
+//Hàm thu gọn thanh Nộp bài, làm lại
+  //Hàm khởi tạo để mặc định là mở rộng
+  // Sửa hàm khởi tạo để mặc định là mở rộng
+window.addEventListener('DOMContentLoaded', function() {
+    const isCollapsed = localStorage.getItem('quizControlsCollapsed') === 'true';
+    const container = document.getElementById('quizControlsContainer');
+    
+    // Mặc định không thu gọn
+    if (isCollapsed) {
+        container.classList.add('collapsed');
+    } else {
+        container.classList.remove('collapsed');
+        // Đảm bảo localStorage có giá trị mặc định
+        localStorage.setItem('quizControlsCollapsed', 'false');
+    }
+});
+  
+      function toggleControls() {
+          const container = document.getElementById('quizControlsContainer');
+          container.classList.toggle('collapsed');
+          
+          // Lưu trạng thái vào localStorage
+          const isCollapsed = container.classList.contains('collapsed');
+          localStorage.setItem('quizControlsCollapsed', isCollapsed);
+      }
+
+      // Khởi tạo trạng thái từ localStorage khi tải trang
+      window.addEventListener('DOMContentLoaded', function() {
+          const isCollapsed = localStorage.getItem('quizControlsCollapsed') === 'true';
+          if (isCollapsed) {
+              document.getElementById('quizControlsContainer').classList.add('collapsed');
+          }
+      });
+
 
 
     function closeResultPopup() {
@@ -1340,6 +1677,214 @@ document.getElementById('clearAnswersBtn')
       document.getElementById('timerDisplay').textContent = 
         `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     }
+    // Lưu câu sai vào localStorage
+    function saveWrongAnswer(questionKey, questionText, userAnswer, correctAnswer) {
+        let wrongAnswers = JSON.parse(localStorage.getItem('wrongAnswers') || '[]');
+        
+        const wrongAnswer = {
+            id: Date.now() + Math.random(), // ID duy nhất
+            questionKey: questionKey,
+            questionText: questionText,
+            userAnswer: userAnswer,
+            correctAnswer: correctAnswer,
+            timestamp: new Date().toLocaleString('vi-VN')
+        };
+        
+        wrongAnswers.push(wrongAnswer);
+        localStorage.setItem('wrongAnswers', JSON.stringify(wrongAnswers));
+    }
+
+      // Hiển thị danh sách câu sai
+      // Hiển thị danh sách câu sai trong popup toàn màn hình
+function showWrongAnswers() {
+    const wrongAnswers = JSON.parse(localStorage.getItem('wrongAnswers') || '[]');
+    
+    if (wrongAnswers.length === 0) {
+        alert('Chưa có câu nào sai 🎉');
+        return;
+    }
+    
+    // Tạo popup toàn màn hình
+    const popup = document.createElement('div');
+    popup.id = 'wrongAnswersPopup';
+    popup.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.8);
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        box-sizing: border-box;
+    `;
+    
+    // Tạo nội dung popup
+    const content = document.createElement('div');
+    content.style.cssText = `
+        background: white;
+        width: 95%;
+        max-width: 1200px;
+        height: 90%;
+        border-radius: 10px;
+        padding: 20px;
+        overflow-y: auto;
+        position: relative;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    `;
+    
+    let tableHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid #f44336; padding-bottom: 10px;">
+            <h2 style="color: #f44336; margin: 0;">📋 Danh sách câu đã sai (${wrongAnswers.length} câu)</h2>
+            <button onclick="closeWrongAnswersPopup()" style="background: #f44336; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 20px; cursor: pointer; font-weight: bold;">×</button>
+        </div>
+        <div style="margin-bottom: 15px;">
+            <button onclick="clearAllWrongAnswers()" style="background: #ff9800; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-right: 10px;">🗑️ Xóa tất cả</button>
+            <button onclick="exportWrongAnswers()" style="background: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">📤 Xuất danh sách</button>
+        </div>
+        <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+            <thead>
+                <tr style="background: #f44336; color: white;">
+                    <th style="padding: 15px 10px; text-align: center; font-weight: bold; width: 5%;">STT</th>
+                    <th style="padding: 15px 10px; text-align: left; font-weight: bold; width: 45%;">Câu hỏi</th>
+                    <th style="padding: 15px 10px; text-align: center; font-weight: bold; width: 12%;">Đáp án của bạn</th>
+                    <th style="padding: 15px 10px; text-align: center; font-weight: bold; width: 12%;">Đáp án đúng</th>
+                    <th style="padding: 15px 10px; text-align: center; font-weight: bold; width: 15%;">Thời gian</th>
+                    <th style="padding: 15px 10px; text-align: center; font-weight: bold; width: 8%;">Key</th>
+                    <th style="padding: 15px 10px; text-align: center; font-weight: bold; width: 8%;">Xóa</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+    
+    wrongAnswers.forEach((item, index) => {
+        const rowColor = index % 2 === 0 ? '#f9f9f9' : 'white';
+        tableHTML += `
+            <tr style="background: ${rowColor};" onmouseover="this.style.background='#ffebee'" onmouseout="this.style.background='${rowColor}'">
+                <td style="padding: 12px 10px; text-align: center; border-bottom: 1px solid #eee; font-weight: bold;">${index + 1}</td>
+                <td style="padding: 12px 10px; border-bottom: 1px solid #eee; line-height: 1.4; text-align: left;">${item.questionText}</td>
+                <td style="padding: 12px 10px; text-align: center; border-bottom: 1px solid #eee; font-weight: bold; color: #f44336; font-size: 16px;">${item.userAnswer}</td>
+                <td style="padding: 12px 10px; text-align: center; border-bottom: 1px solid #eee; font-weight: bold; color: #4CAF50; font-size: 16px;">${item.correctAnswer}</td>
+                <td style="padding: 12px 10px; text-align: center; border-bottom: 1px solid #eee; font-size: 12px; color: #666;">${item.timestamp}</td>
+                <td style="padding: 12px 10px; text-align: center; border-bottom: 1px solid #eee; font-size: 11px; color: #999; font-family: monospace;">${item.questionKey}</td>
+                <td style="padding: 12px 10px; text-align: center; border-bottom: 1px solid #eee;">
+                    <button onclick="removeWrongAnswer(${item.id})" style="background: #f44336; color: white; border: none; border-radius: 4px; padding: 6px 10px; cursor: pointer; font-size: 12px;">❌ Xóa</button>
+                </td>
+            </tr>
+        `;
+    });
+    
+    tableHTML += `
+            </tbody>
+        </table>
+        <div style="margin-top: 20px; text-align: center; color: #666; font-size: 14px;">
+            💡 Tip: Nhấn vào nút "Luyện tập" để ôn lại những câu đã sai
+        </div>
+    `;
+    
+    content.innerHTML = tableHTML;
+    popup.appendChild(content);
+    document.body.appendChild(popup);
+    
+    // Đóng popup khi click outside
+    popup.addEventListener('click', function(e) {
+        if (e.target === popup) {
+            closeWrongAnswersPopup();
+        }
+    });
+}
+
+// Đóng popup câu sai
+function closeWrongAnswersPopup() {
+    const popup = document.getElementById('wrongAnswersPopup');
+    if (popup) {
+        popup.remove();
+    }
+}
+
+// Xóa tất cả câu sai (từ popup)
+function clearAllWrongAnswers() {
+    if (confirm('Bạn có chắc muốn xóa tất cả lịch sử câu sai?')) {
+        localStorage.removeItem('wrongAnswers');
+        closeWrongAnswersPopup();
+        alert('✅ Đã xóa tất cả lịch sử câu sai');
+    }
+}
+
+// Xuất danh sách câu sai
+function exportWrongAnswers() {
+    const wrongAnswers = JSON.parse(localStorage.getItem('wrongAnswers') || '[]');
+    if (wrongAnswers.length === 0) {
+        alert('Không có câu sai nào để xuất!');
+        return;
+    }
+    
+    let exportText = '📋 DANH SÁCH CÂU ĐÃ SAI\n';
+    exportText += '================================\n\n';
+    
+    wrongAnswers.forEach((item, index) => {
+        exportText += `${index + 1}. ${item.questionText}\n`;
+        exportText += `   Đáp án của bạn: ${item.userAnswer}\n`;
+        exportText += `   Đáp án đúng: ${item.correctAnswer}\n`;
+        exportText += `   Thời gian: ${item.timestamp}\n`;
+        exportText += `   Key: ${item.questionKey}\n\n`;
+    });
+    
+    // Tạo file và download
+    const blob = new Blob([exportText], { type: 'text/plain;charset=utf-8' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `cau-sai-${new Date().toISOString().slice(0,10)}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+}
+
+// Xóa một câu sai cụ thể (cập nhật popup)
+function removeWrongAnswer(id) {
+    if (confirm('Bạn có chắc muốn xóa câu này?')) {
+        let wrongAnswers = JSON.parse(localStorage.getItem('wrongAnswers') || '[]');
+        wrongAnswers = wrongAnswers.filter(item => item.id !== id);
+        localStorage.setItem('wrongAnswers', JSON.stringify(wrongAnswers));
+        
+        // Đóng popup cũ và mở lại popup mới
+        closeWrongAnswersPopup();
+        setTimeout(() => showWrongAnswers(), 100);
+    }
+}
+
+
+// Xóa tất cả câu sai (từ thanh điều khiển trái)
+function clearWrongAnswers() {
+    if (confirm('Bạn có chắc muốn xóa tất cả lịch sử câu sai?')) {
+        localStorage.removeItem('wrongAnswers');
+        const wrongAnswersList = document.getElementById('wrongAnswersList');
+        wrongAnswersList.classList.add('hidden');
+        alert('✅ Đã xóa tất cả lịch sử câu sai');
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     window.addEventListener('scroll', function() {
       const timerContainer = document.querySelector('.timer-container');
@@ -1358,5 +1903,23 @@ document.getElementById('clearAnswersBtn')
       updateTimerDisplay();
     };
   </script>
+    <script>
+// Quản lý audio player - Phiên bản cải tiến
+document.addEventListener('DOMContentLoaded', function() {
+    // Sử dụng event delegation để xử lý các audio player
+    document.body.addEventListener('play', function(e) {
+        if (e.target.tagName === 'AUDIO' && e.target.classList.contains('quiz-audio')) {
+            // Dừng tất cả audio khác
+            const allAudios = document.querySelectorAll('audio.quiz-audio');
+            allAudios.forEach(audio => {
+                if (audio !== e.target) {
+                    audio.pause();
+                    audio.currentTime = 0;
+                }
+            });
+        }
+    }, true);
+});
+</script>
 </body>
 </html>
