@@ -673,6 +673,21 @@
     color: #666;
 }
 
+.detail-btn {
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.detail-btn:hover {
+    background-color: #1976D2;
+}
+
 
 </style>
 </head>
@@ -779,6 +794,7 @@
     question: '細心',
     options: ['１ さいしん', '２ さいじん', '３ さいこころ', '４ こまかいこころ'],
     answer: '1',
+    detail: '🔴 細心（さいしん）<br>🈶 Kanji & Hán Việt: 細（TẾ）＝tỉ mỉ, 心（TÂM）＝tâm<br>Nghĩa: Cẩn thận, tỉ mỉ, chú ý đến chi tiết<br>💬 Ví dụ:<br>1. 細心の注意を払う。→ Chú ý cẩn thận.<br>2. 細心の計画を立てる。→ Lập kế hoạch tỉ mỉ.<br>3. 細心の配慮を欠かさない。→ Không bỏ qua sự quan tâm tỉ mỉ.<br>🟢 Đồng nghĩa: 注意深い（ちゅういぶかい）、慎重（しんちょう）<br>🔴 Trái nghĩa: 大雑把（おおざっぱ）<br>🧠 Cách nhớ: Tỉ mỉ + tâm → chú ý cẩn thận<br>👉 Tóm lại: 細心 = cẩn thận, tỉ mỉ',
     isReading: false
   },
   {
@@ -786,6 +802,7 @@
     question: '自尊心',
     options: ['１ じぞんしん', '２ じそんしん', '３ じそんじん', '４ じぞんじん'],
     answer: '2',
+    detail: '🔴 自尊心（じそんしん）<br>🈶 Kanji & Hán Việt: 自（TỰ）＝bản thân, 尊（TÔN）＝tôn trọng, 心（TÂM）＝lòng<br>Nghĩa: Lòng tự trọng<br>💬 Ví dụ:<br>1. 自尊心を傷つける言葉。→ Lời nói làm tổn thương lòng tự trọng.<br>2. 自尊心を持つ。→ Giữ lòng tự trọng.<br>3. 彼は自尊心が高い。→ Anh ấy có lòng tự trọng cao.<br>🟢 Đồng nghĩa: プライド、高慢（こうまん）<br>🔴 Trái nghĩa: 自卑（じひ）<br>🧠 Cách nhớ: Tự + tôn + tâm → lòng tự trọng<br>👉 Tóm lại: 自尊心 = lòng tự trọng',
     isReading: false
   },
   {
@@ -793,6 +810,7 @@
     question: '人格',
     options: ['１ ひとかく', '２ じんがく', '３ ひとがく', '４ じんかく'],
     answer: '4',
+    detail: '🔴 人格（じんかく）<br>🈶 Kanji & Hán Việt: 人（NHÂN）＝người, 格（CÁCH）＝phẩm cách<br>Nghĩa: Nhân cách, phẩm chất con người<br>💬 Ví dụ:<br>1. 高い人格を持つ人。→ Người có nhân cách cao.<br>2. 人格形成に影響を与える。→ Ảnh hưởng đến sự hình thành nhân cách.<br>3. 人格を尊重する。→ Tôn trọng nhân cách.<br>🟢 Đồng nghĩa: 人柄（ひとがら）、性格（せいかく）<br>🔴 Trái nghĩa: 悪人（あくにん）<br>🧠 Cách nhớ: Người + cách = phẩm chất con người<br>👉 Tóm lại: 人格 = nhân cách, phẩm chất',
     isReading: false
   },
   {
@@ -800,6 +818,7 @@
     question: '繊細',
     options: ['１ せんざい', '２ せいさい', '３ せんさい', '４ ぜんさい'],
     answer: '3',
+    detail: '🔴 繊細（せんさい）<br>🈶 Kanji & Hán Việt: 繊（TIÊM）＝mỏng manh, 細（TẾ）＝tỉ mỉ<br>Nghĩa: Nhạy cảm, tinh tế, tỉ mỉ<br>💬 Ví dụ:<br>1. 繊細な心を持つ人。→ Người có trái tim nhạy cảm.<br>2. 繊細な作業が必要だ。→ Cần công việc tỉ mỉ.<br>3. 繊細な感覚。→ Cảm giác tinh tế.<br>🟢 Đồng nghĩa: 細やか（こまやか）、敏感（びんかん）<br>🔴 Trái nghĩa: 粗雑（そざつ）<br>🧠 Cách nhớ: Mỏng manh + tỉ mỉ → nhạy cảm, tinh tế<br>👉 Tóm lại: 繊細 = nhạy cảm, tinh tế',
     isReading: false
   },
   {
@@ -807,6 +826,7 @@
     question: '素朴',
     options: ['１ そほく', '２ そぽく', '３ そぼく', '４ ぞほく'],
     answer: '3',
+    detail: '🔴 素朴（そぼく）<br>🈶 Kanji & Hán Việt: 素（TỐ）＝nguyên chất, 朴（PHÁC）＝mộc mạc<br>Nghĩa: Mộc mạc, đơn giản, chất phác<br>💬 Ví dụ:<br>1. 素朴な疑問。→ Câu hỏi ngây thơ.<br>2. 素朴な人柄。→ Tính cách mộc mạc.<br>3. 素朴な生活。→ Cuộc sống đơn giản.<br>🟢 Đồng nghĩa: 質朴（しつぼく）、簡素（かんそ）<br>🔴 Trái nghĩa: 派手（はで）、複雑（ふくざつ）<br>🧠 Cách nhớ: Nguyên + mộc → mộc mạc, đơn giản<br>👉 Tóm lại: 素朴 = mộc mạc, đơn giản',
     isReading: false
   },
   {
@@ -814,6 +834,7 @@
     question: '典型',
     options: ['１ てんかた', '２ てんけい', '３ てんがた', '４ てんげい'],
     answer: '2',
+    detail: '🔴 典型（てんけい）<br>🈶 Kanji & Hán Việt: 典（ĐIỂN）＝mẫu, 型（HÌNH）＝khuôn<br>Nghĩa: Điển hình, mẫu mực<br>💬 Ví dụ:<br>1. 典型的な例。→ Ví dụ điển hình.<br>2. 典型的な性格。→ Tính cách điển hình.<br>3. 典型的な失敗。→ Thất bại điển hình.<br>🟢 Đồng nghĩa: 模範（もはん）、代表例<br>🔴 Trái nghĩa: 例外（れいがい）<br>🧠 Cách nhớ: Mẫu + khuôn = điển hình<br>👉 Tóm lại: 典型 = điển hình',
     isReading: false
   },
   {
@@ -821,6 +842,7 @@
     question: '度量',
     options: ['１ どりょ', '２ とりょ', '３ とりょう', '４ どりょう'],
     answer: '4',
+    detail: '🔴 度量（どりょう）<br>🈶 Kanji & Hán Việt: 度（ĐỘ）＝mức, 量（LƯỢNG）＝sức<br>Nghĩa: Tấm lòng, độ lượng, khoan dung<br>💬 Ví dụ:<br>1. 度量の広い人。→ Người độ lượng.<br>2. 度量が狭い。→ Hẹp hòi, keo kiệt.<br>3. 度量のある指導者。→ Lãnh đạo khoan dung.<br>🟢 Đồng nghĩa: 寛大（かんだい）、大らか<br>🔴 Trái nghĩa: 狭量（きょうりょう）<br>🧠 Cách nhớ: Mức + lượng → sức chứa lòng → độ lượng<br>👉 Tóm lại: 度量 = độ lượng, khoan dung',
     isReading: false
   },
   {
@@ -828,6 +850,7 @@
     question: '抜群',
     options: ['１ ばつぐん', '２ ぱつぐん', '３ はつぐん', '４ ばつくん'],
     answer: '1',
+    detail: '🔴 抜群（ばつぐん）<br>🈶 Kanji & Hán Việt: 抜（BẠT）＝nổi bật, 群（QUẦN）＝nhóm<br>Nghĩa: Nổi bật, vượt trội<br>💬 Ví dụ:<br>1. 抜群の成績。→ Thành tích xuất sắc.<br>2. 抜群の才能。→ Tài năng vượt trội.<br>3. 抜群のセンス。→ Gu thẩm mỹ tuyệt vời.<br>🟢 Đồng nghĩa: 卓越（たくえつ）、秀でる（ひいでる）<br>🔴 Trái nghĩa: 平凡（へいぼん）<br>🧠 Cách nhớ: Nổi bật trong nhóm → xuất sắc<br>👉 Tóm lại: 抜群 = xuất sắc, nổi bật',
     isReading: false
   },
   {
@@ -835,6 +858,7 @@
     question: '不穏',
     options: ['１ ふあん', '２ ふおん', '３ ふこう', '４ ふきゅう'],
     answer: '2',
+    detail: '🔴 不穏（ふおん）<br>🈶 Kanji & Hán Việt: 不（BẤT）＝không, 穏（ỔN）＝êm<br>Nghĩa: Không yên, bất ổn<br>💬 Ví dụ:<br>1. 不穏な空気。→ Bầu không khí bất ổn.<br>2. 世の中が不穏だ。→ Thế giới bất ổn.<br>3. 不穏な動き。→ Diễn biến không ổn.<br>🟢 Đồng nghĩa: 不安（ふあん）、危険（きけん）<br>🔴 Trái nghĩa: 安穏（あんのん）<br>🧠 Cách nhớ: Không + êm → bất ổn<br>👉 Tóm lại: 不穏 = bất ổn',
     isReading: false
   },
   {
@@ -842,6 +866,7 @@
     question: '分別',
     options: ['１ ぶんぱつ', '２ ぶんぺつ', '３ ふんへつ', '４ ぶんべつ'],
     answer: '4',
+    detail: '🔴 分別（ふんべつ）<br>🈶 Kanji & Hán Việt: 分（PHÂN）＝phân biệt, 別（BIỆT）＝khác<br>Nghĩa: Phân biệt đúng sai, khôn ngoan<br>💬 Ví dụ:<br>1. 分別のある行動。→ Hành động có lý trí.<br>2. 分別をわきまえる。→ Biết phân biệt đúng sai.<br>3. 子どもでも分別が必要。→ Trẻ em cũng cần khôn ngoan.<br>🟢 Đồng nghĩa: 判断力（はんだんりょく）、理性（りせい）<br>🔴 Trái nghĩa: 無分別（むぶんべつ）<br>🧠 Cách nhớ: Phân biệt + khác → khôn ngoan',
     isReading: false
   },
   {
@@ -849,6 +874,7 @@
     question: '偏屈',
     options: ['１ へんくつ', '２ べんくつ', '３ へんぐつ', '４ べんぐつ'],
     answer: '1',
+    detail: '🔴 偏屈（へんくつ）<br>🈶 Kanji & Hán Việt: 偏（THIÊN）＝nghiêng, 屈（KHUẤT）＝cứng<br>Nghĩa: Cứng đầu, ngoan cố, ương ngạnh<br>💬 Ví dụ:<br>1. 偏屈な性格。→ Tính cách ương ngạnh.<br>2. 偏屈で話しにくい人。→ Người cứng đầu, khó nói chuyện.<br>3. 偏屈な考え方。→ Cách suy nghĩ ngoan cố.<br>🟢 Đồng nghĩa: 頑固（がんこ）<br>🔴 Trái nghĩa: 素直（すなお）<br>🧠 Cách nhớ: Nghiêng + cứng → ương ngạnh<br>👉 Tóm lại: 偏屈 = ngoan cố, ương ngạnh',
     isReading: false
   },
   {
@@ -856,6 +882,7 @@
     question: '放任',
     options: ['１ ほうびん', '２ ほうにん', '３ ほにん', '４ ほに'],
     answer: '2',
+    detail: '🔴 放任（ほうにん）<br>🈶 Kanji & Hán Việt: 放（PHÓNG）＝buông, 任（NHÂM）＝giao phó<br>Nghĩa: Buông lỏng, không quản lý<br>💬 Ví dụ:<br>1. 子どもを放任する。→ Buông lỏng con cái.<br>2. 放任主義。→ Chủ nghĩa buông lỏng.<br>3. 放任された環境。→ Môi trường bị bỏ mặc.<br>🟢 Đồng nghĩa: 自由放任（じゆうほうにん）<br>🔴 Trái nghĩa: 厳格（げんかく）<br>🧠 Cách nhớ: Buông + giao → buông lỏng<br>👉 Tóm lại: 放任 = buông lỏng, không quản lý',
     isReading: false
   },
   {
@@ -863,6 +890,7 @@
     question: '本性',
     options: ['１ ほんせい', '２ ぼんせい', '３ もとしょう', '４ ほんしょう'],
     answer: '1',
+    detail: '🔴 本性（ほんしょう）<br>🈶 Kanji & Hán Việt: 本（BỔN）＝bản, 性（TÍNH）＝tính<br>Nghĩa: Bản chất, tính thật<br>💬 Ví dụ:<br>1. 人の本性を見抜く。→ Nhìn thấu bản chất con người.<br>2. 本性を隠す。→ Giấu bản chất thật.<br>3. 本性が出る。→ Bản chất lộ ra.<br>🟢 Đồng nghĩa: 性格（せいかく）、素顔（すがお）<br>🔴 Trái nghĩa: 偽装（ぎそう）<br>🧠 Cách nhớ: Bản + tính → bản chất<br>👉 Tóm lại: 本性 = bản chất',
     isReading: false
   },
   {
@@ -870,6 +898,7 @@
     question: '無口',
     options: ['１ むち', '２ むくち', '３ なしくち', '４ むぐち'],
     answer: '2',
+    detail: '🔴 無口（むくち）<br>🈶 Kanji & Hán Việt: 無（VÔ）＝không, 口（KHẨU）＝miệng<br>Nghĩa: Ít nói, trầm tính<br>💬 Ví dụ:<br>1. 無口な人。→ Người ít nói.<br>2. 無口で物静か。→ Trầm tính, ít nói.<br>3. 無口な性格。→ Tính cách ít nói.<br>🟢 Đồng nghĩa: 寡黙（かもく）、口数少ない<br>🔴 Trái nghĩa: おしゃべり<br>🧠 Cách nhớ: Không + miệng → ít nói<br>👉 Tóm lại: 無口 = ít nói, trầm tính',
     isReading: false
   },
   {
@@ -877,6 +906,7 @@
     question: '弱気',
     options: ['１ よわいき', '２ よわぎ', '３ よわき', '４ よわげ'],
     answer: '3',
+    detail: '🔴 弱気（よわき）<br>🈶 Kanji & Hán Việt: 弱（NHƯỢC）＝yếu, 気（KHÍ）＝tinh thần<br>Nghĩa: Yếu đuối, nhút nhát<br>💬 Ví dụ:<br>1. 弱気な態度。→ Thái độ yếu đuối.<br>2. 弱気で挑戦しない。→ Nhút nhát không dám thử.<br>3. 弱気にならないで。→ Đừng nhút nhát.<br>🟢 Đồng nghĩa: 臆病（おくびょう）<br>🔴 Trái nghĩa: 強気（つよき）<br>🧠 Cách nhớ: Yếu + tinh thần → nhút nhát<br>👉 Tóm lại: 弱気 = nhút nhát, yếu đuối',
     isReading: false
   },
   {
@@ -884,6 +914,7 @@
     question: '冷酷',
     options: ['１ れいごく', '２ れいこく', '３ れこく', '４ れごく'],
     answer: '2',
+    detail: '🔴 冷酷（れいこく）<br>🈶 Kanji & Hán Việt: 冷（LÃNH）＝lạnh, 酷（KHỐC）＝tàn nhẫn<br>Nghĩa: Lạnh lùng, tàn nhẫn<br>💬 Ví dụ:<br>1. 冷酷な人。→ Người lạnh lùng.<br>2. 冷酷な判断。→ Quyết định tàn nhẫn.<br>3. 冷酷な仕打ち。→ Cách đối xử tàn nhẫn.<br>🟢 Đồng nghĩa: 無情（むじょう）、非情（ひじょう）<br>🔴 Trái nghĩa: 情け深い（なさけぶかい）<br>🧠 Cách nhớ: Lạnh + tàn nhẫn → lạnh lùng<br>👉 Tóm lại: 冷酷 = lạnh lùng, tàn nhẫn',
     isReading: false
   },
   {
@@ -891,6 +922,7 @@
     question: '惜しむ',
     options: ['１ おじむ', '２ おすむ', '３ うしむ', '４ おしむ'],
     answer: '4',
+    detail: '🔴 惜しむ（おしむ）<br>🈶 Kanji & Hán Việt: 惜（TÍCH）＝tiếc<br>Nghĩa: Tiếc nuối, luyến tiếc<br>💬 Ví dụ:<br>1. 時間を惜しむ。→ Tiếc thời gian.<br>2. お金を惜しむ。→ Tiếc tiền.<br>3. 命を惜しむ。→ Luyến tiếc mạng sống.<br>🟢 Đồng nghĩa: 残念に思う、もったいない<br>🔴 Trái nghĩa: 喜ぶ（よろこぶ）<br>🧠 Cách nhớ: Tiếc → luyến tiếc<br>👉 Tóm lại: 惜しむ = tiếc nuối',
     isReading: false
   },
   {
@@ -898,6 +930,7 @@
     question: '固める',
     options: ['１ かためる', '２ かたむる', '３ かたせる', '４ かだめる'],
     answer: '1',
+    detail: '🔴 固める（かためる）<br>🈶 Kanji & Hán Việt: 固（CỐ）＝cứng<br>Nghĩa: Củng cố, làm chắc, làm cứng<br>💬 Ví dụ:<br>1. 計画を固める。→ Củng cố kế hoạch.<br>2. 結束を固める。→ Thắt chặt đoàn kết.<br>3. 土を固める。→ Làm đất cứng.<br>🟢 Đồng nghĩa: 強化する（きょうかする）、固定する（こていする）<br>🔴 Trái nghĩa: 緩める（ゆるめる）<br>🧠 Cách nhớ: Cứng → củng cố<br>👉 Tóm lại: 固める = củng cố, làm chắc',
     isReading: false
   },
   {
@@ -905,6 +938,7 @@
     question: 'こだわる',
     options: ['１ Củng cố, làm cứng', '２ Trau chuốt', '３ Câu nệ, để ý, kỹ càng', '４ Say mê'],
     answer: '3',
+    detail: '🔴 こだわる<br>🈶 Nghĩa: Khăng khăng, chú ý tỉ mỉ, quan tâm đặc biệt<br>💬 Ví dụ:<br>1. 細部にこだわる。→ Khắt khe với chi tiết.<br>2. 品質にこだわる。→ Quan tâm đến chất lượng.<br>3. こだわりが強い人。→ Người khắt khe.<br>🟢 Đồng nghĩa: 執着する（しゅうちゃくする）<br>🔴 Trái nghĩa: 気にしない<br>🧠 Cách nhớ: Quan tâm đặc biệt → khăng khăng<br>👉 Tóm lại: こだわる = chú ý, khắt khe',
     isReading: false
   },
   {
@@ -912,6 +946,7 @@
     question: '凝る',
     options: ['１ ごる', '２ おこる', '３ こうる', '４ こる'],
     answer: '4',
+    detail: '🔴 凝る（こる）<br>🈶 Kanji & Hán Việt: 凝（NGƯNG）＝đông, tập trung<br>Nghĩa: Cầu kỳ, chuyên tâm, cứng<br>💬 Ví dụ:<br>1. デザインに凝る。→ Chuyên tâm vào thiết kế.<br>2. 凝った料理。→ Món ăn cầu kỳ.<br>3. 肩が凝る。→ Vai bị cứng.<br>🟢 Đồng nghĩa: 専念する（せんねんする）、こだわる<br>🔴 Trái nghĩa: 手抜きする（てぬきする）<br>🧠 Cách nhớ: Tập trung + đông → chuyên tâm<br>👉 Tóm lại: 凝る = chuyên tâm, cầu kỳ',
     isReading: false
   },
   {
@@ -919,6 +954,7 @@
     question: 'Kỹ lưỡng, cẩn thận (đến từng chi tiết nhỏ)',
     options: ['１ 明細', '２ 心臓', '３ 心配', '４ 細心'],
     answer: '4',
+    detail: '',
     isReading: false
   },
   {
@@ -926,6 +962,7 @@
     question: 'Lòng tự ái, lòng tự trọng',
     options: ['1 自信', '2 自動', '3 自宅', '4 自尊心'],
     answer: '4',
+    detail: '',
     isReading: false
   },
   {
@@ -933,6 +970,7 @@
     question: 'Nhân cách',
     options: ['人格', '人脈', '人生', '合格'],
     answer: '1',
+    detail: '',
     isReading: false
   },
   {
@@ -940,6 +978,7 @@
     question: 'Tinh tế, nhạy cảm (tính cách)',
     options: ['細心', '明細', '繊細', '繊毛'],
     answer: '3',
+    detail: '',
     isReading: false
   },
   {
@@ -947,6 +986,7 @@
     question: 'Mộc mạc, đơn sơ, chất phác',
     options: ['素材', '素直', '素朴', '素手'],
     answer: '3',
+    detail: '',
     isReading: false
   },
   {
@@ -954,6 +994,7 @@
     question: 'Điển hình',
     options: ['典型', '辞典', '小型', '新型'],
     answer: '1',
+    detail: '',
     isReading: false
   },
   {
@@ -961,6 +1002,7 @@
     question: 'Rộng lượng, hào phóng, rộng rãi (tính cách)',
     options: ['頻度', '度量', '温度', '年度'],
     answer: '2',
+    detail: '',
     isReading: false
   },
   {
@@ -968,6 +1010,7 @@
     question: 'Đặc biệt nổi trội, xuất sắc , nổi bật (so với trong nhóm,tập thể..)',
     options: ['群体', '群衆', '抜群', '群馬'],
     answer: '3',
+    detail: '',
     isReading: false
   },
   {
@@ -975,6 +1018,7 @@
     question: 'Bất ổn',
     options: ['不穏', '不安', '不況', '不幸'],
     answer: '1',
+    detail: '',
     isReading: false
   },
   {
@@ -982,6 +1026,7 @@
     question: 'Phân biệt',
     options: ['特別', '分別', '分析', '分布'],
     answer: '1',
+    detail: '',
     isReading: false
   },
   {
@@ -989,6 +1034,7 @@
     question: '(Tính cách) lập dị, khó tính,khó chiều',
     options: ['偏差', '偏心', '退屈', '偏屈'],
     answer: '4',
+    detail: '',
     isReading: false
   },
   {
@@ -996,6 +1042,7 @@
     question: 'Bỏ mặc,không can thiệp, để cho tự do làm theo ý thích',
     options: ['放題', '放任', '解放', '放送'],
     answer: '2',
+    detail: '',
     isReading: false
   },
   {
@@ -1003,6 +1050,7 @@
     question: 'Bản tính, bản chất thật',
     options: ['本棚', '本日', '本人', '本性'],
     answer: '4',
+    detail: '',
     isReading: false
   },
   {
@@ -1010,6 +1058,7 @@
     question: 'Ít nói',
     options: ['無口', '無言', '無料', '無理'],
     answer: '2',
+    detail: '',
     isReading: false
   },
   {
@@ -1017,6 +1066,7 @@
     question: 'Yếu đuối, tiêu cực (tinh thần)',
     options: ['弱火', '弱音', '弱気', '弱視'],
     answer: '3',
+    detail: '',
     isReading: false
   },
   {
@@ -1024,6 +1074,7 @@
     question: 'Lạnh lùng, tàn nhẫn, máu lạnh',
     options: ['冷静', '残酷', '冷酷', '酷遇'],
     answer: '3',
+    detail: '',
     isReading: false
   },
   {
@@ -1031,6 +1082,7 @@
     question: 'Tiếc nuối',
     options: ['恨む', '悔やむ', '惜しむ', '睨む'],
     answer: '3',
+    detail: '',
     isReading: false
   },
   {
@@ -1038,6 +1090,7 @@
     question: 'Làm chắc, củng cố, làm đông cứng',
     options: ['楽しめる', '高める', '深める', '固める'],
     answer: '1',
+    detail: '',
     isReading: false
   },
   {
@@ -1045,6 +1098,7 @@
     question: 'Câu nệ, để ý, chọn lọc kỹ càng',
     options: ['こだわる', 'こたわる', 'ごたわる', 'ごだわる'],
     answer: '3',
+    detail: '',
     isReading: false
   },
   {
@@ -1052,6 +1106,7 @@
     question: 'Say mê,đau mỏi(vai), chuyên tâm, trau chuốt',
     options: ['疑う', '疑る', '凝う', '凝る'],
     answer: '4',
+    detail: '',
     isReading: false
   }
 ]; 
@@ -1153,12 +1208,107 @@
                 label.innerHTML = `<input type="radio" name="q${index + 1}" value="${i + 1}"> ${opt}`;
                 div.appendChild(label);
             });
+
+            const detailBtn = document.createElement('button');
+            detailBtn.classList.add('detail-btn');
+            detailBtn.textContent = 'Xem chi tiết';
+            detailBtn.addEventListener('click', (e) => {
+                e.preventDefault(); // Ngăn chặn sự kiện mặc định
+                e.stopPropagation(); // Ngăn sự kiện lan truyền
+                showQuestionDetail(index);
+            });
+            div.appendChild(detailBtn);
             quizAnswers[`q${index + 1}`] = q.answer;
         }
         
         form.appendChild(div);
     });
 }
+
+function showQuestionDetail(index) {
+    const question = quizData[index];
+    const detailValue = question.detail || "Không có chi tiết bổ sung";
+    
+    // Tạo popup chi tiết với style mới
+    const detailPopup = document.createElement('div');
+    detailPopup.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        z-index: 1000;
+        max-width: 500px;
+        width: 90%;
+        border: 3px solid #ff6b6b;
+        max-height: 80vh;
+        overflow: hidden;
+    `;
+    
+    detailPopup.innerHTML = `
+        <div style="position: relative; height: 100%;">
+            <button id="closeDetailPopup" style="
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 10;
+            transform: translate(-50%, -50%); // Điều chỉnh vị trí
+        ">
+            ✕
+        </button>
+
+            <div style="
+                max-height: calc(80vh - 100px);
+                overflow-y: auto;
+                padding-right: 10px;
+            ">
+                <h3 style="color: #ff6b6b; margin-top: 0; border-bottom: 2px solid #ff6b6b; padding-bottom: 10px;">
+                    Nội dung chi tiết
+                </h3>
+                <p style="text-align: left; line-height: 1.6; color: #333; margin-right: 10px;">
+                    ${detailValue}
+                </p>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(detailPopup);
+
+    // Hàm đóng popup
+    function closePopup() {
+        document.body.removeChild(detailPopup);
+        document.removeEventListener('keydown', escHandler);
+    }
+
+    // Thêm sự kiện click cho nút X
+    const closeButton = document.getElementById('closeDetailPopup');
+    closeButton.addEventListener('click', closePopup);
+
+    // Thêm sự kiện ESC để đóng popup
+    const escHandler = (e) => {
+        if (e.key === 'Escape') {
+            closePopup();
+        }
+    };
+    document.addEventListener('keydown', escHandler);
+}
+
 
     /***=== CHỨC NĂNG TIMER RIÊNG CHO MỖI BLOCK ===***/
     function setReadingTimer(idx) {
