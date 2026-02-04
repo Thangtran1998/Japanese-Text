@@ -687,6 +687,125 @@
 .detail-btn:hover {
     background-color: #1976D2;
 }
+/* =========================
+   DARK THEME – Gray / Blue / Purple
+   ========================= */
+
+body.dark {
+  background-color: #1c1f26;       /* xám than */
+  color: #d6d8dc;                  /* chữ xám sáng */
+}
+
+/* ===== Heading ===== */
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark h4 {
+  color: #eef0f3;
+}
+
+/* ===== Khối chính ===== */
+body.dark .section,
+body.dark #quizControls,
+body.dark #leftControls,
+body.dark #quizControlsContainer,
+body.dark #leftControlsContainer,
+body.dark .timer-container,
+body.dark .sub-question-box,
+body.dark #quizHistory,
+body.dark #wrongAnswersList {
+  background-color: #232732;
+  border: 1px solid #343a4a;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.6);
+}
+
+/* ===== Đọc hiểu (nhấn tím nhẹ) ===== */
+body.dark .reading-comprehension {
+  background: linear-gradient(
+    135deg,
+    #232732,
+    #2b2f3d
+  );
+  border-left: 4px solid #8b7cf6;
+}
+
+body.dark .reading-label {
+  background-color: #6f61e8;
+  color: #ffffff;
+}
+
+/* ===== Text & Answer ===== */
+body.dark .answer-option {
+  color: #d6d8dc;
+}
+
+body.dark .answer-option:hover {
+  color: #7bb6ff; /* xanh dịu */
+}
+
+/* ===== Input ===== */
+body.dark input,
+body.dark .timer-input,
+body.dark .reading-timer-input,
+body.dark #editKey,
+body.dark #editValue {
+  background-color: #1c1f26;
+  color: #eef0f3;
+  border: 1px solid #3a4054;
+}
+
+/* ===== Button ===== */
+body.dark button,
+body.dark .timer-btn {
+  background: linear-gradient(135deg, #4c7cff, #6f61e8);
+  color: white;
+  border: none;
+}
+
+body.dark button:hover,
+body.dark .timer-btn:hover {
+  filter: brightness(1.1);
+}
+
+/* ===== Quiz result ===== */
+body.dark #quizResult {
+  background-color: #1f2330;
+  border-left: 4px solid #4c7cff;
+}
+
+/* ===== Highlight controls ===== */
+body.dark .highlight-controls,
+body.dark .reading-timer-container {
+  background-color: #1c1f26;
+  border: 1px solid #3a4054;
+}
+
+/* ===== Popup ===== */
+body.dark .result-popup {
+  background-color: #232732;
+  color: #eef0f3;
+}
+
+body.dark .close-popup {
+  color: #bbb;
+}
+body.dark .close-popup:hover {
+  color: white;
+}
+
+/* ===== Table (câu sai) ===== */
+body.dark table,
+body.dark .wrong-answers-table {
+  background-color: #232732;
+}
+
+body.dark .wrong-answers-table tr:nth-child(even) {
+  background-color: #1f2330;
+}
+
+body.dark .wrong-answers-table tr:hover {
+  background-color: #2d3350;
+}
 
 
 </style>
@@ -704,6 +823,18 @@
       <span id="timerDisplay" class="timer-display">20:00</span>
     </div>
   </div>
+
+  <button
+  type="button"
+  id="darkModeToggleBtn"
+  class="timer-btn"
+  onclick="toggleDarkMode()"
+  style="margin: 10px 0;"
+>
+  🌙 Dark Mode
+</button>
+
+
   
   <div class="section" id="testday1">
     <h2>📝 Test Từ Vựng Ngày 11</h2>
@@ -794,7 +925,7 @@
     question: '柄',
     options: ['から', 'がら', 'まら', 'きら'],
     answer: '2',
-    detail: '',
+    detail: '🔴 柄（がら）<br>🈶 Kanji & Hán Việt: 柄（BÍNH）＝hoa văn, mô típ, cán<br>Nghĩa: Hoa văn, họa tiết, kiểu dáng; đôi khi nghĩa là “tính cách, loại người”.<br>💬 Ví dụ:<br>1. 花柄のワンピースを着ている。→ Cô ấy mặc váy có hoa văn hoa.<br>2. この柄のシャツは派手すぎる。→ Cái áo sơ mi hoa văn này sặc sỡ quá.<br>3. 彼はその役に合わない柄だ。→ Anh ta không phải loại người phù hợp với vai trò đó.<br>🧠 Cách nhớ: Bộ 木 (cây) + 井 (giếng) → phần “cán” của vật bằng gỗ → mở rộng nghĩa hoa văn, dáng vẻ.<br>👉 Tóm lại: 柄 = hoa văn, kiểu dáng, hoặc loại người.',
     isReading: false
   },
   {
@@ -802,7 +933,7 @@
     question: '生地',
     options: ['きじ', 'ひじ', 'しじ', 'かじ'],
     answer: '1',
-    detail: '',
+    detail: '🔴 生地（きじ）<br>🈶 Kanji & Hán Việt: 生（SINH）＝thô, chưa chế biến; 地（ĐỊA）＝vật chất, mặt đất<br>Nghĩa: Vải thô, chất liệu vải; hoặc bột bánh chưa nướng.<br>💬 Ví dụ:<br>1. この服の生地は薄くて軽い。→ Vải của bộ đồ này mỏng và nhẹ.<br>2. パンの生地をこねる。→ Nhào bột làm bánh mì.<br>3. 生地がいい人だ。→ Người có bản chất tốt (nghĩa bóng).<br>🧠 Cách nhớ: “Chất đất sống” → chất liệu gốc, chưa gia công.<br>👉 Tóm lại: 生地 = vải, chất liệu, bản chất.',
     isReading: false
   },
   {
@@ -810,7 +941,7 @@
     question: '軽装',
     options: ['けいし', 'けいひ', 'けいそう', 'けいけん'],
     answer: '3',
-    detail: '',
+    detail: '🔴 軽装（けいそう）<br>🈶 Kanji & Hán Việt: 軽（KHINH）＝nhẹ; 装（TRANG）＝trang phục<br>Nghĩa: Ăn mặc đơn giản, gọn nhẹ (so với lễ phục).<br>💬 Ví dụ:<br>1. 夏は軽装で出勤してもいい。→ Mùa hè có thể mặc nhẹ khi đi làm.<br>2. 山登りに軽装で行くのは危険だ。→ Leo núi mà mặc đồ nhẹ là nguy hiểm.<br>🧠 Cách nhớ: Trang phục (装) nhẹ (軽) → ăn mặc đơn giản.<br>👉 Tóm lại: 軽装 = ăn mặc gọn nhẹ, giản dị.',
     isReading: false
   },
   {
@@ -818,7 +949,7 @@
     question: '結晶',
     options: ['けっそう', 'けっそ', 'けっしょ', 'けっしょう'],
     answer: '4',
-    detail: '',
+    detail: '🔴 結晶（けっしょう）<br>🈶 Kanji & Hán Việt: 結（KẾT）＝kết hợp; 晶（TINH）＝tinh thể, sáng rõ<br>Nghĩa: Tinh thể; kết tinh (nghĩa bóng: thành quả).<br>💬 Ví dụ:<br>1. 雪の結晶が美しい。→ Tinh thể tuyết rất đẹp.<br>2. 努力の結晶だ。→ Đây là kết tinh của sự nỗ lực.<br>🧠 Cách nhớ: Kết hợp các tinh thể lại → tạo nên “kết tinh”.<br>👉 Tóm lại: 結晶 = tinh thể, kết tinh, thành quả.',
     isReading: false
   },
   {
@@ -826,7 +957,7 @@
     question: '豪華',
     options: ['そうか', 'ろうか', 'ごうか', 'こうか'],
     answer: '3',
-    detail: '',
+    detail: '🔴 豪華（ごうか）<br>🈶 Kanji & Hán Việt: 豪（HÀO）＝sang trọng; 華（HOA）＝hoa lệ<br>Nghĩa: Sang trọng, lộng lẫy, xa hoa.<br>💬 Ví dụ:<br>1. 豪華なホテルに泊まる。→ Nghỉ ở khách sạn sang trọng.<br>2. 豪華な食事を用意した。→ Đã chuẩn bị bữa ăn thịnh soạn.<br>🧠 Cách nhớ: Hào + Hoa → vẻ đẹp sang trọng và rực rỡ.<br>👉 Tóm lại: 豪華 = sang trọng, tráng lệ.',
     isReading: false
   },
   {
@@ -834,7 +965,7 @@
     question: '構想',
     options: ['ろうそう', 'ほうそう', 'こうそう', 'もうそう'],
     answer: '3',
-    detail: '',
+    detail: '🔴 構想（こうそう）<br>🈶 Kanji & Hán Việt: 構（CẤU）＝cấu trúc; 想（TƯỞNG）＝ý tưởng<br>Nghĩa: Ý tưởng, bản thiết kế khái niệm, kế hoạch lớn.<br>💬 Ví dụ:<br>1. 新しい都市の構想を練る。→ Lên kế hoạch cho một thành phố mới.<br>2. この作品は彼の構想によって作られた。→ Tác phẩm này được tạo ra từ ý tưởng của anh ấy.<br>🧠 Cách nhớ: Cấu (xây dựng) + Tưởng (ý nghĩ) → xây dựng ý tưởng.<br>👉 Tóm lại: 構想 = ý tưởng, kế hoạch khái niệm.',
     isReading: false
   },
   {
@@ -842,7 +973,7 @@
     question: '新築',
     options: ['しんこく', 'しんちく', 'しんせん', 'しんそく'],
     answer: '2',
-    detail: '',
+    detail: '🔴 新築（しんちく）<br>🈶 Kanji & Hán Việt: 新（TÂN）＝mới; 築（TRÚC）＝xây dựng<br>Nghĩa: Xây mới (nhà, công trình).<br>💬 Ví dụ:<br>1. 家を新築する。→ Xây nhà mới.<br>2. 新築祝いを贈る。→ Gửi quà mừng nhà mới.<br>🧠 Cách nhớ: Tân + Trúc → xây dựng mới hoàn toàn.<br>👉 Tóm lại: 新築 = xây mới (nhà).',
     isReading: false
   },
   {
@@ -850,7 +981,7 @@
     question: '裾',
     options: ['すそ', 'いそ', 'かそ', 'なそ'],
     answer: '1',
-    detail: '',
+    detail: '🔴 裾（すそ）<br>🈶 Kanji & Hán Việt: 裾（CƯ）＝vạt áo, gấu quần<br>Nghĩa: Vạt áo, gấu quần; phần chân núi.<br>💬 Ví dụ:<br>1. ズボンの裾を直す。→ Sửa gấu quần.<br>2. 山の裾に村がある。→ Dưới chân núi có một ngôi làng.<br>🧠 Cách nhớ: Chữ biểu ý phần thấp của quần áo → gấu, vạt, phần dưới.<br>👉 Tóm lại: 裾 = gấu áo/quần, chân núi.',
     isReading: false
   },
   {
@@ -858,7 +989,7 @@
     question: '精巧',
     options: ['せこ', 'せいこ', 'せこう', 'せいこう'],
     answer: '4',
-    detail: '',
+    detail: '🔴 精巧（せいこう）<br>🈶 Kanji & Hán Việt: 精（TINH）＝tinh tế; 巧（XẢO）＝khéo léo<br>Nghĩa: Tinh xảo, tinh vi, khéo léo.<br>💬 Ví dụ:<br>1. 精巧な機械を作る。→ Chế tạo máy móc tinh xảo.<br>2. この時計は精巧にできている。→ Chiếc đồng hồ này được làm rất tinh vi.<br>🧠 Cách nhớ: Tinh tế + khéo léo → tinh xảo.<br>👉 Tóm lại: 精巧 = tinh xảo, tinh vi.',
     isReading: false
   },
   {
@@ -866,7 +997,7 @@
     question: '正装',
     options: ['しょうそう', 'せいそう', 'ただしそう', 'せいそ'],
     answer: '2',
-    detail: '',
+    detail: '🔴 正装（せいそう）<br>🈶 Kanji & Hán Việt: 正（CHÁNH）＝chính thức; 装（TRANG）＝trang phục<br>Nghĩa: Trang phục nghi lễ, ăn mặc chỉnh tề.<br>💬 Ví dụ:<br>1. 結婚式には正装で出席する。→ Dự đám cưới trong trang phục nghi lễ.<br>2. 正装してパーティーに行く。→ Ăn mặc chỉnh tề đi dự tiệc.<br>🧠 Cách nhớ: Trang phục (装) chính thức (正) → lễ phục.<br>👉 Tóm lại: 正装 = lễ phục, trang phục trang trọng.',
     isReading: false
   },
   {
@@ -874,7 +1005,7 @@
     question: '対比',
     options: ['たいひ', 'だいひ', 'たいび', 'だいび'],
     answer: '1',
-    detail: '',
+    detail: '🔴 対比（たいひ）<br>🈶 Kanji & Hán Việt: 対（ĐỐI）＝so với; 比（TỈ）＝so sánh<br>Nghĩa: So sánh, đối chiếu giữa hai vật.<br>💬 Ví dụ:<br>1. 明暗の対比がはっきりしている。→ Sự tương phản sáng tối rõ ràng.<br>2. 日本とベトナムの文化を対比する。→ So sánh văn hóa Nhật và Việt.<br>🧠 Cách nhớ: Đối + Tỷ → đối chiếu, so sánh.<br>👉 Tóm lại: 対比 = sự so sánh, đối lập.',
     isReading: false
   },
   {
@@ -882,7 +1013,7 @@
     question: '陳列',
     options: ['ちんもく', 'ちんれつ', 'ちんせつ', 'ちんほく'],
     answer: '2',
-    detail: '',
+    detail: '🔴 陳列（ちんれつ）<br>🈶 Kanji & Hán Việt: 陳（TRẦN）＝bày ra; 列（LIỆT）＝xếp hàng<br>Nghĩa: Trưng bày, sắp xếp để cho xem.<br>💬 Ví dụ:<br>1. 商品を陳列する。→ Trưng bày hàng hóa.<br>2. 博物館に絵画が陳列されている。→ Tranh được trưng bày trong bảo tàng.<br>🧠 Cách nhớ: Bày ra (陳) + xếp hàng (列) → trưng bày.<br>👉 Tóm lại: 陳列 = trưng bày, bày biện.',
     isReading: false
   },
   {
@@ -890,7 +1021,7 @@
     question: '半端',
     options: ['はんか', 'はんま', 'はんば', 'はんぱ'],
     answer: '4',
-    detail: '',
+    detail: '🔴 半端（はんぱ）<br>🈶 Kanji & Hán Việt: 半（BÁN）＝một nửa; 端（ĐOAN）＝đầu, mép<br>Nghĩa: Dở dang, không trọn vẹn, lưng chừng.<br>💬 Ví dụ:<br>1. 半端な仕事はやめなさい。→ Đừng làm việc nửa vời.<br>2. 半端じゃない暑さだ。→ Nóng khủng khiếp (không phải bình thường).<br>🧠 Cách nhớ: Nửa + Đầu → thứ không hoàn toàn → nửa vời.<br>👉 Tóm lại: 半端 = nửa chừng, không hoàn chỉnh.',
     isReading: false
   },
   {
@@ -898,7 +1029,7 @@
     question: '縁',
     options: ['くち', 'ふち', 'まち', 'おち'],
     answer: '2',
-    detail: '',
+    detail: '🔴 縁（えん）<br>🈶 Kanji & Hán Việt: 縁（DUYÊN）＝mối liên hệ, kết nối<br>Nghĩa: Duyên, mối quan hệ, liên kết giữa người với người.<br>💬 Ví dụ:<br>1. 不思議な縁で出会った。→ Gặp nhau nhờ một duyên kỳ lạ.<br>2. 縁を大切にする。→ Trân trọng mối duyên, mối quan hệ.<br>🧠 Cách nhớ: Chữ thể hiện sợi dây liên kết giữa người với người → duyên.<br>👉 Tóm lại: 縁 = duyên, mối quan hệ.',
     isReading: false
   },
   {
@@ -906,7 +1037,7 @@
     question: '粉末',
     options: ['くんまつ', 'ぶんまつ', 'ふんまつ', 'くんばつ'],
     answer: '3',
-    detail: '',
+    detail: '🔴 粉末（ふんまつ）<br>🈶 Kanji & Hán Việt: 粉（PHẤN）＝bột; 末（MẠT）＝nhỏ, mịn<br>Nghĩa: Dạng bột mịn.<br>💬 Ví dụ:<br>1. 粉末コーヒーを溶かす。→ Hòa tan cà phê bột.<br>2. 薬を粉末にする。→ Nghiền thuốc thành bột.<br>🧠 Cách nhớ: Phấn + Mạt → chất được nghiền nhỏ → bột.<br>👉 Tóm lại: 粉末 = dạng bột, bột mịn.',
     isReading: false
   },
   {
@@ -914,7 +1045,7 @@
     question: '稀',
     options: ['いれ', 'まれ', 'それ', 'なれ'],
     answer: '2',
-    detail: '',
+    detail: '🔴 稀（まれ）<br>🈶 Kanji & Hán Việt: 稀（HI）＝hiếm có<br>Nghĩa: Hiếm, ít khi xảy ra, đặc biệt.<br>💬 Ví dụ:<br>1. 稀に見る才能だ。→ Tài năng hiếm có.<br>2. こんなことは稀だ。→ Chuyện này hiếm khi xảy ra.<br>🧠 Cách nhớ: Chữ biểu ý sự ít ỏi, hiếm gặp.<br>👉 Tóm lại: 稀 = hiếm, hiếm khi.',
     isReading: false
   },
   {
@@ -922,7 +1053,7 @@
     question: '身なり',
     options: ['いなり', 'しんなり', 'きなり', 'みなり'],
     answer: '4',
-    detail: '',
+    detail: '🔴 身なり（みなり）<br>🈶 Kanji & Hán Việt: 身（THÂN）＝thân thể; 成り（thành）＝trạng thái<br>Nghĩa: Diện mạo, vẻ ngoài, cách ăn mặc.<br>💬 Ví dụ:<br>1. 身なりを整える。→ Chỉnh tề trang phục, ngoại hình.<br>2. 彼は身なりが立派だ。→ Anh ấy ăn mặc bảnh bao, lịch sự.<br>🧠 Cách nhớ: Cách “thể hiện thân” ra ngoài → vẻ ngoài, ăn mặc.<br>👉 Tóm lại: 身なり = diện mạo, cách ăn mặc.',
     isReading: false
   },
   {
@@ -930,7 +1061,7 @@
     question: '無造作',
     options: ['むぞうさ', 'むそうさ', 'むそさ', 'むそざ'],
     answer: '1',
-    detail: '',
+    detail: '🔴 無造作（むぞうさ）<br>🈶 Kanji & Hán Việt: 無（VÔ）＝không; 造作（TẠO TÁC）＝tạo hình, làm ra<br>Nghĩa: Đơn giản, không cầu kỳ; (cũng có thể nghĩa là bất cẩn).<br>💬 Ví dụ:<br>1. 無造作に髪をまとめる。→ Buộc tóc một cách đơn giản.<br>2. 彼は無造作に答えた。→ Anh ấy trả lời qua loa, không suy nghĩ nhiều.<br>🧠 Cách nhớ: Không (無) + làm ra (造作) → không trau chuốt.<br>👉 Tóm lại: 無造作 = đơn giản, không cầu kỳ.',
     isReading: false
   },
   {
@@ -938,7 +1069,7 @@
     question: '紫',
     options: ['むらさぎ', 'むらかみ', 'むらさき', 'むらさり'],
     answer: '3',
-    detail: '',
+    detail: '🔴 紫（むらさき）<br>🈶 Kanji & Hán Việt: 紫（TỬ）＝màu tím<br>Nghĩa: Màu tím.<br>💬 Ví dụ:<br>1. 紫の花が咲いている。→ Hoa tím đang nở.<br>2. 紫のドレスが似合う。→ Hợp với chiếc váy màu tím.<br>🧠 Cách nhớ: Chữ tượng hình chỉ màu tím cổ xưa trong thiên nhiên.<br>👉 Tóm lại: 紫 = màu tím.',
     isReading: false
   },
   {
@@ -946,7 +1077,7 @@
     question: '模型',
     options: ['ぼがた', 'もがた', 'ぼけい', 'もけい'],
     answer: '4',
-    detail: '',
+    detail: '🔴 模型（もけい）<br>🈶 Kanji & Hán Việt: 模（MÔ）＝mô phỏng; 型（HÌNH）＝hình dạng<br>Nghĩa: Mô hình thu nhỏ, mẫu mô phỏng.<br>💬 Ví dụ:<br>1. 飛行機の模型を作る。→ Làm mô hình máy bay.<br>2. 建物の模型を展示する。→ Trưng bày mô hình tòa nhà.<br>🧠 Cách nhớ: Mô phỏng (模) hình dạng (型) → mô hình.<br>👉 Tóm lại: 模型 = mô hình, mẫu thu nhỏ.',
     isReading: false
   },
   {
@@ -1230,23 +1361,27 @@ function showQuestionDetail(index) {
     const detailValue = question.detail || "Không có chi tiết bổ sung";
     
     // Tạo popup chi tiết với style mới
-    const detailPopup = document.createElement('div');
-    detailPopup.style.cssText = `
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: white;
-        padding: 25px;
-        border-radius: 15px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        z-index: 1000;
-        max-width: 500px;
-        width: 90%;
-        border: 3px solid #ff6b6b;
-        max-height: 80vh;
-        overflow: hidden;
-    `;
+    const isDark = document.body.classList.contains('dark');
+
+const detailPopup = document.createElement('div');
+detailPopup.style.cssText = `
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: ${isDark ? '#232732' : 'white'};
+    color: ${isDark ? '#eef0f3' : '#333'};
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,${isDark ? '0.6' : '0.2'});
+    z-index: 1000;
+    max-width: 500px;
+    width: 90%;
+    border: 3px solid ${isDark ? '#6f61e8' : '#ff6b6b'};
+    max-height: 80vh;
+    overflow: hidden;
+`;
+
     
     detailPopup.innerHTML = `
         <div style="position: relative; height: 100%;">
@@ -1281,9 +1416,16 @@ function showQuestionDetail(index) {
                 <h3 style="color: #ff6b6b; margin-top: 0; border-bottom: 2px solid #ff6b6b; padding-bottom: 10px;">
                     Nội dung chi tiết
                 </h3>
-                <p style="text-align: left; line-height: 1.6; color: #333; margin-right: 10px;">
-                    ${detailValue}
-                </p>
+                <p style="
+    text-align: left;
+    line-height: 1.7;
+    color: ${isDark ? '#e6e8ee' : '#333'};
+    margin-right: 10px;
+    font-size: 15px;
+">
+    ${detailValue}
+</p>
+
             </div>
         </div>
     `;
@@ -2049,23 +2191,6 @@ function clearWrongAnswers() {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     window.addEventListener('scroll', function() {
       const timerContainer = document.querySelector('.timer-container');
       const scrollY = window.scrollY;
@@ -2082,6 +2207,43 @@ function clearWrongAnswers() {
       renderQuiz();
       updateTimerDisplay();
     };
+
+
+
+  function updateDarkModeButton(isDark) {
+  const btn = document.getElementById('darkModeToggleBtn');
+  if (!btn) return;
+
+  if (isDark) {
+    btn.textContent = '☀️ Light Mode';
+  } else {
+    btn.textContent = '🌙 Dark Mode';
+  }
+}
+
+function applyDarkMode(isDark) {
+  document.body.classList.toggle('dark', isDark);
+  localStorage.setItem('darkMode', isDark ? '1' : '0');
+  updateDarkModeButton(isDark);
+}
+
+function toggleDarkMode() {
+  const isDark = !document.body.classList.contains('dark');
+  applyDarkMode(isDark);
+}
+
+
+
+
+
+// Tự động nhớ trạng thái khi reload trang
+window.addEventListener('DOMContentLoaded', function () {
+  const saved = localStorage.getItem('darkMode');
+  const isDark = saved === '1';
+  applyDarkMode(isDark);
+});
+
+
   </script>
     <script>
 // Quản lý audio player - Phiên bản cải tiến

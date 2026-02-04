@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>Test Từ Vựng Ngày 7</title>
+<title>Bài tập về kính ngữ</title>
 <style>
   
   body { 
@@ -687,125 +687,6 @@
 .detail-btn:hover {
     background-color: #1976D2;
 }
-/* =========================
-   DARK THEME – Gray / Blue / Purple
-   ========================= */
-
-body.dark {
-  background-color: #1c1f26;       /* xám than */
-  color: #d6d8dc;                  /* chữ xám sáng */
-}
-
-/* ===== Heading ===== */
-body.dark h1,
-body.dark h2,
-body.dark h3,
-body.dark h4 {
-  color: #eef0f3;
-}
-
-/* ===== Khối chính ===== */
-body.dark .section,
-body.dark #quizControls,
-body.dark #leftControls,
-body.dark #quizControlsContainer,
-body.dark #leftControlsContainer,
-body.dark .timer-container,
-body.dark .sub-question-box,
-body.dark #quizHistory,
-body.dark #wrongAnswersList {
-  background-color: #232732;
-  border: 1px solid #343a4a;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.6);
-}
-
-/* ===== Đọc hiểu (nhấn tím nhẹ) ===== */
-body.dark .reading-comprehension {
-  background: linear-gradient(
-    135deg,
-    #232732,
-    #2b2f3d
-  );
-  border-left: 4px solid #8b7cf6;
-}
-
-body.dark .reading-label {
-  background-color: #6f61e8;
-  color: #ffffff;
-}
-
-/* ===== Text & Answer ===== */
-body.dark .answer-option {
-  color: #d6d8dc;
-}
-
-body.dark .answer-option:hover {
-  color: #7bb6ff; /* xanh dịu */
-}
-
-/* ===== Input ===== */
-body.dark input,
-body.dark .timer-input,
-body.dark .reading-timer-input,
-body.dark #editKey,
-body.dark #editValue {
-  background-color: #1c1f26;
-  color: #eef0f3;
-  border: 1px solid #3a4054;
-}
-
-/* ===== Button ===== */
-body.dark button,
-body.dark .timer-btn {
-  background: linear-gradient(135deg, #4c7cff, #6f61e8);
-  color: white;
-  border: none;
-}
-
-body.dark button:hover,
-body.dark .timer-btn:hover {
-  filter: brightness(1.1);
-}
-
-/* ===== Quiz result ===== */
-body.dark #quizResult {
-  background-color: #1f2330;
-  border-left: 4px solid #4c7cff;
-}
-
-/* ===== Highlight controls ===== */
-body.dark .highlight-controls,
-body.dark .reading-timer-container {
-  background-color: #1c1f26;
-  border: 1px solid #3a4054;
-}
-
-/* ===== Popup ===== */
-body.dark .result-popup {
-  background-color: #232732;
-  color: #eef0f3;
-}
-
-body.dark .close-popup {
-  color: #bbb;
-}
-body.dark .close-popup:hover {
-  color: white;
-}
-
-/* ===== Table (câu sai) ===== */
-body.dark table,
-body.dark .wrong-answers-table {
-  background-color: #232732;
-}
-
-body.dark .wrong-answers-table tr:nth-child(even) {
-  background-color: #1f2330;
-}
-
-body.dark .wrong-answers-table tr:hover {
-  background-color: #2d3350;
-}
 
 
 </style>
@@ -813,7 +694,7 @@ body.dark .wrong-answers-table tr:hover {
 <body>
 
   
-  <h1>📚 Test Từ Vựng Ngày 7<h1>(Tổng số câu hỏi: 38 câu)</h1>
+  <h1>📚 Bài tập về kính ngữ<h1>(Tổng số câu hỏi: 32 câu)</h1>
   
   <div class="timer-container">
     <div class="timer-controls">
@@ -823,21 +704,9 @@ body.dark .wrong-answers-table tr:hover {
       <span id="timerDisplay" class="timer-display">20:00</span>
     </div>
   </div>
-
-  <button
-  type="button"
-  id="darkModeToggleBtn"
-  class="timer-btn"
-  onclick="toggleDarkMode()"
-  style="margin: 10px 0;"
->
-  🌙 Dark Mode
-</button>
-
-
   
   <div class="section" id="testday1">
-    <h2>📝 Test Từ Vựng Ngày 7</h2>
+    <h2>📝 Bài tập về kính ngữ</h2>
     <form id="quizForm"></form>
 
 
@@ -922,305 +791,257 @@ body.dark .wrong-answers-table tr:hover {
     const quizData = [
   {
     number: 1,
-    question: '案じる',
-    options: ['あんじる', 'じょうじる', 'かんじる', 'さんじる'],
+    question: '山田さんは新人だから、そばで見て<span style="color:red">(___)</span>くれ。',
+    options: ['やって', 'くれて', 'やらないで', 'くれないで'],
     answer: '1',
-    detail: '🔴 案じる（あんじる）<br>🈶 Kanji & Hán Việt: 案（ÁN）＝bản án, đề án, 考える<br>Nghĩa: Lo lắng, quan tâm<br>💬 Ví dụ:<br>1. 子供のことを案じる。→ Lo lắng cho con.<br>2. 将来を案じる。→ Quan tâm đến tương lai.<br>3. 健康を案じる。→ Lo lắng về sức khỏe.<br>🟢 Đồng nghĩa: 気にかける、心配する<br>🔴 Trái nghĩa: 無関心<br>🧠 Cách nhớ: 案 = bản án, nghĩ → lo lắng<br>👉 Tóm lại: 案じる = lo lắng, quan tâm',
+    detail: '',
     isReading: false
   },
   {
     number: 2,
-    question: '怠る',
-    options: ['あこたる', 'おこたる', 'いこたる', 'うこたる'],
-    answer: '2',
-    detail: '🔴 怠る（おこたる）<br>🈶 Kanji & Hán Việt: 怠（ĐÃI）＝lười<br>Nghĩa: Lơ là, bỏ bê, không chú ý<br>💬 Ví dụ:<br>1. 勉強を怠る。→ Lơ là việc học.<br>2. 職務を怠る。→ Bỏ bê công việc.<br>3. 注意を怠る。→ Không chú ý.<br>🟢 Đồng nghĩa: 省みない、怠慢（たいまん）<br>🔴 Trái nghĩa: 勤勉（きんべん）<br>🧠 Cách nhớ: Lười → bỏ bê<br>👉 Tóm lại: 怠る = lơ là, bỏ bê',
+    question: 'おい、君。会議室での喫煙はやめて<span style="color:red">(___)</span>。',
+    options: ['くる', 'くれ', 'もらえ', 'こい'],
+    answer: '1',
+    detail: '',
     isReading: false
   },
   {
     number: 3,
-    question: '怯える',
-    options: ['おびえる', 'あびえる', 'さびえる', 'こびえる'],
+    question: 'すみません、この字の読み方を教えて<span style="color:red">(___)</span>ませんか。',
+    options: ['いき', 'き', 'いただけ', 'いただき'],
     answer: '1',
-    detail: '🔴 怯える（おびえる）<br>🈶 Kanji & Hán Việt: 怯（KHIẾP）＝sợ<br>Nghĩa: Sợ hãi, hoảng sợ<br>💬 Ví dụ:<br>1. 犬に怯える。→ Sợ chó.<br>2. 暴力に怯える。→ Sợ bạo lực.<br>3. 怯える子供。→ Đứa trẻ sợ hãi.<br>🟢 Đồng nghĩa: 恐れる（おそれる）、怖がる（こわがる）<br>🔴 Trái nghĩa: 勇敢（ゆうかん）<br>🧠 Cách nhớ: Sợ → hoảng sợ<br>👉 Tóm lại: 怯える = sợ hãi, hoảng sợ',
+    detail: '',
     isReading: false
   },
   {
     number: 4,
-    question: '省みる',
-    options: ['しょうみる', 'しょみる', 'かせりみる', 'かえりみる'],
-    answer: '4',
-    detail: '🔴 省みる（かえりみる）<br>🈶 Kanji & Hán Việt: 省（TỈNH）＝xem xét<br>Nghĩa: Nhìn lại bản thân, suy ngẫm<br>💬 Ví dụ:<br>1. 自分を省みる。→ Nhìn lại bản thân.<br>2. 過去を省みる。→ Suy ngẫm về quá khứ.<br>3. 行動を省みる。→ Xem xét lại hành động.<br>🟢 Đồng nghĩa: 反省する、振り返る<br>🔴 Trái nghĩa: 無反省<br>🧠 Cách nhớ: Tỉnh + nhìn → suy ngẫm<br>👉 Tóm lại: 省みる = suy ngẫm, nhìn lại',
+    question: 'えっ、パンフレットがないんですか? じゃあ、鈴木さんが持っていますから、鈴木さんに見せて<span style="color:red">(___)</span>ください。',
+    options: ['あげて', 'もらって', 'くれて', 'やって'],
+    answer: '1',
+    detail: '',
     isReading: false
   },
   {
     number: 5,
-    question: '感極まる',
-    options: ['かんきはまる', 'かんきさまる', 'かんきわまる', 'かんきらまる'],
-    answer: '3',
-    detail: '🔴 感極まる（かんきわまる）<br>🈶 Kanji & Hán Việt: 感（CẢM）＝cảm, 極（CỰC）＝cực<br>Nghĩa: Cảm xúc cực độ, xúc động tột cùng<br>💬 Ví dụ:<br>1. 感極まって涙する。→ Cảm xúc dâng trào, rơi nước mắt.<br>2. 感極まる場面。→ Cảnh xúc động tột cùng.<br>3. 感極まる瞬間。→ Khoảnh khắc cảm xúc mạnh mẽ.<br>🟢 Đồng nghĩa: 感動する<br>🔴 Trái nghĩa: 無感動<br>🧠 Cách nhớ: Cảm + cực → xúc động tột cùng<br>👉 Tóm lại: 感極まる = xúc động tột cùng',
+    question: '最近は、若い人にもっと起業して<span style="color:red">(___)</span>と、大学の授業で起業に関する科目が増えてきている。',
+    options: ['もらえない', 'もらいたい', 'くださる', 'あげる'],
+    answer: '1',
+    detail: '',
     isReading: false
   },
   {
     number: 6,
-    question: '籠る',
-    options: ['こそる', 'ここる', 'こもる', 'こごる'],
-    answer: '3',
-    detail: '🔴 籠る（こもる）<br>🈶 Kanji & Hán Việt: 籠（LUNG）＝rổ, ẩn<br>Nghĩa: Ở trong, ẩn mình, tập trung<br>💬 Ví dụ:<br>1. 部屋に籠る。→ Ở trong phòng.<br>2. 考えに籠る。→ Tập trung suy nghĩ.<br>3. 籠った生活。→ Cuộc sống ẩn dật.<br>🟢 Đồng nghĩa: 隠れる（かくれる）、閉じこもる<br>🔴 Trái nghĩa: 出る、外出する<br>🧠 Cách nhớ: Rổ → chứa → ở trong<br>👉 Tóm lại: 籠る = ẩn mình, tập trung',
+    question: 'すまないが、息子に数学を教えて<span style="color:red">(___)</span>くれないか。',
+    options: ['あげて', 'くれて', 'もらって', 'くださって'],
+    answer: '1',
+    detail: '',
     isReading: false
   },
   {
     number: 7,
-    question: '察する',
-    options: ['さつする', 'さっする', 'かつする', 'かっする'],
-    answer: '2',
-    detail: '🔴 察する（さっする）<br>🈶 Kanji & Hán Việt: 察（SÁT）＝quan sát, hiểu<br>Nghĩa: Hiểu, cảm nhận, đoán<br>💬 Ví dụ:<br>1. 相手の気持ちを察する。→ Cảm nhận tâm trạng đối phương.<br>2. 状況を察する。→ Nhận biết tình hình.<br>3. 察しのいい人。→ Người tinh ý.<br>🟢 Đồng nghĩa: 推測する、理解する<br>🔴 Trái nghĩa: 無理解<br>🧠 Cách nhớ: Quan sát → đoán<br>👉 Tóm lại: 察する = hiểu, đoán',
+    question: '運動会でお子様が頑張っている____ _★___ください。',
+    options: ['見て', '姿を', 'あげて', '是非'],
+    answer: '1',
+    detail: '',
     isReading: false
   },
   {
     number: 8,
-    question: '澄ます',
-    options: ['のます', 'ぼます', 'すます', 'くます'],
-    answer: '3',
-    detail: '🔴 澄ます（すます）<br>🈶 Kanji & Hán Việt: 澄（TRỪNG）＝trong, sạch<br>Nghĩa: Tỏ ra, làm cho trong, tập trung<br>💬 Ví dụ:<br>1. 顔を澄ます。→ Tỏ ra bình tĩnh.<br>2. 耳を澄ます。→ Lắng nghe cẩn thận.<br>3. 表情を澄ます。→ Giữ nét mặt điềm tĩnh.<br>🟢 Đồng nghĩa: 落ち着く、集中する<br>🔴 Trái nghĩa: ざわつく<br>🧠 Cách nhớ: Trong → tập trung<br>👉 Tóm lại: 澄ます = tỏ ra, tập trung',
+    question: '教えたいけど、他の__ ___★___?今忙しいんだ。',
+    options: ['教えて', 'くれない', 'もらって', '人に'],
+    answer: '1',
+    detail: '',
     isReading: false
   },
   {
     number: 9,
-    question: '断つ',
-    options: ['だつ', 'かつ', 'まつ', 'たつ'],
-    answer: '4',
-    detail: '🔴 断つ（たつ）<br>🈶 Kanji & Hán Việt: 断（ĐOẠN）＝cắt<br>Nghĩa: Chấm dứt, cắt bỏ<br>💬 Ví dụ:<br>1. 悪習を断つ。→ Chấm dứt thói xấu.<br>2. 関係を断つ。→ Cắt đứt quan hệ.<br>3. 習慣を断つ。→ Bỏ thói quen.<br>🟢 Đồng nghĩa: 絶つ、やめる<br>🔴 Trái nghĩa: 続ける<br>🧠 Cách nhớ: Cắt → chấm dứt<br>👉 Tóm lại: 断つ = cắt đứt, chấm dứt',
+    question: 'テレビ局を__ ___★___ませんか。',
+    options: ['んですが', 'いただけ', '案内して', '見学したい'],
+    answer: '1',
+    detail: '',
     isReading: false
   },
   {
     number: 10,
-    question: '募る',
-    options: ['つのる', 'くのる', 'まのる', 'はのる'],
+    question: 'せっかくの海外旅行なんだから、__ ___★___くれよ。',
+    options: ['言わないで', '今すぐ', '帰りたい', 'なんて'],
     answer: '1',
-    detail: '🔴 募る（つのる）<br>🈶 Kanji & Hán Việt: 募（MỘ）＝chiêu mộ<br>Nghĩa: Tuyển dụng, tăng lên, dồn dập<br>💬 Ví dụ:<br>1. 募る不安。→ Lo lắng tăng dần.<br>2. 人材を募る。→ Tuyển dụng nhân sự.<br>3. 募る思い。→ Cảm xúc dồn dập.<br>🟢 Đồng nghĩa: 増える、集まる<br>🔴 Trái nghĩa: 減る<br>🧠 Cách nhớ: Chiêu mộ → dồn dập<br>👉 Tóm lại: 募る = tăng lên, dồn dập',
+    detail: '',
     isReading: false
   },
   {
     number: 11,
-    question: '嘆く',
-    options: ['なげく', 'なけく', 'はげく', 'はけく'],
+    question: 'このたびの報道で皆様に大変ご心配をおかけしましたことを心より<span style="color:red">(___)</span>。申し訳ございませんでした。」',
+    options: ['おわび申し上げます', 'おわびいただきます', 'わびていただきます', 'わびていらっしゃいます'],
     answer: '1',
-    detail: '🔴 嘆く（なげく）<br>🈶 Kanji & Hán Việt: 嘆（THÁN）＝than thở<br>Nghĩa: Than vãn, than thở<br>💬 Ví dụ:<br>1. 運命を嘆く。→ Than thở về số phận.<br>2. 嘆きの声。→ Tiếng than thở.<br>3. 嘆く人。→ Người than vãn.<br>🟢 Đồng nghĩa: 悲しむ、嘆息する<br>🔴 Trái nghĩa: 喜ぶ<br>🧠 Cách nhớ: Than → than thở<br>👉 Tóm lại: 嘆く = than thở, than vãn',
+    detail: '',
     isReading: false
   },
   {
     number: 12,
-    question: 'ねだる',
-    options: ['Phàn nàn, cằn nhằn,than phiền', 'Đòi, vòi vĩnh, xin xỏ', 'Đau lòng, than thở', 'Được sống lại, được hồi sinh'],
-    answer: '2',
-    detail: '🔴 ねだる<br>🈶 Nghĩa: Năn nỉ, xin xỏ<br>💬 Ví dụ:<br>1. 子供がおもちゃをねだる。→ Trẻ con năn nỉ xin đồ chơi.<br>2. ねだって買ってもらう。→ Năn nỉ để mua được.<br>3. ねだる態度。→ Thái độ năn nỉ.<br>🟢 Đồng nghĩa: せがむ<br>🔴 Trái nghĩa: 諦める<br>🧠 Cách nhớ: Nghe như “năn nỉ” → năn nỉ<br>👉 Tóm lại: ねだる = năn nỉ, xin xỏ',
+    question: '貴社の製品に興味を持ちました。一度お時間をいただき、もう少しお話を <span style="color:red">(___)</span>いただければと思っております。',
+    options: ['聞いて', '聞けて', '聞かせて', '聞かれて し ぼうこうとうだい'],
+    answer: '1',
+    detail: '',
     isReading: false
   },
   {
     number: 13,
-    question: 'ぼやく',
-    options: ['Sẵn lòng, vui vẻ', '(Cảm xúc...) trỗi dậy', 'Mạnh mẽ, dứt khoát, hiên ngang, chơi đẹp (tinh thần)', 'Phàn nàn, cằn nhằn, than phiền'],
-    answer: '4',
-    detail: '🔴 ぼやく<br>🈶 Nghĩa: Cằn nhằn, than phiền<br>💬 Ví dụ:<br>1. 仕事の愚痴をぼやく。→ Than phiền về công việc.<br>2. ぼやきながら掃除する。→ Cằn nhằn trong khi dọn dẹp.<br>3. ぼやく人。→ Người hay cằn nhằn.<br>🟢 Đồng nghĩa: 文句を言う<br>🔴 Trái nghĩa: 喜ぶ<br>🧠 Cách nhớ: Như tiếng “bỏ ra” → cằn nhằn<br>👉 Tóm lại: ぼやく = cằn nhằn, than phiền',
+    question: '悩んでいる時は、誰かに話を<span style="color:red">(___)</span>気が楽になったり、少し状況を冷静に見ることができるようになったりします。',
+    options: ['聞いてあげることは', '聞いてもらうだけで', '聞いてくれることに', '聞いてやるだけが'],
+    answer: '1',
+    detail: '',
     isReading: false
   },
   {
     number: 14,
-    question: '蘇る',
-    options: ['よみかえる', 'よみがえる', 'よがみえる', 'よかみえる'],
-    answer: '2',
-    detail: '🔴 蘇る（よみがえる）<br>🈶 Kanji & Hán Việt: 蘇（TÔ）＝hồi sinh<br>Nghĩa: Hồi sinh, sống lại, hồi tưởng<br>💬 Ví dụ:<br>1. 記憶が蘇る。→ Ký ức sống lại.<br>2. 命が蘇る。→ Sinh mạng hồi sinh.<br>3. 蘇った感情。→ Cảm xúc hồi tưởng.<br>🟢 Đồng nghĩa: 復活する、再生する<br>🔴 Trái nghĩa: 消える<br>🧠 Cách nhớ: Hồi sinh → sống lại<br>👉 Tóm lại: 蘇る = hồi sinh, sống lại',
+    question: '私は、娘がやりたいことはなるべく<span style="color:red">(___)</span>と思っています。',
+    options: ['やらせてやりたい', 'やらせていただく', 'やらせてもらった', 'やらせてくれた'],
+    answer: '1',
+    detail: '',
     isReading: false
   },
   {
     number: 15,
-    question: '湧く',
-    options: ['かく', 'さく', 'わく', 'はく'],
-    answer: '3',
-    detail: '🔴 湧く（わく）<br>🈶 Kanji & Hán Việt: 湧（DŨNG）＝sôi lên<br>Nghĩa: Sôi lên, trào ra (cảm xúc, nước)<br>💬 Ví dụ:<br>1. 喜びが湧く。→ Cảm giác vui sướng trào ra.<br>2. 湧き水。→ Nước suối phun lên.<br>3. 闘志が湧く。→ Ý chí trào dâng.<br>🟢 Đồng nghĩa: 噴き出す、出る<br>🔴 Trái nghĩa: 引く<br>🧠 Cách nhớ: Sôi lên → trào ra<br>👉 Tóm lại: 湧く = trào ra, sôi lên',
+    question: '​ A 「ごめんごめん。この前借りた本、きょう返そうと思っていたのに、持ってくるの忘れちゃった。」 B 「ああ、別に急がないから、次に会う時に<span style="color:red">(___)</span>よ。」',
+    options: ['持ってきてくれるはずだ', '持ってきてあげるつもりだ', '持ってきてくれればいい', '持ってきてあげたほうがいい'],
+    answer: '1',
+    detail: '',
     isReading: false
   },
   {
     number: 16,
-    question: '潔い',
-    options: ['いさきよい', 'いさぎよい', 'いさひよい', 'いさびよい'],
-    answer: '2',
-    detail: '🔴 潔い（いさぎよい）<br>🈶 Kanji & Hán Việt: 潔（KHIẾT）＝sạch<br>Nghĩa: Trong sạch, thẳng thắn, không do dự<br>💬 Ví dụ:<br>1. 潔い態度。→ Thái độ thẳng thắn.<br>2. 敗北を潔く認める。→ Thẳng thắn nhận thất bại.<br>3. 潔い行動。→ Hành động trong sạch.<br>🟢 Đồng nghĩa: 素直（すなお）、正直（しょうじき）<br>🔴 Trái nghĩa: 不潔、卑怯<br>🧠 Cách nhớ: Sạch → trong sạch, thẳng thắn<br>👉 Tóm lại: 潔い = thẳng thắn, trong sạch',
+    question: 'もしこちらに<span style="color:red">(___)</span>ことがありましたら、ぜひお立ち寄りください。',
+    options: ['まいる', 'お目にかかる', 'ご覧になる', 'おいでになる'],
+    answer: '1',
+    detail: '',
     isReading: false
   },
   {
     number: 17,
-    question: 'くどい',
-    options: ['Sẵn lòng, vui vẻ', 'Mạnh mẽ, dứt khoát, hiên ngang, chơi đẹp (tinh thần)', 'Thoải mái, dễ chịu', 'Dài dòng, lằng nhằng (lời nói..), đậm, ngán, ngấy'],
-    answer: '4',
-    detail: '🔴 くどい<br>🈶 Nghĩa: Dài dòng, lắm lời, lặp đi lặp lại<br>💬 Ví dụ:<br>1. くどい説明。→ Giải thích dài dòng.<br>2. くどく言う。→ Nói lặp đi lặp lại.<br>3. くどい味。→ Vị quá nồng, lặp lại.<br>🟢 Đồng nghĩa: 長ったらしい、しつこい<br>🔴 Trái nghĩa: 簡潔（かんけつ）<br>🧠 Cách nhớ: Nhớ “lặp đi lặp lại”<br>👉 Tóm lại: くどい = dài dòng, lặp lại',
+    question: '皆さんは、最近になって木造建築が見直されていることを<span style="color:red">(___)</span>。',
+    options: ['ご存じです', 'ご存じでしょうか', 'ご存じのようです', 'ご存じなのでしょう けっさいげんてい'],
+    answer: '1',
+    detail: '',
     isReading: false
   },
   {
     number: 18,
-    question: '快い',
-    options: ['こころよい', 'こごろこい', 'こころこい', 'こころそい'],
+    question: '当商品はクレジットカード決済限定にてご注文を<span style="color:red">(___)</span>。',
+    options: ['申し上げます', '差し上げます', 'いたします', 'うけたまわります'],
     answer: '1',
-    detail: '🔴 快い（こころよい）<br>🈶 Kanji & Hán Việt: 快（KHOÁI）＝khoái, dễ chịu<br>Nghĩa: Dễ chịu, vui vẻ<br>💬 Ví dụ:<br>1. 快い返事。→ Trả lời dễ chịu.<br>2. 快い気分。→ Tâm trạng dễ chịu.<br>3. 快い協力。→ Hợp tác vui vẻ.<br>🟢 Đồng nghĩa: 気持ちいい、心地よい<br>🔴 Trái nghĩa: 不快（ふかい）<br>🧠 Cách nhớ: Khoái → dễ chịu<br>👉 Tóm lại: 快い = dễ chịu, vui vẻ',
+    detail: '',
     isReading: false
   },
   {
     number: 19,
-    question: '清々しい',
-    options: ['すかすかしい', 'かすかすしい', 'すがすがしい', 'かずかずしい'],
-    answer: '3',
-    detail: '🔴 清々しい（すがすがしい）<br>🈶 Kanji & Hán Việt: 清（THANH）＝sạch<br>Nghĩa: Thanh thoát, sảng khoái<br>💬 Ví dụ:<br>1. 清々しい朝。→ Buổi sáng sảng khoái.<br>2. 気分が清々しい。→ Cảm giác thanh thoát.<br>3. 清々しい気持ち。→ Tâm trạng dễ chịu.<br>🟢 Đồng nghĩa: 爽やか（さわやか）<br>🔴 Trái nghĩa: どんより<br>🧠 Cách nhớ: Sạch → sảng khoái<br>👉 Tóm lại: 清々しい = sảng khoái, thanh thoát',
+    question: '​ てんいん 店員「お客様、なにか<span style="color:red">(___)</span>、ご案内いたしますが。」 きゃく 客 「あ、居間に敷くカーペットを探しているんです。」',
+    options: ['お探しでしたら', '探してくださいましたら', 'お探ししましたら', '探させていただきましたら'],
+    answer: '1',
+    detail: '',
     isReading: false
   },
   {
     number: 20,
-    question: 'だるい',
-    options: ['Lo lắng', 'Giam mình, tách biệt chính mình với mọi người', 'Lọc, thanh lọc, tập trung (tai, mắt..)', 'Cắt, chấm dứt, kết thúc'],
+    question: '​ やまもといしはら 山本 「石原さん、ギターが欲しいって言っていましたよね。私の息子が使っていた ギターがあるんです。よければどうですか。」 いしはら 石原 「いいんですか。」 やまもと 山本「はい。息子に聞いたら、弾いてくれる方がいるなら、ぜひと言っていたの で、どうぞもらって<span style="color:red">(___)</span>。」',
+    options: ['やりませんか', 'やってください', 'いただきませんか', 'いただいてください とうとうば'],
     answer: '1',
-    detail: '🔴 だるい<br>🈶 Nghĩa: Mệt mỏi, uể oải<br>💬 Ví dụ:<br>1. 体がだるい。→ Cơ thể mệt mỏi.<br>2. 仕事がだるい。→ Công việc uể oải.<br>3. 気分がだるい。→ Tâm trạng mệt mỏi.<br>🟢 Đồng nghĩa: 倦怠感（けんたいかん）、疲れる<br>🔴 Trái nghĩa: 元気（げんき）<br>🧠 Cách nhớ: Nhớ cảm giác uể oải<br>👉 Tóm lại: だるい = mệt mỏi, uể oải',
+    detail: '',
     isReading: false
   },
   {
     number: 21,
-    question: 'Bỏ bê, sao nhãng',
-    options: ['籠る', '怠る', '募る', '蘇る'],
-    answer: '2',
+    question: '弊社の山本という者が、午後に原稿をいただきに<span style="color:red">(___)</span>ので,よろしくお願いいたします。',
+    options: ['みえます', 'あがります', 'くださいます', 'さしあげます'],
+    answer: '1',
     detail: '',
     isReading: false
   },
   {
     number: 22,
-    question: 'Hoảng sợ, sợ sệt',
-    options: ['怯える', '迎える', '与える', '甘える'],
+    question: '(手紙で) しわす 師走を迎え、慌ただしい日々をお過ごしのことと<span style="color:red">(___)</span>が、お元気でいらっしゃ いますか。',
+    options: ['致します', '承ります', '存じます', '申し上げます'],
     answer: '1',
     detail: '',
     isReading: false
   },
   {
     number: 23,
-    question: 'Nhìn lại (để kiểm điểm, sửa đổi)',
-    options: ['沁みる', '凍みる', '染みる', '省みる'],
-    answer: '4',
+    question: '(メールで) このたびは山田様がおけがをされてご入院なさったとのこと、本当に驚きました。その後の具合はいかがでございますか。一刻も早く回復<span style="color:red">(___)</span>。',
+    options: ['されますように', '願ってはどうですか', 'いたしたく思います', 'していらっしゃるでしょうか いしはら'],
+    answer: '1',
     detail: '',
     isReading: false
   },
   {
     number: 24,
-    question: 'Vô cùng xúc động',
-    options: ['始まる', '極まる', '感極まる', '集まる'],
-    answer: '3',
+    question: '1日使ったヘルメットを清潔に保ち、次に装着の際は気持ちよく<span style="color:red">(___)</span>。',
+    options: ['かぶって頂きたい', 'かぶらせて頂きたくない', 'かぶってやりたい', 'かぶらせてくれたくない'],
+    answer: '1',
     detail: '',
     isReading: false
   },
   {
     number: 25,
-    question: 'Giam mình, tách biệt chính mình với mọi người',
-    options: ['募る', '怠る', '籠る', '蘇る'],
-    answer: '3',
+    question: 'お客さまのご都合による返品は<span style="color:red">(___)</span>ので、あらかじめご了解ください。',
+    options: ['さしあげかねません', 'いたしかねません', 'さしあげかねます', 'いたしかねます あくたがわしょう'],
+    answer: '1',
     detail: '',
     isReading: false
   },
   {
     number: 26,
-    question: 'Hiểu,đoán được, cảm nhận được cảm xúc của người khác(mặc dù không nói ra)',
-    options: ['察する', '達する', '接する', '罰する'],
+    question: '子供が嫌がっているにもかかわらず無理に<span style="color:red">(___)</span>のは、余計に嫌いになってしまうだけです。',
+    options: ['やりぬく', 'やりたがる', 'やられる', 'やらせる'],
     answer: '1',
     detail: '',
     isReading: false
   },
   {
     number: 27,
-    question: 'Lọc, thanh lọc, tập trung (tai, mắt..)',
-    options: ['澄ます', '済ます', '冷えます', 'きます'],
+    question: 'あまりいびきがひどいと、友人や家族から<span style="color:red">(___)</span>、一緒に旅行してもらえないこともあります。',
+    options: ['嫌で', '嫌がられ', '嫌がらず', '嫌がらせ しぼ'],
     answer: '1',
     detail: '',
     isReading: false
   },
   {
     number: 28,
-    question: 'Cắt, chấm dứt, kết thúc',
-    options: ['経つ', '断つ', '立つ', '建つ'],
-    answer: '2',
+    question: '去年開園する前は、ここは牛を飼い、乳を搾る農家の農場だった。広い畑が拡 がり、 牛の鳴き声があたりに響いて、のんびりした気分に <span style="color:red">(___)</span>ところだった。',
+    options: ['させられる', 'しつつある', 'なっている', 'されがちな'],
+    answer: '1',
     detail: '',
     isReading: false
   },
   {
     number: 29,
-    question: 'Ngày càng tăng (mức độ)',
-    options: ['怠る', '蘇る', '籠る', '募る'],
-    answer: '4',
+    question: '私は、校内に畑を作って生徒たちに野菜を<span style="color:red">(___)</span>ことを校長に提案した。',
+    options: ['育てられる', '育たれる', '育てさせる', '育つ'],
+    answer: '1',
     detail: '',
     isReading: false
   },
   {
     number: 30,
-    question: 'Đau lòng, than thở',
-    options: ['嘆く', '湧く', '裂く', '沸く'],
+    question: 'リーさんはクラスで日本語が一番上手だが、これまで多くの生徒を教えてきた私に <span style="color:red">(___)</span>、まだまだなんだ。',
+    options: ['言われれば', '言われたら', '言わせると', '言わせて'],
     answer: '1',
     detail: '',
     isReading: false
   },
   {
     number: 31,
-    question: 'Đòi, vòi vĩnh, xin xỏ',
-    options: ['ねたる', 'ねだる', 'ねばる', 'ねかる'],
-    answer: '2',
-    detail: '',
-    isReading: false
-  },
-  {
-    number: 32,
-    question: 'Phàn nàn, cằn nhằn,than phiền',
-    options: ['そやく', 'もやく', 'ほやく', 'ぼやく'],
-    answer: '4',
-    detail: '',
-    isReading: false
-  },
-  {
-    number: 33,
-    question: 'Được sống lại, được hồi sinh (ký ức...)',
-    options: ['怠る', '蘇る', '募る', '籠る'],
-    answer: '2',
-    detail: '',
-    isReading: false
-  },
-  {
-    number: 34,
-    question: '(Cảm xúc...) trỗi dậy',
-    options: ['嘆く', '裂く', '湧く', '沸く'],
-    answer: '3',
-    detail: '',
-    isReading: false
-  },
-  {
-    number: 35,
-    question: 'Mạnh mẽ, dứt khoát, hiên ngang, chơi đẹp (tinh thần)',
-    options: ['浅い', '潔い', '淡い', '煙い'],
-    answer: '2',
-    detail: '',
-    isReading: false
-  },
-  {
-    number: 36,
-    question: 'Dài dòng, lằng nhằng (lời nói..), đậm, ngán, ngấy',
-    options: ['しどい', 'ぐどい', 'ひどい', 'くどい'],
-    answer: '4',
-    detail: '',
-    isReading: false
-  },
-  {
-    number: 37,
-    question: 'Sẵn lòng, vui vẻ',
-    options: ['快い', '清い', '煙い', '潔い'],
+    question: '親に内緒で同棲して、一緒に住んでいることが後からばれてしまうと、無理やり <span style="color:red">(___)</span>、結婚を認めてもらえなくなったりしてしまう場合があります。',
+    options: ['別れさせられたり', '別れたり', '別れられたり', '別れさせたり'],
     answer: '1',
     detail: '',
     isReading: false
   },
   {
-    number: 38,
-    question: 'Thoải mái, dễ chịu',
-    options: ['物々しい', '図々しい', '清々しい', '生々しい'],
-    answer: '3',
+    number: 32,
+    question: '昨日2時間も<span style="color:red">(___)</span>あげく、まずい料理を食べさせられた。',
+    options: ['待たせた', '待たされる', '待たせる', '待たされた'],
+    answer: '1',
     detail: '',
     isReading: false
   }
@@ -1345,27 +1166,23 @@ function showQuestionDetail(index) {
     const detailValue = question.detail || "Không có chi tiết bổ sung";
     
     // Tạo popup chi tiết với style mới
-    const isDark = document.body.classList.contains('dark');
-
-const detailPopup = document.createElement('div');
-detailPopup.style.cssText = `
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: ${isDark ? '#232732' : 'white'};
-    color: ${isDark ? '#eef0f3' : '#333'};
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,${isDark ? '0.6' : '0.2'});
-    z-index: 1000;
-    max-width: 500px;
-    width: 90%;
-    border: 3px solid ${isDark ? '#6f61e8' : '#ff6b6b'};
-    max-height: 80vh;
-    overflow: hidden;
-`;
-
+    const detailPopup = document.createElement('div');
+    detailPopup.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        z-index: 1000;
+        max-width: 500px;
+        width: 90%;
+        border: 3px solid #ff6b6b;
+        max-height: 80vh;
+        overflow: hidden;
+    `;
     
     detailPopup.innerHTML = `
         <div style="position: relative; height: 100%;">
@@ -1400,16 +1217,9 @@ detailPopup.style.cssText = `
                 <h3 style="color: #ff6b6b; margin-top: 0; border-bottom: 2px solid #ff6b6b; padding-bottom: 10px;">
                     Nội dung chi tiết
                 </h3>
-                <p style="
-    text-align: left;
-    line-height: 1.7;
-    color: ${isDark ? '#e6e8ee' : '#333'};
-    margin-right: 10px;
-    font-size: 15px;
-">
-    ${detailValue}
-</p>
-
+                <p style="text-align: left; line-height: 1.6; color: #333; margin-right: 10px;">
+                    ${detailValue}
+                </p>
             </div>
         </div>
     `;
@@ -2175,6 +1985,23 @@ function clearWrongAnswers() {
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     window.addEventListener('scroll', function() {
       const timerContainer = document.querySelector('.timer-container');
       const scrollY = window.scrollY;
@@ -2191,43 +2018,6 @@ function clearWrongAnswers() {
       renderQuiz();
       updateTimerDisplay();
     };
-
-
-
-  function updateDarkModeButton(isDark) {
-  const btn = document.getElementById('darkModeToggleBtn');
-  if (!btn) return;
-
-  if (isDark) {
-    btn.textContent = '☀️ Light Mode';
-  } else {
-    btn.textContent = '🌙 Dark Mode';
-  }
-}
-
-function applyDarkMode(isDark) {
-  document.body.classList.toggle('dark', isDark);
-  localStorage.setItem('darkMode', isDark ? '1' : '0');
-  updateDarkModeButton(isDark);
-}
-
-function toggleDarkMode() {
-  const isDark = !document.body.classList.contains('dark');
-  applyDarkMode(isDark);
-}
-
-
-
-
-
-// Tự động nhớ trạng thái khi reload trang
-window.addEventListener('DOMContentLoaded', function () {
-  const saved = localStorage.getItem('darkMode');
-  const isDark = saved === '1';
-  applyDarkMode(isDark);
-});
-
-
   </script>
     <script>
 // Quản lý audio player - Phiên bản cải tiến
