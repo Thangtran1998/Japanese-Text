@@ -6,361 +6,93 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
-  /* ===== Theme tokens ===== */
-  :root{
-    /* Light Mode (giống ảnh mock) */
-    --bg: #ffffff;
-    --text: #0f172a;
-    --muted: #64748b;
-    --border: #e5e7eb;
-    --card: #f8fafc;
-    --card2:#ffffff;
-    --accent:#0b4f86;     /* xanh đậm */
-    --accent2:#1f6fb2;    /* hover xanh */
-    --danger-bg:#cbd5e1;  /* nút xóa lịch sử: xám nhẹ */
-    --danger-text:#0f172a;
-    --shadow: 0 10px 25px rgba(15,23,42,.06);
-    --radius: 14px;
-    --focus: 0 0 0 4px rgba(11,79,134,.18);
-  }
-
-  body.dark{
-    /* Dark Mode */
-    --bg:#0b1220;
-    --text:#e5e7eb;
-    --muted:#9ca3af;
-    --border: rgba(255,255,255,.10);
-    --card: rgba(255,255,255,.05);
-    --card2: rgba(255,255,255,.07);
-    --accent:#67b7ff;
-    --accent2:#8fd0ff;
-    --danger-bg: rgba(255,255,255,.08);
-    --danger-text:#e5e7eb;
-    --shadow: 0 10px 30px rgba(0,0,0,.35);
-    --focus: 0 0 0 4px rgba(103,183,255,.20);
-  }
-
-  *{ box-sizing: border-box; }
-
-  body{
-    font-family: Inter, "Noto Sans JP", Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    padding: 20px;
-    max-width: 900px;
-    margin: auto;
-    line-height: 1.55;
-  }
-
-  h1, h2, h3 { color: var(--text); }
-
-  /* ===== Top right theme button ===== */
-  .theme-toggle{
-    position: fixed;
-    top: 16px;
-    right: 16px;
-    z-index: 2000;
-
-    border: 1px solid var(--border);
-    background: var(--card);
-    color: var(--text);
-    padding: 10px 12px;
-    border-radius: 999px;
-    cursor: pointer;
-    box-shadow: var(--shadow);
-    user-select:none;
-    display:flex;
-    align-items:center;
-    gap:8px;
-    transition: transform .12s ease, background .2s ease, border-color .2s ease;
-  }
-  .theme-toggle:hover{ transform: translateY(-1px); }
-  .theme-toggle:focus{ outline:none; box-shadow: var(--shadow), var(--focus); }
-
-  /* ===== Nav links (giữ nguyên cấu trúc cũ, chỉ đổi màu) ===== */
-  .nav a{
-    display: block;
-    margin: 10px 0;
-    font-size: 18px;
-    text-decoration: none;
-    color: var(--accent);
-    transition: color .15s ease;
-  }
-  .nav a:hover{ color: var(--accent2); }
-
-  /* ===== Sections ===== */
-  .section{
-    display: none;
-    border: 1px solid var(--border);
-    background: var(--card);
-    padding: 20px;
-    margin-bottom: 30px;
-    border-radius: 10px;
-    box-shadow: var(--shadow);
-  }
-
-  /* ===== Lists ===== */
-  ul.submenu{
-    list-style: none;
-    margin-top: 15px;
-    padding-left: 0;
-  }
-  ul.submenu li{
+  body { font-family: Arial; padding: 20px; max-width: 900px; margin: auto; }
+  h1, h2, h3 { color: #2c3e50; }
+  .nav a { display: block; margin: 10px 0; font-size: 18px; text-decoration: none; color: #007acc; }
+  .section { display: none; border: 1px solid #ccc; padding: 20px; margin-bottom: 30px; border-radius: 10px; }
+  ul.submenu { list-style-type: square; margin-top: 15px; padding-left: 20px; }
+  ul.submenu li {
     margin: 6px 0;
-    padding: 10px 10px;
-    border-radius: 10px;
-    border: 1px solid transparent;
-    color: var(--accent);
     cursor: pointer;
-    transition: background .15s ease, border-color .15s ease, color .15s ease;
   }
-  ul.submenu li:hover{
-    background: rgba(11,79,134,.08);
-    border-color: rgba(11,79,134,.18);
-    color: var(--accent2);
+  ul.submenu li {
+  color: #007acc; /* xanh dương mặc định */
   }
-
-  li.clickable{ cursor: pointer; }
-  li.clickable.done::after { content: ' ✅'; color: #22c55e; }
-
-  .score-display{
-    color: #22c55e;
-    font-weight: 700;
+  ul.submenu li:hover {
+  cursor: pointer;
+    color: #d9534f; /*chuyển sang đỏ khi rê chuột */
+  }
+  
+  li.clickable {
+    cursor: pointer;
+  }
+  .modal {
+    display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%;
+    overflow: auto; background-color: rgba(0, 0, 0, 0.4);
+  }
+  .modal-content {
+    background-color: #fff; margin: 15% auto; padding: 20px; border: 1px solid #888;
+    width: 80%; max-width: 400px; text-align: center; border-radius: 10px;
+  }
+  .close { color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
+  li.clickable.done::after { content: ' ✅'; color: green; }
+  .score-display {
+    color: #2e7d32;
+    font-weight: bold;
     font-size: 0.9em;
-    margin-left: 8px;
+    margin-left: 5px;
   }
-
-  /* Hover của các list khác (giữ đúng id hiện có) */
-  #testList li, #grammarTestList li, #tryGrammarList li{
-    color: var(--accent);
-    transition: color .15s ease, background .15s ease;
+  li[onclick]:hover {
+  cursor: pointer;
+  color: #1e88e5;
   }
-  #testList li:hover, #grammarTestList li:hover, #tryGrammarList li:hover{
-    color: var(--accent2);
+  #testList li {
+  color: #007acc; /* màu xanh mặc định */
   }
-
-  /* ===== Reset button (xám nhẹ) ===== */
-  #resetHistoryBtn{
+  #testList li:hover {
+    cursor: pointer;
+    color: #d9534f;
+  }
+  #grammarTestList li {
+  color: #007acc; /* màu xanh mặc định */
+  }
+  #grammarTestList li:hover {
+  cursor: pointer;
+    color: #d9534f;
+  }
+  #tryGrammarList li {
+  color: #007acc; /* màu xanh mặc định */
+  }
+  #tryGrammarList li:hover {
+  cursor: pointer;
+    color: #d9534f;
+  }
+  #resetHistoryBtn {
     margin: 15px 0;
     padding: 10px 15px;
-    background-color: var(--danger-bg);
-    color: var(--danger-text);
-    border: 1px solid var(--border);
-    border-radius: 12px;
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    border-radius: 6px;
     cursor: pointer;
-    box-shadow: var(--shadow);
-    transition: transform .12s ease, border-color .2s ease;
   }
-  #resetHistoryBtn:hover{
-    transform: translateY(-1px);
-    border-color: rgba(239,68,68,.30);
-  }
-
-  /* ===== PDF header ===== */
-  .pdf-header{
-    color: var(--accent);
-    font-weight: 700;
-    cursor: pointer;
-    transition: color 0.2s ease;
-  }
-  .pdf-header:hover{ color: var(--accent2); }
-
-  /* ===== Modal ===== */
-  .modal{
-    display:none;
-    position:fixed;
-    z-index:1000;
-    left:0; top:0;
-    width:100%; height:100%;
-    overflow:auto;
-    background-color: rgba(0,0,0,0.45);
-  }
-  .modal-content{
-    background-color: var(--bg);
-    color: var(--text);
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid var(--border);
-    width: 80%;
-    max-width: 400px;
-    text-align: center;
-    border-radius: 10px;
-    box-shadow: var(--shadow);
-  }
-  .close{
-    color: var(--muted);
-    float:right;
-    font-size:28px;
-    font-weight:bold;
-    cursor:pointer;
-  }
-  /* ===== MENU CARD (giống hình) ===== */
-.nav a.nav-card{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:14px;
-
-  padding:16px 18px;
-  margin: 14px 0;
-
-  text-decoration:none;
-  color: var(--text);
-
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-
-  transition: transform .12s ease, border-color .2s ease, background .2s ease;
+  .pdf-header {
+  color: #007acc;
+  font-weight: normal;
+  cursor: pointer;
+  transition: color 0.3s ease;
 }
 
-.nav a.nav-card:hover{
-  transform: translateY(-1px);
-  border-color: rgba(11,79,134,.22);
-  background: var(--card2);
+.pdf-header:hover {
+  color: #d9534f;
+  font-weight: normal; /* đảm bảo không đậm lên khi hover */
 }
 
-.nav-card .left{
-  display:flex;
-  align-items:center;
-  gap:14px;
-  min-width: 0;
-}
-
-.nav-card .iconbox{
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  border: 1px solid var(--border);
-  background: var(--card2);
-  color: var(--accent);
-  flex: 0 0 auto;
-  font-size: 18px;
-}
-
-.nav-card .text{
-  min-width: 0;
-}
-
-.nav-card .title{
-  font-weight: 800;
-  font-size: 18px;
-  letter-spacing: -0.01em;
-  line-height: 1.2;
-}
-
-.nav-card .desc{
-  margin-top: 4px;
-  font-size: 13px;
-  color: var(--muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.nav-card .chev{
-  color: var(--muted);
-  flex: 0 0 auto;
-  font-size: 18px;
-}
-/* ===== HERO HEADER ===== */
-.hero{
-  margin: 20px auto 40px;
-  padding: 60px 20px 50px;
-  border-radius: 24px;
-  background:
-    radial-gradient(1200px 400px at 50% 0%, rgba(255,255,255,.08), transparent 60%),
-    linear-gradient(180deg, #0b1220 0%, #0a1426 100%);
-  text-align: center;
-  box-shadow: 0 30px 80px rgba(0,0,0,.45);
-}
-
-.hero-inner{
-  max-width: 720px;
-  margin: auto;
-}
-
-.hero-icon{
-  font-size: 64px;
-  margin-bottom: 18px;
-}
-
-.hero-title{
-  font-size: 44px;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  margin-bottom: 14px;
-}
-
-.hero-greet{
-  font-size: 20px;
-  margin-bottom: 6px;
-  opacity: .95;
-}
-
-.hero-goal{
-  font-size: 16px;
-  color: #9ca3af;
-  margin-bottom: 28px;
-}
-
-.hero-stats{
-  display: flex;
-  justify-content: center;
-  gap: 28px;
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.12);
-  border-radius: 16px;
-  padding: 16px 22px;
-  backdrop-filter: blur(6px);
-}
-
-.hero-stats .stat{
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
 
 
 </style>
-
 </head>
 <body>
-  <header class="hero">
-  <div class="hero-inner">
-    <div class="hero-icon">🧭</div>
-
-    <h1 class="hero-title">Chinh phục JLPT N1</h1>
-
-    <div class="hero-greet">
-      Xin chào Thắng <span>👋</span>
-    </div>
-
-    <div class="hero-goal">
-      Mục tiêu: JLPT N1 – 12/2026
-    </div>
-
-    <div class="hero-stats">
-      <div class="stat">
-        🔥 <b>5</b> ngày liên tiếp
-      </div>
-      <div class="stat">
-        🎯 JLPT N1 – 12/2026
-      </div>
-    </div>
-  </div>
-</header>
-
-    <button id="themeToggle" class="theme-toggle" type="button">
-    🌙 <span id="themeLabel">Dark Mode</span>
-  </button>
-
   <div id="customModal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeModal()">&times;</span>
@@ -368,58 +100,13 @@
     </div>
   </div>
 
-  <h1>Chinh phục JLPT N1</h1>
-
+  <h1>📚 Trang học tiếng Nhật N1</h1>
   <div class="nav">
-  <!-- 1 -->
-  <a href="#" class="nav-card" onclick="showSection('s1')">
-    <div class="left">
-      <div class="iconbox"><i class="fa-solid fa-book"></i></div>
-      <div class="text">
-        <div class="title">Luyện thi N1 – Giai đoạn 1</div>
-        <div class="desc">Lộ trình 100 ngày, ngữ pháp, luyện nghe</div>
-      </div>
-    </div>
-    <div class="chev"><i class="fa-solid fa-chevron-right"></i></div>
-  </a>
-
-  <!-- 2 -->
-  <a href="#" class="nav-card" onclick="showSection('s2')">
-    <div class="left">
-      <div class="iconbox"><i class="fa-solid fa-layer-group"></i></div>
-      <div class="text">
-        <div class="title">Luyện thi N1 – Giai đoạn 2</div>
-        <div class="desc">Đề nâng cao, tổng hợp chuyên đề</div>
-      </div>
-    </div>
-    <div class="chev"><i class="fa-solid fa-chevron-right"></i></div>
-  </a>
-
-  <!-- 3 -->
-  <a href="#" class="nav-card" onclick="showSection('s3')">
-    <div class="left">
-      <div class="iconbox"><i class="fa-solid fa-video"></i></div>
-      <div class="text">
-        <div class="title">Khóa Zoom N1 – 12/2024</div>
-        <div class="desc">Tài liệu, ghi chú, nội dung buổi học</div>
-      </div>
-    </div>
-    <div class="chev"><i class="fa-solid fa-chevron-right"></i></div>
-  </a>
-
-  <!-- 4 -->
-  <a href="#" class="nav-card" onclick="showSection('s4')">
-    <div class="left">
-      <div class="iconbox"><i class="fa-solid fa-book-open"></i></div>
-      <div class="text">
-        <div class="title">Từ vựng</div>
-        <div class="desc">Test từ vựng Mimikara, từ vựng của Thaolejp</div>
-      </div>
-    </div>
-    <div class="chev"><i class="fa-solid fa-chevron-right"></i></div>
-  </a>
-</div>
-
+    <a href="#" onclick="showSection('s1')">1️⃣ Luyện thi N1 giai đoạn 1</a>
+    <a href="#" onclick="showSection('s2')">2️⃣ Luyện thi N1 giai đoạn 2</a>
+    <a href="#" onclick="showSection('s3')">3️⃣ Khóa Zoom N1 - Tháng 12/2024</a>
+    <a href="#" onclick="showSection('s4')">4️⃣ Từ vựng</a>
+  </div>
   <button id="resetHistoryBtn" onclick="resetHistory()">🗑 Xóa toàn bộ lịch sử làm bài</button>
 
 <div class="section" id="s1">
@@ -502,42 +189,6 @@
   <div class="section" id="s3"><h2>3️⃣ Khóa Zoom N1</h2><p>Đang cập nhật nội dung...</p></div>
 
   <script>
-    /* ========= THEME TOGGLE (Light/Dark) ========= */
-function applyTheme(theme){
-  const isDark = theme === "dark";
-  document.body.classList.toggle("dark", isDark);
-
-  const label = document.getElementById("themeLabel");
-  const btn = document.getElementById("themeToggle");
-
-  // Dark -> nút hiển thị ☀️ Light Mode (để chuyển về Light)
-  if(isDark){
-    btn.firstChild.textContent = "☀️ ";
-    label.textContent = "Light Mode";
-  }else{
-    btn.firstChild.textContent = "🌙 ";
-    label.textContent = "Dark Mode";
-  }
-
-  localStorage.setItem("theme", theme);
-}
-
-// Load theme đã lưu (mặc định light)
-(function initTheme(){
-  const saved = localStorage.getItem("theme");
-  applyTheme(saved === "dark" ? "dark" : "light");
-})();
-
-document.addEventListener("DOMContentLoaded", () => {
-  const toggle = document.getElementById("themeToggle");
-  if(toggle){
-    toggle.addEventListener("click", () => {
-      const isDark = document.body.classList.contains("dark");
-      applyTheme(isDark ? "light" : "dark");
-    });
-  }
-});
-
 
 
 
