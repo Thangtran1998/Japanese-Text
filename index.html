@@ -1,908 +1,1082 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="vi">
 <head>
-<meta charset="UTF-8">
-<title>Trang học tiếng Nhật N1</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-<style>
-  /* ===== Theme tokens ===== */
-  :root{
-    /* Light Mode (giống ảnh mock) */
-    --bg: #ffffff;
-    --text: #0f172a;
-    --muted: #64748b;
-    --border: #e5e7eb;
-    --card: #f8fafc;
-    --card2:#ffffff;
-    --accent:#0b4f86;     /* xanh đậm */
-    --accent2:#1f6fb2;    /* hover xanh */
-    --danger-bg:#cbd5e1;  /* nút xóa lịch sử: xám nhẹ */
-    --danger-text:#0f172a;
-    --shadow: 0 10px 25px rgba(15,23,42,.06);
-    --radius: 14px;
-    --focus: 0 0 0 4px rgba(11,79,134,.18);
-  }
-
-  body.dark{
-    /* Dark Mode */
-    --bg:#0b1220;
-    --text:#e5e7eb;
-    --muted:#9ca3af;
-    --border: rgba(255,255,255,.10);
-    --card: rgba(255,255,255,.05);
-    --card2: rgba(255,255,255,.07);
-    --accent:#67b7ff;
-    --accent2:#8fd0ff;
-    --danger-bg: rgba(255,255,255,.08);
-    --danger-text:#e5e7eb;
-    --shadow: 0 10px 30px rgba(0,0,0,.35);
-    --focus: 0 0 0 4px rgba(103,183,255,.20);
-  }
-
-  *{ box-sizing: border-box; }
-
-  body{
-    font-family: Inter, "Noto Sans JP", Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    padding: 20px;
-    max-width: 900px;
-    margin: auto;
-    line-height: 1.55;
-  }
-
-  h1, h2, h3 { color: var(--text); }
-
-  /* ===== Top right theme button ===== */
-  .theme-toggle{
-    position: fixed;
-    top: 16px;
-    right: 16px;
-    z-index: 2000;
-
-    border: 1px solid var(--border);
-    background: var(--card);
-    color: var(--text);
-    padding: 10px 12px;
-    border-radius: 999px;
-    cursor: pointer;
-    box-shadow: var(--shadow);
-    user-select:none;
-    display:flex;
-    align-items:center;
-    gap:8px;
-    transition: transform .12s ease, background .2s ease, border-color .2s ease;
-  }
-  .theme-toggle:hover{ transform: translateY(-1px); }
-  .theme-toggle:focus{ outline:none; box-shadow: var(--shadow), var(--focus); }
-
-  /* ===== Nav links (giữ nguyên cấu trúc cũ, chỉ đổi màu) ===== */
-  .nav a{
-    display: block;
-    margin: 10px 0;
-    font-size: 18px;
-    text-decoration: none;
-    color: var(--accent);
-    transition: color .15s ease;
-  }
-  .nav a:hover{ color: var(--accent2); }
-
-  /* ===== Sections ===== */
-  .section{
-    display: none;
-    border: 1px solid var(--border);
-    background: var(--card);
-    padding: 20px;
-    margin-bottom: 30px;
-    border-radius: 10px;
-    box-shadow: var(--shadow);
-  }
-
-  /* ===== Lists ===== */
-  ul.submenu{
-    list-style: none;
-    margin-top: 15px;
-    padding-left: 0;
-  }
-  ul.submenu li{
-    margin: 6px 0;
-    padding: 10px 10px;
-    border-radius: 10px;
-    border: 1px solid transparent;
-    color: var(--accent);
-    cursor: pointer;
-    transition: background .15s ease, border-color .15s ease, color .15s ease;
-  }
-  ul.submenu li:hover{
-    background: rgba(11,79,134,.08);
-    border-color: rgba(11,79,134,.18);
-    color: var(--accent2);
-  }
-
-  li.clickable{ cursor: pointer; }
-  li.clickable.done::after { content: ' ✅'; color: #22c55e; }
-
-  .score-display{
-    color: #22c55e;
-    font-weight: 700;
-    font-size: 0.9em;
-    margin-left: 8px;
-  }
-
-  /* Hover của các list khác (giữ đúng id hiện có) */
-  #testList li, #grammarTestList li, #tryGrammarList li{
-    color: var(--accent);
-    transition: color .15s ease, background .15s ease;
-  }
-  #testList li:hover, #grammarTestList li:hover, #tryGrammarList li:hover{
-    color: var(--accent2);
-  }
-
-  /* ===== Reset button (xám nhẹ) ===== */
-  #resetHistoryBtn{
-    margin: 15px 0;
-    padding: 10px 15px;
-    background-color: var(--danger-bg);
-    color: var(--danger-text);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    cursor: pointer;
-    box-shadow: var(--shadow);
-    transition: transform .12s ease, border-color .2s ease;
-  }
-  #resetHistoryBtn:hover{
-    transform: translateY(-1px);
-    border-color: rgba(239,68,68,.30);
-  }
-
-  /* ===== PDF header ===== */
-  .pdf-header{
-    color: var(--accent);
-    font-weight: 700;
-    cursor: pointer;
-    transition: color 0.2s ease;
-  }
-  .pdf-header:hover{ color: var(--accent2); }
-
-  /* ===== Modal ===== */
-  .modal{
-    display:none;
-    position:fixed;
-    z-index:1000;
-    left:0; top:0;
-    width:100%; height:100%;
-    overflow:auto;
-    background-color: rgba(0,0,0,0.45);
-  }
-  .modal-content{
-    background-color: var(--bg);
-    color: var(--text);
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid var(--border);
-    width: 80%;
-    max-width: 400px;
-    text-align: center;
-    border-radius: 10px;
-    box-shadow: var(--shadow);
-  }
-  .close{
-    color: var(--muted);
-    float:right;
-    font-size:28px;
-    font-weight:bold;
-    cursor:pointer;
-  }
-  /* ===== MENU CARD (giống hình) ===== */
-.nav a.nav-card{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:14px;
-
-  padding:16px 18px;
-  margin: 14px 0;
-
-  text-decoration:none;
-  color: var(--text);
-
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-
-  transition: transform .12s ease, border-color .2s ease, background .2s ease;
-}
-
-.nav a.nav-card:hover{
-  transform: translateY(-1px);
-  border-color: rgba(11,79,134,.22);
-  background: var(--card2);
-}
-
-.nav-card .left{
-  display:flex;
-  align-items:center;
-  gap:14px;
-  min-width: 0;
-}
-
-.nav-card .iconbox{
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  border: 1px solid var(--border);
-  background: var(--card2);
-  color: var(--accent);
-  flex: 0 0 auto;
-  font-size: 18px;
-}
-
-.nav-card .text{
-  min-width: 0;
-}
-
-.nav-card .title{
-  font-weight: 800;
-  font-size: 18px;
-  letter-spacing: -0.01em;
-  line-height: 1.2;
-}
-
-.nav-card .desc{
-  margin-top: 4px;
-  font-size: 13px;
-  color: var(--muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.nav-card .chev{
-  color: var(--muted);
-  flex: 0 0 auto;
-  font-size: 18px;
-}
-/* ===== HERO HEADER ===== */
-.hero{
-  margin: 20px auto 40px;
-  padding: 60px 20px 50px;
-  border-radius: 24px;
-  background:
-    radial-gradient(1200px 400px at 50% 0%, rgba(255,255,255,.08), transparent 60%),
-    linear-gradient(180deg, #0b1220 0%, #0a1426 100%);
-  text-align: center;
-  box-shadow: 0 30px 80px rgba(0,0,0,.45);
-}
-
-.hero-inner{
-  max-width: 720px;
-  margin: auto;
-}
-
-.hero-icon{
-  font-size: 64px;
-  margin-bottom: 18px;
-}
-
-.hero-title{
-  font-size: 44px;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  margin-bottom: 14px;
-}
-
-.hero-greet{
-  font-size: 20px;
-  margin-bottom: 6px;
-  opacity: .95;
-}
-
-.hero-goal{
-  font-size: 16px;
-  color: #9ca3af;
-  margin-bottom: 28px;
-}
-
-.hero-stats{
-  display: flex;
-  justify-content: center;
-  gap: 28px;
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.12);
-  border-radius: 16px;
-  padding: 16px 22px;
-  backdrop-filter: blur(6px);
-}
-
-.hero-stats .stat{
-  font-size: 16px;
-  display: flex;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>N1 CyberSphere - JLPT N1 2026/07</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background-color: #0a0e17;
+            color: #e0f7ff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(16, 64, 120, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 80% 70%, rgba(0, 150, 200, 0.1) 0%, transparent 20%),
+                linear-gradient(to bottom, #0a0e17, #0c1220);
+        }
+        
+        .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 150, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 150, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+            opacity: 0.4;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(0, 150, 255, 0.3);
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #00a8ff, #0066cc);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            transform: rotate(45deg);
+            box-shadow: 0 0 20px rgba(0, 168, 255, 0.5);
+        }
+        
+        .logo-icon i {
+            transform: rotate(-45deg);
+        }
+        
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 28px;
+            background: linear-gradient(to right, #00a8ff, #00ffcc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(0, 40, 80, 0.4);
+            padding: 12px 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 150, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #ff9900, #ff6600);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #000;
+        }
+        
+        .user-name {
+            font-weight: 600;
+            font-size: 18px;
+        }
+        
+        .user-greeting {
+            color: #88d3ff;
+            font-size: 14px;
+        }
+        
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+        
+        .mission-panel {
+            background: rgba(0, 20, 40, 0.6);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(0, 150, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        
+        .mission-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, #00a8ff, #00ffcc);
+        }
+        
+        .panel-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            margin-bottom: 25px;
+            color: #00e5ff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .panel-title i {
+            color: #ff9900;
+        }
+        
+        .target-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .target-card {
+            flex: 1;
+            min-width: 250px;
+            background: rgba(0, 30, 60, 0.5);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(0, 150, 255, 0.2);
+            position: relative;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .target-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 100, 255, 0.3);
+        }
+        
+        .target-card::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #00ffcc, transparent);
+            opacity: 0.7;
+        }
+        
+        .card-title {
+            font-size: 16px;
+            color: #88d3ff;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .card-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 26px;
+            font-weight: 700;
+            color: #00ffcc;
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+        }
+        
+        .card-value.special {
+            color: #ff9900;
+            text-shadow: 0 0 10px rgba(255, 153, 0, 0.5);
+        }
+        
+        .card-subtitle {
+            font-size: 14px;
+            color: #a0c8e0;
+            margin-top: 5px;
+        }
+        
+        .streak-counter {
+            background: rgba(0, 30, 60, 0.7);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
+            border: 1px solid rgba(255, 153, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .streak-counter::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 153, 0, 0.1) 50%, transparent 70%);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .streak-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            color: #ff9900;
+            margin-bottom: 15px;
+        }
+        
+        .streak-days {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 42px;
+            font-weight: 900;
+            color: #ffcc00;
+            text-shadow: 0 0 15px rgba(255, 204, 0, 0.7);
+            margin-bottom: 5px;
+        }
+        
+        .streak-text {
+            font-size: 18px;
+            color: #ffdd99;
+        }
+        
+        .modules-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .module-card {
+            background: rgba(0, 20, 40, 0.7);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid rgba(0, 150, 255, 0.3);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 25px rgba(0, 100, 255, 0.4);
+            border-color: #00a8ff;
+        }
+        
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, #0066cc, #00a8ff);
+        }
+        
+        .module-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 100, 200, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: #00a8ff;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0, 150, 255, 0.3);
+        }
+        
+        .module-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #00e5ff;
+        }
+        
+        .module-desc {
+            color: #a0c8e0;
+            font-size: 15px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: rgba(0, 50, 100, 0.5);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, #0066cc, #00ffcc);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 1.5s ease-out;
+        }
+        
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #88d3ff;
+        }
+        
+        .start-button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(to right, #0066cc, #00a8ff);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            text-decoration: none;
+            margin-top: 20px;
+            letter-spacing: 1px;
+        }
+        
+        .start-button:hover {
+            background: linear-gradient(to right, #00a8ff, #00ffcc);
+            box-shadow: 0 0 20px rgba(0, 168, 255, 0.7);
+            transform: scale(1.02);
+        }
+        
+        .floating-elements {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .floating-element {
+            position: absolute;
+            background: rgba(0, 150, 255, 0.1);
+            border: 1px solid rgba(0, 150, 255, 0.3);
+            border-radius: 10px;
+            animation: float 20s infinite linear;
+        }
+        
+        .floating-element:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+        
+        .floating-element:nth-child(2) {
+            width: 60px;
+            height: 60px;
+            top: 20%;
+            right: 10%;
+            animation-delay: -5s;
+        }
+        
+        .floating-element:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            bottom: 15%;
+            left: 10%;
+            animation-delay: -10s;
+        }
+        
+        .floating-element:nth-child(4) {
+            width: 70px;
+            height: 70px;
+            bottom: 25%;
+            right: 5%;
+            animation-delay: -15s;
+        }
+        
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(20px, 30px) rotate(90deg); }
+            50% { transform: translate(0, 60px) rotate(180deg); }
+            75% { transform: translate(-20px, 30px) rotate(270deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+        
+        .cyber-line {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .cyber-line::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #00ffcc, transparent);
+            animation: scan 4s linear infinite;
+        }
+        
+        @keyframes scan {
+            0% { top: 0%; }
+            100% { top: 100%; }
+        }
+        
+        .glow-effect {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 150, 255, 0.1), transparent 70%);
+            filter: blur(20px);
+            z-index: -1;
+        }
+        
+        .glow-1 {
+            top: 10%;
+            right: 10%;
+        }
+        
+        .glow-2 {
+            bottom: 10%;
+            left: 10%;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 50px;
+            border-top: 1px solid rgba(0, 150, 255, 0.2);
+            color: #88d3ff;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .target-info {
+                flex-direction: column;
+            }
+            
+            .target-card {
+                min-width: 100%;
+            }
+            
+            .modules-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo-text {
+                font-size: 22px;
+            }
+            
+            .user-info {
+                padding: 8px 15px;
+            }
+        }
+        /* ===== LICENSE GATE ===== */
+.license-gate {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 8, 18, 0.88);
+  backdrop-filter: blur(10px);
+  z-index: 9999;
+  display: none;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  padding: 20px;
 }
 
+.license-panel {
+  width: min(720px, 100%);
+  background: rgba(0, 20, 40, 0.75);
+  border: 1px solid rgba(0, 150, 255, 0.35);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
 
-</style>
+.license-panel::before{
+  content:'';
+  position:absolute; top:0; left:0; right:0; height:4px;
+  background: linear-gradient(to right, #00a8ff, #00ffcc);
+}
 
+.license-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.license-input {
+  width: 100%;
+  padding: 14px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(0,150,255,0.35);
+  background: rgba(0, 10, 25, 0.75);
+  color: #e0f7ff;
+  outline: none;
+  font-size: 15px;
+}
+
+.license-actions {
+  display:flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.license-btn {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 0;
+  cursor:pointer;
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 0.5px;
+}
+
+.license-btn.primary {
+  background: linear-gradient(to right, #0066cc, #00a8ff);
+  color: #fff;
+}
+.license-btn.primary:hover {
+  background: linear-gradient(to right, #00a8ff, #00ffcc);
+  box-shadow: 0 0 20px rgba(0,168,255,0.5);
+}
+
+.license-btn.ghost {
+  background: rgba(0, 40, 80, 0.35);
+  color: #88d3ff;
+  border: 1px solid rgba(0,150,255,0.25);
+}
+
+.license-badge {
+  display:inline-flex;
+  gap:10px;
+  align-items:center;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,153,0,0.35);
+  background: rgba(40,20,0,0.25);
+  color: #ffdd99;
+  margin-top: 10px;
+}
+
+.license-small {
+  color:#a0c8e0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.license-kv {
+  display:grid;
+  grid-template-columns: 160px 1fr;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid rgba(0,150,255,0.2);
+  border-radius: 12px;
+  background: rgba(0, 30, 60, 0.35);
+}
+
+.license-kv code{
+  word-break: break-all;
+  color:#00ffcc;
+}
+
+.license-status {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #88d3ff;
+}
+.license-status.error { color: #ff8a8a; }
+.license-status.ok { color: #00ffcc; }
+
+    </style>
 </head>
 <body>
-  <header class="hero">
-  <div class="hero-inner">
-    <div class="hero-icon">🧭</div>
+    <div class="cyber-grid"></div>
+    <div class="cyber-line"></div>
+    <div class="floating-elements">
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+    </div>
+    <div class="glow-effect glow-1"></div>
+    <div class="glow-effect glow-2"></div>
+    <!-- ===== LICENSE GATE UI ===== -->
+<div class="license-gate" id="licenseGate">
+  <div class="license-panel">
+    <h2 class="panel-title"><i class="fas fa-shield-halved"></i> KÍCH HOẠT BẢN QUYỀN</h2>
 
-    <h1 class="hero-title">Chinh phục JLPT N1</h1>
-
-    <div class="hero-greet">
-      Xin chào Thắng <span>👋</span>
+    <div class="license-small">
+      Web của bạn đang bật chế độ <b>Khóa thiết bị</b>: 1 máy / 1 license.<br/>
+      Nhập license để mở hệ thống.
     </div>
 
-    <div class="hero-goal">
-      Mục tiêu: JLPT N1 – 12/2026
-    </div>
+    <div class="license-row">
+      <input class="license-input" id="licenseInput" placeholder="Nhập license (VD: 20260701-xxxx...)" />
 
-    <div class="hero-stats">
-      <div class="stat">
-        🔥 <b>5</b> ngày liên tiếp
+      <div class="license-actions">
+        <button class="license-btn primary" id="btnActivate">
+          <i class="fas fa-key"></i> KÍCH HOẠT
+        </button>
+        <button class="license-btn ghost" id="btnCopyDevice">
+          <i class="fas fa-copy"></i> COPY THIẾT BỊ HIỆN TẠI
+        </button>
+        <button class="license-btn ghost" id="btnRequestReset">
+          <i class="fas fa-rotate"></i> YÊU CẦU CẤP LẠI LICENSE
+        </button>
       </div>
-      <div class="stat">
-        🎯 JLPT N1 – 12/2026
+
+      <div class="license-status" id="licenseStatus">Trạng thái: Chưa kích hoạt</div>
+
+      <div class="license-kv">
+        <div>Thiết bị hiện tại</div>
+        <div><code id="deviceIdText">...</code></div>
+
+        <div>Thông tin</div>
+        <div><code id="deviceInfoText">...</code></div>
+      </div>
+
+      <div class="license-small">
+        <b>Gợi ý:</b> Nếu bạn đổi máy / đổi trình duyệt / xóa dữ liệu trình duyệt → deviceID thay đổi → cần cấp lại license.
       </div>
     </div>
   </div>
-</header>
-
-    <button id="themeToggle" class="theme-toggle" type="button">
-    🌙 <span id="themeLabel">Dark Mode</span>
-  </button>
-
-  <div id="customModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <p id="modalMessage">Thông báo</p>
-    </div>
-  </div>
-
-  <h1>Chinh phục JLPT N1</h1>
-
-  <div class="nav">
-  <!-- 1 -->
-  <a href="#" class="nav-card" onclick="showSection('s1')">
-    <div class="left">
-      <div class="iconbox"><i class="fa-solid fa-book"></i></div>
-      <div class="text">
-        <div class="title">Luyện thi N1 – Giai đoạn 1</div>
-        <div class="desc">Lộ trình 100 ngày, ngữ pháp, luyện nghe</div>
-      </div>
-    </div>
-    <div class="chev"><i class="fa-solid fa-chevron-right"></i></div>
-  </a>
-
-  <!-- 2 -->
-  <a href="#" class="nav-card" onclick="showSection('s2')">
-    <div class="left">
-      <div class="iconbox"><i class="fa-solid fa-layer-group"></i></div>
-      <div class="text">
-        <div class="title">Luyện thi N1 – Giai đoạn 2</div>
-        <div class="desc">Đề nâng cao, tổng hợp chuyên đề</div>
-      </div>
-    </div>
-    <div class="chev"><i class="fa-solid fa-chevron-right"></i></div>
-  </a>
-
-  <!-- 3 -->
-  <a href="#" class="nav-card" onclick="showSection('s3')">
-    <div class="left">
-      <div class="iconbox"><i class="fa-solid fa-video"></i></div>
-      <div class="text">
-        <div class="title">Khóa Zoom N1 – 12/2024</div>
-        <div class="desc">Tài liệu, ghi chú, nội dung buổi học</div>
-      </div>
-    </div>
-    <div class="chev"><i class="fa-solid fa-chevron-right"></i></div>
-  </a>
-
-  <!-- 4 -->
-  <a href="#" class="nav-card" onclick="showSection('s4')">
-    <div class="left">
-      <div class="iconbox"><i class="fa-solid fa-book-open"></i></div>
-      <div class="text">
-        <div class="title">Từ vựng</div>
-        <div class="desc">Test từ vựng Mimikara, từ vựng của Thaolejp</div>
-      </div>
-    </div>
-    <div class="chev"><i class="fa-solid fa-chevron-right"></i></div>
-  </a>
 </div>
 
-  <button id="resetHistoryBtn" onclick="resetHistory()">🗑 Xóa toàn bộ lịch sử làm bài</button>
-
-<div class="section" id="s1">
-    <h2>1️⃣ Luyện thi N1 giai đoạn 1</h2>
-    <ul class="submenu">
-      <li onclick="showModal('Không có bài test nào trong thư mục này, vui lòng xem tài liệu đã tải về trên máy tính')">📝 Tài liệu và lộ trình khóa N1 giai đoạn 1</li>
-      <li onclick="showSection('testday1')">📝 Bài test theo ngày của lộ trình 100 ngày</li>
-      <li onclick="showSection('grammarTests')">📝 Ngữ pháp phân loại theo chủ điểm</li>
-      <li onclick="showSection('NguPhapCapTocN1')">📝 Ôn tập ngữ pháp cấp tốc N1</li>
-      <li onclick="showSection('Trynguphap')">📝 Luyện nghe Try ngữ pháp</li>
-      <li onclick="showModal('Đang cập nhật nội dung...')">📝 Từ vựng theo chủ điểm</li>
-      <li onclick="showModal('Đang cập nhật nội dung...')">📝 Nghe từ vựng Tango mỗi ngày</li>
-      <li onclick="showModal('Đang cập nhật nội dung...')">📝 Kanji</li>
-      <li onclick="showModal('Đang cập nhật nội dung...')">📝 Kanji Master</li>
-      <li onclick="showModal('Đang cập nhật nội dung...')">📝 Hack não Kanji</li>
-      <li onclick="showModal('Đang cập nhật nội dung...')">📝 Kanji dễ nhầm lẫn (Update 12/2023)</li>
-      <li onclick="showModal('Đang cập nhật nội dung...')">📝 Chữa đề thi JLPT các năm - phần từ vựng, ngữ pháp</li>
-      <li onclick="showModal('Đang cập nhật nội dung...')">📝 Test kanji tổng hợp</li>
-      <li onclick="showModal('Đang cập nhật nội dung...')">📝 Test từ vựng tổng hợp</li>
-      <li onclick="showModal('Đang cập nhật nội dung...')">📝 Text tổng hợp kanji từ vựng</li>
-      <li onclick="showModal('Đang cập nhật nội dung...')">📝 Thi chuyên đề (hàng tuần) (12/2023)</li>
-      <li onclick="showModal('Đang cập nhật nội dung...')">📝 Thi thử tháng update 12/2023</li>
-      <li onclick="showModal('Đang cập nhật nội dung...')">📝 Học Zoom 7/2024</li>
-    </ul>
+<!-- Bọc app để ẩn khi chưa có license -->
+<div id="appRoot">
+  <!-- GIỮ NGUYÊN phần container của bạn ở dưới -->
 </div>
+<div id="appRoot">
+    
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-satellite"></i>
+                </div>
+                <div class="logo-text">N1 CYBERSPHERE</div>
+            </div>
+            <div class="user-info">
+                <div class="user-avatar">T</div>
+                <div>
+                    <div class="user-greeting">Xin chào</div>
+                    <div class="user-name">Thắng 🎉</div>
+                </div>
+            </div>
+        </header>
+        
+        <main class="main-content">
+            <section class="mission-panel">
+                <h2 class="panel-title"><i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC</h2>
+                
+                <div class="target-info">
+                    <div class="target-card">
+                        <div class="card-title"><i class="fas fa-flag"></i> Mục tiêu</div>
+                        <div class="card-value">JLPT N1</div>
+                        <div class="card-subtitle">Cấp độ cao nhất</div>
+                    </div>
+                    
+                    <div class="target-card">
+                        <div class="card-title"><i class="fas fa-calendar-alt"></i> Thời hạn</div>
+                        <div class="card-value special">07/2026</div>
+                        <div class="card-subtitle">Kỳ thi tháng 7 năm 2026</div>
+                    </div>
+                    
+                    <div class="target-card">
+                        <div class="card-title"><i class="fas fa-rocket"></i> Trạng thái</div>
+                        <div class="card-value">ACTIVE</div>
+                        <div class="card-subtitle">Hệ thống đã kích hoạt</div>
+                    </div>
+                </div>
+                
+                <div class="streak-counter">
+                    <div class="streak-title">
+                        <i class="fas fa-fire"></i> CHUỖI HOẠT ĐỘNG
+                    </div>
+                    <div class="streak-days">5 NGÀY</div>
+                    <div class="streak-text">liên tiếp hoàn thành nhiệm vụ!</div>
+                </div>
+            </section>
+            
+            <section class="mission-panel">
+                <h2 class="panel-title"><i class="fas fa-cogs"></i> MODULE ĐÀO TẠO</h2>
+                
+                <div class="modules-section">
+                    <div class="module-card">
+                        <div class="module-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h3 class="module-title">TỪ VỰNG N1</h3>
+                        <p class="module-desc">Hơn 2000 từ vựng nâng cao với hệ thống ghi nhớ thông minh.</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-vocab"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span>Tiến độ</span>
+                            <span id="percent-vocab">0%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="module-card">
+                        <div class="module-icon">
+                            <i class="fas fa-language"></i>
+                        </div>
+                        <h3 class="module-title">NGỮ PHÁP N1</h3>
+                        <p class="module-desc">Hơn 150 cấu trúc ngữ pháp phức tạp với giải thích chi tiết.</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-grammar"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span>Tiến độ</span>
+                            <span id="percent-grammar">0%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="module-card">
+                        <div class="module-icon">
+                            <i class="fas fa-headphones"></i>
+                        </div>
+                        <h3 class="module-title">NGHE HIỂU</h3>
+                        <p class="module-desc">Luyện nghe với các tình huống thực tế và tốc độ bản ngữ.</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-listening"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span>Tiến độ</span>
+                            <span id="percent-listening">0%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="module-card">
+                        <div class="module-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h3 class="module-title">ĐỌC HIỂU</h3>
+                        <p class="module-desc">Phân tích văn bản học thuật, báo chí và tài liệu chuyên ngành.</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-reading"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span>Tiến độ</span>
+                            <span id="percent-reading">0%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <a href="#" class="start-button">
+                    <i class="fas fa-play-circle"></i> KHỞI ĐỘNG HỆ THỐNG HỌC TẬP
+                </a>
+            </section>
+        </main>
+        
+        <footer>
+            <p>© 2025 N1 CYBERSPHERE - Hệ thống đào tạo JLPT N1 công nghệ cao</p>
+            <p>Phiên bản 2.0 | Chế độ: Dark Mode | Kết nối: Stable</p>
+        </footer>
+    </div>
+    </div>
+    
+    <script>
+/**
+ * ====== CONFIG ======
+ * BẮT BUỘC: có server để verify, vì secret không được nằm trong client.
+ * Bạn đổi API_URL theo server của bạn.
+ */
+
+const API_URL = "http://127.0.0.1:3000/api";
 
 
-<div class="section" id="s4">
-    <h2>4️⃣ Từ vựng</h2>
-    <ul class="submenu">
-      <li onclick="showModal('Không có bài test nào trong thư mục này, vui lòng xem tài liệu đã tải về trên máy tính')">📝 N1 Mimikara</li>
-      <li onclick="showSection('vocabulary')">📝 Test từ vựng 30 ngày_ThaoLeJP</li>
-    </ul>
-</div>
 
-<div class="section" id="vocabulary">
-    <h2>📚 30 ngày test từ vựng ThaoLeJp</h2>
-    <ul id="vocabularyList"></ul>
-</div>
+const LS_DEVICE_ID = "n1_device_id";
+const LS_LICENSE = "n1_license";
 
-
-
-  
-  </div>
-    <div class="section" id="grammarTests">
-    <h2>📂 Ngữ pháp phân loại theo chủ điểm</h2>
-    <ul id="grammarTestList"></ul>
-  </div>
-
-  <div class="section" id="NguPhapCapTocN1">
-    <a href="Thaolejp_Tong hop ngu phap N1.pdf" target="_blank" style="text-decoration: none;">
-      <h2 class="pdf-header"><i class="fas fa-file-pdf"></i> Tổng hợp ngữ pháp N1</h2>
-    </a>
-  </div>
-
-
-  <div class="section" id="Trynguphap">
-    <h2>🎧 Luyện nghe Try ngữ pháp</h2>
-    <ul id="tryGrammarList"></ul> 
-  </div>
-
-   <div class="section" id="tuvung_coThao">
-    <h2>🎧 Tổng hợp 30 bài test từ vựng ThaoLeJP</h2>
-    <ul id="tuvung_coThao_List"></ul> 
-  </div>
-
-
-  <div class="section" id="testday1">
-    <h2>📘 Bài test theo ngày</h2>
-    <ul id="testList"></ul>
-  </div>
-
-
-
-
-
-  <div class="section" id="s2"><h2>2️⃣ Luyện thi N1 giai đoạn 2</h2><p>Đang cập nhật nội dung...</p></div>
-
-
-  <div class="section" id="s3"><h2>3️⃣ Khóa Zoom N1</h2><p>Đang cập nhật nội dung...</p></div>
-
-  <script>
-    /* ========= THEME TOGGLE (Light/Dark) ========= */
-function applyTheme(theme){
-  const isDark = theme === "dark";
-  document.body.classList.toggle("dark", isDark);
-
-  const label = document.getElementById("themeLabel");
-  const btn = document.getElementById("themeToggle");
-
-  // Dark -> nút hiển thị ☀️ Light Mode (để chuyển về Light)
-  if(isDark){
-    btn.firstChild.textContent = "☀️ ";
-    label.textContent = "Light Mode";
-  }else{
-    btn.firstChild.textContent = "🌙 ";
-    label.textContent = "Dark Mode";
-  }
-
-  localStorage.setItem("theme", theme);
+/** ====== Utils ====== */
+function uuidv4() {
+  // UUID đơn giản đủ dùng
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, c => {
+    const r = Math.random() * 16 | 0;
+    const v = c === "x" ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
 }
 
-// Load theme đã lưu (mặc định light)
-(function initTheme(){
-  const saved = localStorage.getItem("theme");
-  applyTheme(saved === "dark" ? "dark" : "light");
+function getOrCreateDeviceId() {
+  let id = localStorage.getItem(LS_DEVICE_ID);
+  if (!id) {
+    id = uuidv4();
+    localStorage.setItem(LS_DEVICE_ID, id);
+  }
+  return id;
+}
+
+function getDeviceInfo() {
+  const ua = navigator.userAgent || "";
+  const lang = navigator.language || "";
+  const platform = navigator.platform || "";
+  return `${platform} | ${lang} | ${ua.slice(0, 80)}...`;
+}
+
+function setStatus(text, type="") {
+  const el = document.getElementById("licenseStatus");
+  el.textContent = text;
+  el.classList.remove("error","ok");
+  if (type) el.classList.add(type);
+}
+
+async function copyText(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    // fallback
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    ta.remove();
+    return true;
+  }
+}
+
+/** ====== API ======
+ * server sẽ verify license + bind 1 license vào 1 device
+ */
+async function verifyLicense(deviceId, license) {
+  const res = await fetch(`${API_URL}/verify`, {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({ deviceId, license })
+  });
+  if (!res.ok) {
+    const t = await res.text();
+    throw new Error(t || "Verify failed");
+  }
+  return res.json(); // { ok: true, expiry: "20260701", bound: true }
+}
+
+async function requestReset(deviceId, oldLicense, note) {
+  const res = await fetch(`${API_URL}/request-reset`, {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({ deviceId, oldLicense, note })
+  });
+  // request-reset có thể chỉ log mail/slack, nên ok/không ok tùy bạn
+  if (!res.ok) {
+    const t = await res.text();
+    throw new Error(t || "Request reset failed");
+  }
+  return res.json();
+}
+
+/** ====== Gate flow ====== */
+function showGate(show=true) {
+  const gate = document.getElementById("licenseGate");
+  const app = document.getElementById("appRoot");
+  gate.style.display = show ? "flex" : "none";
+  app.style.display = show ? "none" : "block";
+}
+
+function fillDeviceUI(deviceId) {
+  document.getElementById("deviceIdText").textContent = deviceId;
+  document.getElementById("deviceInfoText").textContent = getDeviceInfo();
+}
+
+function runAppUI() {
+  // === code UI cũ của bạn (progress + effects) ===
+  document.addEventListener('DOMContentLoaded', function() {
+      const progressData = { vocab: 65, grammar: 42, listening: 28, reading: 35 };
+
+      for (const [module, value] of Object.entries(progressData)) {
+          const progressFill = document.getElementById(`progress-${module}`);
+          const percentText = document.getElementById(`percent-${module}`);
+
+          progressFill.style.width = '0%';
+          percentText.textContent = '0%';
+
+          setTimeout(() => {
+              progressFill.style.width = `${value}%`;
+              percentText.textContent = `${value}%`;
+          }, 300);
+      }
+
+      const startButton = document.querySelector('.start-button');
+      startButton.addEventListener('click', function(e) {
+          e.preventDefault();
+
+          const ripple = document.createElement('div');
+          ripple.style.position = 'fixed';
+          ripple.style.borderRadius = '50%';
+          ripple.style.backgroundColor = 'rgba(0, 168, 255, 0.6)';
+          ripple.style.width = '10px';
+          ripple.style.height = '10px';
+          ripple.style.left = `${e.clientX}px`;
+          ripple.style.top = `${e.clientY}px`;
+          ripple.style.transform = 'translate(-50%, -50%)';
+          ripple.style.zIndex = '1000';
+          ripple.style.pointerEvents = 'none';
+          document.body.appendChild(ripple);
+
+          const animation = ripple.animate([
+              { width: '10px', height: '10px', opacity: 1 },
+              { width: '200px', height: '200px', opacity: 0 }
+          ], { duration: 800, easing: 'ease-out' });
+
+          animation.onfinish = () => ripple.remove();
+
+          setTimeout(() => {
+              alert("Hệ thống học tập N1 đang khởi động...\nChuẩn bị cho nhiệm vụ ngày hôm nay!");
+          }, 300);
+      });
+
+      const targetCards = document.querySelectorAll('.target-card');
+      targetCards.forEach(card => {
+          card.addEventListener('mouseenter', () => {
+              const afterElement = card.querySelector('.card-value');
+              if (afterElement) afterElement.style.textShadow = '0 0 20px rgba(0, 255, 204, 0.8)';
+          });
+
+          card.addEventListener('mouseleave', () => {
+              const afterElement = card.querySelector('.card-value');
+              if (afterElement) afterElement.style.textShadow = '0 0 10px rgba(0, 255, 204, 0.5)';
+          });
+      });
+
+      const streakDays = document.querySelector('.streak-days');
+      let count = 0;
+      const targetCount = 5;
+      const countInterval = setInterval(() => {
+          count++;
+          streakDays.textContent = `${count} NGÀY`;
+          if (count === targetCount) clearInterval(countInterval);
+      }, 200);
+  });
+}
+
+/** ====== Boot ====== */
+(async function boot() {
+  const deviceId = getOrCreateDeviceId();
+  fillDeviceUI(deviceId);
+
+  const savedLicense = localStorage.getItem(LS_LICENSE);
+  const licenseInput = document.getElementById("licenseInput");
+  if (savedLicense) licenseInput.value = savedLicense;
+
+  // mặc định: chưa ok => show gate
+  showGate(true);
+
+  // thử auto verify nếu có savedLicense
+  if (savedLicense) {
+    setStatus("Đang kiểm tra license...", "");
+    try {
+      const r = await verifyLicense(deviceId, savedLicense);
+      if (r && r.ok) {
+        setStatus(`Kích hoạt OK (hạn: ${r.expiry})`, "ok");
+        showGate(false);
+        runAppUI();
+        return;
+      }
+      setStatus("License không hợp lệ hoặc đã hết hạn", "error");
+    } catch (e) {
+      setStatus("Không kiểm tra được license (server lỗi hoặc sai API_URL)", "error");
+    }
+  }
+
+  // Buttons
+  document.getElementById("btnCopyDevice").addEventListener("click", async () => {
+    await copyText(deviceId);
+    setStatus("Đã copy deviceID. Gửi deviceID này để cấp license.", "ok");
+  });
+
+  document.getElementById("btnActivate").addEventListener("click", async () => {
+    const license = licenseInput.value.trim();
+    if (!license) return setStatus("Bạn chưa nhập license", "error");
+
+    setStatus("Đang kích hoạt...", "");
+    try {
+      const r = await verifyLicense(deviceId, license);
+      if (r && r.ok) {
+        localStorage.setItem(LS_LICENSE, license);
+        setStatus(`Kích hoạt OK (hạn: ${r.expiry})`, "ok");
+        showGate(false);
+        runAppUI();
+      } else {
+        setStatus("License không hợp lệ hoặc đã hết hạn", "error");
+      }
+    } catch (e) {
+      setStatus("Kích hoạt thất bại: " + (e.message || "unknown"), "error");
+    }
+  });
+
+  document.getElementById("btnRequestReset").addEventListener("click", async () => {
+    const oldLicense = licenseInput.value.trim() || localStorage.getItem(LS_LICENSE) || "";
+    const note = prompt("Nhập lý do cấp lại (vd: đổi máy / cài lại Windows / xóa trình duyệt):") || "";
+
+    // Tạo mã yêu cầu (copy được)
+    const requestCode = `RESET|deviceId=${deviceId}|oldLicense=${oldLicense}|note=${note}`;
+    await copyText(requestCode);
+
+    setStatus("Đã copy mã yêu cầu cấp lại. Dán mã này gửi cho bạn quản trị.", "ok");
+
+    // Nếu bạn có endpoint server thì gọi thêm (không có cũng không sao)
+    try {
+      await requestReset(deviceId, oldLicense, note);
+    } catch {}
+  });
+
 })();
+</script>
 
-document.addEventListener("DOMContentLoaded", () => {
-  const toggle = document.getElementById("themeToggle");
-  if(toggle){
-    toggle.addEventListener("click", () => {
-      const isDark = document.body.classList.contains("dark");
-      applyTheme(isDark ? "light" : "dark");
-    });
-  }
-});
-
-
-
-
-    // Luyện nghe Try ngữ pháp
-const tryGrammarTestsData = [ 
-  { id: "TryTest-1", name: "📄 N1_Try Test 1.1" },
-  { id: "TryTest-21", name: "📄 N1_Try Test 1.2" },
-  { id: "TryTest-2", name: "📄 N1_Try Test 1.3" },
-  { id: "TryTest-3", name: "📄 N1_Try Test 2.1" },
-  { id: "TryTest-22", name: "📄 N1_Try Test 2.2" },
-  { id: "TryTest-4", name: "📄 N1_Try Test 2.3" },
-  { id: "TryTest-5", name: "📄 N1_Try Test 3.1" },
-  { id: "TryTest-23", name: "📄 N1_Try Test 3.2" },
-  { id: "TryTest-6", name: "📄 N1_Try Test 3.3" },
-  { id: "TryTest-7", name: "📄 N1_Try Test 4.1" },
-  { id: "TryTest-24", name: "📄 N1_Try Test 4.2" },
-  { id: "TryTest-8", name: "📄 N1_Try Test 4.3" },
-  { id: "TryTest-9", name: "📄 N1_Try Test 5.1" },
-  { id: "TryTest-25", name: "📄 N1_Try Test 5.2" },
-  { id: "TryTest-26", name: "📄 N1_Try Test 5.3" },
-  { id: "TryTest-10", name: "📄 N1_Try Test 5.4" },
-  { id: "TryTest-11", name: "📄 N1_Try Test 6.1" },
-  { id: "TryTest-27", name: "📄 N1_Try Test 6.2" },
-  { id: "TryTest-12", name: "📄 N1_Try Test 6.3" },
-  { id: "TryTest-13", name: "📄 N1_Try Test 7.1" },
-  { id: "TryTest-28", name: "📄 N1_Try Test 7.2" },
-  { id: "TryTest-14", name: "📄 N1_Try Test 7.3" },
-  { id: "TryTest-15", name: "📄 N1_Try Test 8.1" },
-  { id: "TryTest-29", name: "📄 N1_Try Test 8.2" },
-  { id: "TryTest-16", name: "📄 N1_Try Test 8.3" },
-  { id: "TryTest-17", name: "📄 N1_Try Test 9.1" },
-  { id: "TryTest-30", name: "📄 N1_Try Test 9.2" },
-  { id: "TryTest-18", name: "📄 N1_Try Test 9.3" },
-  { id: "TryTest-19", name: "📄 N1_Try Test 10.1" },
-  { id: "TryTest-31", name: "📄 N1_Try Test 10.2" },
-  { id: "TryTest-20", name: "📄 N1_Try Test 10.3" },
-];
-
-let currentTryGrammarTestId = null;
-
-
-const grammarTestsData = [
-  { id: "test-NguPhapPhanLoaiTheoChuDiem1", name: "📄 N1_Test 1_Ngữ pháp ～まで" },
-  { id: "test-NguPhapPhanLoaiTheoChuDiem2", name: "📄 N1_Test 2_Ngữ pháp まで・ところ・ながら" },
-  { id: "test-NguPhapPhanLoaiTheoChuDiem3", name: "📄 N1_Test 3_Ngữ pháp ～ところ・～ながら" },
-  { id: "test-NguPhapPhanLoaiTheoChuDiem4", name: "📄 N1_Test 4_Ngữ pháp gần giống nh" },
-  { id: "test-NguPhapPhanLoaiTheoChuDiem5", name: "📄 N1_Test 5_ Ngữ pháp gần giống n" },
-  { id: "test-NguPhapPhanLoaiTheoChuDiem6", name: "📄 N1_Test 6_mẫu itaru và cấu trúc" },
-  { id: "test-NguPhapPhanLoaiTheoChuDiem7", name: "📄 N1_Test 7_Ngữ pháp itaru và cấu" },
-  { id: "test-NguPhapPhanLoaiTheoChuDiem8", name: "📄 N1_Test 8_Ngữ pháp_kagiri và mo" },
-  { id: "test-NguPhapPhanLoaiTheoChuDiem9", name: "📄 N1_Test 9_Ngữ pháp thể hiện kết" },
-  { id: "test-NguPhapPhanLoaiTheoChuDiem10", name: "📄 N1_Test 10_Mẫu 限り＋をもって Mẫu ngữ" },
-  { id: "test-NguPhapPhanLoaiTheoChuDiem11", name: "📄 N1_Test 11_Mẫu ngữ pháp thể hiệ" },
-  { id: "test-NguPhapPhanLoaiTheoChuDiem12", name: "📄 N1_Test 12_Ngữ pháp thể hiện tr" },
-  { id: "test-NguPhapPhanLoaiTheoChuDiem13", name: "📄 N1_Test 13_Mẫu ngữ pháp thể hiệ" },
-  { id: "test-NguPhapPhanLoaiTheoChuDiem14", name: "📄 N1_Test 14_Ngữ pháp thể hiện lý" },
-  { id: "test-NguPhapPhanLoaiTheoChuDiem15", name: "📄 N1_Test 15_Ngữ pháp liên quan đ" },
-  { id: "test-NguPhapPhanLoaiTheoChuDiem16", name: "📄 N1_Test 16_Mẫu câu giới hạn" },
-  { id: "test-NguPhapPhanLoaiTheoChuDiem17", name: "📄 N1_Test 17_Ngữ pháp mẫu câu giớ" },
-  { id: "test-NguPhapPhanLoaiTheoChuDiem18", name: "📄 N1_Test 18_Ngữ pháp đuôi câu 1" },
-  { id: "test-NguPhapPhanLoaiTheoChuDiem19", name: "📄 N1_Test 19_Ngữ pháp đuôi câu 2" },
-  { id: "test-NguPhapPhanLoaiTheoChuDiem20", name: "📄 N1_Test 20_Ngữ pháp đuôi câu 3" },
-  { id: "test-NguPhapPhanLoaiTheoChuDiem21", name: "📄 N1_Test 21_Ngữ pháp đuôi câu 4" },
-  { id: "test-NguPhapPhanLoaiTheoChuDiem22", name: "📄 N1_Test 22_Ngữ pháp とは" },
-  { id: "test-NguPhapPhanLoaiTheoChuDiem23", name: "📄 N1_Test 23_Ngữ pháp ときたら" },
-  { id: "test-NguPhapPhanLoaiTheoChuDiem24", name: "📄 N1_Test 24_Ngữ pháp 1" },
-  { id: "test-NguPhapPhanLoaiTheoChuDiem25", name: "📄 N1_Test 25_Ngữ pháp 2" },
-  { id: "test-NguPhapPhanLoaiTheoChuDiem26", name: "📄 N1_Test 26_Ngữ pháp 3" },
-  { id: "test-NguPhapPhanLoaiTheoChuDiem27", name: "📄 N1_Test 27_Ngữ pháp 4" },
-  { id: "test-NguPhapPhanLoaiTheoChuDiem28", name: "📄 N1_Test 28_ôn tập kiến thức N2" },
-  { id: "test-NguPhapPhanLoaiTheoChuDiem29", name: "📄 N1_Test 29_ôn tập kiến thức N2" },
-  { id: "test-NguPhapPhanLoaiTheoChuDiem30", name: "📄 N1_Test 30_Ôn tập Ngữ pháp N1" },
-  { id: "test-NguPhapPhanLoaiTheoChuDiem31", name: "📄 N1_Test 31_điền dấu sao_1" },
-  { id: "test-NguPhapPhanLoaiTheoChuDiem32", name: "📄 N1_Test 32_Điền dấu sao_2" },
-  { id: "test-NguPhapPhanLoaiTheoChuDiem33", name: "📄 N1_Test 33_đọc hiểu ngữ pháp.xlsx" },
-];
-
-
-let currentTestId1 = null;
-
-
-
-// Dữ liệu từ vựng theo chủ điểm
-    const vocabularyTestsData = [ 
-      { id: "vocab-1", name: "📄 Ngày 1" },
-      { id: "vocab-2", name: "📄 Ngày 2" },
-      { id: "vocab-3", name: "📄 Ngày 3" },
-      { id: "vocab-4", name: "📄 Ngày 4" },
-      { id: "vocab-5", name: "📄 Ngày 5" },
-      { id: "vocab-6", name: "📄 Ngày 6" },
-      { id: "vocab-7", name: "📄 Ngày 7" },
-      { id: "vocab-8", name: "📄 Ngày 8" },
-      { id: "vocab-9", name: "📄 Ngày 9" },
-      { id: "vocab-10", name: "📄 Ngày 10" },
-      { id: "vocab-11", name: "📄 Ngày 11" },
-      { id: "vocab-12", name: "📄 Ngày 12" },
-      { id: "vocab-13", name: "📄 Ngày 13" },
-      { id: "vocab-14", name: "📄 Ngày 14" },
-      { id: "vocab-15", name: "📄 Ngày 15" },
-    ];
-
-    let currentVocabularyTestId = null;
-
-    // Hiển thị danh sách từ vựng
-    function renderVocabularyTests() {
-      const vocabularyList = document.getElementById("vocabularyList");
-
-      const doneTests = JSON.parse(localStorage.getItem("doneTests") || "[]");
-      const testScores = JSON.parse(localStorage.getItem("testScores") || "{}");
-
-      vocabularyList.innerHTML = "";
-
-      vocabularyTestsData.forEach(test => {
-        const li = document.createElement("li");
-        li.textContent = test.name;
-        li.classList.add("clickable");
-
-        if (doneTests.includes(test.id)) {
-          li.classList.add("done");
-          const scoreData = testScores[test.id] || { score: 0, total: 1 };
-          const percentage = Math.round((scoreData.score / scoreData.total) * 100);
-          li.innerHTML += ` <span class="score-display">${percentage}%</span>`;
-        }
-
-        li.onclick = () => {
-          currentVocabularyTestId = test.id;
-          openTestInNewTab(`${test.id}.html`, li);
-        };
-
-        vocabularyList.appendChild(li);
-      });
-    }
-
-
-
-
-// Luyện nghe Try ngữ pháp
-function renderTryGrammarTests() {
-  const tryGrammarList = document.getElementById("tryGrammarList");
-
-  const doneTests = JSON.parse(localStorage.getItem("doneTests") || "[]");
-  const testScores = JSON.parse(localStorage.getItem("testScores") || "{}");
-
-  tryGrammarList.innerHTML = "";
-
-  tryGrammarTestsData.forEach(test => {
-    const li = document.createElement("li");
-    li.textContent = test.name;
-    li.classList.add("clickable");
-
-    if (doneTests.includes(test.id)) {
-      li.classList.add("done");
-      const scoreData = testScores[test.id] || { score: 0, total: 1 };
-      const percentage = Math.round((scoreData.score / scoreData.total) * 100);
-      li.innerHTML += ` <span class="score-display">${percentage}%</span>`;
-    }
-
-    li.onclick = () => {
-      currentTryGrammarTestId = test.id;
-      openTestInNewTab(`${test.id}.html`, li);
-    };
-
-    tryGrammarList.appendChild(li);
-  });
-}
-
-
-
-
-//Ngữ pháp phân loại theo chủ điểm 
-function renderGrammarTests() {
-  const grammarList = document.getElementById("grammarTestList");
-  const doneTests = JSON.parse(localStorage.getItem("doneTests") || "[]");
-  const testScores = JSON.parse(localStorage.getItem("testScores") || "{}");
-
-  grammarList.innerHTML = "";
-
-  grammarTestsData.forEach(test => {
-    const li = document.createElement("li");
-    li.textContent = test.name;
-    li.classList.add("clickable");
-
-    if (doneTests.includes(test.id)) {
-      li.classList.add("done");
-      const scoreData = testScores[test.id] || { score: 0, total: 1 };
-      const percentage = Math.round((scoreData.score / scoreData.total) * 100);
-      li.innerHTML += ` <span class="score-display">${percentage}%</span>`;
-    }
-
-    li.onclick = () => {
-      currentTestId = test.id;
-      openTestInNewTab(`${test.id}.html`, li);
-    };
-
-    grammarList.appendChild(li);
-  });
-}
-
-
-
-
-//Bài test theo ngày của lộ trình 100 ngày
-    const testData = Array.from({ length: 62 }, (_, i) => `📘Bài test ngày ${i + 1}`);
-    let currentTestId = null;
-
-    function renderTestList() {
-      //Lấy phần tử HTML có id testList.
-      const testList = document.getElementById("testList"); //const : Khai báo biến
-
-      //Lấy dữ liệu lịch sử từ localStorage:
-      //doneTests: danh sách testId đã làm xong.
-      //testScores: điểm số đã lưu { testId: { score, total } }.
-      const doneTests = JSON.parse(localStorage.getItem("doneTests") || "[]");
-      const testScores = JSON.parse(localStorage.getItem("testScores") || "{}");
-      
-      //Xóa toàn bộ danh sách cũ trước khi render lại.
-      testList.innerHTML = "";
-
-      //Lặp qua từng bài test trong testData, tạo phần tử <li> tương ứng, gán class="clickable".
-      testData.forEach((test, idx) => {
-        const testId = `test-day${idx + 1}`;
-        const li = document.createElement("li");
-        li.textContent = test;
-        li.classList.add("clickable");
-        
-
-        //Nếu bài test nằm trong danh sách đã làm:
-        //Thêm class done (để hiển thị dấu ✅ bằng CSS).
-        //Tính phần trăm điểm và hiển thị.
-        if (doneTests.includes(testId)) {
-          li.classList.add("done");
-          const scoreData = testScores[testId] || { score: 0, total: 1 };
-          const percentage = Math.round((scoreData.score / scoreData.total) * 100);
-          li.innerHTML += ` <span class="score-display">${percentage}%</span>`;
-        }
-        //Gán sự kiện click
-        li.onclick = () => {
-          currentTestId = testId;
-          openTestInNewTab(`${testId}.html`, li);
-        };
-        //Gắn vào DOM
-        testList.appendChild(li);
-      });
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    function openTestInNewTab(testFile, listItem) {
-  window.open(testFile, '_blank');
-  const testId = testFile.replace('.html', '');
-
-  // ✅ Ghi nhớ bài test đã mở
-  let doneTests = JSON.parse(localStorage.getItem("doneTests") || "[]");
-  if (!doneTests.includes(testId)) {
-    doneTests.push(testId);
-    localStorage.setItem("doneTests", JSON.stringify(doneTests));
-  }
-      
-      if (listItem) {
-        listItem.classList.add("done");
-        // Chưa hiển thị % vì chưa có điểm
-      }
-    }
-
-    function showSection(id) {
-      document.querySelectorAll('.section').forEach(sec => sec.style.display = 'none');
-      const section = document.getElementById(id);
-      if (section) section.style.display = 'block';
-    }
-
-    function resetHistory() {
-      localStorage.removeItem("doneTests");
-      localStorage.removeItem("testScores");
-      document.querySelectorAll('li.clickable.done').forEach(el => {
-        el.classList.remove("done");
-        const scoreDisplay = el.querySelector('.score-display');
-        if (scoreDisplay) scoreDisplay.remove();
-      });
-      alert("Đã xóa toàn bộ lịch sử làm bài.");
-    }
-
-    function showModal(msg) {
-      document.getElementById('modalMessage').innerText = msg;
-      document.getElementById('customModal').style.display = 'block';
-    }
-
-    function closeModal() {
-      document.getElementById('customModal').style.display = 'none';
-    }
-
-    // Lắng nghe message từ các tab bài test
-    window.addEventListener('message', function(event) {
-      if (event.data && event.data.type === 'updateScore') {
-        const { testId, score, total } = event.data;
-        let testScores = JSON.parse(localStorage.getItem("testScores") || "{}");
-        testScores[testId] = { score: score, total: total };
-        localStorage.setItem("testScores", JSON.stringify(testScores));
-        
-        // Cập nhật hiển thị điểm
-        document.querySelectorAll('li.clickable').forEach(li => {
-          if (li.getAttribute('onclick') && li.getAttribute('onclick').includes(testId)) {
-            li.classList.add("done");
-            const percentage = Math.round((score / total) * 100);
-            
-            // Xóa phần hiển thị điểm cũ nếu có
-            const oldDisplay = li.querySelector('.score-display');
-            if (oldDisplay) oldDisplay.remove();
-            
-            // Thêm phần hiển thị điểm mới
-            const scoreSpan = document.createElement('span');
-            scoreSpan.className = 'score-display';
-            scoreSpan.textContent = `${percentage}%`;
-            li.appendChild(scoreSpan);
-          }
-        });
-      }
-    });
-
-    window.addEventListener("DOMContentLoaded", function() {
-      renderTestList();
-      renderTryGrammarTests(); 
-      renderGrammarTests();
-      renderVocabularyTests() 
-   
-      
-      // Khôi phục trạng thái section đang mở
-      const lastSection = sessionStorage.getItem("lastSection");
-      if (lastSection) showSection(lastSection);
-    });
-
-    // Lưu trạng thái khi đóng trang
-    window.addEventListener('beforeunload', function() {
-      const currentSection = [...document.querySelectorAll('.section')].find(s => s.style.display === 'block');
-      if (currentSection) sessionStorage.setItem("lastSection", currentSection.id);
-    });
-    
-    
-    
-
-  </script>
 </body>
 </html>
