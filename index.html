@@ -654,7 +654,7 @@
     <!-- ===== LICENSE GATE UI ===== -->
 <div class="license-gate" id="licenseGate">
   <div class="license-panel">
-    <h2 class="panel-title"><i class="fas fa-shield-halved"></i> KÍCH HOẠT BẢN QUYỀN</h2>
+    <h2 class="panel-title"><i class="fas fa-shield-halved"></i> KÍCH HOẠT BẢN QUYỀN1111</h2>
 
     <div class="license-small">
       Web của bạn đang bật chế độ <b>Khóa thiết bị</b>: 1 máy / 1 license.<br/>
@@ -719,7 +719,7 @@
         
         <main class="main-content">
             <section class="mission-panel">
-                <h2 class="panel-title"><i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC</h2>
+                <h2 class="panel-title"><i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1111</h2>
                 
                 <div class="target-info">
                     <div class="target-card">
@@ -844,6 +844,7 @@ const API_URL = "https://n1-license-server.onrender.com/api";
 
 
 const LS_DEVICE_ID = "n1_device_id";
+const LS_ACTIVATED = "n1_activated_once";
 const LS_LICENSE = "n1_license";
 const LS_USER_NAME = "n1_user_name";
 
@@ -921,6 +922,55 @@ async function verifyLicense(deviceId, license) {
   }
   return res.json(); // { ok: true, expiry: "20260701", bound: true }
 }
+
+function startBackgroundRecheck(deviceId) {
+  const INTERVAL_MS = 90 * 1000; // 90 giây (anh có thể đổi 60s, 120s...)
+
+  // tránh setInterval nhiều lần nếu gọi lại
+  if (window.__recheckTimer) return;
+
+  async function tick() {
+    const license = localStorage.getItem(LS_LICENSE);
+    const activatedOnce = localStorage.getItem(LS_ACTIVATED) === "1";
+    if (!license || !activatedOnce) return;
+
+    try {
+      const r = await verifyLicense(deviceId, license);
+
+      if (r && r.ok) {
+        // server online + ok => giữ kích hoạt
+        setStatus(`Kích hoạt OK (hạn: ${r.expiry})`, "ok");
+        return;
+      }
+
+      throw new Error("Verify failed");
+    } catch (e) {
+      const msg = String(e?.message || "");
+
+      // ✅ server online trả về lỗi "cứng" => khóa ngay
+      const hardBlock =
+        msg.includes("Device revoked") ||
+        msg.includes("Expired") ||
+        msg.includes("Invalid") ||
+        msg.includes("already bound");
+
+      if (hardBlock) {
+        localStorage.removeItem(LS_LICENSE);
+        localStorage.removeItem(LS_ACTIVATED);
+        setStatus("Quyền truy cập đã bị thu hồi hoặc license không còn hợp lệ.", "error");
+        showGate(true);
+        return;
+      }
+
+      // ✅ server offline / mạng lỗi => KHÔNG khóa
+      setStatus("Server kiểm tra đang offline. Hệ thống giữ trạng thái kích hoạt.", "error");
+    }
+  }
+
+  tick();
+  window.__recheckTimer = setInterval(tick, INTERVAL_MS);
+}
+
 
 async function requestReset(deviceId, oldLicense, note) {
   const res = await fetch(`${API_URL}/request-reset`, {
@@ -1032,8 +1082,16 @@ function runAppUI() {
     if (savedName) setUserName(savedName);
 
 
-  // mặc định: chưa ok => show gate
+const activatedOnce = localStorage.getItem(LS_ACTIVATED) === "1";
+if (activatedOnce && savedLicense) {
+  showGate(false);
+  runAppUI();
+  startBackgroundRecheck(deviceId);
+} else {
   showGate(true);
+}
+
+
 
   // thử auto verify nếu có savedLicense
   if (savedLicense) {
@@ -1041,7 +1099,8 @@ function runAppUI() {
     try {
       const r = await verifyLicense(deviceId, savedLicense);
       if (r && r.ok) {
-  setStatus(`Kích hoạt OK (hạn: ${r.expiry})`, "ok");
+        localStorage.setItem(LS_ACTIVATED, "1");
+        setStatus(`Kích hoạt OK (hạn: ${r.expiry})`, "ok");
 
         // NEW: set tên user từ server
         if (r.userName) setUserName(r.userName);
@@ -1072,6 +1131,7 @@ function runAppUI() {
       const r = await verifyLicense(deviceId, license);
             if (r && r.ok) {
         localStorage.setItem(LS_LICENSE, license);
+        localStorage.setItem(LS_ACTIVATED, "1");
         setStatus(`Kích hoạt OK (hạn: ${r.expiry})`, "ok");
 
         // NEW: set tên user từ server
@@ -1079,6 +1139,7 @@ function runAppUI() {
 
         showGate(false);
         runAppUI();
+        startBackgroundRecheck(deviceId);
         } else {
         setStatus("License không hợp lệ hoặc đã hết hạn", "error");
         }
