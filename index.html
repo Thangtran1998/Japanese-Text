@@ -1084,8 +1084,18 @@ function runAppUI() {
         }
 
     } catch (e) {
-      setStatus("Kích hoạt thất bại: " + (e.message || "unknown"), "error");
-    }
+  const msg = (e && e.message) ? e.message : "unknown";
+  if (msg.includes("Expired")) {
+    setStatus("License đã hết hạn", "error");
+  } else if (msg.includes("Invalid")) {
+    setStatus("License không hợp lệ", "error");
+  } else if (msg.includes("already bound")) {
+    setStatus("License đã được dùng trên thiết bị khác", "error");
+  } else {
+    setStatus("Kích hoạt thất bại: " + msg, "error");
+  }
+}
+
   });
 
   document.getElementById("btnRequestReset").addEventListener("click", async () => {
