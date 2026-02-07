@@ -654,7 +654,7 @@
     <!-- ===== LICENSE GATE UI ===== -->
 <div class="license-gate" id="licenseGate">
   <div class="license-panel">
-    <h2 class="panel-title"><i class="fas fa-shield-halved"></i> KÍCH HOẠT BẢN QUYỀN1111</h2>
+    <h2 class="panel-title"><i class="fas fa-shield-halved"></i> KÍCH HOẠT BẢN QUYỀN</h2>
 
     <div class="license-small">
       Web của bạn đang bật chế độ <b>Khóa thiết bị</b>: 1 máy / 1 license.<br/>
@@ -694,9 +694,7 @@
 </div>
 
 <!-- Bọc app để ẩn khi chưa có license -->
-<div id="appRoot">
-  <!-- GIỮ NGUYÊN phần container của bạn ở dưới -->
-</div>
+
 <div id="appRoot">
     
     <div class="container">
@@ -730,9 +728,12 @@
                     
                     <div class="target-card">
                         <div class="card-title"><i class="fas fa-calendar-alt"></i> Thời hạn</div>
-                        <div class="card-value special">07/2026</div>
-                        <div class="card-subtitle">Kỳ thi tháng 7 năm 2026</div>
+
+                        <div class="card-value special" id="examMonthYear">07/2026</div>
+                        <div class="card-subtitle" id="examSubtitle">Kỳ thi tháng 7 năm 2026</div>
+                        <div class="card-subtitle" id="examCountdown">Còn ...</div>
                     </div>
+
                     
                     <div class="target-card">
                         <div class="card-title"><i class="fas fa-rocket"></i> Trạng thái</div>
@@ -847,6 +848,8 @@ const LS_DEVICE_ID = "n1_device_id";
 const LS_ACTIVATED = "n1_activated_once";
 const LS_LICENSE = "n1_license";
 const LS_USER_NAME = "n1_user_name";
+const LS_EXAM_DATE = "n1_exam_date";
+
 
 /** ====== Utils ====== */
 function uuidv4() {
@@ -889,6 +892,83 @@ function setUserName(name) {
   el.textContent = safeName + " 🎉";
   localStorage.setItem(LS_USER_NAME, safeName);
 }
+
+// ===== Exam date countdown =====
+const DEFAULT_EXAM_DATE = "20260701"; // mặc định nếu server không trả (anh có thể đổi)
+
+function parseYYYYMMDD(s) {
+  const m = /^(\d{4})(\d{2})(\d{2})$/.exec(String(s || "").trim());
+  if (!m) return null;
+  const y = Number(m[1]), mo = Number(m[2]) - 1, d = Number(m[3]);
+  const dt = new Date(y, mo, d);
+  if (dt.getFullYear() !== y || dt.getMonth() !== mo || dt.getDate() !== d) return null;
+  return dt;
+}
+
+function formatMonthYear(dt) {
+  const mm = String(dt.getMonth() + 1).padStart(2, "0");
+  const yyyy = dt.getFullYear();
+  return `${mm}/${yyyy}`;
+}
+
+// trả về số tháng + số ngày còn lại (ước lượng theo lịch, đủ đẹp để hiển thị)
+function diffMonthsDays(fromDate, toDate) {
+  if (toDate <= fromDate) return { months: 0, days: 0 };
+
+  let months =
+    (toDate.getFullYear() - fromDate.getFullYear()) * 12 +
+    (toDate.getMonth() - fromDate.getMonth());
+
+  const candidate = new Date(fromDate.getFullYear(), fromDate.getMonth() + months, fromDate.getDate());
+  if (candidate > toDate) months -= 1;
+
+  const anchor = new Date(fromDate.getFullYear(), fromDate.getMonth() + months, fromDate.getDate());
+  const msPerDay = 24 * 60 * 60 * 1000;
+  const days = Math.max(0, Math.round((toDate - anchor) / msPerDay));
+
+  return { months, days };
+}
+
+function updateExamUI(examDateStr) {
+  const examMonthYearEl = document.getElementById("examMonthYear");
+  const examSubtitleEl = document.getElementById("examSubtitle");
+  const examCountdownEl = document.getElementById("examCountdown");
+  if (!examMonthYearEl || !examSubtitleEl || !examCountdownEl) return;
+
+  // ưu tiên: examDateStr từ server -> localStorage -> default
+  const raw = (examDateStr && String(examDateStr).trim())
+    ? String(examDateStr).trim()
+    : (localStorage.getItem(LS_EXAM_DATE) || DEFAULT_EXAM_DATE);
+
+  const examDt = parseYYYYMMDD(raw);
+  if (!examDt) {
+    examMonthYearEl.textContent = "07/2026";
+    examSubtitleEl.textContent = "Kỳ thi tháng 7 năm 2026";
+    examCountdownEl.textContent = "Còn ...";
+    return;
+  }
+
+  // 07/2026
+  examMonthYearEl.textContent = formatMonthYear(examDt);
+
+  // subtitle
+  if (!examDateStr && !localStorage.getItem(LS_EXAM_DATE)) {
+    // không có gì từ server + chưa lưu => dùng dòng mặc định
+    examSubtitleEl.textContent = "Kỳ thi tháng 7 năm 2026";
+  } else {
+    const dd = String(examDt.getDate()).padStart(2, "0");
+    const mm = String(examDt.getMonth() + 1).padStart(2, "0");
+    const yyyy = examDt.getFullYear();
+    examSubtitleEl.textContent = `Hạn kỳ thi: ${dd}/${mm}/${yyyy}`;
+  }
+
+  // countdown theo ngày hiện tại của máy user
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()); // bỏ giờ cho ổn định
+  const { months, days } = diffMonthsDays(today, examDt);
+  examCountdownEl.textContent = `Còn ${months} tháng ${days} ngày`;
+}
+
 
 
 async function copyText(text) {
@@ -1080,6 +1160,9 @@ function runAppUI() {
   if (savedLicense) licenseInput.value = savedLicense;
   const savedName = localStorage.getItem(LS_USER_NAME);
     if (savedName) setUserName(savedName);
+    updateExamUI(""); // dùng localStorage nếu có, không có thì dùng DEFAULT_EXAM_DATE
+    setInterval(() => updateExamUI(""), 60 * 1000); // update mỗi phút
+
 
 
 const activatedOnce = localStorage.getItem(LS_ACTIVATED) === "1";
@@ -1104,6 +1187,9 @@ if (activatedOnce && savedLicense) {
 
         // NEW: set tên user từ server
         if (r.userName) setUserName(r.userName);
+        if (r.examDate) localStorage.setItem(LS_EXAM_DATE, r.examDate);
+            updateExamUI(r.examDate);
+
 
         showGate(false);
         runAppUI();
@@ -1136,6 +1222,9 @@ if (activatedOnce && savedLicense) {
 
         // NEW: set tên user từ server
         if (r.userName) setUserName(r.userName);
+        if (r.examDate) localStorage.setItem(LS_EXAM_DATE, r.examDate);
+            updateExamUI(r.examDate);
+
 
         showGate(false);
         runAppUI();
@@ -1167,7 +1256,7 @@ if (activatedOnce && savedLicense) {
     const requestCode = `RESET|deviceId=${deviceId}|oldLicense=${oldLicense}|note=${note}`;
     await copyText(requestCode);
 
-    setStatus("Đã copy mã yêu cầu cấp lại. Dán mã này gửi cho bạn quản trị.", "ok");
+    setStatus("Đã copy mã yêu cầu cấp lại. Dán mã này gửi cho ban quản trị.", "ok");
 
     // Nếu bạn có endpoint server thì gọi thêm (không có cũng không sao)
     try {
