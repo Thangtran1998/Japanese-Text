@@ -654,7 +654,7 @@
     <!-- ===== LICENSE GATE UI ===== -->
 <div class="license-gate" id="licenseGate">
   <div class="license-panel">
-    <h2 class="panel-title"><i class="fas fa-shield-halved"></i> KÍCH HOẠT BẢN QUYỀN111</h2>
+    <h2 class="panel-title"><i class="fas fa-shield-halved"></i> KÍCH HOẠT BẢN QUYỀN</h2>
 
     <div class="license-small">
       Web của bạn đang bật chế độ <b>Khóa thiết bị</b>: 1 máy / 1 license.<br/>
@@ -711,7 +711,8 @@
                 <div class="user-avatar">T</div>
                 <div>
                     <div class="user-greeting">Xin chào</div>
-                    <div class="user-name">Thắng 🎉</div>
+                    <div class="user-name" id="userNameText">---</div>
+
                 </div>
             </div>
         </header>
@@ -844,6 +845,7 @@ const API_URL = "https://n1-license-server.onrender.com/api";
 
 const LS_DEVICE_ID = "n1_device_id";
 const LS_LICENSE = "n1_license";
+const LS_USER_NAME = "n1_user_name";
 
 /** ====== Utils ====== */
 function uuidv4() {
@@ -877,6 +879,16 @@ function setStatus(text, type="") {
   el.classList.remove("error","ok");
   if (type) el.classList.add(type);
 }
+function setUserName(name) {
+  const el = document.getElementById("userNameText");
+  if (!el) return;
+  const safeName = (name || "").trim();
+  if (!safeName) return;
+
+  el.textContent = safeName + " 🎉";
+  localStorage.setItem(LS_USER_NAME, safeName);
+}
+
 
 async function copyText(text) {
   try {
@@ -1016,6 +1028,9 @@ function runAppUI() {
   const savedLicense = localStorage.getItem(LS_LICENSE);
   const licenseInput = document.getElementById("licenseInput");
   if (savedLicense) licenseInput.value = savedLicense;
+  const savedName = localStorage.getItem(LS_USER_NAME);
+    if (savedName) setUserName(savedName);
+
 
   // mặc định: chưa ok => show gate
   showGate(true);
@@ -1026,11 +1041,16 @@ function runAppUI() {
     try {
       const r = await verifyLicense(deviceId, savedLicense);
       if (r && r.ok) {
-        setStatus(`Kích hoạt OK (hạn: ${r.expiry})`, "ok");
+  setStatus(`Kích hoạt OK (hạn: ${r.expiry})`, "ok");
+
+        // NEW: set tên user từ server
+        if (r.userName) setUserName(r.userName);
+
         showGate(false);
         runAppUI();
         return;
-      }
+        }
+
       setStatus("License không hợp lệ hoặc đã hết hạn", "error");
     } catch (e) {
       setStatus("Không kiểm tra được license (server lỗi hoặc sai API_URL)", "error");
@@ -1050,14 +1070,19 @@ function runAppUI() {
     setStatus("Đang kích hoạt...", "");
     try {
       const r = await verifyLicense(deviceId, license);
-      if (r && r.ok) {
+            if (r && r.ok) {
         localStorage.setItem(LS_LICENSE, license);
         setStatus(`Kích hoạt OK (hạn: ${r.expiry})`, "ok");
+
+        // NEW: set tên user từ server
+        if (r.userName) setUserName(r.userName);
+
         showGate(false);
         runAppUI();
-      } else {
+        } else {
         setStatus("License không hợp lệ hoặc đã hết hạn", "error");
-      }
+        }
+
     } catch (e) {
       setStatus("Kích hoạt thất bại: " + (e.message || "unknown"), "error");
     }
