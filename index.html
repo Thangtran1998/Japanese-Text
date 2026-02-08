@@ -187,16 +187,10 @@
             box-shadow: 0 10px 20px rgba(0, 100, 255, 0.3);
         }
         
+        /* XÓA HOẶC SỬA phần này trong CSS mặc định */
         .target-card::after {
-            content: '';
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: radial-gradient(circle, #00ffcc, transparent);
-            opacity: 0.7;
+        /* XÓA HOẶC SỬA THÀNH: */
+        display: none; /* Thêm dòng này */
         }
         
         .card-title {
@@ -641,36 +635,61 @@
 
 /* ====== Ô THỜI HẠN MẶC ĐỊNH (trên 60 ngày) - GIỮ NGUYÊN MÀU XANH ====== */
 .target-card:nth-child(2) {
-  /* Giữ nguyên như các ô khác - không có màu vàng mặc định */
   position: relative;
   overflow: hidden;
 }
 
-/* Chỉ cần phần tử sparkle chung cho tất cả trạng thái */
-.target-card:nth-child(2) .sparkle {
+/* Ẩn tất cả pseudo-elements và sparkle mặc định */
+.target-card:nth-child(2)::before,
+.target-card:nth-child(2)::after {
+  display: none !important;
+}
+
+
+
+/* Chỉ hiển thị khi có cảnh báo */
+.target-card:nth-child(2).warning-yellow::before,
+.target-card:nth-child(2).warning-yellow::after,
+.target-card:nth-child(2).warning-red::before,
+.target-card:nth-child(2).warning-red::after,
+.target-card:nth-child(2).warning-expired::before,
+.target-card:nth-child(2).warning-expired::after {
+  display: block !important;
+}
+
+.target-card:nth-child(2).warning-yellow .sparkle,
+.target-card:nth-child(2).warning-red .sparkle,
+.target-card:nth-child(2).warning-expired .sparkle {
+  display: block !important;
+}
+
+/* Sparkle chỉ hiển thị khi có cảnh báo */
+.target-card:nth-child(2).warning-yellow .sparkle,
+.target-card:nth-child(2).warning-red .sparkle,
+.target-card:nth-child(2).warning-expired .sparkle {
   position: absolute;
   width: 4px;
   height: 4px;
-  background: #00ffcc; /* Màu xanh cyber mặc định */
   border-radius: 50%;
   filter: blur(1px);
   animation: sparkleMove 4s linear infinite;
   opacity: 0.7;
 }
 
-.sparkle:nth-child(1) {
+/* Vị trí sparkle */
+.target-card:nth-child(2) .sparkle:nth-child(1) {
   top: 20%;
   left: 15%;
   animation-delay: 0s;
 }
 
-.sparkle:nth-child(2) {
+.target-card:nth-child(2) .sparkle:nth-child(2) {
   top: 60%;
   right: 20%;
   animation-delay: 1s;
 }
 
-.sparkle:nth-child(3) {
+.target-card:nth-child(2) .sparkle:nth-child(3) {
   bottom: 30%;
   left: 30%;
   animation-delay: 2s;
