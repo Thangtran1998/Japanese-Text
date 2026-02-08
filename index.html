@@ -638,7 +638,177 @@
 .license-status.error { color: #ff8a8a; }
 .license-status.ok { color: #00ffcc; }
 
-    </style>
+
+/* ====== CYBER YELLOW CARD - THỜI HẠN ====== */
+.target-card:nth-child(2) {
+  background: rgba(60, 40, 0, 0.7) !important;
+  border: 1px solid rgba(255, 200, 0, 0.6) !important;
+  animation: cyberPulse 2s infinite alternate !important;
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes cyberPulse {
+  0% {
+    box-shadow: 
+      0 0 10px rgba(255, 200, 0, 0.3),
+      0 0 20px rgba(255, 150, 0, 0.2),
+      inset 0 0 15px rgba(255, 200, 0, 0.1);
+    background: rgba(60, 40, 0, 0.7);
+  }
+  100% {
+    box-shadow: 
+      0 0 20px rgba(255, 200, 0, 0.6),
+      0 0 40px rgba(255, 150, 0, 0.4),
+      0 0 60px rgba(255, 100, 0, 0.2),
+      inset 0 0 25px rgba(255, 200, 0, 0.2);
+    background: rgba(80, 60, 0, 0.8);
+  }
+}
+
+.target-card:nth-child(2)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ffcc00, transparent);
+  animation: borderScan 3s linear infinite;
+}
+
+@keyframes borderScan {
+  0% {
+    left: -100%;
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
+}
+
+.target-card:nth-child(2)::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffcc00, transparent 70%);
+  animation: particleGlow 1.5s ease-in-out infinite alternate;
+  filter: blur(1px);
+}
+
+@keyframes particleGlow {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.5;
+    box-shadow: 0 0 10px #ffcc00;
+  }
+  100% {
+    transform: scale(1.2);
+    opacity: 1;
+    box-shadow: 0 0 20px #ffcc00, 0 0 30px #ff9900;
+  }
+}
+
+.target-card:nth-child(2) .card-title {
+  color: #ffdd99 !important;
+}
+
+.target-card:nth-child(2) .card-value.special {
+  color: #ffcc00 !important;
+  text-shadow: 0 0 15px rgba(255, 204, 0, 0.8) !important;
+  animation: textGlow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes textGlow {
+  0% {
+    text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+  }
+  100% {
+    text-shadow: 
+      0 0 20px rgba(255, 204, 0, 0.8),
+      0 0 30px rgba(255, 153, 0, 0.6);
+  }
+}
+
+.target-card:nth-child(2) .card-subtitle {
+  color: #ffcc99 !important;
+}
+
+.target-card:nth-child(2):hover {
+  transform: translateY(-8px) !important;
+  animation: cyberPulseHover 1.5s infinite alternate !important;
+}
+
+@keyframes cyberPulseHover {
+  0% {
+    box-shadow: 
+      0 0 25px rgba(255, 200, 0, 0.7),
+      0 0 50px rgba(255, 150, 0, 0.5),
+      0 0 75px rgba(255, 100, 0, 0.3),
+      inset 0 0 30px rgba(255, 200, 0, 0.3);
+    background: rgba(90, 70, 0, 0.9);
+  }
+  100% {
+    box-shadow: 
+      0 0 30px rgba(255, 200, 0, 0.9),
+      0 0 60px rgba(255, 150, 0, 0.7),
+      0 0 90px rgba(255, 100, 0, 0.5),
+      inset 0 0 40px rgba(255, 200, 0, 0.4);
+    background: rgba(100, 80, 0, 1);
+  }
+}
+
+.target-card:nth-child(2) .sparkle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #ffcc00;
+  border-radius: 50%;
+  filter: blur(1px);
+  animation: sparkleMove 3s linear infinite;
+}
+
+.sparkle:nth-child(1) {
+  top: 20%;
+  left: 15%;
+  animation-delay: 0s;
+}
+
+.sparkle:nth-child(2) {
+  top: 60%;
+  right: 20%;
+  animation-delay: 1s;
+}
+
+.sparkle:nth-child(3) {
+  bottom: 30%;
+  left: 30%;
+  animation-delay: 2s;
+}
+
+@keyframes sparkleMove {
+  0%, 100% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+  10%, 90% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+    transform: translate(10px, -10px);
+  }
+}
+
+</style>
 </head>
 <body>
     <div class="cyber-grid"></div>
@@ -728,10 +898,13 @@
                     
                     <div class="target-card">
                         <div class="card-title"><i class="fas fa-calendar-alt"></i> Thời hạn</div>
-
                         <div class="card-value special" id="examMonthYear">07/2026</div>
                         <div class="card-subtitle" id="examSubtitle">Kỳ thi tháng 7 năm 2026</div>
                         <div class="card-subtitle" id="examCountdown">Còn ...</div>
+                        <!-- Thêm 3 sparkle cho hiệu ứng cyber -->
+                        <div class="sparkle"></div>
+                        <div class="sparkle"></div>
+                        <div class="sparkle"></div>
                     </div>
 
                     
