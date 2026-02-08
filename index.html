@@ -1852,11 +1852,11 @@
         if (remainingDays < 30) {
           // Dưới 30 ngày: Màu đỏ cảnh báo
           targetCardEl.classList.add("warning-red");
-          statusSubtitleEl.innerHTML = `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(expDate)}<br>Còn ${remainingDays} ngày (CẢNH BÁO ĐỎ)`;
+          statusSubtitleEl.innerHTML = `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(expDate)}<br>Còn ${remainingDays} ngày`;
         } else if (remainingDays <= 60) {
           // 30-60 ngày: Màu vàng cảnh báo
           targetCardEl.classList.add("warning-yellow");
-          statusSubtitleEl.innerHTML = `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(expDate)}<br>Còn ${remainingDays} ngày (CẢNH BÁO VÀNG)`;
+          statusSubtitleEl.innerHTML = `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(expDate)}<br>Còn ${remainingDays} ngày`;
         } else {
           // Trên 60 ngày: Màu xanh
           targetCardEl.classList.add("warning-green");
