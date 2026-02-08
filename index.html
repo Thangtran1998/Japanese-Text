@@ -354,9 +354,10 @@
       }
       /* Flyout bên phải */
       .submenu-flyout {
-        position: absolute;
-        left: calc(100% + 12px); /* cách item gốc 12px */
-        top: -6px;
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 0;
 
         width: 220px; /* có thể tăng sau */
         padding: 10px;
@@ -1594,9 +1595,16 @@
       }
 
       .flyout-item:hover {
-        transform: translateY(-2px);
-        border-color: rgba(0, 168, 255, 0.55);
-        box-shadow: 0 0 18px rgba(0, 168, 255, 0.22);
+        transform: translateY(-1px);
+        border-color: rgba(0, 168, 255, 0.45);
+
+        /* Glow nhẹ hơn start-button */
+        box-shadow:
+          0 0 10px rgba(0, 168, 255, 0.22),
+          0 0 18px rgba(0, 255, 204, 0.1);
+
+        background: rgba(0, 50, 100, 0.45);
+        /*Nếu muốn “nhẹ” nữa: giảm 0.22 → 0.15 và 0.10 → 0.06.*/
       }
     </style>
   </head>
@@ -1699,7 +1707,7 @@
           <!-- [HTML-3.2.1] MISSION PANEL: Mục tiêu + Thời hạn + Streak -->
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC111
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
             </h2>
 
             <div class="target-info">
@@ -2474,6 +2482,35 @@
             const mimikaraItem = vocabCard.querySelector(
               '.submenu-item.has-child[data-sub="mimikara"]',
             );
+            const flyout = mimikaraItem?.querySelector(".submenu-flyout");
+
+            function positionFlyout() {
+              if (!mimikaraItem || !flyout) return;
+
+              const gap = 12;
+              const rect = mimikaraItem.getBoundingClientRect();
+
+              // Ưu tiên đặt flyout bên phải item
+              let left = rect.right + gap;
+
+              // Đảm bảo không tràn khỏi mép phải màn hình
+              const flyoutWidth = flyout.offsetWidth || 220;
+              const maxLeft = window.innerWidth - flyoutWidth - 12;
+
+              // Nếu tràn phải => chuyển sang trái item
+              if (left > maxLeft) {
+                left = rect.left - gap - flyoutWidth;
+              }
+
+              // Nếu vẫn tràn trái => kẹp vào trong màn hình
+              left = Math.max(12, Math.min(left, maxLeft));
+
+              flyout.style.left = `${left}px`;
+            }
+            // Hover vào Mimikara → canh lại vị trí flyout
+            mimikaraItem?.addEventListener("mouseenter", () => {
+              positionFlyout();
+            });
 
             function closeAll() {
               vocabCard.classList.remove("is-open");
@@ -2482,8 +2519,10 @@
 
             function toggleCardOpen() {
               vocabCard.classList.toggle("is-open");
-              // nếu đóng card thì cũng đóng flyout pin
-              if (!vocabCard.classList.contains("is-open")) {
+
+              if (vocabCard.classList.contains("is-open")) {
+                positionFlyout();
+              } else {
                 mimikaraItem?.classList.remove("is-open-child");
               }
             }
@@ -2510,6 +2549,7 @@
                 e.stopPropagation();
                 // đảm bảo menu chính đang mở
                 vocabCard.classList.add("is-open");
+                positionFlyout();
                 clickedMimikara.classList.toggle("is-open-child");
                 return;
               }
@@ -2526,6 +2566,23 @@
             document.addEventListener("keydown", (e) => {
               if (e.key === "Escape") closeAll();
             });
+
+            window.addEventListener(
+              "resize",
+              () => {
+                // chỉ tính lại khi menu đang mở
+                if (vocabCard.classList.contains("is-open")) positionFlyout();
+              },
+              { passive: true },
+            );
+
+            window.addEventListener(
+              "scroll",
+              () => {
+                if (vocabCard.classList.contains("is-open")) positionFlyout();
+              },
+              { passive: true },
+            );
           }
         });
       }
