@@ -313,18 +313,19 @@
 
       /* ===== MODULES SECTION VỚI KHUNG HIỂN THỊ ===== */
       .modules-wrapper {
-        display: flex;
-        gap: 30px;
-        margin-top: 20px;
-        position: relative;
-      }
+  display: flex;
+  gap: 30px;
+  margin-top: 20px;
+  position: relative;
+}
 
-      .modules-section {
-        flex: 1;
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 25px;
-      }
+.modules-section {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* CHỈ 2 CỘT */
+  gap: 25px;
+  max-width: calc(100% - 610px); /* Trừ đi chiều rộng của khung hiển thị + gap */
+}
 
       .module-card {
         background: rgba(0, 20, 40, 0.7);
@@ -428,22 +429,51 @@
 
       /* ===== KHUNG HIỂN THỊ NỘI DUNG MODULE ===== */
       .module-display-frame {
-        width: 280px; /* Bằng chiều rộng của một module card */
-        height: 560px; /* Gấp đôi chiều rộng (280px * 2) */
-        background: rgba(0, 20, 40, 0.8);
-        border: 1px solid rgba(0, 150, 255, 0.4);
-        border-radius: 12px;
-        padding: 25px;
-        position: sticky;
-        top: 30px;
-        align-self: flex-start;
-        backdrop-filter: blur(10px);
-        overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-        display: none; /* Mặc định ẩn */
-        opacity: 0;
-        transition: opacity 0.3s ease;
-      }
+  width: 560px; /* GẤP ĐÔI: 280px * 2 = 560px */
+  height: 560px; /* Giữ nguyên chiều cao */
+  background: rgba(0, 20, 40, 0.9);
+  border: 2px solid rgba(0, 150, 255, 0.6); /* Viền dày hơn */
+  border-radius: 15px; /* Bo góc lớn hơn */
+  padding: 30px;
+  position: sticky;
+  top: 30px;
+  align-self: flex-start;
+  backdrop-filter: blur(15px);
+  overflow: hidden;
+  box-shadow: 
+    0 15px 40px rgba(0, 0, 0, 0.8),
+    inset 0 0 30px rgba(0, 150, 255, 0.1); /* Thêm hiệu ứng bên trong */
+  display: none; /* Mặc định ẩn */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+}
+
+/* Thêm hiệu ứng viền neon bao quanh 4 cạnh */
+.module-display-frame::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 15px;
+  border: 2px solid rgba(0, 255, 204, 0.3);
+  pointer-events: none;
+  z-index: 1;
+  animation: borderPulse 3s infinite alternate;
+}
+
+@keyframes borderPulse {
+  0% {
+    border-color: rgba(0, 255, 204, 0.2);
+    box-shadow: 0 0 10px rgba(0, 255, 204, 0.1);
+  }
+  100% {
+    border-color: rgba(0, 255, 204, 0.5);
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.3);
+  }
+}
 
       .module-display-frame.active {
         display: block;
@@ -508,6 +538,99 @@
         background: linear-gradient(to bottom, #00a8ff, #00ffcc);
         border-radius: 3px;
       }
+      /* Cập nhật cho khung lớn hơn */
+.frame-content {
+  height: calc(100% - 100px);
+  overflow-y: auto;
+  padding-right: 15px;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* CHIA 2 CỘT BÊN TRONG KHUNG */
+  gap: 20px;
+}
+
+.frame-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.frame-content::-webkit-scrollbar-track {
+  background: rgba(0, 30, 60, 0.3);
+  border-radius: 4px;
+}
+
+.frame-content::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #00a8ff, #00ffcc);
+  border-radius: 4px;
+}
+
+.content-item {
+  background: rgba(0, 30, 60, 0.5);
+  border-radius: 10px;
+  padding: 20px;
+  border: 1px solid rgba(0, 150, 255, 0.3);
+  transition: all 0.3s;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.content-item:hover {
+  background: rgba(0, 40, 80, 0.6);
+  border-color: #00a8ff;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 100, 255, 0.2);
+}
+
+.item-title {
+  font-family: "Orbitron", sans-serif;
+  font-size: 18px; /* Tăng kích thước chữ */
+  color: #00e5ff;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.item-title i {
+  color: #00ffcc;
+  font-size: 10px;
+}
+
+.item-desc {
+  color: #a0c8e0;
+  font-size: 15px; /* Tăng kích thước chữ */
+  line-height: 1.6;
+  margin-bottom: 15px;
+  flex-grow: 1;
+}
+
+.item-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-size: 13px;
+  color: #88d3ff;
+  background: rgba(0, 40, 80, 0.3);
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+
+.item-progress {
+  height: 6px; /* Tăng độ dày */
+  background: rgba(0, 50, 100, 0.5);
+  border-radius: 3px;
+  margin-top: 12px;
+  overflow: hidden;
+}
+
+.item-progress-fill {
+  height: 100%;
+  background: linear-gradient(to right, #00a8ff, #00ffcc);
+  border-radius: 3px;
+  width: 0%;
+  transition: width 1s ease-out;
+  box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+}
 
       .content-item {
         background: rgba(0, 30, 60, 0.4);
@@ -725,22 +848,29 @@
         font-size: 14px;
       }
 
-      @media (max-width: 1200px) {
-        .modules-wrapper {
-          flex-direction: column;
-        }
-        
-        .module-display-frame {
-          width: 100%;
-          height: 400px;
-          position: static;
-          margin-top: 20px;
-        }
-        
-        .modules-section {
-          grid-template-columns: repeat(2, 1fr);
-        }
-      }
+      @media (max-width: 1300px) {
+  .modules-wrapper {
+    flex-direction: column;
+  }
+  
+  .modules-section {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 100%;
+  }
+  
+  .module-display-frame {
+    width: 100%;
+    height: 500px;
+    position: static;
+    margin-top: 30px;
+  }
+}
+
+@media (max-width: 900px) {
+  .modules-section {
+    grid-template-columns: 1fr; /* Mobile: 1 cột */
+  }
+}
 
       @media (max-width: 768px) {
         .target-info {
@@ -2373,22 +2503,23 @@
         }
         
         // Tạo nội dung
-        frameContent.innerHTML = '';
-        moduleContents[moduleId].items.forEach(item => {
-          const itemEl = document.createElement('div');
-          itemEl.className = 'content-item';
-          itemEl.innerHTML = `
-            <div class="item-title">
-              <i class="fas fa-circle"></i> ${item.title}
-            </div>
-            <div class="item-desc">${item.desc}</div>
-            <div class="item-stats">${item.stats}</div>
-            <div class="item-progress">
-              <div class="item-progress-fill" style="width: ${item.progress}%"></div>
-            </div>
-          `;
-          frameContent.appendChild(itemEl);
-        });
+  frameContent.innerHTML = '';
+  moduleContents[moduleId].items.forEach(item => {
+    const itemEl = document.createElement('div');
+    itemEl.className = 'content-item';
+    itemEl.innerHTML = `
+      <div class="item-title">
+        <i class="fas fa-circle"></i> ${item.title}
+      </div>
+      <div class="item-desc">${item.desc}</div>
+      <div class="item-stats">${item.stats}</div>
+      <div class="item-progress">
+        <div class="item-progress-fill" style="width: ${item.progress}%"></div>
+      </div>
+    `;
+    frameContent.appendChild(itemEl);
+  });
+        
         
         // Hiển thị khung
         displayFrame.classList.add('active');
