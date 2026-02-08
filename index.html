@@ -638,71 +638,6 @@
 .license-status.error { color: #ff8a8a; }
 .license-status.ok { color: #00ffcc; }
 
-/* ===== EXAM COUNTDOWN STATE ===== */
-
-#examCountdown {
-  transition: color 0.3s ease, text-shadow 0.3s ease;
-}
-
-/* ⚠️ 60 → 30 ngày: Vàng cảnh báo */
-.countdown-warn {
-  color: #ffcc00; /* vàng cyber */
-  text-shadow: 0 0 8px rgba(255, 204, 0, 0.6);
-}
-
-/* 🚨 < 30 ngày hoặc đã diễn ra: Đỏ nguy cấp */
-.countdown-danger {
-  color: #ff5c5c; /* đỏ cyber */
-  text-shadow: 0 0 10px rgba(255, 92, 92, 0.8);
-}
-/* ===== DEADLINE CARD ALERT (Target Card: Thời hạn) ===== */
-.target-card.deadline-warn {
-  border-color: rgba(255, 204, 0, 0.55);
-  box-shadow: 0 0 0 1px rgba(255, 204, 0, 0.12), 0 12px 26px rgba(255, 204, 0, 0.10);
-  background: rgba(255, 204, 0, 0.06);
-}
-
-.target-card.deadline-warn .card-value.special {
-  color: #ffcc00;
-  text-shadow: 0 0 12px rgba(255, 204, 0, 0.65);
-}
-
-.target-card.deadline-danger {
-  border-color: rgba(255, 92, 92, 0.60);
-  box-shadow: 0 0 0 1px rgba(255, 92, 92, 0.14), 0 14px 30px rgba(255, 92, 92, 0.12);
-  background: rgba(255, 92, 92, 0.06);
-}
-
-.target-card.deadline-danger .card-value.special {
-  color: #ff5c5c;
-  text-shadow: 0 0 14px rgba(255, 92, 92, 0.75);
-}
-
-/* Nhấp nháy nhẹ cho trạng thái nguy cấp (đúng kiểu neon, không chói) */
-@keyframes dangerPulse {
-  0%, 100% {
-    box-shadow: 0 0 0 1px rgba(255, 92, 92, 0.14), 0 14px 30px rgba(255, 92, 92, 0.10);
-    filter: saturate(1);
-  }
-  50% {
-    box-shadow: 0 0 0 1px rgba(255, 92, 92, 0.22), 0 18px 42px rgba(255, 92, 92, 0.18);
-    filter: saturate(1.15);
-  }
-}
-
-.target-card.deadline-danger.pulse {
-  animation: dangerPulse 1.6s ease-in-out infinite;
-}
-
-/* Tôn trọng user hệ điều hành: nếu bật giảm chuyển động thì tắt nhấp nháy */
-@media (prefers-reduced-motion: reduce) {
-  .target-card.deadline-danger.pulse {
-    animation: none;
-  }
-}
-
-
-
     </style>
 </head>
 <body>
@@ -791,7 +726,7 @@
                         <div class="card-subtitle">Cấp độ cao nhất</div>
                     </div>
                     
-                    <div class="target-card" id="deadlineCard">
+                    <div class="target-card">
                         <div class="card-title"><i class="fas fa-calendar-alt"></i> Thời hạn</div>
 
                         <div class="card-value special" id="examMonthYear">07/2026</div>
@@ -1031,58 +966,8 @@ function updateExamUI(examDateStr) {
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()); // bỏ giờ cho ổn định
   const { months, days } = diffMonthsDays(today, examDt);
-
-// Tổng số ngày còn lại (để tính màu)
-const msPerDay = 24 * 60 * 60 * 1000;
-const totalDaysLeft = Math.ceil((examDt - today) / msPerDay);
-
-// Reset class màu
-examCountdownEl.classList.remove("countdown-warn", "countdown-danger");
-
-// === CASE 1: Kỳ thi đã diễn ra ===
-if (totalDaysLeft <= 0) {
-  examCountdownEl.textContent = "Kỳ thi JLPT đã diễn ra";
-  examCountdownEl.classList.add("countdown-danger");
-  return;
-}
-
-// === CASE 2: 0 tháng, còn ngày ===
-if (months === 0 && days > 0) {
-  examCountdownEl.textContent = `Còn ${days} ngày`;
-}
-// === CASE 3: 1 tháng (giữ chữ tháng) ===
-else if (months === 1) {
   examCountdownEl.textContent = `Còn ${months} tháng ${days} ngày`;
 }
-// === CASE 4: >= 2 tháng ===
-else {
-  examCountdownEl.textContent = `Còn ${months} tháng ${days} ngày`;
-}
-
-// === ĐỔI MÀU THEO ĐỘ GẤP ===
-if (totalDaysLeft <= 30) {
-  examCountdownEl.classList.add("countdown-danger");
-} else if (totalDaysLeft <= 60) {
-  examCountdownEl.classList.add("countdown-warn");
-}
-
-}
-
-// ===== Deadline card coloring =====
-const deadlineCard = document.getElementById("deadlineCard");
-if (deadlineCard) {
-  deadlineCard.classList.remove("deadline-warn", "deadline-danger", "pulse");
-
-  if (totalDaysLeft <= 0) {
-    // đã diễn ra: vẫn đỏ nhưng không cần pulse quá mạnh (tuỳ bạn)
-    deadlineCard.classList.add("deadline-danger");
-  } else if (totalDaysLeft < 30) {
-    deadlineCard.classList.add("deadline-danger", "pulse");
-  } else if (totalDaysLeft <= 60) {
-    deadlineCard.classList.add("deadline-warn");
-  }
-}
-
 
 
 
