@@ -639,144 +639,23 @@
 .license-status.ok { color: #00ffcc; }
 
 
-/* ====== CYBER YELLOW CARD - THỜI HẠN ====== */
+/* ====== Ô THỜI HẠN MẶC ĐỊNH (trên 60 ngày) - GIỮ NGUYÊN MÀU XANH ====== */
 .target-card:nth-child(2) {
-  background: rgba(60, 40, 0, 0.7) !important;
-  border: 1px solid rgba(255, 200, 0, 0.6) !important;
+  /* Giữ nguyên như các ô khác - không có màu vàng mặc định */
   position: relative;
   overflow: hidden;
 }
-/* Thêm lớp warning-yellow cho mặc định */
-.target-card:nth-child(2).warning-yellow {
-  animation: cyberPulse 2s infinite alternate !important;
-}
 
-@keyframes cyberPulse {
-  0% {
-    box-shadow: 
-      0 0 10px rgba(255, 200, 0, 0.3),
-      0 0 20px rgba(255, 150, 0, 0.2),
-      inset 0 0 15px rgba(255, 200, 0, 0.1);
-    background: rgba(60, 40, 0, 0.7);
-  }
-  100% {
-    box-shadow: 
-      0 0 20px rgba(255, 200, 0, 0.6),
-      0 0 40px rgba(255, 150, 0, 0.4),
-      0 0 60px rgba(255, 100, 0, 0.2),
-      inset 0 0 25px rgba(255, 200, 0, 0.2);
-    background: rgba(80, 60, 0, 0.8);
-  }
-}
-
-.target-card:nth-child(2)::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #ffcc00, transparent);
-  animation: borderScan 3s linear infinite;
-}
-
-@keyframes borderScan {
-  0% {
-    left: -100%;
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    left: 100%;
-    opacity: 0;
-  }
-}
-
-.target-card:nth-child(2)::after {
-  content: '';
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #ffcc00, transparent 70%);
-  animation: particleGlow 1.5s ease-in-out infinite alternate;
-  filter: blur(1px);
-}
-
-@keyframes particleGlow {
-  0% {
-    transform: scale(0.8);
-    opacity: 0.5;
-    box-shadow: 0 0 10px #ffcc00;
-  }
-  100% {
-    transform: scale(1.2);
-    opacity: 1;
-    box-shadow: 0 0 20px #ffcc00, 0 0 30px #ff9900;
-  }
-}
-
-.target-card:nth-child(2) .card-title {
-  color: #ffdd99 !important;
-}
-
-.target-card:nth-child(2) .card-value.special {
-  color: #ffcc00 !important;
-  text-shadow: 0 0 15px rgba(255, 204, 0, 0.8) !important;
-  animation: textGlow 1.5s ease-in-out infinite alternate;
-}
-
-@keyframes textGlow {
-  0% {
-    text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
-  }
-  100% {
-    text-shadow: 
-      0 0 20px rgba(255, 204, 0, 0.8),
-      0 0 30px rgba(255, 153, 0, 0.6);
-  }
-}
-
-.target-card:nth-child(2) .card-subtitle {
-  color: #ffcc99 !important;
-}
-
-.target-card:nth-child(2):hover {
-  transform: translateY(-8px) !important;
-  animation: cyberPulseHover 1.5s infinite alternate !important;
-}
-
-@keyframes cyberPulseHover {
-  0% {
-    box-shadow: 
-      0 0 25px rgba(255, 200, 0, 0.7),
-      0 0 50px rgba(255, 150, 0, 0.5),
-      0 0 75px rgba(255, 100, 0, 0.3),
-      inset 0 0 30px rgba(255, 200, 0, 0.3);
-    background: rgba(90, 70, 0, 0.9);
-  }
-  100% {
-    box-shadow: 
-      0 0 30px rgba(255, 200, 0, 0.9),
-      0 0 60px rgba(255, 150, 0, 0.7),
-      0 0 90px rgba(255, 100, 0, 0.5),
-      inset 0 0 40px rgba(255, 200, 0, 0.4);
-    background: rgba(100, 80, 0, 1);
-  }
-}
-
+/* Chỉ cần phần tử sparkle chung cho tất cả trạng thái */
 .target-card:nth-child(2) .sparkle {
   position: absolute;
   width: 4px;
   height: 4px;
-  background: #ffcc00;
+  background: #00ffcc; /* Màu xanh cyber mặc định */
   border-radius: 50%;
   filter: blur(1px);
-  animation: sparkleMove 3s linear infinite;
+  animation: sparkleMove 4s linear infinite;
+  opacity: 0.7;
 }
 
 .sparkle:nth-child(1) {
@@ -803,23 +682,151 @@
     transform: translate(0, 0);
   }
   10%, 90% {
-    opacity: 1;
+    opacity: 0.7;
   }
   50% {
-    opacity: 0.5;
-    transform: translate(10px, -10px);
+    opacity: 0.4;
+    transform: translate(5px, -5px);
   }
 }
 
-/* ====== CẢNH BÁO MÀU VÀNG (30-60 ngày) - GIỮ NGUYÊN ====== */
+/* ====== CẢNH BÁO MÀU VÀNG (30-60 ngày) ====== */
 .target-card:nth-child(2).warning-yellow {
-  /* Giữ nguyên màu vàng cyber đã tạo */
   background: rgba(60, 40, 0, 0.7) !important;
   border: 1px solid rgba(255, 200, 0, 0.6) !important;
   animation: cyberPulse 2s infinite alternate !important;
 }
 
+@keyframes cyberPulse {
+  0% {
+    box-shadow: 
+      0 0 10px rgba(255, 200, 0, 0.3),
+      0 0 20px rgba(255, 150, 0, 0.2),
+      inset 0 0 15px rgba(255, 200, 0, 0.1);
+    background: rgba(60, 40, 0, 0.7);
+  }
+  100% {
+    box-shadow: 
+      0 0 20px rgba(255, 200, 0, 0.6),
+      0 0 40px rgba(255, 150, 0, 0.4),
+      0 0 60px rgba(255, 100, 0, 0.2),
+      inset 0 0 25px rgba(255, 200, 0, 0.2);
+    background: rgba(80, 60, 0, 0.8);
+  }
+}
+
+/* Hiệu ứng viền vàng */
+.target-card:nth-child(2).warning-yellow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ffcc00, transparent);
+  animation: borderScan 3s linear infinite;
+}
+
+@keyframes borderScan {
+  0% {
+    left: -100%;
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
+}
+
+/* Hạt sparkle vàng */
+.target-card:nth-child(2).warning-yellow .sparkle {
+  background: #ffcc00 !important;
+  animation: sparkleMove 3s linear infinite !important;
+}
+
+/* Hạt ánh sáng vàng */
+.target-card:nth-child(2).warning-yellow::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffcc00, transparent 70%);
+  animation: particleGlow 1.5s ease-in-out infinite alternate;
+  filter: blur(1px);
+}
+
+@keyframes particleGlow {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.5;
+    box-shadow: 0 0 10px #ffcc00;
+  }
+  100% {
+    transform: scale(1.2);
+    opacity: 1;
+    box-shadow: 0 0 20px #ffcc00, 0 0 30px #ff9900;
+  }
+}
+
+/* Chữ vàng */
+.target-card:nth-child(2).warning-yellow .card-title {
+  color: #ffdd99 !important;
+}
+
+.target-card:nth-child(2).warning-yellow .card-value.special {
+  color: #ffcc00 !important;
+  text-shadow: 0 0 15px rgba(255, 204, 0, 0.8) !important;
+  animation: textGlow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes textGlow {
+  0% {
+    text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+  }
+  100% {
+    text-shadow: 
+      0 0 20px rgba(255, 204, 0, 0.8),
+      0 0 30px rgba(255, 153, 0, 0.6);
+  }
+}
+
+.target-card:nth-child(2).warning-yellow .card-subtitle {
+  color: #ffcc99 !important;
+}
+
+/* Hiệu ứng hover vàng */
+.target-card:nth-child(2).warning-yellow:hover {
+  transform: translateY(-8px) !important;
+  animation: cyberPulseHover 1.5s infinite alternate !important;
+}
+
+@keyframes cyberPulseHover {
+  0% {
+    box-shadow: 
+      0 0 25px rgba(255, 200, 0, 0.7),
+      0 0 50px rgba(255, 150, 0, 0.5),
+      0 0 75px rgba(255, 100, 0, 0.3),
+      inset 0 0 30px rgba(255, 200, 0, 0.3);
+    background: rgba(90, 70, 0, 0.9);
+  }
+  100% {
+    box-shadow: 
+      0 0 30px rgba(255, 200, 0, 0.9),
+      0 0 60px rgba(255, 150, 0, 0.7),
+      0 0 90px rgba(255, 100, 0, 0.5),
+      inset 0 0 40px rgba(255, 200, 0, 0.4);
+    background: rgba(100, 80, 0, 1);
+  }
+}
+
 /* ====== CẢNH BÁO MÀU ĐỎ (<30 ngày) ====== */
+/* Giữ nguyên phần CSS màu đỏ đã tạo */
 .target-card:nth-child(2).warning-red {
   background: rgba(60, 0, 0, 0.7) !important;
   border: 1px solid rgba(255, 50, 50, 0.8) !important;
@@ -844,7 +851,7 @@
   }
 }
 
-/* Hiệu ứng viền đỏ chạy nhanh hơn (cấp bách) */
+/* Hiệu ứng viền đỏ */
 .target-card:nth-child(2).warning-red::before {
   animation: redBorderScan 2s linear infinite !important;
   background: linear-gradient(90deg, transparent, #ff3333, transparent) !important;
@@ -864,9 +871,10 @@
   }
 }
 
-/* Hạt sparkle màu đỏ */
+/* Hạt sparkle đỏ */
 .target-card:nth-child(2).warning-red .sparkle {
   background: #ff3333 !important;
+  animation: sparkleMove 2s linear infinite !important;
 }
 
 .target-card:nth-child(2).warning-red::after {
@@ -887,7 +895,7 @@
   }
 }
 
-/* Chữ màu đỏ nhạt */
+/* Chữ đỏ */
 .target-card:nth-child(2).warning-red .card-title {
   color: #ff9999 !important;
 }
@@ -913,9 +921,10 @@
   color: #ffaaaa !important;
 }
 
-/* Hiệu ứng hover màu đỏ */
+/* Hiệu ứng hover đỏ */
 .target-card:nth-child(2).warning-red:hover {
   animation: redPulseHover 1s infinite alternate !important;
+  transform: translateY(-8px) !important;
 }
 
 @keyframes redPulseHover {
@@ -959,7 +968,7 @@
   }
 }
 
-/* Viền xám nhạt */
+/* Viền xám */
 .target-card:nth-child(2).warning-expired::before {
   animation: expiredBorderScan 4s linear infinite !important;
   background: linear-gradient(90deg, transparent, #888888, transparent) !important;
@@ -968,7 +977,7 @@
 /* Hạt sparkle xám */
 .target-card:nth-child(2).warning-expired .sparkle {
   background: #888888 !important;
-  animation: sparkleMove 4s linear infinite !important;
+  animation: sparkleMove 5s linear infinite !important;
 }
 
 .target-card:nth-child(2).warning-expired::after {
@@ -1379,7 +1388,7 @@ function updateWarningColor(cardElement, daysRemaining) {
     // 30-60 ngày: Màu vàng cảnh báo
     cardElement.classList.add('warning-yellow');
   }
-  // Trên 60 ngày: Giữ màu mặc định (vàng cyber)
+  // Trên 60 ngày: KHÔNG thêm class, giữ nguyên màu xanh
 }
 
 
