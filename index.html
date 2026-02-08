@@ -332,6 +332,133 @@
         box-shadow: 0 15px 25px rgba(0, 100, 255, 0.4);
         border-color: #00a8ff;
       }
+      /* ===== MODULE SUBMENU (CyberSphere) ===== */
+      .module-card.has-submenu {
+        cursor: pointer; /* hover: con trỏ bàn tay */
+      }
+
+      /* Nút trigger chevron (hỗ trợ iPad/touch) */
+      .module-menu-trigger {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        border: 1px solid rgba(0, 150, 255, 0.25);
+        background: rgba(0, 30, 60, 0.35);
+        color: #88d3ff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s,
+          background 0.2s;
+      }
+
+      .module-card.has-submenu:hover .module-menu-trigger {
+        box-shadow: 0 0 18px rgba(0, 168, 255, 0.35);
+        background: rgba(0, 50, 100, 0.45);
+      }
+
+      .module-card.has-submenu.is-open .module-menu-trigger {
+        transform: rotate(180deg);
+      }
+
+      /* Submenu ẩn mặc định */
+      .module-submenu {
+        margin-top: 14px;
+        padding-top: 14px;
+        border-top: 1px solid rgba(0, 150, 255, 0.18);
+
+        display: grid;
+        gap: 10px;
+
+        opacity: 0;
+        transform: translateY(-6px);
+        max-height: 0;
+        overflow: hidden;
+        pointer-events: none;
+        transition:
+          opacity 0.25s ease,
+          transform 0.25s ease,
+          max-height 0.25s ease;
+      }
+
+      /* Hiện submenu khi hover (PC) hoặc khi click mở (iPad/touch) */
+      .module-card.has-submenu:hover .module-submenu,
+      .module-card.has-submenu.is-open .module-submenu {
+        opacity: 1;
+        transform: translateY(0);
+        max-height: 240px;
+        pointer-events: auto;
+      }
+
+      /* Item submenu */
+      .submenu-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 12px;
+        border-radius: 12px;
+
+        text-decoration: none;
+        color: #e0f7ff;
+
+        border: 1px solid rgba(0, 150, 255, 0.22);
+        background: rgba(0, 20, 40, 0.55);
+        backdrop-filter: blur(8px);
+
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s,
+          border-color 0.2s;
+      }
+
+      .submenu-item i:first-child {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: rgba(0, 100, 200, 0.18);
+        border: 1px solid rgba(0, 150, 255, 0.25);
+        color: #00a8ff;
+      }
+
+      .submenu-text {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .submenu-title {
+        font-family: "Orbitron", sans-serif;
+        font-size: 14px;
+        color: #00e5ff;
+        letter-spacing: 0.4px;
+      }
+
+      .submenu-sub {
+        font-size: 12.5px;
+        color: #a0c8e0;
+      }
+
+      .submenu-item i:last-child {
+        color: #88d3ff;
+        opacity: 0.8;
+      }
+
+      .submenu-item:hover {
+        transform: translateY(-2px);
+        border-color: rgba(0, 168, 255, 0.55);
+        box-shadow: 0 0 20px rgba(0, 168, 255, 0.25);
+      }
 
       .module-card::before {
         content: "";
@@ -1375,90 +1502,6 @@
         animation: expiredPulse 3s infinite alternate !important;
         transform: none !important;
       }
-      /* ====== VOCAB DROPDOWN MENU ====== */
-      .vocab-card {
-        position: relative;
-        cursor: pointer;
-      }
-
-      .vocab-dropdown-menu {
-        position: absolute;
-        top: calc(100% - 10px);
-        left: 0;
-        width: 100%;
-        background: rgba(0, 30, 60, 0.95);
-        border: 1px solid rgba(0, 150, 255, 0.5);
-        border-radius: 8px;
-        padding: 10px 0;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-        backdrop-filter: blur(10px);
-        z-index: 100;
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(-10px);
-        transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-      }
-
-      .vocab-card:hover .vocab-dropdown-menu {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-      }
-
-      .vocab-option {
-        display: block;
-        padding: 12px 20px;
-        color: #e0f7ff;
-        text-decoration: none;
-        font-size: 15px;
-        transition: all 0.2s;
-        border-left: 3px solid transparent;
-      }
-
-      .vocab-option:hover {
-        background: rgba(0, 100, 200, 0.3);
-        color: #00ffcc;
-        border-left: 3px solid #00ffcc;
-        padding-left: 25px;
-      }
-
-      .vocab-option i {
-        margin-right: 10px;
-        width: 20px;
-        text-align: center;
-      }
-
-      /* Hiệu ứng cyber cho menu */
-      .vocab-dropdown-menu::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 2px;
-        background: linear-gradient(
-          to right,
-          transparent,
-          #00ffcc,
-          transparent
-        );
-        animation: menuScan 2s linear infinite;
-      }
-
-      @keyframes menuScan {
-        0% {
-          transform: translateX(-100%);
-        }
-        100% {
-          transform: translateX(100%);
-        }
-      }
-
-      /* Hiệu ứng hover cho card từ vựng */
-      .vocab-card:hover {
-        border-color: #00a8ff !important;
-        box-shadow: 0 15px 30px rgba(0, 100, 255, 0.5) !important;
-      }
     </style>
   </head>
   <body>
@@ -1560,7 +1603,7 @@
           <!-- [HTML-3.2.1] MISSION PANEL: Mục tiêu + Thời hạn + Streak -->
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC111
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
             </h2>
 
             <div class="target-info">
@@ -1616,7 +1659,15 @@
             </h2>
 
             <div class="modules-section">
-              <div class="module-card">
+              <div class="module-card has-submenu" data-module="vocab">
+                <button
+                  class="module-menu-trigger"
+                  type="button"
+                  aria-label="Mở menu từ vựng"
+                >
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+
                 <div class="module-icon">
                   <i class="fas fa-book"></i>
                 </div>
@@ -1624,21 +1675,45 @@
                 <p class="module-desc">
                   Hơn 2000 từ vựng nâng cao với hệ thống ghi nhớ thông minh.
                 </p>
-                <!-- THÊM PHẦN NÀY: Menu dropdown -->
-                <div class="vocab-dropdown-menu">
-                  <a href="#" class="vocab-option" data-target="mimikara">
-                    <i class="fas fa-list-ul"></i> Từ vựng Mimikara
-                  </a>
-                  <a href="#" class="vocab-option" data-target="thaolejp">
-                    <i class="fas fa-language"></i> Từ vựng ThaoLejp
-                  </a>
-                </div>
                 <div class="progress-bar">
                   <div class="progress-fill" id="progress-vocab"></div>
                 </div>
                 <div class="progress-text">
                   <span>Tiến độ</span>
                   <span id="percent-vocab">0%</span>
+                </div>
+                <div class="module-submenu" role="menu">
+                  <a
+                    class="submenu-item"
+                    role="menuitem"
+                    href="vocab-mimikara/index.html"
+                    data-target="vocab-mimikara"
+                  >
+                    <i class="fas fa-database"></i>
+                    <div class="submenu-text">
+                      <div class="submenu-title">Từ vựng Mimikara</div>
+                      <div class="submenu-sub">
+                        Luyện theo bộ Mimikara Oboeru
+                      </div>
+                    </div>
+                    <i class="fas fa-arrow-right"></i>
+                  </a>
+
+                  <a
+                    class="submenu-item"
+                    role="menuitem"
+                    href="vocab-thaolejp/index.html"
+                    data-target="vocab-thaolejp"
+                  >
+                    <i class="fas fa-brain"></i>
+                    <div class="submenu-text">
+                      <div class="submenu-title">Từ vựng ThaoLejp</div>
+                      <div class="submenu-sub">
+                        Tổng hợp theo nhóm chủ đề + ví dụ
+                      </div>
+                    </div>
+                    <i class="fas fa-arrow-right"></i>
+                  </a>
                 </div>
               </div>
 
@@ -2172,61 +2247,6 @@
             }, 300);
           });
 
-          // THÊM PHẦN NÀY: Xử lý menu từ vựng
-          const vocabCard = document.querySelector(".vocab-card");
-          const vocabOptions = document.querySelectorAll(".vocab-option");
-
-          // Thay đổi cursor khi hover
-          if (vocabCard) {
-            vocabCard.style.cursor = "pointer";
-          }
-
-          // Xử lý click vào các option
-          vocabOptions.forEach((option) => {
-            option.addEventListener("click", function (e) {
-              e.preventDefault();
-              e.stopPropagation();
-
-              const target = this.getAttribute("data-target");
-
-              // Hiệu ứng ripple
-              const rect = this.getBoundingClientRect();
-              const ripple = document.createElement("div");
-              ripple.style.position = "fixed";
-              ripple.style.borderRadius = "50%";
-              ripple.style.backgroundColor = "rgba(0, 168, 255, 0.6)";
-              ripple.style.width = "10px";
-              ripple.style.height = "10px";
-              ripple.style.left = `${rect.left + rect.width / 2}px`;
-              ripple.style.top = `${rect.top + rect.height / 2}px`;
-              ripple.style.transform = "translate(-50%, -50%)";
-              ripple.style.zIndex = "1000";
-              ripple.style.pointerEvents = "none";
-              document.body.appendChild(ripple);
-
-              const animation = ripple.animate(
-                [
-                  { width: "10px", height: "10px", opacity: 1 },
-                  { width: "100px", height: "100px", opacity: 0 },
-                ],
-                { duration: 500, easing: "ease-out" },
-              );
-
-              animation.onfinish = () => ripple.remove();
-
-              // Xử lý chuyển trang (có thể thay đổi sau)
-              setTimeout(() => {
-                alert(
-                  `Đang chuyển đến: ${target === "mimikara" ? "Từ vựng Mimikara" : "Từ vựng ThaoLejp"}\n\nChức năng này sẽ dẫn đến trang HTML riêng trong tương lai.`,
-                );
-
-                // GHI CHÚ: Để thực sự chuyển trang, bạn có thể dùng:
-                // window.location.href = `${target}.html`;
-                // hoặc mở modal/popup với nội dung tương ứng
-              }, 200);
-            });
-          });
-
           const targetCards = document.querySelectorAll(".target-card");
           targetCards.forEach((card) => {
             card.addEventListener("mouseenter", () => {
@@ -2252,6 +2272,41 @@
             streakDays.textContent = `${count} NGÀY`;
             if (count === targetCount) clearInterval(countInterval);
           }, 200);
+          // ===== Submenu for Vocab module (PC hover + iPad click) =====
+          const vocabCard = document.querySelector(
+            '.module-card.has-submenu[data-module="vocab"]',
+          );
+
+          if (vocabCard) {
+            const trigger = vocabCard.querySelector(".module-menu-trigger");
+
+            // Click nút chevron: toggle
+            if (trigger) {
+              trigger.addEventListener("click", (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                vocabCard.classList.toggle("is-open");
+              });
+            }
+
+            // Click vào card (không phải link): cũng toggle
+            vocabCard.addEventListener("click", (e) => {
+              const isLink = e.target.closest("a.submenu-item");
+              if (isLink) return; // để link tự đi sang trang HTML
+              vocabCard.classList.toggle("is-open");
+            });
+
+            // Click ra ngoài: đóng
+            document.addEventListener("click", (e) => {
+              if (!vocabCard.contains(e.target))
+                vocabCard.classList.remove("is-open");
+            });
+
+            // ESC: đóng (PC)
+            document.addEventListener("keydown", (e) => {
+              if (e.key === "Escape") vocabCard.classList.remove("is-open");
+            });
+          }
         });
       }
 
