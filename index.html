@@ -638,6 +638,25 @@
 .license-status.error { color: #ff8a8a; }
 .license-status.ok { color: #00ffcc; }
 
+/* ===== EXAM COUNTDOWN STATE ===== */
+
+#examCountdown {
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* ⚠️ 60 → 30 ngày: Vàng cảnh báo */
+.countdown-warn {
+  color: #ffcc00; /* vàng cyber */
+  text-shadow: 0 0 8px rgba(255, 204, 0, 0.6);
+}
+
+/* 🚨 < 30 ngày hoặc đã diễn ra: Đỏ nguy cấp */
+.countdown-danger {
+  color: #ff5c5c; /* đỏ cyber */
+  text-shadow: 0 0 10px rgba(255, 92, 92, 0.8);
+}
+
+
     </style>
 </head>
 <body>
@@ -717,7 +736,7 @@
         
         <main class="main-content">
             <section class="mission-panel">
-                <h2 class="panel-title"><i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1111</h2>
+                <h2 class="panel-title"><i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC</h2>
                 
                 <div class="target-info">
                     <div class="target-card">
@@ -966,7 +985,41 @@ function updateExamUI(examDateStr) {
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()); // bỏ giờ cho ổn định
   const { months, days } = diffMonthsDays(today, examDt);
+
+// Tổng số ngày còn lại (để tính màu)
+const msPerDay = 24 * 60 * 60 * 1000;
+const totalDaysLeft = Math.ceil((examDt - today) / msPerDay);
+
+// Reset class màu
+examCountdownEl.classList.remove("countdown-warn", "countdown-danger");
+
+// === CASE 1: Kỳ thi đã diễn ra ===
+if (totalDaysLeft <= 0) {
+  examCountdownEl.textContent = "Kỳ thi JLPT đã diễn ra";
+  examCountdownEl.classList.add("countdown-danger");
+  return;
+}
+
+// === CASE 2: 0 tháng, còn ngày ===
+if (months === 0 && days > 0) {
+  examCountdownEl.textContent = `Còn ${days} ngày`;
+}
+// === CASE 3: 1 tháng (giữ chữ tháng) ===
+else if (months === 1) {
   examCountdownEl.textContent = `Còn ${months} tháng ${days} ngày`;
+}
+// === CASE 4: >= 2 tháng ===
+else {
+  examCountdownEl.textContent = `Còn ${months} tháng ${days} ngày`;
+}
+
+// === ĐỔI MÀU THEO ĐỘ GẤP ===
+if (totalDaysLeft <= 30) {
+  examCountdownEl.classList.add("countdown-danger");
+} else if (totalDaysLeft <= 60) {
+  examCountdownEl.classList.add("countdown-warn");
+}
+
 }
 
 
