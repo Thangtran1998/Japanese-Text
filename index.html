@@ -26,6 +26,7 @@
     9) RESPONSIVE (@media)
     10) LICENSE GATE (overlay activate)
     11) EXAM WARNING STATE (target-card thứ 2)
+    12) MODULE DISPLAY FRAME (Khung hiển thị nội dung module)
     ========================================================= */
 
       * {
@@ -69,7 +70,7 @@
       }
 
       .container {
-        max-width: 1200px;
+        max-width: 1400px; /* Tăng chiều rộng để chứa khung hiển thị */
         margin: 0 auto;
         padding: 20px;
         position: relative;
@@ -310,11 +311,19 @@
         color: #ffdd99;
       }
 
+      /* ===== MODULES SECTION VỚI KHUNG HIỂN THỊ ===== */
+      .modules-wrapper {
+        display: flex;
+        gap: 30px;
+        margin-top: 20px;
+        position: relative;
+      }
+
       .modules-section {
+        flex: 1;
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         gap: 25px;
-        margin-top: 20px;
       }
 
       .module-card {
@@ -325,12 +334,19 @@
         transition: all 0.3s;
         position: relative;
         overflow: hidden;
+        cursor: pointer;
       }
 
       .module-card:hover {
         transform: translateY(-8px);
         box-shadow: 0 15px 25px rgba(0, 100, 255, 0.4);
         border-color: #00a8ff;
+      }
+
+      .module-card.active {
+        border-color: #00ffcc;
+        background: rgba(0, 40, 80, 0.8);
+        box-shadow: 0 0 25px rgba(0, 255, 204, 0.5);
       }
 
       .module-card::before {
@@ -341,6 +357,11 @@
         width: 100%;
         height: 5px;
         background: linear-gradient(to right, #0066cc, #00a8ff);
+      }
+
+      .module-card.active::before {
+        background: linear-gradient(to right, #00ffcc, #00a8ff);
+        height: 5px;
       }
 
       .module-icon {
@@ -357,11 +378,22 @@
         border: 1px solid rgba(0, 150, 255, 0.3);
       }
 
+      .module-card.active .module-icon {
+        color: #00ffcc;
+        background: rgba(0, 150, 255, 0.3);
+        border-color: #00ffcc;
+      }
+
       .module-title {
         font-family: "Orbitron", sans-serif;
         font-size: 20px;
         margin-bottom: 10px;
         color: #00e5ff;
+      }
+
+      .module-card.active .module-title {
+        color: #00ffcc;
+        text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
       }
 
       .module-desc {
@@ -392,6 +424,144 @@
         justify-content: space-between;
         font-size: 14px;
         color: #88d3ff;
+      }
+
+      /* ===== KHUNG HIỂN THỊ NỘI DUNG MODULE ===== */
+      .module-display-frame {
+        width: 280px; /* Bằng chiều rộng của một module card */
+        height: 560px; /* Gấp đôi chiều rộng (280px * 2) */
+        background: rgba(0, 20, 40, 0.8);
+        border: 1px solid rgba(0, 150, 255, 0.4);
+        border-radius: 12px;
+        padding: 25px;
+        position: sticky;
+        top: 30px;
+        align-self: flex-start;
+        backdrop-filter: blur(10px);
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        display: none; /* Mặc định ẩn */
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .module-display-frame.active {
+        display: block;
+        opacity: 1;
+      }
+
+      .module-display-frame::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(to right, #00ffcc, #00a8ff);
+      }
+
+      .frame-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(0, 150, 255, 0.3);
+      }
+
+      .frame-icon {
+        width: 50px;
+        height: 50px;
+        background: rgba(0, 100, 200, 0.3);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        color: #00ffcc;
+        border: 1px solid rgba(0, 255, 204, 0.3);
+      }
+
+      .frame-title {
+        font-family: "Orbitron", sans-serif;
+        font-size: 22px;
+        color: #00ffcc;
+        text-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+      }
+
+      .frame-content {
+        height: calc(100% - 100px);
+        overflow-y: auto;
+        padding-right: 10px;
+      }
+
+      .frame-content::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .frame-content::-webkit-scrollbar-track {
+        background: rgba(0, 30, 60, 0.3);
+        border-radius: 3px;
+      }
+
+      .frame-content::-webkit-scrollbar-thumb {
+        background: linear-gradient(to bottom, #00a8ff, #00ffcc);
+        border-radius: 3px;
+      }
+
+      .content-item {
+        background: rgba(0, 30, 60, 0.4);
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        border: 1px solid rgba(0, 150, 255, 0.2);
+        transition: all 0.3s;
+      }
+
+      .content-item:hover {
+        background: rgba(0, 40, 80, 0.5);
+        border-color: #00a8ff;
+        transform: translateY(-3px);
+      }
+
+      .item-title {
+        font-family: "Orbitron", sans-serif;
+        font-size: 16px;
+        color: #00e5ff;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .item-desc {
+        color: #a0c8e0;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .item-stats {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+        font-size: 12px;
+        color: #88d3ff;
+      }
+
+      .item-progress {
+        height: 4px;
+        background: rgba(0, 50, 100, 0.5);
+        border-radius: 2px;
+        margin-top: 8px;
+        overflow: hidden;
+      }
+
+      .item-progress-fill {
+        height: 100%;
+        background: linear-gradient(to right, #00a8ff, #00ffcc);
+        border-radius: 2px;
+        width: 0%;
+        transition: width 1s ease-out;
       }
 
       .start-button {
@@ -555,6 +725,23 @@
         font-size: 14px;
       }
 
+      @media (max-width: 1200px) {
+        .modules-wrapper {
+          flex-direction: column;
+        }
+        
+        .module-display-frame {
+          width: 100%;
+          height: 400px;
+          position: static;
+          margin-top: 20px;
+        }
+        
+        .modules-section {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
       @media (max-width: 768px) {
         .target-info {
           flex-direction: column;
@@ -574,6 +761,10 @@
 
         .user-info {
           padding: 8px 15px;
+        }
+        
+        .module-display-frame {
+          height: 350px;
         }
       }
       /* ===== LICENSE GATE ===== */
@@ -1476,7 +1667,7 @@
           <!-- [HTML-3.2.1] MISSION PANEL: Mục tiêu + Thời hạn + Streak -->
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC111
             </h2>
 
             <div class="target-info">
@@ -1531,72 +1722,87 @@
               <i class="fas fa-cogs"></i> MODULE ĐÀO TẠO
             </h2>
 
-            <div class="modules-section">
-              <div class="module-card">
-                <div class="module-icon">
-                  <i class="fas fa-book"></i>
+            <div class="modules-wrapper">
+              <div class="modules-section">
+                <div class="module-card" data-module="vocab">
+                  <div class="module-icon">
+                    <i class="fas fa-book"></i>
+                  </div>
+                  <h3 class="module-title">TỪ VỰNG N1</h3>
+                  <p class="module-desc">
+                    Hơn 2000 từ vựng nâng cao với hệ thống ghi nhớ thông minh.
+                  </p>
+                  <div class="progress-bar">
+                    <div class="progress-fill" id="progress-vocab"></div>
+                  </div>
+                  <div class="progress-text">
+                    <span>Tiến độ</span>
+                    <span id="percent-vocab">0%</span>
+                  </div>
                 </div>
-                <h3 class="module-title">TỪ VỰNG N1</h3>
-                <p class="module-desc">
-                  Hơn 2000 từ vựng nâng cao với hệ thống ghi nhớ thông minh.
-                </p>
-                <div class="progress-bar">
-                  <div class="progress-fill" id="progress-vocab"></div>
+
+                <div class="module-card" data-module="grammar">
+                  <div class="module-icon">
+                    <i class="fas fa-language"></i>
+                  </div>
+                  <h3 class="module-title">NGỮ PHÁP N1</h3>
+                  <p class="module-desc">
+                    Hơn 150 cấu trúc ngữ pháp phức tạp với giải thích chi tiết.
+                  </p>
+                  <div class="progress-bar">
+                    <div class="progress-fill" id="progress-grammar"></div>
+                  </div>
+                  <div class="progress-text">
+                    <span>Tiến độ</span>
+                    <span id="percent-grammar">0%</span>
+                  </div>
                 </div>
-                <div class="progress-text">
-                  <span>Tiến độ</span>
-                  <span id="percent-vocab">0%</span>
+
+                <div class="module-card" data-module="listening">
+                  <div class="module-icon">
+                    <i class="fas fa-headphones"></i>
+                  </div>
+                  <h3 class="module-title">NGHE HIỂU</h3>
+                  <p class="module-desc">
+                    Luyện nghe với các tình huống thực tế và tốc độ bản ngữ.
+                  </p>
+                  <div class="progress-bar">
+                    <div class="progress-fill" id="progress-listening"></div>
+                  </div>
+                  <div class="progress-text">
+                    <span>Tiến độ</span>
+                    <span id="percent-listening">0%</span>
+                  </div>
+                </div>
+
+                <div class="module-card" data-module="reading">
+                  <div class="module-icon">
+                    <i class="fas fa-file-alt"></i>
+                  </div>
+                  <h3 class="module-title">ĐỌC HIỂU</h3>
+                  <p class="module-desc">
+                    Phân tích văn bản học thuật, báo chí và tài liệu chuyên ngành.
+                  </p>
+                  <div class="progress-bar">
+                    <div class="progress-fill" id="progress-reading"></div>
+                  </div>
+                  <div class="progress-text">
+                    <span>Tiến độ</span>
+                    <span id="percent-reading">0%</span>
+                  </div>
                 </div>
               </div>
 
-              <div class="module-card">
-                <div class="module-icon">
-                  <i class="fas fa-language"></i>
+              <!-- Khung hiển thị nội dung module -->
+              <div class="module-display-frame" id="moduleDisplay">
+                <div class="frame-header">
+                  <div class="frame-icon">
+                    <i class="fas fa-book"></i>
+                  </div>
+                  <div class="frame-title" id="frameTitle">TỪ VỰNG N1</div>
                 </div>
-                <h3 class="module-title">NGỮ PHÁP N1</h3>
-                <p class="module-desc">
-                  Hơn 150 cấu trúc ngữ pháp phức tạp với giải thích chi tiết.
-                </p>
-                <div class="progress-bar">
-                  <div class="progress-fill" id="progress-grammar"></div>
-                </div>
-                <div class="progress-text">
-                  <span>Tiến độ</span>
-                  <span id="percent-grammar">0%</span>
-                </div>
-              </div>
-
-              <div class="module-card">
-                <div class="module-icon">
-                  <i class="fas fa-headphones"></i>
-                </div>
-                <h3 class="module-title">NGHE HIỂU</h3>
-                <p class="module-desc">
-                  Luyện nghe với các tình huống thực tế và tốc độ bản ngữ.
-                </p>
-                <div class="progress-bar">
-                  <div class="progress-fill" id="progress-listening"></div>
-                </div>
-                <div class="progress-text">
-                  <span>Tiến độ</span>
-                  <span id="percent-listening">0%</span>
-                </div>
-              </div>
-
-              <div class="module-card">
-                <div class="module-icon">
-                  <i class="fas fa-file-alt"></i>
-                </div>
-                <h3 class="module-title">ĐỌC HIỂU</h3>
-                <p class="module-desc">
-                  Phân tích văn bản học thuật, báo chí và tài liệu chuyên ngành.
-                </p>
-                <div class="progress-bar">
-                  <div class="progress-fill" id="progress-reading"></div>
-                </div>
-                <div class="progress-text">
-                  <span>Tiến độ</span>
-                  <span id="percent-reading">0%</span>
+                <div class="frame-content" id="frameContent">
+                  <!-- Nội dung sẽ được thêm bằng JavaScript -->
                 </div>
               </div>
             </div>
@@ -1626,7 +1832,8 @@
   JS-6) BACKGROUND RECHECK (server ping định kỳ)
   JS-7) GATE FLOW (show/hide)
   JS-8) APP UI EFFECTS (progress/ripple/streak)
-  JS-9) BOOT (IIFE)
+  JS-9) MODULE DISPLAY LOGIC (hover/click)
+  JS-10) BOOT (IIFE)
 ========================================================= */
       /**
        * ====== CONFIG ======
@@ -2022,89 +2229,346 @@
         document.getElementById("deviceInfoText").textContent = getDeviceInfo();
       }
 
-      function runAppUI() {
-        // === code UI cũ của bạn (progress + effects) ===
-        document.addEventListener("DOMContentLoaded", function () {
-          const progressData = {
-            vocab: 65,
-            grammar: 42,
-            listening: 28,
-            reading: 35,
-          };
+      /* ====== MODULE DISPLAY LOGIC ====== */
+      let activeModule = null;
+      let hoverTimeout = null;
 
-          for (const [module, value] of Object.entries(progressData)) {
-            const progressFill = document.getElementById(`progress-${module}`);
-            const percentText = document.getElementById(`percent-${module}`);
+      // Dữ liệu nội dung cho các module
+      const moduleContents = {
+        vocab: {
+          title: "TỪ VỰNG N1",
+          icon: "fas fa-book",
+          items: [
+            {
+              title: "Từ vựng Chuyên ngành",
+              desc: "1000 từ vựng kinh tế, chính trị, khoa học kỹ thuật",
+              progress: 65,
+              stats: "Đã học: 650/1000 từ"
+            },
+            {
+              title: "Thành ngữ - Quán ngữ",
+              desc: "300 thành ngữ thông dụng trong giao tiếp nâng cao",
+              progress: 42,
+              stats: "Đã học: 126/300 thành ngữ"
+            },
+            {
+              title: "Từ đồng nghĩa/Trái nghĩa",
+              desc: "500 cặp từ đồng nghĩa và trái nghĩa N1",
+              progress: 28,
+              stats: "Đã học: 140/500 cặp từ"
+            },
+            {
+              title: "Từ vựng Hán tự N1",
+              desc: "800 từ Hán tự nâng cao với âm On/Kun",
+              progress: 75,
+              stats: "Đã học: 600/800 từ"
+            }
+          ]
+        },
+        grammar: {
+          title: "NGỮ PHÁP N1",
+          icon: "fas fa-language",
+          items: [
+            {
+              title: "Ngữ pháp Văn viết",
+              desc: "100 cấu trúc ngữ pháp dùng trong văn bản học thuật",
+              progress: 42,
+              stats: "Đã học: 42/100 cấu trúc"
+            },
+            {
+              title: "Ngữ pháp Hội thoại",
+              desc: "50 mẫu câu đàm thoại nâng cao trong công việc",
+              progress: 60,
+              stats: "Đã học: 30/50 mẫu câu"
+            },
+            {
+              title: "Liên từ - Trợ từ N1",
+              desc: "70 liên từ và trợ từ phức tạp",
+              progress: 35,
+              stats: "Đã học: 25/70 từ"
+            },
+            {
+              title: "Mẫu câu So sánh",
+              desc: "30 mẫu câu so sánh nâng cao",
+              progress: 80,
+              stats: "Đã học: 24/30 mẫu câu"
+            }
+          ]
+        },
+        listening: {
+          title: "NGHE HIỂU",
+          icon: "fas fa-headphones",
+          items: [
+            {
+              title: "Nghe tin tức",
+              desc: "50 bài nghe tin tức NHK với tốc độ thực",
+              progress: 28,
+              stats: "Đã học: 14/50 bài"
+            },
+            {
+              title: "Hội thoại Công sở",
+              desc: "30 tình huống giao tiếp trong môi trường công ty",
+              progress: 45,
+              stats: "Đã học: 14/30 tình huống"
+            },
+            {
+              title: "Bài giảng Đại học",
+              desc: "20 bài giảng học thuật các chuyên ngành",
+              progress: 20,
+              stats: "Đã học: 4/20 bài"
+            },
+            {
+              title: "Phỏng vấn chuyên gia",
+              desc: "15 cuộc phỏng vấn với chuyên gia các lĩnh vực",
+              progress: 15,
+              stats: "Đã học: 2/15 bài"
+            }
+          ]
+        },
+        reading: {
+          title: "ĐỌC HIỂU",
+          icon: "fas fa-file-alt",
+          items: [
+            {
+              title: "Văn bản Học thuật",
+              desc: "25 bài đọc về khoa học, nghiên cứu chuyên sâu",
+              progress: 35,
+              stats: "Đã học: 9/25 bài"
+            },
+            {
+              title: "Báo chí - Tạp chí",
+              desc: "30 bài báo kinh tế, chính trị, xã hội",
+              progress: 40,
+              stats: "Đã học: 12/30 bài"
+            },
+            {
+              title: "Tiểu thuyết - Văn học",
+              desc: "15 trích đoạn tiểu thuyết đương đại",
+              progress: 25,
+              stats: "Đã học: 4/15 bài"
+            },
+            {
+              title: "Tài liệu Kỹ thuật",
+              desc: "20 tài liệu kỹ thuật, hướng dẫn sử dụng",
+              progress: 30,
+              stats: "Đã học: 6/20 bài"
+            }
+          ]
+        }
+      };
 
-            progressFill.style.width = "0%";
-            percentText.textContent = "0%";
-
-            setTimeout(() => {
-              progressFill.style.width = `${value}%`;
-              percentText.textContent = `${value}%`;
-            }, 300);
-          }
-
-          const startButton = document.querySelector(".start-button");
-          startButton.addEventListener("click", function (e) {
-            e.preventDefault();
-
-            const ripple = document.createElement("div");
-            ripple.style.position = "fixed";
-            ripple.style.borderRadius = "50%";
-            ripple.style.backgroundColor = "rgba(0, 168, 255, 0.6)";
-            ripple.style.width = "10px";
-            ripple.style.height = "10px";
-            ripple.style.left = `${e.clientX}px`;
-            ripple.style.top = `${e.clientY}px`;
-            ripple.style.transform = "translate(-50%, -50%)";
-            ripple.style.zIndex = "1000";
-            ripple.style.pointerEvents = "none";
-            document.body.appendChild(ripple);
-
-            const animation = ripple.animate(
-              [
-                { width: "10px", height: "10px", opacity: 1 },
-                { width: "200px", height: "200px", opacity: 0 },
-              ],
-              { duration: 800, easing: "ease-out" },
-            );
-
-            animation.onfinish = () => ripple.remove();
-
-            setTimeout(() => {
-              alert(
-                "Hệ thống học tập N1 đang khởi động...\nChuẩn bị cho nhiệm vụ ngày hôm nay!",
-              );
-            }, 300);
-          });
-
-          const targetCards = document.querySelectorAll(".target-card");
-          targetCards.forEach((card) => {
-            card.addEventListener("mouseenter", () => {
-              const afterElement = card.querySelector(".card-value");
-              if (afterElement)
-                afterElement.style.textShadow =
-                  "0 0 20px rgba(0, 255, 204, 0.8)";
-            });
-
-            card.addEventListener("mouseleave", () => {
-              const afterElement = card.querySelector(".card-value");
-              if (afterElement)
-                afterElement.style.textShadow =
-                  "0 0 10px rgba(0, 255, 204, 0.5)";
-            });
-          });
-
-          const streakDays = document.querySelector(".streak-days");
-          let count = 0;
-          const targetCount = 5;
-          const countInterval = setInterval(() => {
-            count++;
-            streakDays.textContent = `${count} NGÀY`;
-            if (count === targetCount) clearInterval(countInterval);
-          }, 200);
+      function updateModuleDisplay(moduleId, isClick = false) {
+        const moduleCard = document.querySelector(`[data-module="${moduleId}"]`);
+        const displayFrame = document.getElementById("moduleDisplay");
+        const frameTitle = document.getElementById("frameTitle");
+        const frameContent = document.getElementById("frameContent");
+        
+        if (!moduleCard || !displayFrame || !moduleContents[moduleId]) return;
+        
+        // Cập nhật tiêu đề và icon
+        frameTitle.textContent = moduleContents[moduleId].title;
+        const frameIcon = document.querySelector(".frame-icon i");
+        if (frameIcon) {
+          frameIcon.className = moduleContents[moduleId].icon;
+        }
+        
+        // Tạo nội dung
+        frameContent.innerHTML = '';
+        moduleContents[moduleId].items.forEach(item => {
+          const itemEl = document.createElement('div');
+          itemEl.className = 'content-item';
+          itemEl.innerHTML = `
+            <div class="item-title">
+              <i class="fas fa-circle"></i> ${item.title}
+            </div>
+            <div class="item-desc">${item.desc}</div>
+            <div class="item-stats">${item.stats}</div>
+            <div class="item-progress">
+              <div class="item-progress-fill" style="width: ${item.progress}%"></div>
+            </div>
+          `;
+          frameContent.appendChild(itemEl);
         });
+        
+        // Hiển thị khung
+        displayFrame.classList.add('active');
+        
+        // Xóa active class từ tất cả module cards
+        document.querySelectorAll('.module-card').forEach(card => {
+          card.classList.remove('active');
+        });
+        
+        // Thêm active class cho module được chọn
+        if (isClick) {
+          moduleCard.classList.add('active');
+          activeModule = moduleId;
+        }
+      }
+
+      function hideModuleDisplay() {
+        const displayFrame = document.getElementById("moduleDisplay");
+        if (displayFrame && !activeModule) {
+          displayFrame.classList.remove('active');
+        }
+      }
+
+      function setupModuleInteractions() {
+        const moduleCards = document.querySelectorAll('.module-card');
+        const displayFrame = document.getElementById("moduleDisplay");
+        
+        moduleCards.forEach(card => {
+          const moduleId = card.getAttribute('data-module');
+          
+          // Hover enter
+          card.addEventListener('mouseenter', () => {
+            clearTimeout(hoverTimeout);
+            hoverTimeout = setTimeout(() => {
+              updateModuleDisplay(moduleId, false);
+            }, 300);
+          });
+          
+          // Hover leave
+          card.addEventListener('mouseleave', () => {
+            clearTimeout(hoverTimeout);
+            hoverTimeout = setTimeout(() => {
+              if (activeModule !== moduleId) {
+                hideModuleDisplay();
+              }
+            }, 300);
+          });
+          
+          // Click
+          card.addEventListener('click', (e) => {
+            e.preventDefault();
+            clearTimeout(hoverTimeout);
+            
+            if (activeModule === moduleId) {
+              // Click lần nữa để tắt
+              card.classList.remove('active');
+              activeModule = null;
+              hideModuleDisplay();
+            } else {
+              // Click chọn module mới
+              activeModule = moduleId;
+              updateModuleDisplay(moduleId, true);
+            }
+          });
+        });
+        
+        // Khi hover ra khỏi khung hiển thị
+        if (displayFrame) {
+          displayFrame.addEventListener('mouseenter', () => {
+            clearTimeout(hoverTimeout);
+          });
+          
+          displayFrame.addEventListener('mouseleave', () => {
+            if (!activeModule) {
+              hoverTimeout = setTimeout(() => {
+                hideModuleDisplay();
+              }, 300);
+            }
+          });
+        }
+      }
+
+      function runAppUI() {
+        // === Progress bars ===
+        const progressData = {
+          vocab: 65,
+          grammar: 42,
+          listening: 28,
+          reading: 35,
+        };
+
+        for (const [module, value] of Object.entries(progressData)) {
+          const progressFill = document.getElementById(`progress-${module}`);
+          const percentText = document.getElementById(`percent-${module}`);
+
+          progressFill.style.width = "0%";
+          percentText.textContent = "0%";
+
+          setTimeout(() => {
+            progressFill.style.width = `${value}%`;
+            percentText.textContent = `${value}%`;
+          }, 300);
+        }
+
+        // === Start button ripple effect ===
+        const startButton = document.querySelector(".start-button");
+        startButton.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          const ripple = document.createElement("div");
+          ripple.style.position = "fixed";
+          ripple.style.borderRadius = "50%";
+          ripple.style.backgroundColor = "rgba(0, 168, 255, 0.6)";
+          ripple.style.width = "10px";
+          ripple.style.height = "10px";
+          ripple.style.left = `${e.clientX}px`;
+          ripple.style.top = `${e.clientY}px`;
+          ripple.style.transform = "translate(-50%, -50%)";
+          ripple.style.zIndex = "1000";
+          ripple.style.pointerEvents = "none";
+          document.body.appendChild(ripple);
+
+          const animation = ripple.animate(
+            [
+              { width: "10px", height: "10px", opacity: 1 },
+              { width: "200px", height: "200px", opacity: 0 },
+            ],
+            { duration: 800, easing: "ease-out" },
+          );
+
+          animation.onfinish = () => ripple.remove();
+
+          setTimeout(() => {
+            alert(
+              "Hệ thống học tập N1 đang khởi động...\nChuẩn bị cho nhiệm vụ ngày hôm nay!",
+            );
+          }, 300);
+        });
+
+        // === Target cards hover effect ===
+        const targetCards = document.querySelectorAll(".target-card");
+        targetCards.forEach((card) => {
+          card.addEventListener("mouseenter", () => {
+            const afterElement = card.querySelector(".card-value");
+            if (afterElement)
+              afterElement.style.textShadow =
+                "0 0 20px rgba(0, 255, 204, 0.8)";
+          });
+
+          card.addEventListener("mouseleave", () => {
+            const afterElement = card.querySelector(".card-value");
+            if (afterElement)
+              afterElement.style.textShadow =
+                "0 0 10px rgba(0, 255, 204, 0.5)";
+          });
+        });
+
+        // === Streak counter animation ===
+        const streakDays = document.querySelector(".streak-days");
+        let count = 0;
+        const targetCount = 5;
+        const countInterval = setInterval(() => {
+          count++;
+          streakDays.textContent = `${count} NGÀY`;
+          if (count === targetCount) clearInterval(countInterval);
+        }, 200);
+        
+        // === Setup module interactions ===
+        setupModuleInteractions();
+        
+        // Hiển thị module đầu tiên mặc định
+        setTimeout(() => {
+          const firstModule = document.querySelector('.module-card');
+          if (firstModule) {
+            const moduleId = firstModule.getAttribute('data-module');
+            updateModuleDisplay(moduleId, true);
+            firstModule.classList.add('active');
+            activeModule = moduleId;
+          }
+        }, 1000);
       }
 
       /** ====== Boot ====== */
