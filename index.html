@@ -339,6 +339,7 @@
         position: relative;
         overflow: hidden;
         cursor: pointer;
+        user-select: none;
       }
 
       .module-card:hover {
@@ -1897,7 +1898,7 @@
           <!-- [HTML-3.2.1] MISSION PANEL: Mục tiêu + Thời hạn + Streak -->
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC11
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
             </h2>
 
             <div class="target-info">
@@ -2075,7 +2076,7 @@
   JS-6) BACKGROUND RECHECK (server ping định kỳ)
   JS-7) GATE FLOW (show/hide)
   JS-8) APP UI EFFECTS (progress/ripple/streak)
-  JS-9) MODULE DISPLAY LOGIC (hover/double-click/ESC)
+  JS-9) MODULE DISPLAY LOGIC (hover/double-click/ESC) - ĐÃ SỬA
   JS-10) BOOT (IIFE)
 ========================================================= */
       /**
@@ -2472,7 +2473,7 @@
         document.getElementById("deviceInfoText").textContent = getDeviceInfo();
       }
 
-      /* ====== MODULE DISPLAY LOGIC (nâng cao) ====== */
+      /* ====== MODULE DISPLAY LOGIC (nâng cao) - ĐÃ SỬA ====== */
       let activeModule = null;
       let hoverTimeout = null;
       let clickTimeout = null;
@@ -2722,17 +2723,20 @@
         showDefaultContent();
       }
 
-      // Hàm xử lý double-click (lock/unlock)
+      // Hàm xử lý double-click (lock/unlock) - ĐÃ SỬA
       function handleDoubleClick(moduleId) {
+        console.log(`Double-click detected on module: ${moduleId}`);
         const moduleCard = document.querySelector(`[data-module="${moduleId}"]`);
         
         if (!moduleCard) return;
         
         if (moduleCard.classList.contains("locked")) {
           // Nếu đang locked -> unlock
+          console.log(`Unlocking module: ${moduleId}`);
           unlockAll();
         } else {
           // Nếu chưa locked -> lock module này
+          console.log(`Locking module: ${moduleId}`);
           unlockAll(); // Bỏ khóa tất cả trước
           updateModuleDisplay(moduleId, true);
         }
@@ -2764,46 +2768,55 @@
         
         // Đặt timeout để ẩn nội dung (nếu không hover vào module khác)
         hoverTimeout = setTimeout(() => {
-          if (!isLocked) {
-            unlockAll();
+          if (!isLocked && !activeModule) {
+            showDefaultContent();
           }
         }, 300);
       }
 
-      // Thiết lập tương tác cho module
+      // Thiết lập tương tác cho module - ĐÃ SỬA HOÀN TOÀN
       function setupModuleInteractions() {
         const moduleCards = document.querySelectorAll(".module-card");
-        let clickCount = 0;
-        let clickTimer = null;
-
+        
         moduleCards.forEach((card) => {
           const moduleId = card.getAttribute("data-module");
+          let clickTimer = null;
+          let clickCount = 0;
 
           // Xử lý mouseenter (hover)
           card.addEventListener("mouseenter", () => {
+            console.log(`Hover on: ${moduleId}`);
             handleHover(moduleId);
           });
 
           // Xử lý mouseleave
           card.addEventListener("mouseleave", () => {
+            console.log(`Mouse leave: ${moduleId}`);
             handleMouseLeave();
           });
 
-          // Xử lý click (để phân biệt click đơn và double-click)
+          // Xử lý click với double-click detection - CÁCH MỚI
           card.addEventListener("click", (e) => {
             e.preventDefault();
             clickCount++;
             
             if (clickCount === 1) {
-              // Đây có thể là click đơn, đợi xem có double-click không
+              // Đặt timer cho click đơn
               clickTimer = setTimeout(() => {
-                // Nếu đây là click đơn (không phải double-click)
-                // Không làm gì cho click đơn
+                // Nếu đây là click đơn (không có click thứ 2 trong 300ms)
+                console.log(`Single click on: ${moduleId}`);
+                
+                // Với click đơn, chỉ hiển thị module (giống hover)
+                if (!isLocked) {
+                  updateModuleDisplay(moduleId, false);
+                }
+                
                 clickCount = 0;
-              }, 300); // Thời gian chờ để phân biệt click đơn/double-click
+              }, 300);
             } else if (clickCount === 2) {
               // Đây là double-click
               clearTimeout(clickTimer);
+              console.log(`Double-click detected on: ${moduleId}`);
               handleDoubleClick(moduleId);
               clickCount = 0;
             }
@@ -2822,9 +2835,13 @@
         // Xử lý phím ESC
         document.addEventListener("keydown", (e) => {
           if (e.key === "Escape") {
+            console.log("ESC pressed - unlocking all");
             unlockAll();
           }
         });
+
+        // Debug log
+        console.log("Module interactions setup complete");
       }
 
       function runAppUI() {
@@ -2915,6 +2932,9 @@
 
         // Hiển thị nội dung mặc định
         showDefaultContent();
+
+        // Debug
+        console.log("App UI initialized");
       }
 
       /** ====== Boot ====== */
