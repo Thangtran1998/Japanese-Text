@@ -350,9 +350,9 @@
 
       /* ====== TRẠNG THÁI LOCKED (khóa cố định) ====== */
       .module-card.locked {
-        border-color: #FF00FF !important;
+        border-color: #ff00ff !important;
         background: rgba(255, 0, 255, 0.15) !important;
-        box-shadow: 
+        box-shadow:
           0 0 20px rgba(255, 0, 255, 0.5),
           0 15px 25px rgba(0, 100, 255, 0.4) !important;
         transform: translateY(-8px);
@@ -366,24 +366,30 @@
         top: 10px;
         right: 10px;
         font-size: 20px;
-        color: #FF00FF;
+        color: #ff00ff;
         text-shadow: 0 0 10px rgba(255, 0, 255, 0.7);
         animation: lockPulse 1.5s infinite alternate;
       }
 
       @keyframes lockPulse {
-        0% { opacity: 0.7; transform: scale(0.9); }
-        100% { opacity: 1; transform: scale(1.1); }
+        0% {
+          opacity: 0.7;
+          transform: scale(0.9);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1.1);
+        }
       }
 
       .module-card.locked .module-icon {
-        color: #FF00FF !important;
+        color: #ff00ff !important;
         background: rgba(255, 0, 255, 0.2) !important;
-        border-color: #FF00FF !important;
+        border-color: #ff00ff !important;
       }
 
       .module-card.locked .module-title {
-        color: #FF00FF !important;
+        color: #ff00ff !important;
         text-shadow: 0 0 10px rgba(255, 0, 255, 0.5) !important;
       }
 
@@ -409,7 +415,7 @@
       }
 
       .module-card.locked::before {
-        background: linear-gradient(to right, #FF00FF, #FF5500) !important;
+        background: linear-gradient(to right, #ff00ff, #ff5500) !important;
       }
 
       .module-icon {
@@ -479,7 +485,7 @@
         width: 560px; /* GẤP ĐÔI: 280px * 2 = 560px */
         height: 560px; /* Giữ nguyên chiều cao */
         background: rgba(0, 20, 40, 0.9);
-        border: 3px solid #FF00FF; /* Màu neon magenta */
+        border: 3px solid #ff00ff; /* Màu neon magenta */
         border-radius: 15px; /* Bo góc lớn hơn */
         padding: 30px;
         position: sticky;
@@ -487,7 +493,7 @@
         align-self: flex-start;
         backdrop-filter: blur(15px);
         overflow: hidden;
-        box-shadow: 
+        box-shadow:
           0 15px 40px rgba(0, 0, 0, 0.8),
           0 0 30px rgba(255, 0, 255, 0.7),
           inset 0 0 30px rgba(0, 150, 255, 0.1); /* Thêm hiệu ứng bên trong */
@@ -500,19 +506,19 @@
       }
 
       @keyframes neonPulse {
-        0% { 
-          box-shadow: 
+        0% {
+          box-shadow:
             0 15px 40px rgba(0, 0, 0, 0.8),
             0 0 20px rgba(255, 0, 255, 0.5),
             inset 0 0 30px rgba(0, 150, 255, 0.1);
-          border-color: #FF00FF;
+          border-color: #ff00ff;
         }
-        100% { 
-          box-shadow: 
+        100% {
+          box-shadow:
             0 15px 40px rgba(0, 0, 0, 0.8),
             0 0 40px rgba(255, 0, 255, 0.9),
             inset 0 0 30px rgba(0, 150, 255, 0.1);
-          border-color: #FF5500;
+          border-color: #ff5500;
         }
       }
 
@@ -523,7 +529,7 @@
         left: 0;
         width: 100%;
         height: 5px;
-        background: linear-gradient(to right, #FF00FF, #FF5500);
+        background: linear-gradient(to right, #ff00ff, #ff5500);
         z-index: 2;
       }
 
@@ -571,14 +577,14 @@
       }
 
       .status-indicator.locked {
-        color: #FF00FF;
+        color: #ff00ff;
         text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
       }
 
       .clear-lock-btn {
         background: rgba(255, 0, 255, 0.2);
         border: 1px solid rgba(255, 0, 255, 0.5);
-        color: #FF00FF;
+        color: #ff00ff;
         padding: 5px 10px;
         border-radius: 5px;
         font-size: 12px;
@@ -1898,7 +1904,7 @@
           <!-- [HTML-3.2.1] MISSION PANEL: Mục tiêu + Thời hạn + Streak -->
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1111
             </h2>
 
             <div class="target-info">
@@ -2032,7 +2038,11 @@
                     <span class="status-icon">🔓</span>
                     <span class="status-text">Đang xem tạm thời</span>
                   </div>
-                  <button class="clear-lock-btn" id="clearLockBtn" style="display: none;">
+                  <button
+                    class="clear-lock-btn"
+                    id="clearLockBtn"
+                    style="display: none"
+                  >
                     <i class="fas fa-unlock"></i> Bỏ khóa
                   </button>
                 </div>
@@ -2476,7 +2486,6 @@
       /* ====== MODULE DISPLAY LOGIC (nâng cao) - ĐÃ SỬA ====== */
       let activeModule = null;
       let hoverTimeout = null;
-      let clickTimeout = null;
       let isLocked = false;
 
       // Dữ liệu nội dung cho các module
@@ -2690,13 +2699,13 @@
       function showDefaultContent() {
         const frameTitle = document.getElementById("frameTitle");
         const frameContent = document.getElementById("frameContent");
-        
+
         frameTitle.textContent = "Chọn module";
         const frameIcon = document.querySelector(".frame-icon i");
         if (frameIcon) {
           frameIcon.className = "fas fa-book";
         }
-        
+
         frameContent.innerHTML = `
           <div class="default-content" style="grid-column: 1 / -1; text-align: center; padding: 40px;">
             <h3 style="color: #00ffcc; margin-bottom: 20px; font-size: 24px;">Chào mừng đến với Module Đào Tạo</h3>
@@ -2705,7 +2714,7 @@
             <p style="margin-bottom: 15px; font-size: 16px;">Nhấn ESC hoặc nút "Bỏ khóa" để giải phóng</p>
           </div>
         `;
-        
+
         updateFrameStatus();
       }
 
@@ -2715,10 +2724,10 @@
           card.classList.remove("locked");
           card.classList.remove("active");
         });
-        
+
         activeModule = null;
         isLocked = false;
-        
+
         // Hiển thị nội dung mặc định
         showDefaultContent();
       }
@@ -2726,10 +2735,12 @@
       // Hàm xử lý double-click (lock/unlock) - ĐÃ SỬA
       function handleDoubleClick(moduleId) {
         console.log(`Double-click detected on module: ${moduleId}`);
-        const moduleCard = document.querySelector(`[data-module="${moduleId}"]`);
-        
+        const moduleCard = document.querySelector(
+          `[data-module="${moduleId}"]`,
+        );
+
         if (!moduleCard) return;
-        
+
         if (moduleCard.classList.contains("locked")) {
           // Nếu đang locked -> unlock
           console.log(`Unlocking module: ${moduleId}`);
@@ -2746,12 +2757,12 @@
       function handleHover(moduleId) {
         // Nếu đang có module bị lock thì bỏ qua hover
         if (isLocked) return;
-        
+
         // Hủy timeout cũ nếu có
         if (hoverTimeout) {
           clearTimeout(hoverTimeout);
         }
-        
+
         // Hiển thị module được hover
         updateModuleDisplay(moduleId, false);
       }
@@ -2760,12 +2771,13 @@
       function handleMouseLeave() {
         // Nếu đang có module bị lock thì không làm gì
         if (isLocked) return;
-        
+        activeModule = null;
+
         // Hủy timeout cũ nếu có
         if (hoverTimeout) {
           clearTimeout(hoverTimeout);
         }
-        
+
         // Đặt timeout để ẩn nội dung (nếu không hover vào module khác)
         hoverTimeout = setTimeout(() => {
           if (!isLocked && !activeModule) {
@@ -2777,62 +2789,53 @@
       // Thiết lập tương tác cho module - ĐÃ SỬA HOÀN TOÀN
       function setupModuleInteractions() {
         const moduleCards = document.querySelectorAll(".module-card");
-        
+
         moduleCards.forEach((card) => {
           const moduleId = card.getAttribute("data-module");
-          let clickTimer = null;
-          let clickCount = 0;
 
-          // Xử lý mouseenter (hover)
+          // Hover xem tạm thời
           card.addEventListener("mouseenter", () => {
             console.log(`Hover on: ${moduleId}`);
             handleHover(moduleId);
           });
 
-          // Xử lý mouseleave
+          // Rời chuột khỏi card
           card.addEventListener("mouseleave", () => {
             console.log(`Mouse leave: ${moduleId}`);
             handleMouseLeave();
           });
 
-          // Xử lý click với double-click detection - CÁCH MỚI
+          // (Tuỳ chọn) Click đơn: hữu ích cho thiết bị không có hover
           card.addEventListener("click", (e) => {
             e.preventDefault();
-            clickCount++;
-            
-            if (clickCount === 1) {
-              // Đặt timer cho click đơn
-              clickTimer = setTimeout(() => {
-                // Nếu đây là click đơn (không có click thứ 2 trong 300ms)
-                console.log(`Single click on: ${moduleId}`);
-                
-                // Với click đơn, chỉ hiển thị module (giống hover)
-                if (!isLocked) {
-                  updateModuleDisplay(moduleId, false);
-                }
-                
-                clickCount = 0;
-              }, 300);
-            } else if (clickCount === 2) {
-              // Đây là double-click
-              clearTimeout(clickTimer);
-              console.log(`Double-click detected on: ${moduleId}`);
-              handleDoubleClick(moduleId);
-              clickCount = 0;
-            }
+
+            // Nếu đang lock thì click đơn không làm gì (để tránh phá trạng thái lock)
+            if (isLocked) return;
+
+            console.log(`Single click on: ${moduleId}`);
+            updateModuleDisplay(moduleId, false);
           });
 
-          // Ngăn context menu trên double-click
-          card.addEventListener('contextmenu', (e) => {
+          // ✅ Double-click: lock/unlock theo chuẩn hệ điều hành / trình duyệt
+          card.addEventListener("dblclick", (e) => {
+            e.preventDefault();
+            console.log(`Double-click detected on: ${moduleId}`);
+            handleDoubleClick(moduleId);
+          });
+
+          // Ngăn context menu (chuột phải)
+          card.addEventListener("contextmenu", (e) => {
             e.preventDefault();
           });
         });
 
-        // Xử lý nút "Bỏ khóa"
+        // Nút "Bỏ khóa"
         const clearLockBtn = document.getElementById("clearLockBtn");
-        clearLockBtn.addEventListener("click", unlockAll);
+        if (clearLockBtn) {
+          clearLockBtn.addEventListener("click", unlockAll);
+        }
 
-        // Xử lý phím ESC
+        // Phím ESC để bỏ khóa nhanh
         document.addEventListener("keydown", (e) => {
           if (e.key === "Escape") {
             console.log("ESC pressed - unlocking all");
@@ -2840,7 +2843,6 @@
           }
         });
 
-        // Debug log
         console.log("Module interactions setup complete");
       }
 
