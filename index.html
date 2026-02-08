@@ -1243,7 +1243,7 @@
           <!-- [HTML-3.2.1] MISSION PANEL: Mục tiêu + Thời hạn + Streak -->
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC111
             </h2>
 
             <div class="target-info">
@@ -1274,8 +1274,8 @@
                 <div class="card-title">
                   <i class="fas fa-rocket"></i> Trạng thái
                 </div>
-                <div class="card-value">ACTIVE</div>
-                <div class="card-subtitle">Hệ thống đã kích hoạt</div>
+                <div class="card-value" id="statusValue">---</div>
+                <div class="card-subtitle" id="statusSubtitle">---</div>
               </div>
             </div>
 
@@ -1469,6 +1469,56 @@
         return `${mm}/${yyyy}`;
       }
 
+      function formatDDMMYYYY(dt) {
+        const dd = String(dt.getDate()).padStart(2, "0");
+        const mm = String(dt.getMonth() + 1).padStart(2, "0");
+        const yyyy = dt.getFullYear();
+        return `${dd}/${mm}/${yyyy}`;
+      }
+
+      function updateStatusUI(expiryStr) {
+        const statusValueEl = document.getElementById("statusValue");
+        const statusSubtitleEl = document.getElementById("statusSubtitle");
+        if (!statusValueEl || !statusSubtitleEl) return;
+
+        const expiryDt = parseYYYYMMDD(expiryStr);
+        if (!expiryDt) {
+          statusValueEl.textContent = "ACTIVE";
+          statusSubtitleEl.textContent = "Trạng thái bản quyền: Đã kích hoạt";
+          return;
+        }
+
+        // Chuẩn hóa ngày (không tính giờ)
+        const now = new Date();
+        const today = new Date(
+          now.getFullYear(),
+          now.getMonth(),
+          now.getDate(),
+        );
+        const expDate = new Date(
+          expiryDt.getFullYear(),
+          expiryDt.getMonth(),
+          expiryDt.getDate(),
+        );
+
+        // Tính số ngày còn lại
+        const msPerDay = 24 * 60 * 60 * 1000;
+        const remainingDays = Math.ceil((expDate - today) / msPerDay);
+
+        // Hết hạn
+        if (remainingDays < 0) {
+          statusValueEl.textContent = "EXPIRED";
+          statusValueEl.classList.add("special");
+          statusSubtitleEl.textContent = `Quyền truy cập đã hết hạn từ: ${formatDDMMYYYY(expDate)}`;
+          return;
+        }
+
+        // Còn hạn
+        statusValueEl.textContent = "ACTIVE";
+        statusValueEl.classList.remove("special");
+        statusSubtitleEl.textContent = `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(expDate)} (còn ${remainingDays} ngày)`;
+      }
+
       // trả về số tháng + số ngày còn lại (ước lượng theo lịch, đủ đẹp để hiển thị)
       function diffMonthsDays(fromDate, toDate) {
         if (toDate <= fromDate) return { months: 0, days: 0 };
@@ -1640,8 +1690,8 @@
             const r = await verifyLicense(deviceId, license);
 
             if (r && r.ok) {
-              // server online + ok => giữ kích hoạt
               setStatus(`Kích hoạt OK (hạn: ${r.expiry})`, "ok");
+              updateStatusUI(r.expiry);
               return;
             }
 
@@ -1821,6 +1871,7 @@
             if (r && r.ok) {
               localStorage.setItem(LS_ACTIVATED, "1");
               setStatus(`Kích hoạt OK (hạn: ${r.expiry})`, "ok");
+              updateStatusUI(r.expiry);
 
               // NEW: set tên user từ server
               if (r.userName) setUserName(r.userName);
@@ -1865,6 +1916,7 @@
                 localStorage.setItem(LS_LICENSE, license);
                 localStorage.setItem(LS_ACTIVATED, "1");
                 setStatus(`Kích hoạt OK (hạn: ${r.expiry})`, "ok");
+                updateStatusUI(r.expiry);
 
                 // NEW: set tên user từ server
                 if (r.userName) setUserName(r.userName);
