@@ -2483,12 +2483,21 @@
         document.getElementById("deviceInfoText").textContent = getDeviceInfo();
       }
 
-      /* ====== MODULE DISPLAY LOGIC (nâng cao) - ĐÃ SỬA ====== */
-      let activeModule = null;
-      let hoverTimeout = null;
-      let isLocked = false;
+      /* ====== MODULE DISPLAY LOGIC (hover + click lock + dblclick/ESC unlock) ====== */
+      /**
+       * State đúng theo yêu cầu:
+       * - hoveredModule: module đang hover (tạm thời)
+       * - lockedModule: module đang bị khóa (giữ sáng)
+       * - defaultContent: "Xin chào"
+       */
+      let hoveredModule = null;
+      let lockedModule = null;
 
-      // Dữ liệu nội dung cho các module
+      // Chặn bug: dblclick sẽ bắn 2 click trước đó → bỏ qua click xảy ra sát ngay trước dblclick
+      let lastDblClickAt = 0;
+      const IGNORE_CLICK_AFTER_DBL_MS = 350;
+
+      // Dữ liệu nội dung cho các module (GIỮ NGUYÊN của bạn)
       const moduleContents = {
         vocab: {
           title: "TỪ VỰNG N1",
@@ -2612,58 +2621,52 @@
         },
       };
 
-      // Hàm cập nhật trạng thái khung hiển thị
-      function updateFrameStatus() {
-        const frameStatus = document.getElementById("frameStatus");
-        const statusIcon = frameStatus.querySelector(".status-icon");
-        const statusText = frameStatus.querySelector(".status-text");
-        const clearLockBtn = document.getElementById("clearLockBtn");
-
-        if (isLocked && activeModule) {
-          // Trạng thái khóa
-          frameStatus.classList.add("locked");
-          statusIcon.textContent = "🔒";
-          statusText.textContent = `Đã khóa: ${moduleContents[activeModule].title}`;
-          clearLockBtn.style.display = "block";
-        } else {
-          // Trạng thái bình thường/hover
-          frameStatus.classList.remove("locked");
-          if (activeModule) {
-            statusIcon.textContent = "🔓";
-            statusText.textContent = `Đang xem: ${moduleContents[activeModule].title}`;
-          } else {
-            statusIcon.textContent = "🔓";
-            statusText.textContent = "Đang xem tạm thời";
-          }
-          clearLockBtn.style.display = "none";
-        }
+      function getModuleCard(moduleId) {
+        return document.querySelector(`[data-module="${moduleId}"]`);
       }
 
-      // Hàm cập nhật nội dung khung hiển thị
-      function updateModuleDisplay(moduleId, isLock = false) {
-        const moduleCard = document.querySelector(
-          `[data-module="${moduleId}"]`,
-        );
-        const displayFrame = document.getElementById("moduleDisplay");
+      function clearAllCardStates() {
+        document.querySelectorAll(".module-card").forEach((c) => {
+          c.classList.remove("active", "locked");
+        });
+      }
+
+      // ===== UI helpers theo yêu cầu =====
+      function showDefault() {
+        hoveredModule = null;
+
         const frameTitle = document.getElementById("frameTitle");
         const frameContent = document.getElementById("frameContent");
-
-        if (!moduleCard || !displayFrame || !moduleContents[moduleId]) return;
-
-        // Cập nhật activeModule
-        activeModule = moduleId;
-        isLocked = isLock;
-
-        // Cập nhật tiêu đề và icon
-        frameTitle.textContent = moduleContents[moduleId].title;
         const frameIcon = document.querySelector(".frame-icon i");
-        if (frameIcon) {
-          frameIcon.className = moduleContents[moduleId].icon;
-        }
 
-        // Tạo nội dung
+        frameTitle.textContent = "Xin chào";
+        if (frameIcon) frameIcon.className = "fas fa-book";
+
+        // giữ layout grid trong frame-content → set grid-column để không vỡ
+        frameContent.innerHTML = `
+    <div class="default-content" style="grid-column: 1 / -1; text-align:center; padding: 40px;">
+      <h3 style="color:#00ffcc; margin-bottom: 10px; font-size: 26px;">Xin chào</h3>
+      <p style="margin-bottom: 10px; font-size: 16px;">Rê chuột vào module để xem nhanh.</p>
+      <p style="margin-bottom: 10px; font-size: 16px;">Click để khóa. ESC hoặc double-click vào module đang khóa để bỏ khóa.</p>
+    </div>
+  `;
+
+        updateFrameStatus();
+      }
+
+      function renderModuleToPanel(moduleId) {
+        const data = moduleContents[moduleId];
+        if (!data) return;
+
+        const frameTitle = document.getElementById("frameTitle");
+        const frameContent = document.getElementById("frameContent");
+        const frameIcon = document.querySelector(".frame-icon i");
+
+        frameTitle.textContent = data.title;
+        if (frameIcon) frameIcon.className = data.icon;
+
         frameContent.innerHTML = "";
-        moduleContents[moduleId].items.forEach((item) => {
+        data.items.forEach((item) => {
           const itemEl = document.createElement("div");
           itemEl.className = "content-item";
           itemEl.innerHTML = `
@@ -2679,172 +2682,136 @@
           frameContent.appendChild(itemEl);
         });
 
-        // Cập nhật trạng thái locked cho module card
-        document.querySelectorAll(".module-card").forEach((card) => {
-          card.classList.remove("locked");
-          card.classList.remove("active");
-        });
-
-        if (isLock) {
-          moduleCard.classList.add("locked");
-        } else {
-          moduleCard.classList.add("active");
-        }
-
-        // Cập nhật trạng thái hiển thị
         updateFrameStatus();
       }
 
-      // Hàm hiển thị nội dung mặc định
-      function showDefaultContent() {
-        const frameTitle = document.getElementById("frameTitle");
-        const frameContent = document.getElementById("frameContent");
+      function updateFrameStatus() {
+        const frameStatus = document.getElementById("frameStatus");
+        const clearLockBtn = document.getElementById("clearLockBtn");
+        if (!frameStatus) return;
 
-        frameTitle.textContent = "Chọn module";
-        const frameIcon = document.querySelector(".frame-icon i");
-        if (frameIcon) {
-          frameIcon.className = "fas fa-book";
-        }
+        const statusIcon = frameStatus.querySelector(".status-icon");
+        const statusText = frameStatus.querySelector(".status-text");
 
-        frameContent.innerHTML = `
-          <div class="default-content" style="grid-column: 1 / -1; text-align: center; padding: 40px;">
-            <h3 style="color: #00ffcc; margin-bottom: 20px; font-size: 24px;">Chào mừng đến với Module Đào Tạo</h3>
-            <p style="margin-bottom: 15px; font-size: 16px;">Di chuột vào module bên trái để xem nội dung tạm thời</p>
-            <p style="margin-bottom: 15px; font-size: 16px;">Nhấn đúp để khóa nội dung cố định</p>
-            <p style="margin-bottom: 15px; font-size: 16px;">Nhấn ESC hoặc nút "Bỏ khóa" để giải phóng</p>
-          </div>
-        `;
-
-        updateFrameStatus();
-      }
-
-      // Hàm bỏ khóa tất cả
-      function unlockAll() {
-        document.querySelectorAll(".module-card").forEach((card) => {
-          card.classList.remove("locked");
-          card.classList.remove("active");
-        });
-
-        activeModule = null;
-        isLocked = false;
-
-        // Hiển thị nội dung mặc định
-        showDefaultContent();
-      }
-
-      // Hàm xử lý double-click (lock/unlock) - ĐÃ SỬA
-      function handleDoubleClick(moduleId) {
-        console.log(`Double-click detected on module: ${moduleId}`);
-        const moduleCard = document.querySelector(
-          `[data-module="${moduleId}"]`,
-        );
-
-        if (!moduleCard) return;
-
-        if (moduleCard.classList.contains("locked")) {
-          // Nếu đang locked -> unlock
-          console.log(`Unlocking module: ${moduleId}`);
-          unlockAll();
+        if (lockedModule) {
+          frameStatus.classList.add("locked");
+          if (statusIcon) statusIcon.textContent = "🔒";
+          if (statusText)
+            statusText.textContent = `Đã khóa: ${moduleContents[lockedModule].title}`;
+          if (clearLockBtn) clearLockBtn.style.display = "block";
         } else {
-          // Nếu chưa locked -> lock module này
-          console.log(`Locking module: ${moduleId}`);
-          unlockAll(); // Bỏ khóa tất cả trước
-          updateModuleDisplay(moduleId, true);
+          frameStatus.classList.remove("locked");
+          if (statusIcon) statusIcon.textContent = "🔓";
+          if (statusText)
+            statusText.textContent = hoveredModule
+              ? `Đang xem: ${moduleContents[hoveredModule].title}`
+              : "Đang xem tạm thời";
+          if (clearLockBtn) clearLockBtn.style.display = "none";
         }
       }
 
-      // Hàm xử lý hover
-      function handleHover(moduleId) {
-        // Nếu đang có module bị lock thì bỏ qua hover
-        if (isLocked) return;
+      // ===== API theo yêu cầu: setActive / setLocked / unlock =====
+      function setActive(moduleId) {
+        // Nếu đã lock thì hover không có tác dụng
+        if (lockedModule) return;
 
-        // Hủy timeout cũ nếu có
-        if (hoverTimeout) {
-          clearTimeout(hoverTimeout);
-        }
+        hoveredModule = moduleId;
 
-        // Hiển thị module được hover
-        updateModuleDisplay(moduleId, false);
+        clearAllCardStates();
+        const card = getModuleCard(moduleId);
+        if (card) card.classList.add("active");
+
+        renderModuleToPanel(moduleId);
       }
 
-      // Hàm xử lý mouse leave
-      function handleMouseLeave() {
-        // Nếu đang có module bị lock thì không làm gì
-        if (isLocked) return;
-        activeModule = null;
+      function setLocked(moduleId) {
+        lockedModule = moduleId;
+        hoveredModule = null;
 
-        // Hủy timeout cũ nếu có
-        if (hoverTimeout) {
-          clearTimeout(hoverTimeout);
-        }
+        clearAllCardStates();
+        const card = getModuleCard(moduleId);
+        if (card) card.classList.add("locked");
 
-        // Đặt timeout để ẩn nội dung (nếu không hover vào module khác)
-        hoverTimeout = setTimeout(() => {
-          if (!isLocked && !activeModule) {
-            showDefaultContent();
-          }
-        }, 300);
+        renderModuleToPanel(moduleId);
       }
 
-      // Thiết lập tương tác cho module - ĐÃ SỬA HOÀN TOÀN
+      function unlock() {
+        lockedModule = null;
+        hoveredModule = null;
+
+        clearAllCardStates();
+        showDefault();
+      }
+
+      // ===== Event binding đúng spec =====
       function setupModuleInteractions() {
         const moduleCards = document.querySelectorAll(".module-card");
 
         moduleCards.forEach((card) => {
           const moduleId = card.getAttribute("data-module");
 
-          // Hover xem tạm thời
+          // Hover (mouseenter/leave) — chỉ hoạt động khi chưa lock
           card.addEventListener("mouseenter", () => {
-            console.log(`Hover on: ${moduleId}`);
-            handleHover(moduleId);
+            if (lockedModule) return;
+            setActive(moduleId);
           });
 
-          // Rời chuột khỏi card
           card.addEventListener("mouseleave", () => {
-            console.log(`Mouse leave: ${moduleId}`);
-            handleMouseLeave();
+            if (lockedModule) return;
+
+            // chỉ khi rời đúng module đang hover thì mới default
+            if (hoveredModule === moduleId) {
+              hoveredModule = null;
+              clearAllCardStates();
+              showDefault();
+            }
           });
 
-          // (Tuỳ chọn) Click đơn: hữu ích cho thiết bị không có hover
+          // Click trái để LOCK
           card.addEventListener("click", (e) => {
             e.preventDefault();
 
-            // Nếu đang lock thì click đơn không làm gì (để tránh phá trạng thái lock)
-            if (isLocked) return;
+            // bỏ qua click sinh ra do dblclick
+            const now = Date.now();
+            if (now - lastDblClickAt < IGNORE_CLICK_AFTER_DBL_MS) return;
 
-            console.log(`Single click on: ${moduleId}`);
-            updateModuleDisplay(moduleId, false);
+            // Nếu đang lock module khác -> click không làm gì (đúng spec)
+            if (lockedModule && lockedModule !== moduleId) return;
+
+            // Nếu đang lock chính nó -> click cũng không unlock (spec: unlock chỉ dblclick/ESC)
+            if (lockedModule === moduleId) return;
+
+            setLocked(moduleId);
           });
 
-          // ✅ Double-click: lock/unlock theo chuẩn hệ điều hành / trình duyệt
+          // Double-click chỉ để UNLOCK nếu đúng module đang lock
           card.addEventListener("dblclick", (e) => {
             e.preventDefault();
-            console.log(`Double-click detected on: ${moduleId}`);
-            handleDoubleClick(moduleId);
+            lastDblClickAt = Date.now();
+
+            if (lockedModule === moduleId) {
+              unlock();
+            }
+            // dblclick lên module khác khi đang lock: không làm gì (đúng spec)
           });
 
-          // Ngăn context menu (chuột phải)
-          card.addEventListener("contextmenu", (e) => {
-            e.preventDefault();
-          });
+          // Chặn context menu (chuột phải)
+          card.addEventListener("contextmenu", (e) => e.preventDefault());
         });
 
-        // Nút "Bỏ khóa"
+        // Nút "Bỏ khóa" (không bắt buộc trong spec nhưng bạn đã có UI, dùng như unlock)
         const clearLockBtn = document.getElementById("clearLockBtn");
-        if (clearLockBtn) {
-          clearLockBtn.addEventListener("click", unlockAll);
-        }
+        if (clearLockBtn) clearLockBtn.addEventListener("click", unlock);
 
-        // Phím ESC để bỏ khóa nhanh
+        // ESC để unlock
         document.addEventListener("keydown", (e) => {
-          if (e.key === "Escape") {
-            console.log("ESC pressed - unlocking all");
-            unlockAll();
+          if (e.key === "Escape" && lockedModule) {
+            unlock();
           }
         });
-
-        console.log("Module interactions setup complete");
       }
+
+      /* ====== END MODULE DISPLAY LOGIC ====== */
 
       function runAppUI() {
         // === Progress bars ===
@@ -2933,7 +2900,8 @@
         setupModuleInteractions();
 
         // Hiển thị nội dung mặc định
-        showDefaultContent();
+        showDefault();
+
 
         // Debug
         console.log("App UI initialized");
