@@ -326,6 +326,79 @@
         position: relative;
         overflow: hidden;
       }
+      /* Cho phép menu (flyout) tràn ra ngoài card để đè lên các ô khác */
+      .module-card.has-submenu {
+        overflow: visible; /* override overflow hidden của .module-card */
+        z-index: 50;
+      }
+
+      /* Khi mở menu, ưu tiên nằm trên các card khác */
+      .module-card.has-submenu.is-open {
+        z-index: 200;
+      }
+      /* Item có menu con */
+      .submenu-item.has-child {
+        position: relative;
+        cursor: pointer;
+        user-select: none;
+      }
+
+      /* Mũi tên phải */
+      .child-arrow {
+        margin-left: auto;
+        color: #88d3ff;
+        opacity: 0.85;
+        transition:
+          transform 0.2s,
+          opacity 0.2s;
+      }
+      /* Flyout bên phải */
+      .submenu-flyout {
+        position: absolute;
+        left: calc(100% + 12px); /* cách item gốc 12px */
+        top: -6px;
+
+        width: 220px; /* có thể tăng sau */
+        padding: 10px;
+        border-radius: 14px;
+
+        border: 1px solid rgba(0, 150, 255, 0.28);
+        background: rgba(0, 18, 36, 0.92);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 0 28px rgba(0, 168, 255, 0.25);
+
+        display: grid;
+        gap: 8px;
+
+        opacity: 0;
+        transform: translateX(-6px);
+        pointer-events: none;
+
+        transition:
+          opacity 0.2s ease,
+          transform 0.2s ease;
+        z-index: 999; /* đè lên các ô bên cạnh */
+      }
+
+      /* Hiện flyout khi hover item hoặc khi item được "pin" (class is-open-child) */
+      .submenu-item.has-child:hover .submenu-flyout,
+      .submenu-item.has-child.is-open-child .submenu-flyout {
+        opacity: 1;
+        transform: translateX(0);
+        pointer-events: auto;
+      }
+
+      /* Khi mở flyout, mũi tên nổi bật */
+      .submenu-item.has-child:hover .child-arrow,
+      .submenu-item.has-child.is-open-child .child-arrow {
+        opacity: 1;
+        transform: translateX(2px);
+      }
+
+      /* Cả submenu cũng phải visible để flyout tràn */
+      .module-card.has-submenu .module-submenu {
+        overflow: visible;
+      }
 
       .module-card:hover {
         transform: translateY(-8px);
@@ -1502,6 +1575,29 @@
         animation: expiredPulse 3s infinite alternate !important;
         transform: none !important;
       }
+      .flyout-item {
+        display: block;
+        padding: 10px 10px;
+        border-radius: 12px;
+        text-decoration: none;
+
+        color: #e0f7ff;
+        font-size: 14px;
+
+        border: 1px solid rgba(0, 150, 255, 0.18);
+        background: rgba(0, 30, 60, 0.35);
+
+        transition:
+          transform 0.18s,
+          box-shadow 0.18s,
+          border-color 0.18s;
+      }
+
+      .flyout-item:hover {
+        transform: translateY(-2px);
+        border-color: rgba(0, 168, 255, 0.55);
+        box-shadow: 0 0 18px rgba(0, 168, 255, 0.22);
+      }
     </style>
   </head>
   <body>
@@ -1603,7 +1699,7 @@
           <!-- [HTML-3.2.1] MISSION PANEL: Mục tiêu + Thời hạn + Streak -->
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC111
             </h2>
 
             <div class="target-info">
@@ -1683,21 +1779,116 @@
                   <span id="percent-vocab">0%</span>
                 </div>
                 <div class="module-submenu" role="menu">
-                  <a
-                    class="submenu-item"
+                  <div
+                    class="submenu-item has-child"
                     role="menuitem"
-                    href="vocab-mimikara/index.html"
-                    data-target="vocab-mimikara"
+                    data-sub="mimikara"
                   >
                     <i class="fas fa-database"></i>
+
                     <div class="submenu-text">
                       <div class="submenu-title">Từ vựng Mimikara</div>
                       <div class="submenu-sub">
                         Luyện theo bộ Mimikara Oboeru
                       </div>
                     </div>
-                    <i class="fas fa-arrow-right"></i>
-                  </a>
+
+                    <i class="fas fa-chevron-right child-arrow"></i>
+
+                    <!-- Flyout bên phải: danh sách ngày -->
+                    <div class="submenu-flyout" role="menu">
+                      <a
+                        class="flyout-item"
+                        role="menuitem"
+                        href="mimikara/day01.html"
+                        >Từ vựng Mimikara ngày 1</a
+                      >
+                      <a
+                        class="flyout-item"
+                        role="menuitem"
+                        href="mimikara/day02.html"
+                        >Từ vựng Mimikara ngày 2</a
+                      >
+                      <a
+                        class="flyout-item"
+                        role="menuitem"
+                        href="mimikara/day03.html"
+                        >Từ vựng Mimikara ngày 3</a
+                      >
+                      <a
+                        class="flyout-item"
+                        role="menuitem"
+                        href="mimikara/day04.html"
+                        >Từ vựng Mimikara ngày 4</a
+                      >
+                      <a
+                        class="flyout-item"
+                        role="menuitem"
+                        href="mimikara/day05.html"
+                        >Từ vựng Mimikara ngày 5</a
+                      >
+                      <a
+                        class="flyout-item"
+                        role="menuitem"
+                        href="mimikara/day06.html"
+                        >Từ vựng Mimikara ngày 6</a
+                      >
+                      <a
+                        class="flyout-item"
+                        role="menuitem"
+                        href="mimikara/day07.html"
+                        >Từ vựng Mimikara ngày 7</a
+                      >
+                      <a
+                        class="flyout-item"
+                        role="menuitem"
+                        href="mimikara/day08.html"
+                        >Từ vựng Mimikara ngày 8</a
+                      >
+                      <a
+                        class="flyout-item"
+                        role="menuitem"
+                        href="mimikara/day09.html"
+                        >Từ vựng Mimikara ngày 9</a
+                      >
+                      <a
+                        class="flyout-item"
+                        role="menuitem"
+                        href="mimikara/day10.html"
+                        >Từ vựng Mimikara ngày 10</a
+                      >
+                      <a
+                        class="flyout-item"
+                        role="menuitem"
+                        href="mimikara/day11.html"
+                        >Từ vựng Mimikara ngày 11</a
+                      >
+                      <a
+                        class="flyout-item"
+                        role="menuitem"
+                        href="mimikara/day12.html"
+                        >Từ vựng Mimikara ngày 12</a
+                      >
+                      <a
+                        class="flyout-item"
+                        role="menuitem"
+                        href="mimikara/day13.html"
+                        >Từ vựng Mimikara ngày 13</a
+                      >
+                      <a
+                        class="flyout-item"
+                        role="menuitem"
+                        href="mimikara/day14.html"
+                        >Từ vựng Mimikara ngày 14</a
+                      >
+                      <a
+                        class="flyout-item"
+                        role="menuitem"
+                        href="mimikara/day15.html"
+                        >Từ vựng Mimikara ngày 15</a
+                      >
+                    </div>
+                  </div>
 
                   <a
                     class="submenu-item"
@@ -2273,38 +2464,67 @@
             if (count === targetCount) clearInterval(countInterval);
           }, 200);
           // ===== Submenu for Vocab module (PC hover + iPad click) =====
+          // ===== Submenu for Vocab module (2-level) =====
           const vocabCard = document.querySelector(
             '.module-card.has-submenu[data-module="vocab"]',
           );
 
           if (vocabCard) {
             const trigger = vocabCard.querySelector(".module-menu-trigger");
+            const mimikaraItem = vocabCard.querySelector(
+              '.submenu-item.has-child[data-sub="mimikara"]',
+            );
 
-            // Click nút chevron: toggle
-            if (trigger) {
-              trigger.addEventListener("click", (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                vocabCard.classList.toggle("is-open");
-              });
+            function closeAll() {
+              vocabCard.classList.remove("is-open");
+              mimikaraItem?.classList.remove("is-open-child");
             }
 
-            // Click vào card (không phải link): cũng toggle
-            vocabCard.addEventListener("click", (e) => {
-              const isLink = e.target.closest("a.submenu-item");
-              if (isLink) return; // để link tự đi sang trang HTML
+            function toggleCardOpen() {
               vocabCard.classList.toggle("is-open");
+              // nếu đóng card thì cũng đóng flyout pin
+              if (!vocabCard.classList.contains("is-open")) {
+                mimikaraItem?.classList.remove("is-open-child");
+              }
+            }
+
+            // Click nút chevron: mở/thu menu chính
+            trigger?.addEventListener("click", (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              toggleCardOpen();
             });
 
-            // Click ra ngoài: đóng
+            // Click vào card (không phải link): mở/thu menu chính
+            vocabCard.addEventListener("click", (e) => {
+              // nếu click vào link (ThaoLejp hoặc day item) thì cho đi trang
+              const isAnyLink = e.target.closest("a");
+              if (isAnyLink) return;
+
+              // nếu click đúng vào item Mimikara (has-child) thì chỉ pin flyout, không toggle cả card
+              const clickedMimikara = e.target.closest(
+                '.submenu-item.has-child[data-sub="mimikara"]',
+              );
+              if (clickedMimikara) {
+                e.preventDefault();
+                e.stopPropagation();
+                // đảm bảo menu chính đang mở
+                vocabCard.classList.add("is-open");
+                clickedMimikara.classList.toggle("is-open-child");
+                return;
+              }
+
+              toggleCardOpen();
+            });
+
+            // Click ra ngoài: đóng hết
             document.addEventListener("click", (e) => {
-              if (!vocabCard.contains(e.target))
-                vocabCard.classList.remove("is-open");
+              if (!vocabCard.contains(e.target)) closeAll();
             });
 
-            // ESC: đóng (PC)
+            // ESC: đóng
             document.addEventListener("keydown", (e) => {
-              if (e.key === "Escape") vocabCard.classList.remove("is-open");
+              if (e.key === "Escape") closeAll();
             });
           }
         });
