@@ -1142,6 +1142,315 @@
         animation: expiredPulse 3s infinite alternate !important;
         transform: none !important;
       }
+      /* ====== CẢNH BÁO CHO Ô TRẠNG THÁI (target-card thứ 3) ====== */
+      /* =========================================================
+  [CSS-12] STATUS WARNING STATE (chỉ áp dụng cho target-card thứ 3 = "Trạng thái")
+  - warning-green: >60 ngày còn hạn
+  - warning-yellow: 30–60 ngày còn hạn
+  - warning-red: <30 ngày còn hạn
+  - warning-expired: <=0 ngày (hết hạn)
+========================================================= */
+      .target-card:nth-child(3) {
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Ẩn tất cả pseudo-elements và sparkle mặc định */
+      .target-card:nth-child(3)::before,
+      .target-card:nth-child(3)::after {
+        display: none !important;
+      }
+
+      /* Thêm sparkle vào HTML cho ô Trạng thái */
+      .target-card:nth-child(3) .sparkle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        filter: blur(1px);
+        animation: sparkleMove 4s linear infinite;
+        opacity: 0.7;
+        display: none;
+      }
+
+      /* Vị trí sparkle cho ô Trạng thái */
+      .target-card:nth-child(3) .sparkle:nth-child(1) {
+        top: 20%;
+        left: 15%;
+        animation-delay: 0s;
+      }
+
+      .target-card:nth-child(3) .sparkle:nth-child(2) {
+        top: 60%;
+        right: 20%;
+        animation-delay: 1s;
+      }
+
+      .target-card:nth-child(3) .sparkle:nth-child(3) {
+        bottom: 30%;
+        left: 30%;
+        animation-delay: 2s;
+      }
+
+      /* Chỉ hiển thị khi có cảnh báo */
+      .target-card:nth-child(3).warning-green::before,
+      .target-card:nth-child(3).warning-green::after,
+      .target-card:nth-child(3).warning-yellow::before,
+      .target-card:nth-child(3).warning-yellow::after,
+      .target-card:nth-child(3).warning-red::before,
+      .target-card:nth-child(3).warning-red::after,
+      .target-card:nth-child(3).warning-expired::before,
+      .target-card:nth-child(3).warning-expired::after {
+        display: block !important;
+      }
+
+      .target-card:nth-child(3).warning-green .sparkle,
+      .target-card:nth-child(3).warning-yellow .sparkle,
+      .target-card:nth-child(3).warning-red .sparkle,
+      .target-card:nth-child(3).warning-expired .sparkle {
+        display: block !important;
+      }
+
+      /* ====== TRẠNG THÁI MÀU XANH (>60 ngày) ====== */
+      .target-card:nth-child(3).warning-green {
+        background: rgba(0, 40, 80, 0.7) !important;
+        border: 1px solid rgba(0, 200, 255, 0.6) !important;
+        animation: cyberPulseGreen 3s infinite alternate !important;
+      }
+
+      @keyframes cyberPulseGreen {
+        0% {
+          box-shadow:
+            0 0 10px rgba(0, 200, 255, 0.3),
+            0 0 20px rgba(0, 150, 255, 0.2),
+            inset 0 0 15px rgba(0, 200, 255, 0.1);
+          background: rgba(0, 40, 80, 0.7);
+        }
+        100% {
+          box-shadow:
+            0 0 20px rgba(0, 200, 255, 0.6),
+            0 0 40px rgba(0, 150, 255, 0.4),
+            0 0 60px rgba(0, 100, 255, 0.2),
+            inset 0 0 25px rgba(0, 200, 255, 0.2);
+          background: rgba(0, 60, 120, 0.8);
+        }
+      }
+
+      /* Hiệu ứng viền xanh */
+      .target-card:nth-child(3).warning-green::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #00ccff, transparent);
+        animation: borderScan 3s linear infinite;
+      }
+
+      /* Hạt sparkle xanh */
+      .target-card:nth-child(3).warning-green .sparkle {
+        background: #00ccff !important;
+        animation: sparkleMove 3s linear infinite !important;
+      }
+
+      /* Hạt ánh sáng xanh */
+      .target-card:nth-child(3).warning-green::after {
+        content: "";
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: radial-gradient(circle, #00ccff, transparent 70%);
+        animation: particleGlowGreen 1.5s ease-in-out infinite alternate;
+        filter: blur(1px);
+      }
+
+      @keyframes particleGlowGreen {
+        0% {
+          transform: scale(0.8);
+          opacity: 0.5;
+          box-shadow: 0 0 10px #00ccff;
+        }
+        100% {
+          transform: scale(1.2);
+          opacity: 1;
+          box-shadow:
+            0 0 20px #00ccff,
+            0 0 30px #0099ff;
+        }
+      }
+
+      /* Chữ xanh */
+      .target-card:nth-child(3).warning-green .card-title {
+        color: #88d3ff !important;
+      }
+
+      .target-card:nth-child(3).warning-green .card-value {
+        color: #00ffcc !important;
+        text-shadow: 0 0 15px rgba(0, 255, 204, 0.8) !important;
+        animation: textGlowGreen 1.5s ease-in-out infinite alternate;
+      }
+
+      @keyframes textGlowGreen {
+        0% {
+          text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+        }
+        100% {
+          text-shadow:
+            0 0 20px rgba(0, 255, 204, 0.8),
+            0 0 30px rgba(0, 200, 255, 0.6);
+        }
+      }
+
+      .target-card:nth-child(3).warning-green .card-subtitle {
+        color: #a0c8e0 !important;
+      }
+
+      /* Hiệu ứng hover xanh */
+      .target-card:nth-child(3).warning-green:hover {
+        transform: translateY(-8px) !important;
+        animation: cyberPulseGreenHover 1.5s infinite alternate !important;
+      }
+
+      @keyframes cyberPulseGreenHover {
+        0% {
+          box-shadow:
+            0 0 25px rgba(0, 200, 255, 0.7),
+            0 0 50px rgba(0, 150, 255, 0.5),
+            0 0 75px rgba(0, 100, 255, 0.3),
+            inset 0 0 30px rgba(0, 200, 255, 0.3);
+          background: rgba(0, 70, 140, 0.9);
+        }
+        100% {
+          box-shadow:
+            0 0 30px rgba(0, 200, 255, 0.9),
+            0 0 60px rgba(0, 150, 255, 0.7),
+            0 0 90px rgba(0, 100, 255, 0.5),
+            inset 0 0 40px rgba(0, 200, 255, 0.4);
+          background: rgba(0, 80, 160, 1);
+        }
+      }
+
+      /* ====== CẢNH BÁO MÀU VÀNG (30-60 ngày) ====== */
+      .target-card:nth-child(3).warning-yellow {
+        background: rgba(60, 40, 0, 0.7) !important;
+        border: 1px solid rgba(255, 200, 0, 0.6) !important;
+        animation: cyberPulse 2s infinite alternate !important;
+      }
+
+      /* Hạt sparkle vàng cho ô Trạng thái */
+      .target-card:nth-child(3).warning-yellow .sparkle {
+        background: #ffcc00 !important;
+        animation: sparkleMove 3s linear infinite !important;
+      }
+
+      /* Hạt ánh sáng vàng */
+      .target-card:nth-child(3).warning-yellow::after {
+        background: radial-gradient(
+          circle,
+          #ffcc00,
+          transparent 70%
+        ) !important;
+        animation: particleGlow 1.5s ease-in-out infinite alternate !important;
+      }
+
+      /* Chữ vàng */
+      .target-card:nth-child(3).warning-yellow .card-title {
+        color: #ffdd99 !important;
+      }
+
+      .target-card:nth-child(3).warning-yellow .card-value {
+        color: #ffcc00 !important;
+        text-shadow: 0 0 15px rgba(255, 204, 0, 0.8) !important;
+        animation: textGlow 1.5s ease-in-out infinite alternate !important;
+      }
+
+      .target-card:nth-child(3).warning-yellow .card-subtitle {
+        color: #ffcc99 !important;
+      }
+
+      /* ====== CẢNH BÁO MÀU ĐỎ (<30 ngày) ====== */
+      .target-card:nth-child(3).warning-red {
+        background: rgba(60, 0, 0, 0.7) !important;
+        border: 1px solid rgba(255, 50, 50, 0.8) !important;
+        animation: redPulse 1.5s infinite alternate !important;
+      }
+
+      /* Hạt sparkle đỏ */
+      .target-card:nth-child(3).warning-red .sparkle {
+        background: #ff3333 !important;
+        animation: sparkleMove 2s linear infinite !important;
+      }
+
+      .target-card:nth-child(3).warning-red::after {
+        background: radial-gradient(
+          circle,
+          #ff3333,
+          transparent 70%
+        ) !important;
+        animation: redParticleGlow 1s ease-in-out infinite alternate !important;
+      }
+
+      /* Chữ đỏ */
+      .target-card:nth-child(3).warning-red .card-title {
+        color: #ff9999 !important;
+      }
+
+      .target-card:nth-child(3).warning-red .card-value {
+        color: #ff6666 !important;
+        text-shadow: 0 0 20px rgba(255, 50, 50, 0.9) !important;
+        animation: redTextGlow 1s ease-in-out infinite alternate !important;
+      }
+
+      .target-card:nth-child(3).warning-red .card-subtitle {
+        color: #ffaaaa !important;
+      }
+
+      /* ====== ĐÃ HẾT HẠN ====== */
+      .target-card:nth-child(3).warning-expired {
+        background: rgba(30, 30, 30, 0.7) !important;
+        border: 1px solid rgba(100, 100, 100, 0.5) !important;
+        animation: expiredPulse 3s infinite alternate !important;
+      }
+
+      /* Hạt sparkle xám */
+      .target-card:nth-child(3).warning-expired .sparkle {
+        background: #888888 !important;
+        animation: sparkleMove 5s linear infinite !important;
+      }
+
+      .target-card:nth-child(3).warning-expired::after {
+        background: radial-gradient(
+          circle,
+          #888888,
+          transparent 70%
+        ) !important;
+        animation: expiredParticleGlow 2s ease-in-out infinite alternate !important;
+      }
+
+      /* Chữ xám */
+      .target-card:nth-child(3).warning-expired .card-title {
+        color: #aaaaaa !important;
+      }
+
+      .target-card:nth-child(3).warning-expired .card-value {
+        color: #888888 !important;
+        text-shadow: 0 0 10px rgba(136, 136, 136, 0.5) !important;
+        animation: none !important;
+      }
+
+      .target-card:nth-child(3).warning-expired .card-subtitle {
+        color: #999999 !important;
+      }
+
+      /* Tắt hiệu ứng hover cho đã hết hạn */
+      .target-card:nth-child(3).warning-expired:hover {
+        animation: expiredPulse 3s infinite alternate !important;
+        transform: none !important;
+      }
     </style>
   </head>
   <body>
@@ -1243,7 +1552,7 @@
           <!-- [HTML-3.2.1] MISSION PANEL: Mục tiêu + Thời hạn + Streak -->
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC111
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
             </h2>
 
             <div class="target-info">
@@ -1276,6 +1585,10 @@
                 </div>
                 <div class="card-value" id="statusValue">---</div>
                 <div class="card-subtitle" id="statusSubtitle">---</div>
+                <!-- Thêm 3 sparkle cho hiệu ứng cyber -->
+                <div class="sparkle"></div>
+                <div class="sparkle"></div>
+                <div class="sparkle"></div>
               </div>
             </div>
 
@@ -1479,12 +1792,23 @@
       function updateStatusUI(expiryStr) {
         const statusValueEl = document.getElementById("statusValue");
         const statusSubtitleEl = document.getElementById("statusSubtitle");
-        if (!statusValueEl || !statusSubtitleEl) return;
+        const targetCardEl = document.querySelector(
+          ".target-card:nth-child(3)",
+        ); // Lấy ô Trạng thái
+
+        if (!statusValueEl || !statusSubtitleEl || !targetCardEl) return;
 
         const expiryDt = parseYYYYMMDD(expiryStr);
         if (!expiryDt) {
           statusValueEl.textContent = "ACTIVE";
           statusSubtitleEl.textContent = "Trạng thái bản quyền: Đã kích hoạt";
+          // Xóa tất cả class cảnh báo
+          targetCardEl.classList.remove(
+            "warning-green",
+            "warning-yellow",
+            "warning-red",
+            "warning-expired",
+          );
           return;
         }
 
@@ -1505,20 +1829,39 @@
         const msPerDay = 24 * 60 * 60 * 1000;
         const remainingDays = Math.ceil((expDate - today) / msPerDay);
 
+        // Xóa tất cả class cảnh báo cũ
+        targetCardEl.classList.remove(
+          "warning-green",
+          "warning-yellow",
+          "warning-red",
+          "warning-expired",
+        );
+
         // Hết hạn
-        if (remainingDays < 0) {
+        if (remainingDays <= 0) {
           statusValueEl.textContent = "EXPIRED";
-          statusValueEl.classList.add("special");
           statusSubtitleEl.textContent = `Quyền truy cập đã hết hạn từ: ${formatDDMMYYYY(expDate)}`;
+          targetCardEl.classList.add("warning-expired");
           return;
         }
 
         // Còn hạn
         statusValueEl.textContent = "ACTIVE";
-        statusValueEl.classList.remove("special");
-        statusSubtitleEl.innerHTML =
-  `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(expDate)}<br>Còn ${remainingDays} ngày`;
 
+        // Thêm class cảnh báo dựa trên số ngày còn lại
+        if (remainingDays < 30) {
+          // Dưới 30 ngày: Màu đỏ cảnh báo
+          targetCardEl.classList.add("warning-red");
+          statusSubtitleEl.innerHTML = `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(expDate)}<br>Còn ${remainingDays} ngày (CẢNH BÁO ĐỎ)`;
+        } else if (remainingDays <= 60) {
+          // 30-60 ngày: Màu vàng cảnh báo
+          targetCardEl.classList.add("warning-yellow");
+          statusSubtitleEl.innerHTML = `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(expDate)}<br>Còn ${remainingDays} ngày (CẢNH BÁO VÀNG)`;
+        } else {
+          // Trên 60 ngày: Màu xanh
+          targetCardEl.classList.add("warning-green");
+          statusSubtitleEl.innerHTML = `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(expDate)}<br>Còn ${remainingDays} ngày`;
+        }
       }
 
       // trả về số tháng + số ngày còn lại (ước lượng theo lịch, đủ đẹp để hiển thị)
