@@ -27,6 +27,7 @@
     10) LICENSE GATE (overlay activate)
     11) EXAM WARNING STATE (target-card thứ 2)
     12) MODULE DISPLAY FRAME (Khung hiển thị nội dung module)
+    13) MODULE INTERACTION STATES (hover/locked)
     ========================================================= */
 
       * {
@@ -346,6 +347,45 @@
         border-color: #00a8ff;
       }
 
+      /* ====== TRẠNG THÁI LOCKED (khóa cố định) ====== */
+      .module-card.locked {
+        border-color: #FF00FF !important;
+        background: rgba(255, 0, 255, 0.15) !important;
+        box-shadow: 
+          0 0 20px rgba(255, 0, 255, 0.5),
+          0 15px 25px rgba(0, 100, 255, 0.4) !important;
+        transform: translateY(-8px);
+        position: relative;
+        z-index: 5;
+      }
+
+      .module-card.locked::after {
+        content: "🔒";
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        color: #FF00FF;
+        text-shadow: 0 0 10px rgba(255, 0, 255, 0.7);
+        animation: lockPulse 1.5s infinite alternate;
+      }
+
+      @keyframes lockPulse {
+        0% { opacity: 0.7; transform: scale(0.9); }
+        100% { opacity: 1; transform: scale(1.1); }
+      }
+
+      .module-card.locked .module-icon {
+        color: #FF00FF !important;
+        background: rgba(255, 0, 255, 0.2) !important;
+        border-color: #FF00FF !important;
+      }
+
+      .module-card.locked .module-title {
+        color: #FF00FF !important;
+        text-shadow: 0 0 10px rgba(255, 0, 255, 0.5) !important;
+      }
+
       .module-card.active {
         border-color: #00ffcc;
         background: rgba(0, 40, 80, 0.8);
@@ -365,6 +405,10 @@
       .module-card.active::before {
         background: linear-gradient(to right, #00ffcc, #00a8ff);
         height: 5px;
+      }
+
+      .module-card.locked::before {
+        background: linear-gradient(to right, #FF00FF, #FF5500) !important;
       }
 
       .module-icon {
@@ -434,7 +478,7 @@
         width: 560px; /* GẤP ĐÔI: 280px * 2 = 560px */
         height: 560px; /* Giữ nguyên chiều cao */
         background: rgba(0, 20, 40, 0.9);
-        border: 2px solid rgba(0, 150, 255, 0.6); /* Viền dày hơn */
+        border: 3px solid #FF00FF; /* Màu neon magenta */
         border-radius: 15px; /* Bo góc lớn hơn */
         padding: 30px;
         position: sticky;
@@ -442,13 +486,44 @@
         align-self: flex-start;
         backdrop-filter: blur(15px);
         overflow: hidden;
-        box-shadow:
+        box-shadow: 
           0 15px 40px rgba(0, 0, 0, 0.8),
+          0 0 30px rgba(255, 0, 255, 0.7),
           inset 0 0 30px rgba(0, 150, 255, 0.1); /* Thêm hiệu ứng bên trong */
-        display: none; /* Mặc định ẩn */
-        opacity: 0;
+        display: flex;
+        flex-direction: column;
+        opacity: 1;
         transition: opacity 0.3s ease;
         z-index: 10;
+        animation: neonPulse 2s infinite alternate;
+      }
+
+      @keyframes neonPulse {
+        0% { 
+          box-shadow: 
+            0 15px 40px rgba(0, 0, 0, 0.8),
+            0 0 20px rgba(255, 0, 255, 0.5),
+            inset 0 0 30px rgba(0, 150, 255, 0.1);
+          border-color: #FF00FF;
+        }
+        100% { 
+          box-shadow: 
+            0 15px 40px rgba(0, 0, 0, 0.8),
+            0 0 40px rgba(255, 0, 255, 0.9),
+            inset 0 0 30px rgba(0, 150, 255, 0.1);
+          border-color: #FF5500;
+        }
+      }
+
+      .module-display-frame::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(to right, #FF00FF, #FF5500);
+        z-index: 2;
       }
 
       /* Thêm hiệu ứng viền neon bao quanh 4 cạnh */
@@ -460,7 +535,7 @@
         right: 0;
         bottom: 0;
         border-radius: 15px;
-        border: 2px solid rgba(0, 255, 204, 0.3);
+        border: 2px solid rgba(255, 0, 255, 0.3);
         pointer-events: none;
         z-index: 1;
         animation: borderPulse 3s infinite alternate;
@@ -468,28 +543,51 @@
 
       @keyframes borderPulse {
         0% {
-          border-color: rgba(0, 255, 204, 0.2);
-          box-shadow: 0 0 10px rgba(0, 255, 204, 0.1);
+          border-color: rgba(255, 0, 255, 0.2);
+          box-shadow: 0 0 10px rgba(255, 0, 255, 0.1);
         }
         100% {
-          border-color: rgba(0, 255, 204, 0.5);
-          box-shadow: 0 0 20px rgba(0, 255, 204, 0.3);
+          border-color: rgba(255, 0, 255, 0.5);
+          box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
         }
       }
 
-      .module-display-frame.active {
-        display: block;
-        opacity: 1;
+      .frame-status {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(255, 0, 255, 0.3);
       }
 
-      .module-display-frame::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 5px;
-        background: linear-gradient(to right, #00ffcc, #00a8ff);
+      .status-indicator {
+        font-size: 14px;
+        color: #88d3ff;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .status-indicator.locked {
+        color: #FF00FF;
+        text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+      }
+
+      .clear-lock-btn {
+        background: rgba(255, 0, 255, 0.2);
+        border: 1px solid rgba(255, 0, 255, 0.5);
+        color: #FF00FF;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .clear-lock-btn:hover {
+        background: rgba(255, 0, 255, 0.4);
+        box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
       }
 
       .frame-header {
@@ -522,7 +620,7 @@
       }
 
       .frame-content {
-        height: calc(100% - 100px);
+        height: calc(100% - 130px);
         overflow-y: auto;
         padding-right: 10px;
       }
@@ -542,7 +640,7 @@
       }
       /* Cập nhật cho khung lớn hơn */
       .frame-content {
-        height: calc(100% - 100px);
+        height: calc(100% - 130px);
         overflow-y: auto;
         padding-right: 15px;
         display: grid;
@@ -1928,14 +2026,26 @@
 
               <!-- Khung hiển thị nội dung module -->
               <div class="module-display-frame" id="moduleDisplay">
+                <div class="frame-status">
+                  <div class="status-indicator" id="frameStatus">
+                    <span class="status-icon">🔓</span>
+                    <span class="status-text">Đang xem tạm thời</span>
+                  </div>
+                  <button class="clear-lock-btn" id="clearLockBtn" style="display: none;">
+                    <i class="fas fa-unlock"></i> Bỏ khóa
+                  </button>
+                </div>
                 <div class="frame-header">
                   <div class="frame-icon">
                     <i class="fas fa-book"></i>
                   </div>
-                  <div class="frame-title" id="frameTitle">TỪ VỰNG N1</div>
+                  <div class="frame-title" id="frameTitle">Chọn module</div>
                 </div>
                 <div class="frame-content" id="frameContent">
-                  <!-- Nội dung sẽ được thêm bằng JavaScript -->
+                  <div class="default-content">
+                    <p>Di chuột vào module bên trái để xem nội dung tạm thời</p>
+                    <p>Nhấn đúp để khóa nội dung cố định</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1965,7 +2075,7 @@
   JS-6) BACKGROUND RECHECK (server ping định kỳ)
   JS-7) GATE FLOW (show/hide)
   JS-8) APP UI EFFECTS (progress/ripple/streak)
-  JS-9) MODULE DISPLAY LOGIC (hover/click)
+  JS-9) MODULE DISPLAY LOGIC (hover/double-click/ESC)
   JS-10) BOOT (IIFE)
 ========================================================= */
       /**
@@ -2362,9 +2472,11 @@
         document.getElementById("deviceInfoText").textContent = getDeviceInfo();
       }
 
-      /* ====== MODULE DISPLAY LOGIC ====== */
+      /* ====== MODULE DISPLAY LOGIC (nâng cao) ====== */
       let activeModule = null;
       let hoverTimeout = null;
+      let clickTimeout = null;
+      let isLocked = false;
 
       // Dữ liệu nội dung cho các module
       const moduleContents = {
@@ -2490,7 +2602,35 @@
         },
       };
 
-      function updateModuleDisplay(moduleId, isClick = false) {
+      // Hàm cập nhật trạng thái khung hiển thị
+      function updateFrameStatus() {
+        const frameStatus = document.getElementById("frameStatus");
+        const statusIcon = frameStatus.querySelector(".status-icon");
+        const statusText = frameStatus.querySelector(".status-text");
+        const clearLockBtn = document.getElementById("clearLockBtn");
+
+        if (isLocked && activeModule) {
+          // Trạng thái khóa
+          frameStatus.classList.add("locked");
+          statusIcon.textContent = "🔒";
+          statusText.textContent = `Đã khóa: ${moduleContents[activeModule].title}`;
+          clearLockBtn.style.display = "block";
+        } else {
+          // Trạng thái bình thường/hover
+          frameStatus.classList.remove("locked");
+          if (activeModule) {
+            statusIcon.textContent = "🔓";
+            statusText.textContent = `Đang xem: ${moduleContents[activeModule].title}`;
+          } else {
+            statusIcon.textContent = "🔓";
+            statusText.textContent = "Đang xem tạm thời";
+          }
+          clearLockBtn.style.display = "none";
+        }
+      }
+
+      // Hàm cập nhật nội dung khung hiển thị
+      function updateModuleDisplay(moduleId, isLock = false) {
         const moduleCard = document.querySelector(
           `[data-module="${moduleId}"]`,
         );
@@ -2499,6 +2639,10 @@
         const frameContent = document.getElementById("frameContent");
 
         if (!moduleCard || !displayFrame || !moduleContents[moduleId]) return;
+
+        // Cập nhật activeModule
+        activeModule = moduleId;
+        isLocked = isLock;
 
         // Cập nhật tiêu đề và icon
         frameTitle.textContent = moduleContents[moduleId].title;
@@ -2525,85 +2669,162 @@
           frameContent.appendChild(itemEl);
         });
 
-        // Hiển thị khung
-        displayFrame.classList.add("active");
-
-        // Xóa active class từ tất cả module cards
+        // Cập nhật trạng thái locked cho module card
         document.querySelectorAll(".module-card").forEach((card) => {
+          card.classList.remove("locked");
           card.classList.remove("active");
         });
 
-        // Thêm active class cho module được chọn
-        if (isClick) {
+        if (isLock) {
+          moduleCard.classList.add("locked");
+        } else {
           moduleCard.classList.add("active");
-          activeModule = moduleId;
+        }
+
+        // Cập nhật trạng thái hiển thị
+        updateFrameStatus();
+      }
+
+      // Hàm hiển thị nội dung mặc định
+      function showDefaultContent() {
+        const frameTitle = document.getElementById("frameTitle");
+        const frameContent = document.getElementById("frameContent");
+        
+        frameTitle.textContent = "Chọn module";
+        const frameIcon = document.querySelector(".frame-icon i");
+        if (frameIcon) {
+          frameIcon.className = "fas fa-book";
+        }
+        
+        frameContent.innerHTML = `
+          <div class="default-content" style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+            <h3 style="color: #00ffcc; margin-bottom: 20px; font-size: 24px;">Chào mừng đến với Module Đào Tạo</h3>
+            <p style="margin-bottom: 15px; font-size: 16px;">Di chuột vào module bên trái để xem nội dung tạm thời</p>
+            <p style="margin-bottom: 15px; font-size: 16px;">Nhấn đúp để khóa nội dung cố định</p>
+            <p style="margin-bottom: 15px; font-size: 16px;">Nhấn ESC hoặc nút "Bỏ khóa" để giải phóng</p>
+          </div>
+        `;
+        
+        updateFrameStatus();
+      }
+
+      // Hàm bỏ khóa tất cả
+      function unlockAll() {
+        document.querySelectorAll(".module-card").forEach((card) => {
+          card.classList.remove("locked");
+          card.classList.remove("active");
+        });
+        
+        activeModule = null;
+        isLocked = false;
+        
+        // Hiển thị nội dung mặc định
+        showDefaultContent();
+      }
+
+      // Hàm xử lý double-click (lock/unlock)
+      function handleDoubleClick(moduleId) {
+        const moduleCard = document.querySelector(`[data-module="${moduleId}"]`);
+        
+        if (!moduleCard) return;
+        
+        if (moduleCard.classList.contains("locked")) {
+          // Nếu đang locked -> unlock
+          unlockAll();
+        } else {
+          // Nếu chưa locked -> lock module này
+          unlockAll(); // Bỏ khóa tất cả trước
+          updateModuleDisplay(moduleId, true);
         }
       }
 
-      function hideModuleDisplay() {
-        const displayFrame = document.getElementById("moduleDisplay");
-        if (displayFrame && !activeModule) {
-          displayFrame.classList.remove("active");
+      // Hàm xử lý hover
+      function handleHover(moduleId) {
+        // Nếu đang có module bị lock thì bỏ qua hover
+        if (isLocked) return;
+        
+        // Hủy timeout cũ nếu có
+        if (hoverTimeout) {
+          clearTimeout(hoverTimeout);
         }
+        
+        // Hiển thị module được hover
+        updateModuleDisplay(moduleId, false);
       }
 
+      // Hàm xử lý mouse leave
+      function handleMouseLeave() {
+        // Nếu đang có module bị lock thì không làm gì
+        if (isLocked) return;
+        
+        // Hủy timeout cũ nếu có
+        if (hoverTimeout) {
+          clearTimeout(hoverTimeout);
+        }
+        
+        // Đặt timeout để ẩn nội dung (nếu không hover vào module khác)
+        hoverTimeout = setTimeout(() => {
+          if (!isLocked) {
+            unlockAll();
+          }
+        }, 300);
+      }
+
+      // Thiết lập tương tác cho module
       function setupModuleInteractions() {
         const moduleCards = document.querySelectorAll(".module-card");
-        const displayFrame = document.getElementById("moduleDisplay");
+        let clickCount = 0;
+        let clickTimer = null;
 
         moduleCards.forEach((card) => {
           const moduleId = card.getAttribute("data-module");
 
-          // Hover enter
+          // Xử lý mouseenter (hover)
           card.addEventListener("mouseenter", () => {
-            clearTimeout(hoverTimeout);
-            hoverTimeout = setTimeout(() => {
-              updateModuleDisplay(moduleId, false);
-            }, 300);
+            handleHover(moduleId);
           });
 
-          // Hover leave
+          // Xử lý mouseleave
           card.addEventListener("mouseleave", () => {
-            clearTimeout(hoverTimeout);
-            hoverTimeout = setTimeout(() => {
-              if (activeModule !== moduleId) {
-                hideModuleDisplay();
-              }
-            }, 300);
+            handleMouseLeave();
           });
 
-          // Click
+          // Xử lý click (để phân biệt click đơn và double-click)
           card.addEventListener("click", (e) => {
             e.preventDefault();
-            clearTimeout(hoverTimeout);
-
-            if (activeModule === moduleId) {
-              // Click lần nữa để tắt
-              card.classList.remove("active");
-              activeModule = null;
-              hideModuleDisplay();
-            } else {
-              // Click chọn module mới
-              activeModule = moduleId;
-              updateModuleDisplay(moduleId, true);
+            clickCount++;
+            
+            if (clickCount === 1) {
+              // Đây có thể là click đơn, đợi xem có double-click không
+              clickTimer = setTimeout(() => {
+                // Nếu đây là click đơn (không phải double-click)
+                // Không làm gì cho click đơn
+                clickCount = 0;
+              }, 300); // Thời gian chờ để phân biệt click đơn/double-click
+            } else if (clickCount === 2) {
+              // Đây là double-click
+              clearTimeout(clickTimer);
+              handleDoubleClick(moduleId);
+              clickCount = 0;
             }
+          });
+
+          // Ngăn context menu trên double-click
+          card.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
           });
         });
 
-        // Khi hover ra khỏi khung hiển thị
-        if (displayFrame) {
-          displayFrame.addEventListener("mouseenter", () => {
-            clearTimeout(hoverTimeout);
-          });
+        // Xử lý nút "Bỏ khóa"
+        const clearLockBtn = document.getElementById("clearLockBtn");
+        clearLockBtn.addEventListener("click", unlockAll);
 
-          displayFrame.addEventListener("mouseleave", () => {
-            if (!activeModule) {
-              hoverTimeout = setTimeout(() => {
-                hideModuleDisplay();
-              }, 300);
-            }
-          });
-        }
+        // Xử lý phím ESC
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") {
+            unlockAll();
+          }
+        });
       }
 
       function runAppUI() {
@@ -2692,16 +2913,8 @@
         // === Setup module interactions ===
         setupModuleInteractions();
 
-        // Hiển thị module đầu tiên mặc định
-        setTimeout(() => {
-          const firstModule = document.querySelector(".module-card");
-          if (firstModule) {
-            const moduleId = firstModule.getAttribute("data-module");
-            updateModuleDisplay(moduleId, true);
-            firstModule.classList.add("active");
-            activeModule = moduleId;
-          }
-        }, 1000);
+        // Hiển thị nội dung mặc định
+        showDefaultContent();
       }
 
       /** ====== Boot ====== */
