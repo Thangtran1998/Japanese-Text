@@ -328,14 +328,15 @@
       }
       /* Cho phép menu (flyout) tràn ra ngoài card để đè lên các ô khác */
       .module-card.has-submenu {
-        overflow: visible; /* override overflow hidden của .module-card */
-        z-index: 50;
+        overflow: visible !important; /* Quan trọng: cho phép flyout tràn ra ngoài */
+        position: relative; /* Tạo ngữ cảnh định vị */
+        z-index: 50; /* Mặc định */
       }
 
-      /* Khi mở menu, ưu tiên nằm trên các card khác */
       .module-card.has-submenu.is-open {
-        z-index: 200;
+        z-index: 200; /* Khi mở thì cao hơn */
       }
+
       /* Item có menu con */
       .submenu-item.has-child {
         position: relative;
@@ -355,38 +356,41 @@
       /* Flyout bên phải */
       .submenu-flyout {
         position: fixed;
-        top: 50%;
-        transform: translateY(-50%);
-        left: 0;
-
-        width: 220px; /* có thể tăng sau */
-        padding: 10px;
+        top: 0; /* Sẽ được JS điều chỉnh */
+        left: 0; /* Sẽ được JS điều chỉnh */
+        width: 240px; /* Rộng hơn một chút */
+        max-height: 400px; /* Giới hạn chiều cao */
+        padding: 12px;
         border-radius: 14px;
+        border: 1px solid rgba(0, 150, 255, 0.3);
+        background: rgba(0, 18, 36, 0.95);
+        backdrop-filter: blur(15px);
+        box-shadow:
+          0 10px 30px rgba(0, 0, 0, 0.5),
+          0 0 30px rgba(0, 168, 255, 0.2);
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
 
-        border: 1px solid rgba(0, 150, 255, 0.28);
-        background: rgba(0, 18, 36, 0.92);
-        backdrop-filter: blur(10px);
-        box-shadow: 0 0 28px rgba(0, 168, 255, 0.25);
-
-        display: grid;
-        gap: 8px;
-
+        /* Hiệu ứng ẩn/hiện */
         opacity: 0;
-        transform: translateX(-6px);
-        pointer-events: none;
-
+        visibility: hidden;
+        transform: translateX(10px) scale(0.98);
         transition:
-          opacity 0.2s ease,
-          transform 0.2s ease;
-        z-index: 999; /* đè lên các ô bên cạnh */
+          opacity 0.25s ease,
+          transform 0.25s ease,
+          visibility 0.25s;
+
+        z-index: 1000;
+        overflow-y: auto; /* Cho phép cuộn nếu dài */
       }
 
-      /* Hiện flyout khi hover item hoặc khi item được "pin" (class is-open-child) */
+      /* Hiện flyout */
       .submenu-item.has-child:hover .submenu-flyout,
       .submenu-item.has-child.is-open-child .submenu-flyout {
         opacity: 1;
-        transform: translateX(0);
-        pointer-events: auto;
+        visibility: visible;
+        transform: translateX(0) scale(1);
       }
 
       /* Khi mở flyout, mũi tên nổi bật */
@@ -395,10 +399,29 @@
         opacity: 1;
         transform: translateX(2px);
       }
+      /* Thanh cuộn tùy chỉnh cho flyout */
+      .submenu-flyout::-webkit-scrollbar {
+        width: 6px;
+      }
+      .submenu-flyout::-webkit-scrollbar-track {
+        background: rgba(0, 30, 60, 0.3);
+        border-radius: 10px;
+      }
 
-      /* Cả submenu cũng phải visible để flyout tràn */
+      .submenu-flyout::-webkit-scrollbar-thumb {
+        background: rgba(0, 150, 255, 0.5);
+        border-radius: 10px;
+      }
+
+      .submenu-flyout::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 200, 255, 0.7);
+      }
+
+      /* Đảm bảo submenu chính cũng visible */
       .module-card.has-submenu .module-submenu {
-        overflow: visible;
+        overflow: visible !important;
+        position: relative;
+        z-index: 100;
       }
 
       .module-card:hover {
@@ -1578,33 +1601,65 @@
       }
       .flyout-item {
         display: block;
-        padding: 10px 10px;
-        border-radius: 12px;
+        padding: 10px 12px;
+        border-radius: 10px;
         text-decoration: none;
-
         color: #e0f7ff;
         font-size: 14px;
-
-        border: 1px solid rgba(0, 150, 255, 0.18);
-        background: rgba(0, 30, 60, 0.35);
-
-        transition:
-          transform 0.18s,
-          box-shadow 0.18s,
-          border-color 0.18s;
+        font-family: "Exo 2", sans-serif;
+        border: 1px solid rgba(0, 150, 255, 0.2);
+        background: rgba(0, 30, 60, 0.4);
+        transition: all 0.2s ease;
+        margin-bottom: 4px;
       }
 
       .flyout-item:hover {
-        transform: translateY(-1px);
-        border-color: rgba(0, 168, 255, 0.45);
-
-        /* Glow nhẹ hơn start-button */
+        transform: translateY(-2px);
+        border-color: rgba(0, 200, 255, 0.5);
+        /* GLOW NHẸ - giảm đáng kể intensity */
         box-shadow:
-          0 0 10px rgba(0, 168, 255, 0.22),
-          0 0 18px rgba(0, 255, 204, 0.1);
+          0 4px 12px rgba(0, 168, 255, 0.15),
+          0 0 8px rgba(0, 255, 204, 0.05);
+        background: rgba(0, 50, 100, 0.5);
+      }
+      /* Loại bỏ margin bottom cho item cuối cùng */
+      .flyout-item:last-child {
+        margin-bottom: 0;
+      }
+      /* Thêm vào cuối style để debug flyout position */
+      .flyout-left::after {
+        content: "←";
+        position: absolute;
+        right: -15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: rgba(0, 255, 204, 0.5);
+        font-size: 12px;
+      }
 
-        background: rgba(0, 50, 100, 0.45);
-        /*Nếu muốn “nhẹ” nữa: giảm 0.22 → 0.15 và 0.10 → 0.06.*/
+      .flyout-right::after {
+        content: "→";
+        position: absolute;
+        left: -15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: rgba(0, 255, 204, 0.5);
+        font-size: 12px;
+      }
+
+      /* Hiệu ứng mở flyout mượt hơn */
+      .submenu-flyout {
+        transform-origin: left center; /* Hoặc right center tùy vị trí */
+      }
+
+      .submenu-item.has-child:hover .submenu-flyout.flyout-right,
+      .submenu-item.has-child.is-open-child .submenu-flyout.flyout-right {
+        transform-origin: left center;
+      }
+
+      .submenu-item.has-child:hover .submenu-flyout.flyout-left,
+      .submenu-item.has-child.is-open-child .submenu-flyout.flyout-left {
+        transform-origin: right center;
       }
     </style>
   </head>
@@ -2487,30 +2542,113 @@
             function positionFlyout() {
               if (!mimikaraItem || !flyout) return;
 
-              const gap = 12;
+              const gap = 8; // Khoảng cách nhỏ hơn
               const rect = mimikaraItem.getBoundingClientRect();
+              const viewportWidth = window.innerWidth;
+              const viewportHeight = window.innerHeight;
 
-              // Ưu tiên đặt flyout bên phải item
-              let left = rect.right + gap;
+              // Kích thước flyout
+              flyout.style.width = "240px"; // Đặt kích thước cố định
+              flyout.style.height = "auto"; // Chiều cao tự động
 
-              // Đảm bảo không tràn khỏi mép phải màn hình
-              const flyoutWidth = flyout.offsetWidth || 220;
-              const maxLeft = window.innerWidth - flyoutWidth - 12;
+              // Đo kích thước thực tế sau khi render
+              const flyoutWidth = 240; // Giá trị cố định đã set
+              let flyoutHeight = flyout.scrollHeight || 400; // Ước lượng
 
-              // Nếu tràn phải => chuyển sang trái item
-              if (left > maxLeft) {
+              // 1. TÍNH TOÁN VỊ TRÍ DỌC (VERTICAL CENTERING)
+              let top = rect.top + rect.height / 2 - flyoutHeight / 2;
+
+              // Đảm bảo không tràn khỏi viewport
+              const minTop = 10;
+              const maxTop = viewportHeight - flyoutHeight - 10;
+              top = Math.max(minTop, Math.min(top, maxTop));
+
+              // 2. TÍNH TOÁN VỊ TRÍ NGANG (HORIZONTAL POSITION)
+              let left;
+
+              // Kiểm tra xem bên phải có đủ chỗ không
+              const spaceOnRight = viewportWidth - rect.right - gap;
+              const spaceOnLeft = rect.left - gap;
+
+              // ƯU TIÊN: Bên phải nếu đủ chỗ
+              if (spaceOnRight >= flyoutWidth || spaceOnRight >= spaceOnLeft) {
+                // Đủ chỗ bên phải hoặc bên phải có nhiều chỗ hơn
+                left = rect.right + gap;
+
+                // Nếu vẫn tràn phải (hiếm khi xảy ra)
+                if (left + flyoutWidth > viewportWidth - 10) {
+                  left = viewportWidth - flyoutWidth - 10;
+                }
+              } else {
+                // Không đủ chỗ bên phải → đặt bên trái
                 left = rect.left - gap - flyoutWidth;
+
+                // Nếu tràn trái
+                if (left < 10) {
+                  left = 10;
+
+                  // Nếu tràn cả hai bên → đặt trong viewport
+                  if (left + flyoutWidth > viewportWidth) {
+                    left = (viewportWidth - flyoutWidth) / 2;
+                  }
+                }
               }
 
-              // Nếu vẫn tràn trái => kẹp vào trong màn hình
-              left = Math.max(12, Math.min(left, maxLeft));
-
+              // 3. ÁP DỤNG VỊ TRÍ
+              flyout.style.top = `${top}px`;
               flyout.style.left = `${left}px`;
+
+              // 4. THÊM CLASS để biết flyout đang ở bên nào (cho debug)
+              flyout.classList.remove("flyout-left", "flyout-right");
+              if (left < rect.left) {
+                flyout.classList.add("flyout-left");
+              } else {
+                flyout.classList.add("flyout-right");
+              }
+            }
+
+            // Thêm hàm này SAU hàm positionFlyout
+            function updateFlyoutPosition() {
+              if (vocabCard && vocabCard.classList.contains("is-open")) {
+                positionFlyout();
+              }
+            }
+
+            // VÀ sửa phần event listeners trong runAppUI():
+            window.addEventListener("resize", updateFlyoutPosition, {
+              passive: true,
+            });
+            window.addEventListener("scroll", updateFlyoutPosition, {
+              passive: true,
+            });
+
+            // Thêm observer để theo dõi thay đổi kích thước
+            if (typeof ResizeObserver !== "undefined" && mimikaraItem) {
+              const resizeObserver = new ResizeObserver(() => {
+                if (mimikaraItem.classList.contains("is-open-child")) {
+                  positionFlyout();
+                }
+              });
+              resizeObserver.observe(mimikaraItem);
             }
             // Hover vào Mimikara → canh lại vị trí flyout
+            // Trong phần sự kiện hover của mimikaraItem, THÊM:
             mimikaraItem?.addEventListener("mouseenter", () => {
-              positionFlyout();
+              // Đợi một chút để đảm bảo CSS đã áp dụng
+              setTimeout(() => {
+                positionFlyout();
+              }, 10);
             });
+            // Thêm sự kiện cho flyout items
+            if (flyout) {
+              const flyoutItems = flyout.querySelectorAll(".flyout-item");
+              flyoutItems.forEach((item) => {
+                item.addEventListener("mouseenter", () => {
+                  // Giữ flyout mở khi hover vào items bên trong
+                  mimikaraItem.classList.add("is-open-child");
+                });
+              });
+            }
 
             function closeAll() {
               vocabCard.classList.remove("is-open");
@@ -2585,6 +2723,34 @@
             );
           }
         });
+
+        // Thêm vào cuối runAppUI()
+        console.log("Flyout system initialized");
+        console.log("Mimikara item:", mimikaraItem);
+        console.log("Flyout element:", flyout);
+
+        // Test position
+        setTimeout(() => {
+          if (mimikaraItem && flyout) {
+            console.log("Testing flyout position...");
+            positionFlyout();
+
+            // Hiển thị thông tin debug
+            const rect = mimikaraItem.getBoundingClientRect();
+            console.log("Item position:", {
+              top: rect.top,
+              right: rect.right,
+              left: rect.left,
+              width: rect.width,
+              height: rect.height,
+            });
+
+            console.log("Viewport:", {
+              width: window.innerWidth,
+              height: window.innerHeight,
+            });
+          }
+        }, 1000);
       }
 
       /** ====== Boot ====== */
