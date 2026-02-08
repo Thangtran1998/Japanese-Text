@@ -26,7 +26,6 @@
     9) RESPONSIVE (@media)
     10) LICENSE GATE (overlay activate)
     11) EXAM WARNING STATE (target-card thứ 2)
-    12) VOCABULARY SUB-MENU
     ========================================================= */
 
       * {
@@ -1376,160 +1375,89 @@
         animation: expiredPulse 3s infinite alternate !important;
         transform: none !important;
       }
-
-      /* ====== VOCABULARY SUB-MENU ====== */
-      /* =========================================================
-  [CSS-13] VOCABULARY SUB-MENU (hover vào ô từ vựng N1)
-  - Module-card đầu tiên (TỪ VỰNG N1)
-  - Sub-menu ẩn/hiện khi hover
-  - Style phù hợp với theme cyberpunk
-========================================================= */
-      .vocab-module {
+      /* ====== VOCAB DROPDOWN MENU ====== */
+      .vocab-card {
         position: relative;
         cursor: pointer;
       }
 
-      .vocab-module:hover {
-        cursor: pointer;
-      }
-
-      .vocab-submenu {
+      .vocab-dropdown-menu {
         position: absolute;
-        top: 100%;
+        top: calc(100% - 10px);
         left: 0;
-        right: 0;
-        background: rgba(0, 20, 40, 0.95);
-        border: 1px solid rgba(0, 150, 255, 0.4);
+        width: 100%;
+        background: rgba(0, 30, 60, 0.95);
+        border: 1px solid rgba(0, 150, 255, 0.5);
         border-radius: 8px;
-        padding: 15px;
-        margin-top: 10px;
+        padding: 10px 0;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(10px);
         z-index: 100;
         opacity: 0;
         visibility: hidden;
         transform: translateY(-10px);
-        transition:
-          opacity 0.3s,
-          transform 0.3s,
-          visibility 0.3s;
-        box-shadow:
-          0 10px 30px rgba(0, 0, 0, 0.5),
-          0 0 20px rgba(0, 168, 255, 0.3);
-        backdrop-filter: blur(10px);
+        transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
       }
 
-      .vocab-module:hover .vocab-submenu {
+      .vocab-card:hover .vocab-dropdown-menu {
         opacity: 1;
         visibility: visible;
         transform: translateY(0);
       }
 
-      .vocab-submenu::before {
-        content: "";
-        position: absolute;
-        top: -10px;
-        left: 20px;
-        width: 0;
-        height: 0;
-        border-left: 10px solid transparent;
-        border-right: 10px solid transparent;
-        border-bottom: 10px solid rgba(0, 150, 255, 0.4);
-      }
-
-      .vocab-submenu::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 2px;
-        background: linear-gradient(to right, #00a8ff, #00ffcc);
-      }
-
-      .submenu-title {
-        font-family: "Orbitron", sans-serif;
-        font-size: 16px;
-        color: #00e5ff;
-        margin-bottom: 12px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-
-      .submenu-title i {
-        color: #ff9900;
-      }
-
-      .submenu-options {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-      }
-
-      .submenu-option {
-        display: flex;
-        align-items: center;
-        padding: 12px 15px;
-        background: rgba(0, 30, 60, 0.6);
-        border-radius: 6px;
-        border: 1px solid rgba(0, 150, 255, 0.2);
+      .vocab-option {
+        display: block;
+        padding: 12px 20px;
         color: #e0f7ff;
         text-decoration: none;
+        font-size: 15px;
         transition: all 0.2s;
-        cursor: pointer;
+        border-left: 3px solid transparent;
       }
 
-      .submenu-option:hover {
-        background: rgba(0, 50, 100, 0.8);
-        border-color: #00a8ff;
-        transform: translateX(5px);
-        box-shadow: 0 5px 15px rgba(0, 100, 255, 0.3);
-      }
-
-      .submenu-option i {
-        margin-right: 10px;
+      .vocab-option:hover {
+        background: rgba(0, 100, 200, 0.3);
         color: #00ffcc;
+        border-left: 3px solid #00ffcc;
+        padding-left: 25px;
+      }
+
+      .vocab-option i {
+        margin-right: 10px;
         width: 20px;
         text-align: center;
       }
 
-      .submenu-option .option-text {
-        flex: 1;
-        font-weight: 500;
+      /* Hiệu ứng cyber cho menu */
+      .vocab-dropdown-menu::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(
+          to right,
+          transparent,
+          #00ffcc,
+          transparent
+        );
+        animation: menuScan 2s linear infinite;
       }
 
-      .submenu-option .option-badge {
-        background: rgba(255, 153, 0, 0.2);
-        color: #ffcc00;
-        padding: 3px 8px;
-        border-radius: 4px;
-        font-size: 12px;
-        font-family: "Orbitron", sans-serif;
+      @keyframes menuScan {
+        0% {
+          transform: translateX(-100%);
+        }
+        100% {
+          transform: translateX(100%);
+        }
       }
 
-      /* Mobile responsive cho sub-menu */
-      @media (max-width: 768px) {
-        .vocab-submenu {
-          position: fixed;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%) scale(0.9);
-          width: 90%;
-          max-width: 300px;
-          opacity: 0;
-          visibility: hidden;
-          transition:
-            opacity 0.3s,
-            transform 0.3s,
-            visibility 0.3s;
-        }
-
-        .vocab-module:hover .vocab-submenu {
-          transform: translate(-50%, -50%) scale(1);
-        }
-
-        .vocab-submenu::before {
-          display: none;
-        }
+      /* Hiệu ứng hover cho card từ vựng */
+      .vocab-card:hover {
+        border-color: #00a8ff !important;
+        box-shadow: 0 15px 30px rgba(0, 100, 255, 0.5) !important;
       }
     </style>
   </head>
@@ -1632,7 +1560,7 @@
           <!-- [HTML-3.2.1] MISSION PANEL: Mục tiêu + Thời hạn + Streak -->
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC111
             </h2>
 
             <div class="target-info">
@@ -1688,8 +1616,7 @@
             </h2>
 
             <div class="modules-section">
-              <!-- Module TỪ VỰNG N1 với sub-menu -->
-              <div class="module-card vocab-module">
+              <div class="module-card">
                 <div class="module-icon">
                   <i class="fas fa-book"></i>
                 </div>
@@ -1697,37 +1624,21 @@
                 <p class="module-desc">
                   Hơn 2000 từ vựng nâng cao với hệ thống ghi nhớ thông minh.
                 </p>
+                <!-- THÊM PHẦN NÀY: Menu dropdown -->
+                <div class="vocab-dropdown-menu">
+                  <a href="#" class="vocab-option" data-target="mimikara">
+                    <i class="fas fa-list-ul"></i> Từ vựng Mimikara
+                  </a>
+                  <a href="#" class="vocab-option" data-target="thaolejp">
+                    <i class="fas fa-language"></i> Từ vựng ThaoLejp
+                  </a>
+                </div>
                 <div class="progress-bar">
                   <div class="progress-fill" id="progress-vocab"></div>
                 </div>
                 <div class="progress-text">
                   <span>Tiến độ</span>
                   <span id="percent-vocab">0%</span>
-                </div>
-
-                <!-- Sub-menu từ vựng -->
-                <div class="vocab-submenu">
-                  <div class="submenu-title">
-                    <i class="fas fa-code-branch"></i> CHUYÊN MỤC TỪ VỰNG
-                  </div>
-                  <div class="submenu-options">
-                    <a href="vocab-mimikara.html" class="submenu-option">
-                      <i class="fas fa-brain"></i>
-                      <span class="option-text">Từ vựng Mimikara</span>
-                      <span class="option-badge">NEW</span>
-                    </a>
-                    <a href="vocab-thaolejp.html" class="submenu-option">
-                      <i class="fas fa-rocket"></i>
-                      <span class="option-text">Từ vựng ThaoLejp</span>
-                      <span class="option-badge">PRO</span>
-                    </a>
-                  </div>
-                  <div
-                    class="license-small"
-                    style="margin-top: 10px; text-align: center"
-                  >
-                    Chọn chuyên mục để bắt đầu học
-                  </div>
                 </div>
               </div>
 
@@ -1807,7 +1718,7 @@
   JS-5) API CALLS (verify / request-reset)
   JS-6) BACKGROUND RECHECK (server ping định kỳ)
   JS-7) GATE FLOW (show/hide)
-  JS-8) APP UI EFFECTS (progress/ripple/streak/vocab-submenu)
+  JS-8) APP UI EFFECTS (progress/ripple/streak)
   JS-9) BOOT (IIFE)
 ========================================================= */
       /**
@@ -1944,9 +1855,7 @@
         // Hết hạn
         if (remainingDays <= 0) {
           statusValueEl.textContent = "EXPIRED";
-          statusSubtitleEl.textContent = `Quyền truy cập đã hết hạn từ: ${formatDDMMYYYY(
-            expDate,
-          )}`;
+          statusSubtitleEl.textContent = `Quyền truy cập đã hết hạn từ: ${formatDDMMYYYY(expDate)}`;
           targetCardEl.classList.add("warning-expired");
           return;
         }
@@ -1958,20 +1867,14 @@
         if (remainingDays < 30) {
           // Dưới 30 ngày: Màu đỏ cảnh báo
           targetCardEl.classList.add("warning-red");
-          statusSubtitleEl.innerHTML = `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(
-            expDate,
-          )}<br>Còn ${remainingDays} ngày`;
+          statusSubtitleEl.innerHTML = `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(expDate)}<br>Còn ${remainingDays} ngày`;
         } else if (remainingDays <= 60) {
           // 30-60 ngày: Màu vàng cảnh báo
           targetCardEl.classList.add("warning-yellow");
-          statusSubtitleEl.innerHTML = `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(
-            expDate,
-          )}<br>Còn ${remainingDays} ngày`;
+          statusSubtitleEl.innerHTML = `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(expDate)}<br>Còn ${remainingDays} ngày`;
         } else {
           // Trên 60 ngày: KHÔNG thêm class, giữ màu mặc định
-          statusSubtitleEl.innerHTML = `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(
-            expDate,
-          )}<br>Còn ${remainingDays} ngày`;
+          statusSubtitleEl.innerHTML = `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(expDate)}<br>Còn ${remainingDays} ngày`;
         }
       }
 
@@ -2235,76 +2138,6 @@
             }, 300);
           }
 
-          // Xử lý sub-menu từ vựng
-          const vocabModule = document.querySelector(".vocab-module");
-          if (vocabModule) {
-            // Thêm cursor pointer
-            vocabModule.style.cursor = "pointer";
-
-            // Xử lý click để đảm bảo hoạt động trên mobile
-            vocabModule.addEventListener("click", function (e) {
-              // Chỉ xử lý trên mobile
-              if (window.innerWidth <= 768) {
-                e.preventDefault();
-                const submenu = this.querySelector(".vocab-submenu");
-                if (submenu) {
-                  const isVisible = submenu.style.visibility === "visible";
-                  if (isVisible) {
-                    submenu.style.opacity = "0";
-                    submenu.style.visibility = "hidden";
-                    submenu.style.transform =
-                      "translate(-50%, -50%) scale(0.9)";
-                  } else {
-                    submenu.style.opacity = "1";
-                    submenu.style.visibility = "visible";
-                    submenu.style.transform = "translate(-50%, -50%) scale(1)";
-                  }
-                }
-              }
-            });
-          }
-
-          // Xử lý click cho các option trong sub-menu
-          document.querySelectorAll(".submenu-option").forEach((option) => {
-            option.addEventListener("click", function (e) {
-              e.preventDefault();
-              const href = this.getAttribute("href");
-
-              // Hiệu ứng ripple
-              const ripple = document.createElement("div");
-              ripple.style.position = "fixed";
-              ripple.style.borderRadius = "50%";
-              ripple.style.backgroundColor = "rgba(0, 168, 255, 0.6)";
-              ripple.style.width = "10px";
-              ripple.style.height = "10px";
-              const rect = this.getBoundingClientRect();
-              ripple.style.left = `${rect.left + rect.width / 2}px`;
-              ripple.style.top = `${rect.top + rect.height / 2}px`;
-              ripple.style.transform = "translate(-50%, -50%)";
-              ripple.style.zIndex = "1000";
-              ripple.style.pointerEvents = "none";
-              document.body.appendChild(ripple);
-
-              const animation = ripple.animate(
-                [
-                  { width: "10px", height: "10px", opacity: 1 },
-                  { width: "200px", height: "200px", opacity: 0 },
-                ],
-                { duration: 800, easing: "ease-out" },
-              );
-
-              animation.onfinish = () => ripple.remove();
-
-              // Thông báo chuyển trang (có thể thay bằng window.location.href = href)
-              setTimeout(() => {
-                alert(
-                  `Đang chuyển đến: ${this.querySelector(".option-text").textContent}\n(URL: ${href})`,
-                );
-                // window.location.href = href; // Bỏ comment để thực sự chuyển trang
-              }, 300);
-            });
-          });
-
           const startButton = document.querySelector(".start-button");
           startButton.addEventListener("click", function (e) {
             e.preventDefault();
@@ -2337,6 +2170,61 @@
                 "Hệ thống học tập N1 đang khởi động...\nChuẩn bị cho nhiệm vụ ngày hôm nay!",
               );
             }, 300);
+          });
+
+          // THÊM PHẦN NÀY: Xử lý menu từ vựng
+          const vocabCard = document.querySelector(".vocab-card");
+          const vocabOptions = document.querySelectorAll(".vocab-option");
+
+          // Thay đổi cursor khi hover
+          if (vocabCard) {
+            vocabCard.style.cursor = "pointer";
+          }
+
+          // Xử lý click vào các option
+          vocabOptions.forEach((option) => {
+            option.addEventListener("click", function (e) {
+              e.preventDefault();
+              e.stopPropagation();
+
+              const target = this.getAttribute("data-target");
+
+              // Hiệu ứng ripple
+              const rect = this.getBoundingClientRect();
+              const ripple = document.createElement("div");
+              ripple.style.position = "fixed";
+              ripple.style.borderRadius = "50%";
+              ripple.style.backgroundColor = "rgba(0, 168, 255, 0.6)";
+              ripple.style.width = "10px";
+              ripple.style.height = "10px";
+              ripple.style.left = `${rect.left + rect.width / 2}px`;
+              ripple.style.top = `${rect.top + rect.height / 2}px`;
+              ripple.style.transform = "translate(-50%, -50%)";
+              ripple.style.zIndex = "1000";
+              ripple.style.pointerEvents = "none";
+              document.body.appendChild(ripple);
+
+              const animation = ripple.animate(
+                [
+                  { width: "10px", height: "10px", opacity: 1 },
+                  { width: "100px", height: "100px", opacity: 0 },
+                ],
+                { duration: 500, easing: "ease-out" },
+              );
+
+              animation.onfinish = () => ripple.remove();
+
+              // Xử lý chuyển trang (có thể thay đổi sau)
+              setTimeout(() => {
+                alert(
+                  `Đang chuyển đến: ${target === "mimikara" ? "Từ vựng Mimikara" : "Từ vựng ThaoLejp"}\n\nChức năng này sẽ dẫn đến trang HTML riêng trong tương lai.`,
+                );
+
+                // GHI CHÚ: Để thực sự chuyển trang, bạn có thể dùng:
+                // window.location.href = `${target}.html`;
+                // hoặc mở modal/popup với nội dung tương ứng
+              }, 200);
+            });
           });
 
           const targetCards = document.querySelectorAll(".target-card");
