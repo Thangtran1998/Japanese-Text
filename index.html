@@ -1335,7 +1335,7 @@ function updateExamUI(examDateStr) {
     const dd = String(examDt.getDate()).padStart(2, "0");
     const mm = String(examDt.getMonth() + 1).padStart(2, "0");
     const yyyy = examDt.getFullYear();
-    examSubtitleEl.textContent = `Hạn kỳ thi: ${dd}/${mm}/${yyyy}`;
+    examSubtitleEl.textContent = `Ngày thi chính thức : ${dd}/${mm}/${yyyy}`;
   }
 
   // countdown theo ngày hiện tại của máy user
