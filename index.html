@@ -26,6 +26,7 @@
     9) RESPONSIVE (@media)
     10) LICENSE GATE (overlay activate)
     11) EXAM WARNING STATE (target-card thứ 2)
+    12) VOCABULARY SUB-MENU
     ========================================================= */
 
       * {
@@ -1143,238 +1144,393 @@
         transform: none !important;
       }
       /* ====== CẢNH BÁO CHO Ô TRẠNG THÁI (target-card thứ 3) ====== */
-/* =========================================================
+      /* =========================================================
   [CSS-12] STATUS WARNING STATE (chỉ áp dụng cho target-card thứ 3 = "Trạng thái")
   - KHÔNG có class warning-green (giữ màu mặc định khi >60 ngày)
   - warning-yellow: 30–60 ngày còn hạn
   - warning-red: <30 ngày còn hạn
   - warning-expired: <=0 ngày (hết hạn)
 ========================================================= */
-.target-card:nth-child(3) {
-  position: relative;
-  overflow: hidden;
-}
+      .target-card:nth-child(3) {
+        position: relative;
+        overflow: hidden;
+      }
 
-/* Ẩn tất cả pseudo-elements và sparkle mặc định */
-.target-card:nth-child(3)::before,
-.target-card:nth-child(3)::after {
-  display: none !important;
-}
+      /* Ẩn tất cả pseudo-elements và sparkle mặc định */
+      .target-card:nth-child(3)::before,
+      .target-card:nth-child(3)::after {
+        display: none !important;
+      }
 
-/* Thêm sparkle vào HTML cho ô Trạng thái */
-.target-card:nth-child(3) .sparkle {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  filter: blur(1px);
-  animation: sparkleMove 4s linear infinite;
-  opacity: 0.7;
-  display: none;
-}
+      /* Thêm sparkle vào HTML cho ô Trạng thái */
+      .target-card:nth-child(3) .sparkle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        filter: blur(1px);
+        animation: sparkleMove 4s linear infinite;
+        opacity: 0.7;
+        display: none;
+      }
 
-/* Vị trí sparkle cho ô Trạng thái */
-.target-card:nth-child(3) .sparkle:nth-child(1) {
-  top: 20%;
-  left: 15%;
-  animation-delay: 0s;
-}
+      /* Vị trí sparkle cho ô Trạng thái */
+      .target-card:nth-child(3) .sparkle:nth-child(1) {
+        top: 20%;
+        left: 15%;
+        animation-delay: 0s;
+      }
 
-.target-card:nth-child(3) .sparkle:nth-child(2) {
-  top: 60%;
-  right: 20%;
-  animation-delay: 1s;
-}
+      .target-card:nth-child(3) .sparkle:nth-child(2) {
+        top: 60%;
+        right: 20%;
+        animation-delay: 1s;
+      }
 
-.target-card:nth-child(3) .sparkle:nth-child(3) {
-  bottom: 30%;
-  left: 30%;
-  animation-delay: 2s;
-}
+      .target-card:nth-child(3) .sparkle:nth-child(3) {
+        bottom: 30%;
+        left: 30%;
+        animation-delay: 2s;
+      }
 
-/* Chỉ hiển thị khi có cảnh báo (KHÔNG có warning-green) */
-.target-card:nth-child(3).warning-yellow::before,
-.target-card:nth-child(3).warning-yellow::after,
-.target-card:nth-child(3).warning-red::before,
-.target-card:nth-child(3).warning-red::after,
-.target-card:nth-child(3).warning-expired::before,
-.target-card:nth-child(3).warning-expired::after {
-  display: block !important;
-}
+      /* Chỉ hiển thị khi có cảnh báo (KHÔNG có warning-green) */
+      .target-card:nth-child(3).warning-yellow::before,
+      .target-card:nth-child(3).warning-yellow::after,
+      .target-card:nth-child(3).warning-red::before,
+      .target-card:nth-child(3).warning-red::after,
+      .target-card:nth-child(3).warning-expired::before,
+      .target-card:nth-child(3).warning-expired::after {
+        display: block !important;
+      }
 
-.target-card:nth-child(3).warning-yellow .sparkle,
-.target-card:nth-child(3).warning-red .sparkle,
-.target-card:nth-child(3).warning-expired .sparkle {
-  display: block !important;
-}
+      .target-card:nth-child(3).warning-yellow .sparkle,
+      .target-card:nth-child(3).warning-red .sparkle,
+      .target-card:nth-child(3).warning-expired .sparkle {
+        display: block !important;
+      }
 
-/* ====== CẢNH BÁO MÀU VÀNG (30-60 ngày) ====== */
-.target-card:nth-child(3).warning-yellow {
-  background: rgba(60, 40, 0, 0.7) !important;
-  border: 1px solid rgba(255, 200, 0, 0.6) !important;
-  animation: cyberPulse 2s infinite alternate !important;
-}
+      /* ====== CẢNH BÁO MÀU VÀNG (30-60 ngày) ====== */
+      .target-card:nth-child(3).warning-yellow {
+        background: rgba(60, 40, 0, 0.7) !important;
+        border: 1px solid rgba(255, 200, 0, 0.6) !important;
+        animation: cyberPulse 2s infinite alternate !important;
+      }
 
-/* Hiệu ứng viền vàng */
-.target-card:nth-child(3).warning-yellow::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #ffcc00, transparent);
-  animation: borderScan 3s linear infinite;
-}
+      /* Hiệu ứng viền vàng */
+      .target-card:nth-child(3).warning-yellow::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #ffcc00, transparent);
+        animation: borderScan 3s linear infinite;
+      }
 
-/* Hạt sparkle vàng cho ô Trạng thái */
-.target-card:nth-child(3).warning-yellow .sparkle {
-  background: #ffcc00 !important;
-  animation: sparkleMove 3s linear infinite !important;
-}
+      /* Hạt sparkle vàng cho ô Trạng thái */
+      .target-card:nth-child(3).warning-yellow .sparkle {
+        background: #ffcc00 !important;
+        animation: sparkleMove 3s linear infinite !important;
+      }
 
-/* Hạt ánh sáng vàng */
-.target-card:nth-child(3).warning-yellow::after {
-  content: "";
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #ffcc00, transparent 70%);
-  animation: particleGlow 1.5s ease-in-out infinite alternate;
-  filter: blur(1px);
-}
+      /* Hạt ánh sáng vàng */
+      .target-card:nth-child(3).warning-yellow::after {
+        content: "";
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: radial-gradient(circle, #ffcc00, transparent 70%);
+        animation: particleGlow 1.5s ease-in-out infinite alternate;
+        filter: blur(1px);
+      }
 
-/* Chữ vàng */
-.target-card:nth-child(3).warning-yellow .card-title {
-  color: #ffdd99 !important;
-}
+      /* Chữ vàng */
+      .target-card:nth-child(3).warning-yellow .card-title {
+        color: #ffdd99 !important;
+      }
 
-.target-card:nth-child(3).warning-yellow .card-value {
-  color: #ffcc00 !important;
-  text-shadow: 0 0 15px rgba(255, 204, 0, 0.8) !important;
-  animation: textGlow 1.5s ease-in-out infinite alternate !important;
-}
+      .target-card:nth-child(3).warning-yellow .card-value {
+        color: #ffcc00 !important;
+        text-shadow: 0 0 15px rgba(255, 204, 0, 0.8) !important;
+        animation: textGlow 1.5s ease-in-out infinite alternate !important;
+      }
 
-.target-card:nth-child(3).warning-yellow .card-subtitle {
-  color: #ffcc99 !important;
-}
+      .target-card:nth-child(3).warning-yellow .card-subtitle {
+        color: #ffcc99 !important;
+      }
 
-/* Hiệu ứng hover vàng */
-.target-card:nth-child(3).warning-yellow:hover {
-  transform: translateY(-8px) !important;
-  animation: cyberPulseHover 1.5s infinite alternate !important;
-}
+      /* Hiệu ứng hover vàng */
+      .target-card:nth-child(3).warning-yellow:hover {
+        transform: translateY(-8px) !important;
+        animation: cyberPulseHover 1.5s infinite alternate !important;
+      }
 
-/* ====== CẢNH BÁO MÀU ĐỎ (<30 ngày) ====== */
-.target-card:nth-child(3).warning-red {
-  background: rgba(60, 0, 0, 0.7) !important;
-  border: 1px solid rgba(255, 50, 50, 0.8) !important;
-  animation: redPulse 1.5s infinite alternate !important;
-}
+      /* ====== CẢNH BÁO MÀU ĐỎ (<30 ngày) ====== */
+      .target-card:nth-child(3).warning-red {
+        background: rgba(60, 0, 0, 0.7) !important;
+        border: 1px solid rgba(255, 50, 50, 0.8) !important;
+        animation: redPulse 1.5s infinite alternate !important;
+      }
 
-/* Hiệu ứng viền đỏ */
-.target-card:nth-child(3).warning-red::before {
-  animation: redBorderScan 2s linear infinite !important;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    #ff3333,
-    transparent
-  ) !important;
-}
+      /* Hiệu ứng viền đỏ */
+      .target-card:nth-child(3).warning-red::before {
+        animation: redBorderScan 2s linear infinite !important;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          #ff3333,
+          transparent
+        ) !important;
+      }
 
-/* Hạt sparkle đỏ */
-.target-card:nth-child(3).warning-red .sparkle {
-  background: #ff3333 !important;
-  animation: sparkleMove 2s linear infinite !important;
-}
+      /* Hạt sparkle đỏ */
+      .target-card:nth-child(3).warning-red .sparkle {
+        background: #ff3333 !important;
+        animation: sparkleMove 2s linear infinite !important;
+      }
 
-.target-card:nth-child(3).warning-red::after {
-  background: radial-gradient(
-    circle,
-    #ff3333,
-    transparent 70%
-  ) !important;
-  animation: redParticleGlow 1s ease-in-out infinite alternate !important;
-}
+      .target-card:nth-child(3).warning-red::after {
+        background: radial-gradient(
+          circle,
+          #ff3333,
+          transparent 70%
+        ) !important;
+        animation: redParticleGlow 1s ease-in-out infinite alternate !important;
+      }
 
-/* Chữ đỏ */
-.target-card:nth-child(3).warning-red .card-title {
-  color: #ff9999 !important;
-}
+      /* Chữ đỏ */
+      .target-card:nth-child(3).warning-red .card-title {
+        color: #ff9999 !important;
+      }
 
-.target-card:nth-child(3).warning-red .card-value {
-  color: #ff6666 !important;
-  text-shadow: 0 0 20px rgba(255, 50, 50, 0.9) !important;
-  animation: redTextGlow 1s ease-in-out infinite alternate !important;
-}
+      .target-card:nth-child(3).warning-red .card-value {
+        color: #ff6666 !important;
+        text-shadow: 0 0 20px rgba(255, 50, 50, 0.9) !important;
+        animation: redTextGlow 1s ease-in-out infinite alternate !important;
+      }
 
-.target-card:nth-child(3).warning-red .card-subtitle {
-  color: #ffaaaa !important;
-}
+      .target-card:nth-child(3).warning-red .card-subtitle {
+        color: #ffaaaa !important;
+      }
 
-/* Hiệu ứng hover đỏ */
-.target-card:nth-child(3).warning-red:hover {
-  animation: redPulseHover 1s infinite alternate !important;
-  transform: translateY(-8px) !important;
-}
+      /* Hiệu ứng hover đỏ */
+      .target-card:nth-child(3).warning-red:hover {
+        animation: redPulseHover 1s infinite alternate !important;
+        transform: translateY(-8px) !important;
+      }
 
-/* ====== ĐÃ HẾT HẠN ====== */
-.target-card:nth-child(3).warning-expired {
-  background: rgba(30, 30, 30, 0.7) !important;
-  border: 1px solid rgba(100, 100, 100, 0.5) !important;
-  animation: expiredPulse 3s infinite alternate !important;
-}
+      /* ====== ĐÃ HẾT HẠN ====== */
+      .target-card:nth-child(3).warning-expired {
+        background: rgba(30, 30, 30, 0.7) !important;
+        border: 1px solid rgba(100, 100, 100, 0.5) !important;
+        animation: expiredPulse 3s infinite alternate !important;
+      }
 
-/* Viền xám */
-.target-card:nth-child(3).warning-expired::before {
-  animation: expiredBorderScan 4s linear infinite !important;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    #888888,
-    transparent
-  ) !important;
-}
+      /* Viền xám */
+      .target-card:nth-child(3).warning-expired::before {
+        animation: expiredBorderScan 4s linear infinite !important;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          #888888,
+          transparent
+        ) !important;
+      }
 
-/* Hạt sparkle xám */
-.target-card:nth-child(3).warning-expired .sparkle {
-  background: #888888 !important;
-  animation: sparkleMove 5s linear infinite !important;
-}
+      /* Hạt sparkle xám */
+      .target-card:nth-child(3).warning-expired .sparkle {
+        background: #888888 !important;
+        animation: sparkleMove 5s linear infinite !important;
+      }
 
-.target-card:nth-child(3).warning-expired::after {
-  background: radial-gradient(
-    circle,
-    #888888,
-    transparent 70%
-  ) !important;
-  animation: expiredParticleGlow 2s ease-in-out infinite alternate !important;
-}
+      .target-card:nth-child(3).warning-expired::after {
+        background: radial-gradient(
+          circle,
+          #888888,
+          transparent 70%
+        ) !important;
+        animation: expiredParticleGlow 2s ease-in-out infinite alternate !important;
+      }
 
-/* Chữ xám */
-.target-card:nth-child(3).warning-expired .card-title {
-  color: #aaaaaa !important;
-}
+      /* Chữ xám */
+      .target-card:nth-child(3).warning-expired .card-title {
+        color: #aaaaaa !important;
+      }
 
-.target-card:nth-child(3).warning-expired .card-value {
-  color: #888888 !important;
-  text-shadow: 0 0 10px rgba(136, 136, 136, 0.5) !important;
-  animation: none !important;
-}
+      .target-card:nth-child(3).warning-expired .card-value {
+        color: #888888 !important;
+        text-shadow: 0 0 10px rgba(136, 136, 136, 0.5) !important;
+        animation: none !important;
+      }
 
-.target-card:nth-child(3).warning-expired .card-subtitle {
-  color: #999999 !important;
-}
+      .target-card:nth-child(3).warning-expired .card-subtitle {
+        color: #999999 !important;
+      }
 
-/* Tắt hiệu ứng hover cho đã hết hạn */
-.target-card:nth-child(3).warning-expired:hover {
-  animation: expiredPulse 3s infinite alternate !important;
-  transform: none !important;
-}
+      /* Tắt hiệu ứng hover cho đã hết hạn */
+      .target-card:nth-child(3).warning-expired:hover {
+        animation: expiredPulse 3s infinite alternate !important;
+        transform: none !important;
+      }
+
+      /* ====== VOCABULARY SUB-MENU ====== */
+      /* =========================================================
+  [CSS-13] VOCABULARY SUB-MENU (hover vào ô từ vựng N1)
+  - Module-card đầu tiên (TỪ VỰNG N1)
+  - Sub-menu ẩn/hiện khi hover
+  - Style phù hợp với theme cyberpunk
+========================================================= */
+      .vocab-module {
+        position: relative;
+        cursor: pointer;
+      }
+
+      .vocab-module:hover {
+        cursor: pointer;
+      }
+
+      .vocab-submenu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(0, 20, 40, 0.95);
+        border: 1px solid rgba(0, 150, 255, 0.4);
+        border-radius: 8px;
+        padding: 15px;
+        margin-top: 10px;
+        z-index: 100;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition:
+          opacity 0.3s,
+          transform 0.3s,
+          visibility 0.3s;
+        box-shadow:
+          0 10px 30px rgba(0, 0, 0, 0.5),
+          0 0 20px rgba(0, 168, 255, 0.3);
+        backdrop-filter: blur(10px);
+      }
+
+      .vocab-module:hover .vocab-submenu {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .vocab-submenu::before {
+        content: "";
+        position: absolute;
+        top: -10px;
+        left: 20px;
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-bottom: 10px solid rgba(0, 150, 255, 0.4);
+      }
+
+      .vocab-submenu::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(to right, #00a8ff, #00ffcc);
+      }
+
+      .submenu-title {
+        font-family: "Orbitron", sans-serif;
+        font-size: 16px;
+        color: #00e5ff;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .submenu-title i {
+        color: #ff9900;
+      }
+
+      .submenu-options {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .submenu-option {
+        display: flex;
+        align-items: center;
+        padding: 12px 15px;
+        background: rgba(0, 30, 60, 0.6);
+        border-radius: 6px;
+        border: 1px solid rgba(0, 150, 255, 0.2);
+        color: #e0f7ff;
+        text-decoration: none;
+        transition: all 0.2s;
+        cursor: pointer;
+      }
+
+      .submenu-option:hover {
+        background: rgba(0, 50, 100, 0.8);
+        border-color: #00a8ff;
+        transform: translateX(5px);
+        box-shadow: 0 5px 15px rgba(0, 100, 255, 0.3);
+      }
+
+      .submenu-option i {
+        margin-right: 10px;
+        color: #00ffcc;
+        width: 20px;
+        text-align: center;
+      }
+
+      .submenu-option .option-text {
+        flex: 1;
+        font-weight: 500;
+      }
+
+      .submenu-option .option-badge {
+        background: rgba(255, 153, 0, 0.2);
+        color: #ffcc00;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-family: "Orbitron", sans-serif;
+      }
+
+      /* Mobile responsive cho sub-menu */
+      @media (max-width: 768px) {
+        .vocab-submenu {
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%) scale(0.9);
+          width: 90%;
+          max-width: 300px;
+          opacity: 0;
+          visibility: hidden;
+          transition:
+            opacity 0.3s,
+            transform 0.3s,
+            visibility 0.3s;
+        }
+
+        .vocab-module:hover .vocab-submenu {
+          transform: translate(-50%, -50%) scale(1);
+        }
+
+        .vocab-submenu::before {
+          display: none;
+        }
+      }
     </style>
   </head>
   <body>
@@ -1532,7 +1688,8 @@
             </h2>
 
             <div class="modules-section">
-              <div class="module-card">
+              <!-- Module TỪ VỰNG N1 với sub-menu -->
+              <div class="module-card vocab-module">
                 <div class="module-icon">
                   <i class="fas fa-book"></i>
                 </div>
@@ -1546,6 +1703,31 @@
                 <div class="progress-text">
                   <span>Tiến độ</span>
                   <span id="percent-vocab">0%</span>
+                </div>
+
+                <!-- Sub-menu từ vựng -->
+                <div class="vocab-submenu">
+                  <div class="submenu-title">
+                    <i class="fas fa-code-branch"></i> CHUYÊN MỤC TỪ VỰNG
+                  </div>
+                  <div class="submenu-options">
+                    <a href="vocab-mimikara.html" class="submenu-option">
+                      <i class="fas fa-brain"></i>
+                      <span class="option-text">Từ vựng Mimikara</span>
+                      <span class="option-badge">NEW</span>
+                    </a>
+                    <a href="vocab-thaolejp.html" class="submenu-option">
+                      <i class="fas fa-rocket"></i>
+                      <span class="option-text">Từ vựng ThaoLejp</span>
+                      <span class="option-badge">PRO</span>
+                    </a>
+                  </div>
+                  <div
+                    class="license-small"
+                    style="margin-top: 10px; text-align: center"
+                  >
+                    Chọn chuyên mục để bắt đầu học
+                  </div>
                 </div>
               </div>
 
@@ -1625,7 +1807,7 @@
   JS-5) API CALLS (verify / request-reset)
   JS-6) BACKGROUND RECHECK (server ping định kỳ)
   JS-7) GATE FLOW (show/hide)
-  JS-8) APP UI EFFECTS (progress/ripple/streak)
+  JS-8) APP UI EFFECTS (progress/ripple/streak/vocab-submenu)
   JS-9) BOOT (IIFE)
 ========================================================= */
       /**
@@ -1714,66 +1896,84 @@
       }
 
       function updateStatusUI(expiryStr) {
-  const statusValueEl = document.getElementById("statusValue");
-  const statusSubtitleEl = document.getElementById("statusSubtitle");
-  const targetCardEl = document.querySelector(".target-card:nth-child(3)"); // Lấy ô Trạng thái
-  
-  if (!statusValueEl || !statusSubtitleEl || !targetCardEl) return;
+        const statusValueEl = document.getElementById("statusValue");
+        const statusSubtitleEl = document.getElementById("statusSubtitle");
+        const targetCardEl = document.querySelector(
+          ".target-card:nth-child(3)",
+        ); // Lấy ô Trạng thái
 
-  const expiryDt = parseYYYYMMDD(expiryStr);
-  if (!expiryDt) {
-    statusValueEl.textContent = "ACTIVE";
-    statusSubtitleEl.textContent = "Trạng thái bản quyền: Đã kích hoạt";
-    // Xóa tất cả class cảnh báo
-    targetCardEl.classList.remove("warning-yellow", "warning-red", "warning-expired");
-    return;
-  }
+        if (!statusValueEl || !statusSubtitleEl || !targetCardEl) return;
 
-  // Chuẩn hóa ngày (không tính giờ)
-  const now = new Date();
-  const today = new Date(
-    now.getFullYear(),
-    now.getMonth(),
-    now.getDate(),
-  );
-  const expDate = new Date(
-    expiryDt.getFullYear(),
-    expiryDt.getMonth(),
-    expiryDt.getDate(),
-  );
+        const expiryDt = parseYYYYMMDD(expiryStr);
+        if (!expiryDt) {
+          statusValueEl.textContent = "ACTIVE";
+          statusSubtitleEl.textContent = "Trạng thái bản quyền: Đã kích hoạt";
+          // Xóa tất cả class cảnh báo
+          targetCardEl.classList.remove(
+            "warning-yellow",
+            "warning-red",
+            "warning-expired",
+          );
+          return;
+        }
 
-  // Tính số ngày còn lại
-  const msPerDay = 24 * 60 * 60 * 1000;
-  const remainingDays = Math.ceil((expDate - today) / msPerDay);
+        // Chuẩn hóa ngày (không tính giờ)
+        const now = new Date();
+        const today = new Date(
+          now.getFullYear(),
+          now.getMonth(),
+          now.getDate(),
+        );
+        const expDate = new Date(
+          expiryDt.getFullYear(),
+          expiryDt.getMonth(),
+          expiryDt.getDate(),
+        );
 
-  // Xóa tất cả class cảnh báo cũ
-  targetCardEl.classList.remove("warning-yellow", "warning-red", "warning-expired");
+        // Tính số ngày còn lại
+        const msPerDay = 24 * 60 * 60 * 1000;
+        const remainingDays = Math.ceil((expDate - today) / msPerDay);
 
-  // Hết hạn
-  if (remainingDays <= 0) {
-    statusValueEl.textContent = "EXPIRED";
-    statusSubtitleEl.textContent = `Quyền truy cập đã hết hạn từ: ${formatDDMMYYYY(expDate)}`;
-    targetCardEl.classList.add("warning-expired");
-    return;
-  }
+        // Xóa tất cả class cảnh báo cũ
+        targetCardEl.classList.remove(
+          "warning-yellow",
+          "warning-red",
+          "warning-expired",
+        );
 
-  // Còn hạn
-  statusValueEl.textContent = "ACTIVE";
-  
-  // Thêm class cảnh báo dựa trên số ngày còn lại
-  if (remainingDays < 30) {
-    // Dưới 30 ngày: Màu đỏ cảnh báo
-    targetCardEl.classList.add("warning-red");
-    statusSubtitleEl.innerHTML = `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(expDate)}<br>Còn ${remainingDays} ngày`;
-  } else if (remainingDays <= 60) {
-    // 30-60 ngày: Màu vàng cảnh báo
-    targetCardEl.classList.add("warning-yellow");
-    statusSubtitleEl.innerHTML = `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(expDate)}<br>Còn ${remainingDays} ngày`;
-  } else {
-    // Trên 60 ngày: KHÔNG thêm class, giữ màu mặc định
-    statusSubtitleEl.innerHTML = `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(expDate)}<br>Còn ${remainingDays} ngày`;
-  }
-}
+        // Hết hạn
+        if (remainingDays <= 0) {
+          statusValueEl.textContent = "EXPIRED";
+          statusSubtitleEl.textContent = `Quyền truy cập đã hết hạn từ: ${formatDDMMYYYY(
+            expDate,
+          )}`;
+          targetCardEl.classList.add("warning-expired");
+          return;
+        }
+
+        // Còn hạn
+        statusValueEl.textContent = "ACTIVE";
+
+        // Thêm class cảnh báo dựa trên số ngày còn lại
+        if (remainingDays < 30) {
+          // Dưới 30 ngày: Màu đỏ cảnh báo
+          targetCardEl.classList.add("warning-red");
+          statusSubtitleEl.innerHTML = `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(
+            expDate,
+          )}<br>Còn ${remainingDays} ngày`;
+        } else if (remainingDays <= 60) {
+          // 30-60 ngày: Màu vàng cảnh báo
+          targetCardEl.classList.add("warning-yellow");
+          statusSubtitleEl.innerHTML = `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(
+            expDate,
+          )}<br>Còn ${remainingDays} ngày`;
+        } else {
+          // Trên 60 ngày: KHÔNG thêm class, giữ màu mặc định
+          statusSubtitleEl.innerHTML = `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(
+            expDate,
+          )}<br>Còn ${remainingDays} ngày`;
+        }
+      }
 
       // trả về số tháng + số ngày còn lại (ước lượng theo lịch, đủ đẹp để hiển thị)
       function diffMonthsDays(fromDate, toDate) {
@@ -2034,6 +2234,76 @@
               percentText.textContent = `${value}%`;
             }, 300);
           }
+
+          // Xử lý sub-menu từ vựng
+          const vocabModule = document.querySelector(".vocab-module");
+          if (vocabModule) {
+            // Thêm cursor pointer
+            vocabModule.style.cursor = "pointer";
+
+            // Xử lý click để đảm bảo hoạt động trên mobile
+            vocabModule.addEventListener("click", function (e) {
+              // Chỉ xử lý trên mobile
+              if (window.innerWidth <= 768) {
+                e.preventDefault();
+                const submenu = this.querySelector(".vocab-submenu");
+                if (submenu) {
+                  const isVisible = submenu.style.visibility === "visible";
+                  if (isVisible) {
+                    submenu.style.opacity = "0";
+                    submenu.style.visibility = "hidden";
+                    submenu.style.transform =
+                      "translate(-50%, -50%) scale(0.9)";
+                  } else {
+                    submenu.style.opacity = "1";
+                    submenu.style.visibility = "visible";
+                    submenu.style.transform = "translate(-50%, -50%) scale(1)";
+                  }
+                }
+              }
+            });
+          }
+
+          // Xử lý click cho các option trong sub-menu
+          document.querySelectorAll(".submenu-option").forEach((option) => {
+            option.addEventListener("click", function (e) {
+              e.preventDefault();
+              const href = this.getAttribute("href");
+
+              // Hiệu ứng ripple
+              const ripple = document.createElement("div");
+              ripple.style.position = "fixed";
+              ripple.style.borderRadius = "50%";
+              ripple.style.backgroundColor = "rgba(0, 168, 255, 0.6)";
+              ripple.style.width = "10px";
+              ripple.style.height = "10px";
+              const rect = this.getBoundingClientRect();
+              ripple.style.left = `${rect.left + rect.width / 2}px`;
+              ripple.style.top = `${rect.top + rect.height / 2}px`;
+              ripple.style.transform = "translate(-50%, -50%)";
+              ripple.style.zIndex = "1000";
+              ripple.style.pointerEvents = "none";
+              document.body.appendChild(ripple);
+
+              const animation = ripple.animate(
+                [
+                  { width: "10px", height: "10px", opacity: 1 },
+                  { width: "200px", height: "200px", opacity: 0 },
+                ],
+                { duration: 800, easing: "ease-out" },
+              );
+
+              animation.onfinish = () => ripple.remove();
+
+              // Thông báo chuyển trang (có thể thay bằng window.location.href = href)
+              setTimeout(() => {
+                alert(
+                  `Đang chuyển đến: ${this.querySelector(".option-text").textContent}\n(URL: ${href})`,
+                );
+                // window.location.href = href; // Bỏ comment để thực sự chuyển trang
+              }, 300);
+            });
+          });
 
           const startButton = document.querySelector(".start-button");
           startButton.addEventListener("click", function (e) {
