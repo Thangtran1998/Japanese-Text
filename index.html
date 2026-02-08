@@ -655,6 +655,52 @@
   color: #ff5c5c; /* đỏ cyber */
   text-shadow: 0 0 10px rgba(255, 92, 92, 0.8);
 }
+/* ===== DEADLINE CARD ALERT (Target Card: Thời hạn) ===== */
+.target-card.deadline-warn {
+  border-color: rgba(255, 204, 0, 0.55);
+  box-shadow: 0 0 0 1px rgba(255, 204, 0, 0.12), 0 12px 26px rgba(255, 204, 0, 0.10);
+  background: rgba(255, 204, 0, 0.06);
+}
+
+.target-card.deadline-warn .card-value.special {
+  color: #ffcc00;
+  text-shadow: 0 0 12px rgba(255, 204, 0, 0.65);
+}
+
+.target-card.deadline-danger {
+  border-color: rgba(255, 92, 92, 0.60);
+  box-shadow: 0 0 0 1px rgba(255, 92, 92, 0.14), 0 14px 30px rgba(255, 92, 92, 0.12);
+  background: rgba(255, 92, 92, 0.06);
+}
+
+.target-card.deadline-danger .card-value.special {
+  color: #ff5c5c;
+  text-shadow: 0 0 14px rgba(255, 92, 92, 0.75);
+}
+
+/* Nhấp nháy nhẹ cho trạng thái nguy cấp (đúng kiểu neon, không chói) */
+@keyframes dangerPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 1px rgba(255, 92, 92, 0.14), 0 14px 30px rgba(255, 92, 92, 0.10);
+    filter: saturate(1);
+  }
+  50% {
+    box-shadow: 0 0 0 1px rgba(255, 92, 92, 0.22), 0 18px 42px rgba(255, 92, 92, 0.18);
+    filter: saturate(1.15);
+  }
+}
+
+.target-card.deadline-danger.pulse {
+  animation: dangerPulse 1.6s ease-in-out infinite;
+}
+
+/* Tôn trọng user hệ điều hành: nếu bật giảm chuyển động thì tắt nhấp nháy */
+@media (prefers-reduced-motion: reduce) {
+  .target-card.deadline-danger.pulse {
+    animation: none;
+  }
+}
+
 
 
     </style>
@@ -736,7 +782,7 @@
         
         <main class="main-content">
             <section class="mission-panel">
-                <h2 class="panel-title"><i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC</h2>
+                <h2 class="panel-title"><i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1111</h2>
                 
                 <div class="target-info">
                     <div class="target-card">
@@ -745,7 +791,7 @@
                         <div class="card-subtitle">Cấp độ cao nhất</div>
                     </div>
                     
-                    <div class="target-card">
+                    <div class="target-card" id="deadlineCard">
                         <div class="card-title"><i class="fas fa-calendar-alt"></i> Thời hạn</div>
 
                         <div class="card-value special" id="examMonthYear">07/2026</div>
@@ -1021,6 +1067,22 @@ if (totalDaysLeft <= 30) {
 }
 
 }
+
+// ===== Deadline card coloring =====
+const deadlineCard = document.getElementById("deadlineCard");
+if (deadlineCard) {
+  deadlineCard.classList.remove("deadline-warn", "deadline-danger", "pulse");
+
+  if (totalDaysLeft <= 0) {
+    // đã diễn ra: vẫn đỏ nhưng không cần pulse quá mạnh (tuỳ bạn)
+    deadlineCard.classList.add("deadline-danger");
+  } else if (totalDaysLeft < 30) {
+    deadlineCard.classList.add("deadline-danger", "pulse");
+  } else if (totalDaysLeft <= 60) {
+    deadlineCard.classList.add("deadline-warn");
+  }
+}
+
 
 
 
