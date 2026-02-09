@@ -1829,7 +1829,7 @@
     <div class="license-gate" id="licenseGate">
       <div class="license-panel">
         <h2 class="panel-title">
-          <i class="fas fa-shield-halved"></i> KÍCH HOẠT BẢN QUYỀN
+          <i class="fas fa-shield-halved"></i> KÍCH HOẠT BẢN QUYỀN1
         </h2>
 
         <div class="license-small">
@@ -2100,7 +2100,6 @@
       const LS_LICENSE = "n1_license";
       const LS_USER_NAME = "n1_user_name";
       const LS_EXAM_DATE = "n1_exam_date";
-      const LS_EXPIRY = "n1_expiry"; // NEW: lưu ngày hết hạn YYYYMMDD
       /** ====== Utils ====== */
       function uuidv4() {
         // UUID đơn giản đủ dùng
@@ -2160,41 +2159,6 @@
         )
           return null;
         return dt;
-      }
-      function enforceExpiryLock() {
-        const expiryStr = localStorage.getItem(LS_EXPIRY);
-        if (!expiryStr) return false;
-
-        const expiryDt = parseYYYYMMDD(expiryStr);
-        if (!expiryDt) return false;
-
-        // Chuẩn hóa ngày (không tính giờ)
-        const now = new Date();
-        const today = new Date(
-          now.getFullYear(),
-          now.getMonth(),
-          now.getDate(),
-        );
-        const expDate = new Date(
-          expiryDt.getFullYear(),
-          expiryDt.getMonth(),
-          expiryDt.getDate(),
-        );
-
-        // remainingDays <= 0 => KHÓA NGAY
-        const msPerDay = 24 * 60 * 60 * 1000;
-        const remainingDays = Math.ceil((expDate - today) / msPerDay);
-
-        if (remainingDays <= 0) {
-          localStorage.removeItem(LS_LICENSE);
-          localStorage.removeItem(LS_ACTIVATED);
-
-          setStatus("License đã hết hạn. Vui lòng kích hoạt lại.", "error");
-          showGate(true);
-          return true;
-        }
-
-        return false;
       }
 
       function formatMonthYear(dt) {
@@ -2256,11 +2220,20 @@
           "warning-expired",
         );
 
-        // Hết hạn
+        // THÊM TỰ ĐỘNG KHÓA KHI HẾT HẠN
         if (remainingDays <= 0) {
           statusValueEl.textContent = "EXPIRED";
           statusSubtitleEl.textContent = `Quyền truy cập đã hết hạn từ: ${formatDDMMYYYY(expDate)}`;
           targetCardEl.classList.add("warning-expired");
+
+          // TỰ ĐỘNG KHÓA HỆ THỐNG
+          localStorage.removeItem(LS_LICENSE);
+          localStorage.removeItem(LS_ACTIVATED);
+          showGate(true);
+          setStatus(
+            "License đã hết hạn. Vui lòng gia hạn để tiếp tục sử dụng.",
+            "error",
+          );
           return;
         }
 
@@ -2453,9 +2426,6 @@
             const r = await verifyLicense(deviceId, license);
 
             if (r && r.ok) {
-              localStorage.setItem(LS_EXPIRY, r.expiry || ""); // NEW
-              enforceExpiryLock(); // NEW
-
               setStatus(`Kích hoạt OK (hạn: ${r.expiry})`, "ok");
               updateStatusUI(r.expiry);
               return;
@@ -2957,12 +2927,8 @@
         if (savedName) setUserName(savedName);
         updateExamUI(""); // dùng localStorage nếu có, không có thì dùng DEFAULT_EXAM_DATE
         setInterval(() => updateExamUI(""), 60 * 1000); // update mỗi phút
-        setInterval(() => {
-          enforceExpiryLock();
-        }, 60 * 1000);
 
         const activatedOnce = localStorage.getItem(LS_ACTIVATED) === "1";
-        if (enforceExpiryLock()) return;
         if (activatedOnce && savedLicense) {
           showGate(false);
           runAppUI();
@@ -2978,7 +2944,6 @@
             const r = await verifyLicense(deviceId, savedLicense);
             if (r && r.ok) {
               localStorage.setItem(LS_ACTIVATED, "1");
-              if (enforceExpiryLock()) return;
               setStatus(`Kích hoạt OK (hạn: ${r.expiry})`, "ok");
               updateStatusUI(r.expiry);
 
@@ -3024,9 +2989,6 @@
               if (r && r.ok) {
                 localStorage.setItem(LS_LICENSE, license);
                 localStorage.setItem(LS_ACTIVATED, "1");
-                localStorage.setItem(LS_EXPIRY, r.expiry || ""); // NEW
-                enforceExpiryLock(); // NEW
-
                 setStatus(`Kích hoạt OK (hạn: ${r.expiry})`, "ok");
                 updateStatusUI(r.expiry);
 
