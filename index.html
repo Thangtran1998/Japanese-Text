@@ -2179,7 +2179,7 @@
         const statusSubtitleEl = document.getElementById("statusSubtitle");
         const targetCardEl = document.querySelector(
           ".target-card:nth-child(3)",
-        ); // Lấy ô Trạng thái
+        );
 
         if (!statusValueEl || !statusSubtitleEl || !targetCardEl) return;
 
@@ -2187,7 +2187,6 @@
         if (!expiryDt) {
           statusValueEl.textContent = "ACTIVE";
           statusSubtitleEl.textContent = "Trạng thái bản quyền: Đã kích hoạt";
-          // Xóa tất cả class cảnh báo
           targetCardEl.classList.remove(
             "warning-yellow",
             "warning-red",
@@ -2196,7 +2195,9 @@
           return;
         }
 
-        // Chuẩn hóa ngày (không tính giờ)
+        // Lưu expiry vào localStorage để dùng offline
+        localStorage.setItem("n1_expiry_date", expiryStr);
+
         const now = new Date();
         const today = new Date(
           now.getFullYear(),
@@ -2209,18 +2210,16 @@
           expiryDt.getDate(),
         );
 
-        // Tính số ngày còn lại
         const msPerDay = 24 * 60 * 60 * 1000;
         const remainingDays = Math.ceil((expDate - today) / msPerDay);
 
-        // Xóa tất cả class cảnh báo cũ
         targetCardEl.classList.remove(
           "warning-yellow",
           "warning-red",
           "warning-expired",
         );
 
-        // THÊM TỰ ĐỘNG KHÓA KHI HẾT HẠN
+        // TỰ ĐỘNG KHÓA KHI HẾT HẠN
         if (remainingDays <= 0) {
           statusValueEl.textContent = "EXPIRED";
           statusSubtitleEl.textContent = `Quyền truy cập đã hết hạn từ: ${formatDDMMYYYY(expDate)}`;
@@ -2237,22 +2236,25 @@
           return;
         }
 
-        // Còn hạn
         statusValueEl.textContent = "ACTIVE";
 
-        // Thêm class cảnh báo dựa trên số ngày còn lại
         if (remainingDays < 30) {
-          // Dưới 30 ngày: Màu đỏ cảnh báo
           targetCardEl.classList.add("warning-red");
           statusSubtitleEl.innerHTML = `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(expDate)}<br>Còn ${remainingDays} ngày`;
         } else if (remainingDays <= 60) {
-          // 30-60 ngày: Màu vàng cảnh báo
           targetCardEl.classList.add("warning-yellow");
           statusSubtitleEl.innerHTML = `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(expDate)}<br>Còn ${remainingDays} ngày`;
         } else {
-          // Trên 60 ngày: KHÔNG thêm class, giữ màu mặc định
           statusSubtitleEl.innerHTML = `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(expDate)}<br>Còn ${remainingDays} ngày`;
         }
+
+        // KHỞI ĐỘNG COUNTDOWN TỰ ĐỘNG KIỂM TRA
+        // Xóa timer cũ nếu có
+        if (window.__expiryCountdownTimer) {
+          clearInterval(window.__expiryCountdownTimer);
+        }
+        // Bắt đầu countdown mới
+        startExpiryCountdown(expiryStr);
       }
 
       // trả về số tháng + số ngày còn lại (ước lượng theo lịch, đủ đẹp để hiển thị)
@@ -2478,7 +2480,69 @@
         }
         return res.json();
       }
+      /** ====== Expiry Countdown ====== */
+      function startExpiryCountdown(expiryStr) {
+        if (!expiryStr) return;
 
+        const expiryDt = parseYYYYMMDD(expiryStr);
+        if (!expiryDt) return;
+
+        // Xóa timer cũ nếu có
+        if (window.__expiryCountdownTimer) {
+          clearInterval(window.__expiryCountdownTimer);
+        }
+
+        // Tạo interval kiểm tra mỗi phút
+        window.__expiryCountdownTimer = setInterval(() => {
+          const now = new Date();
+          const today = new Date(
+            now.getFullYear(),
+            now.getMonth(),
+            now.getDate(),
+          );
+          const expDate = new Date(
+            expiryDt.getFullYear(),
+            expiryDt.getMonth(),
+            expiryDt.getDate(),
+          );
+
+          const msPerDay = 24 * 60 * 60 * 1000;
+          const remainingDays = Math.ceil((expDate - today) / msPerDay);
+
+          // Nếu hết hạn (<= 0 ngày)
+          if (remainingDays <= 0) {
+            clearInterval(window.__expiryCountdownTimer);
+            localStorage.removeItem(LS_LICENSE);
+            localStorage.removeItem(LS_ACTIVATED);
+
+            // Hiển thị thông báo và khóa app
+            showGate(true);
+            setStatus(
+              "License đã hết hạn. Vui lòng gia hạn để tiếp tục sử dụng.",
+              "error",
+            );
+
+            // Cập nhật UI ngay lập tức
+            const statusValueEl = document.getElementById("statusValue");
+            const statusSubtitleEl = document.getElementById("statusSubtitle");
+            const targetCardEl = document.querySelector(
+              ".target-card:nth-child(3)",
+            );
+
+            if (statusValueEl) statusValueEl.textContent = "EXPIRED";
+            if (statusSubtitleEl)
+              statusSubtitleEl.textContent = `Quyền truy cập đã hết hạn từ: ${formatDDMMYYYY(expDate)}`;
+            if (targetCardEl) {
+              targetCardEl.classList.remove(
+                "warning-yellow",
+                "warning-red",
+                "warning-expired",
+              );
+              targetCardEl.classList.add("warning-expired");
+            }
+          }
+        }, 60000); // Kiểm tra mỗi 60 giây
+      }
       /** ====== Gate flow ====== */
       function showGate(show = true) {
         const gate = document.getElementById("licenseGate");
@@ -2910,7 +2974,28 @@
 
         // Hiển thị nội dung mặc định
         showDefault();
-
+        // KIỂM TRA EXPIRY KHI APP KHỞI ĐỘNG (phòng trường hợp user đã mở app từ trước)
+        const savedExpiry = localStorage.getItem("n1_expiry_date");
+        if (savedExpiry) {
+          updateStatusUI(savedExpiry);
+        } else {
+          // Nếu không có expiry trong localStorage, thử lấy từ server
+          const license = localStorage.getItem(LS_LICENSE);
+          if (license) {
+            const deviceId = getOrCreateDeviceId();
+            // Gọi lại verify để cập nhật expiry mới nhất
+            verifyLicense(deviceId, license)
+              .then((r) => {
+                if (r && r.ok) {
+                  updateStatusUI(r.expiry);
+                }
+              })
+              .catch(() => {
+                // Nếu verify fail, vẫn hiển thị active
+                updateStatusUI("");
+              });
+          }
+        }
         // Debug
         console.log("App UI initialized");
       }
@@ -2946,6 +3031,10 @@
               localStorage.setItem(LS_ACTIVATED, "1");
               setStatus(`Kích hoạt OK (hạn: ${r.expiry})`, "ok");
               updateStatusUI(r.expiry);
+              // Lưu expiry date để kiểm tra offline
+              localStorage.setItem("n1_expiry_date", r.expiry);
+              // Lưu expiry date để kiểm tra offline
+              localStorage.setItem("n1_expiry_date", r.expiry);
 
               // NEW: set tên user từ server
               if (r.userName) setUserName(r.userName);
