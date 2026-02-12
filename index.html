@@ -26,8 +26,9 @@
     9) RESPONSIVE (@media)
     10) LICENSE GATE (overlay activate)
     11) EXAM WARNING STATE (target-card thứ 2)
-    12) MODULE DISPLAY FRAME (Khung hiển thị nội dung module)
+    12) MODULE DISPLAY FRAME (Khung hiển thị nội dung module) - CẬP NHẬT
     13) MODULE INTERACTION STATES (hover/locked)
+    14) MODAL ANIMATION - HIỆU ỨNG HIỂN THỊ MODULE
     ========================================================= */
 
       * {
@@ -71,7 +72,7 @@
       }
 
       .container {
-        max-width: 1400px; /* Tăng chiều rộng để chứa khung hiển thị */
+        max-width: 1400px;
         margin: 0 auto;
         padding: 20px;
         position: relative;
@@ -220,8 +221,6 @@
         box-shadow: 0 10px 20px rgba(0, 100, 255, 0.3);
       }
 
-      /* NOTE: Tắt pseudo-element mặc định của target-card để tránh hiệu ứng dư.
-        Ô "Thời hạn" (target-card #2) sẽ tự bật pseudo khi có class warning-* ở phần EXAM WARNING STATE bên dưới. */
       .target-card::after {
         display: none;
       }
@@ -312,22 +311,33 @@
         color: #ffdd99;
       }
 
-      /* ===== MODULES SECTION VỚI KHUNG HIỂN THỊ ===== */
+      /* ===== MODULES SECTION CẬP NHẬT ===== */
       .modules-wrapper {
         display: flex;
         gap: 30px;
         margin-top: 20px;
         position: relative;
+        min-height: 600px;
       }
 
       .modules-section {
         flex: 1;
         display: grid;
-        grid-template-columns: repeat(2, 1fr); /* CHỈ 2 CỘT */
+        grid-template-columns: repeat(2, 1fr);
         gap: 25px;
-        max-width: calc(
-          100% - 610px
-        ); /* Trừ đi chiều rộng của khung hiển thị + gap */
+        width: 100%;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      /* Khi module display ẩn - modules chiếm full width */
+      .modules-wrapper.no-frame .modules-section {
+        max-width: 100%;
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      /* Khi module display hiện - modules giãn ra */
+      .modules-wrapper.has-frame .modules-section {
+        max-width: calc(100% - 590px);
       }
 
       .module-card {
@@ -348,7 +358,6 @@
         border-color: #00a8ff;
       }
 
-      /* ====== TRẠNG THÁI LOCKED (khóa cố định) ====== */
       .module-card.locked {
         border-color: #ff00ff !important;
         background: rgba(255, 0, 255, 0.15) !important;
@@ -480,46 +489,47 @@
         color: #88d3ff;
       }
 
-      /* ===== KHUNG HIỂN THỊ NỘI DUNG MODULE ===== */
+      /* ===== MODULE DISPLAY FRAME - MODAL STYLE ===== */
       .module-display-frame {
-        width: 560px; /* GẤP ĐÔI: 280px * 2 = 560px */
-        height: 560px; /* Giữ nguyên chiều cao */
-        background: rgba(0, 20, 40, 0.9);
-        border: 3px solid #ff00ff; /* Màu neon magenta */
-        border-radius: 15px; /* Bo góc lớn hơn */
+        width: 560px;
+        height: 560px;
+        background: rgba(0, 20, 40, 0.95);
+        border: 3px solid #ff00ff;
+        border-radius: 15px;
         padding: 30px;
-        position: sticky;
-        top: 30px;
-        align-self: flex-start;
         backdrop-filter: blur(15px);
         overflow: hidden;
         box-shadow:
           0 15px 40px rgba(0, 0, 0, 0.8),
           0 0 30px rgba(255, 0, 255, 0.7),
-          inset 0 0 30px rgba(0, 150, 255, 0.1); /* Thêm hiệu ứng bên trong */
+          inset 0 0 30px rgba(0, 150, 255, 0.1);
         display: flex;
         flex-direction: column;
+        z-index: 100;
+        animation: modalAppear 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(1);
         opacity: 1;
-        transition: opacity 0.3s ease;
-        z-index: 10;
-        animation: neonPulse 2s infinite alternate;
+        transition: all 0.3s ease;
       }
 
-      @keyframes neonPulse {
+      @keyframes modalAppear {
         0% {
-          box-shadow:
-            0 15px 40px rgba(0, 0, 0, 0.8),
-            0 0 20px rgba(255, 0, 255, 0.5),
-            inset 0 0 30px rgba(0, 150, 255, 0.1);
-          border-color: #ff00ff;
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(0.7);
         }
         100% {
-          box-shadow:
-            0 15px 40px rgba(0, 0, 0, 0.8),
-            0 0 40px rgba(255, 0, 255, 0.9),
-            inset 0 0 30px rgba(0, 150, 255, 0.1);
-          border-color: #ff5500;
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1);
         }
+      }
+
+      .module-display-frame.hidden {
+        display: none !important;
+        opacity: 0;
+        visibility: hidden;
       }
 
       .module-display-frame::before {
@@ -533,7 +543,6 @@
         z-index: 2;
       }
 
-      /* Thêm hiệu ứng viền neon bao quanh 4 cạnh */
       .module-display-frame::after {
         content: "";
         position: absolute;
@@ -559,6 +568,33 @@
         }
       }
 
+      /* Overlay tối khi modal hiện */
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(5px);
+        z-index: 99;
+        display: none;
+        animation: overlayFadeIn 0.3s ease;
+      }
+
+      .modal-overlay.active {
+        display: block;
+      }
+
+      @keyframes overlayFadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
       .frame-status {
         display: flex;
         align-items: center;
@@ -581,20 +617,24 @@
         text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
       }
 
-      .clear-lock-btn {
+      .close-modal-btn {
         background: rgba(255, 0, 255, 0.2);
         border: 1px solid rgba(255, 0, 255, 0.5);
         color: #ff00ff;
-        padding: 5px 10px;
+        padding: 8px 15px;
         border-radius: 5px;
-        font-size: 12px;
+        font-size: 14px;
         cursor: pointer;
         transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
       }
 
-      .clear-lock-btn:hover {
+      .close-modal-btn:hover {
         background: rgba(255, 0, 255, 0.4);
         box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+        transform: scale(1.05);
       }
 
       .frame-header {
@@ -629,29 +669,9 @@
       .frame-content {
         height: calc(100% - 130px);
         overflow-y: auto;
-        padding-right: 10px;
-      }
-
-      .frame-content::-webkit-scrollbar {
-        width: 6px;
-      }
-
-      .frame-content::-webkit-scrollbar-track {
-        background: rgba(0, 30, 60, 0.3);
-        border-radius: 3px;
-      }
-
-      .frame-content::-webkit-scrollbar-thumb {
-        background: linear-gradient(to bottom, #00a8ff, #00ffcc);
-        border-radius: 3px;
-      }
-      /* Cập nhật cho khung lớn hơn */
-      .frame-content {
-        height: calc(100% - 130px);
-        overflow-y: auto;
         padding-right: 15px;
         display: grid;
-        grid-template-columns: 1fr 1fr; /* CHIA 2 CỘT BÊN TRONG KHUNG */
+        grid-template-columns: 1fr 1fr;
         gap: 20px;
       }
 
@@ -690,7 +710,7 @@
 
       .item-title {
         font-family: "Orbitron", sans-serif;
-        font-size: 18px; /* Tăng kích thước chữ */
+        font-size: 18px;
         color: #00e5ff;
         margin-bottom: 12px;
         display: flex;
@@ -705,7 +725,7 @@
 
       .item-desc {
         color: #a0c8e0;
-        font-size: 15px; /* Tăng kích thước chữ */
+        font-size: 15px;
         line-height: 1.6;
         margin-bottom: 15px;
         flex-grow: 1;
@@ -723,7 +743,7 @@
       }
 
       .item-progress {
-        height: 6px; /* Tăng độ dày */
+        height: 6px;
         background: rgba(0, 50, 100, 0.5);
         border-radius: 3px;
         margin-top: 12px;
@@ -737,61 +757,6 @@
         width: 0%;
         transition: width 1s ease-out;
         box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
-      }
-
-      .content-item {
-        background: rgba(0, 30, 60, 0.4);
-        border-radius: 8px;
-        padding: 15px;
-        margin-bottom: 15px;
-        border: 1px solid rgba(0, 150, 255, 0.2);
-        transition: all 0.3s;
-      }
-
-      .content-item:hover {
-        background: rgba(0, 40, 80, 0.5);
-        border-color: #00a8ff;
-        transform: translateY(-3px);
-      }
-
-      .item-title {
-        font-family: "Orbitron", sans-serif;
-        font-size: 16px;
-        color: #00e5ff;
-        margin-bottom: 8px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-
-      .item-desc {
-        color: #a0c8e0;
-        font-size: 14px;
-        line-height: 1.5;
-      }
-
-      .item-stats {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 10px;
-        font-size: 12px;
-        color: #88d3ff;
-      }
-
-      .item-progress {
-        height: 4px;
-        background: rgba(0, 50, 100, 0.5);
-        border-radius: 2px;
-        margin-top: 8px;
-        overflow: hidden;
-      }
-
-      .item-progress-fill {
-        height: 100%;
-        background: linear-gradient(to right, #00a8ff, #00ffcc);
-        border-radius: 2px;
-        width: 0%;
-        transition: width 1s ease-out;
       }
 
       .start-button {
@@ -960,22 +925,25 @@
           flex-direction: column;
         }
 
-        .modules-section {
-          grid-template-columns: repeat(2, 1fr);
+        .modules-wrapper.has-frame .modules-section {
           max-width: 100%;
         }
 
         .module-display-frame {
-          width: 100%;
-          height: 500px;
-          position: static;
-          margin-top: 30px;
+          width: 90%;
+          max-width: 560px;
+          height: auto;
+          min-height: 500px;
         }
       }
 
       @media (max-width: 900px) {
         .modules-section {
-          grid-template-columns: 1fr; /* Mobile: 1 cột */
+          grid-template-columns: 1fr;
+        }
+
+        .modules-wrapper.no-frame .modules-section {
+          grid-template-columns: 1fr;
         }
       }
 
@@ -988,10 +956,6 @@
           min-width: 100%;
         }
 
-        .modules-section {
-          grid-template-columns: 1fr;
-        }
-
         .logo-text {
           font-size: 22px;
         }
@@ -1001,15 +965,18 @@
         }
 
         .module-display-frame {
-          height: 350px;
+          width: 95%;
+          height: auto;
+          min-height: 450px;
+          padding: 20px;
+        }
+
+        .frame-content {
+          grid-template-columns: 1fr;
         }
       }
-      /* ===== LICENSE GATE ===== */
-      /* =========================================================
-        [CSS-10] LICENSE GATE (UI khóa bản quyền)
-        - overlay + panel + input + buttons + status
-        ========================================================= */
 
+      /* License Gate CSS - giữ nguyên */
       .license-gate {
         position: fixed;
         inset: 0;
@@ -1136,27 +1103,17 @@
         color: #00ffcc;
       }
 
-      /* ====== Ô THỜI HẠN MẶC ĐỊNH (trên 60 ngày) - GIỮ NGUYÊN MÀU XANH ====== */
-      /* =========================================================
-  [CSS-11] EXAM WARNING STATE (chỉ áp dụng cho target-card thứ 2 = "Thời hạn")
-  - Mặc định: giữ xanh (không class)
-  - warning-yellow: 30–60 ngày
-  - warning-red: <30 ngày
-  - warning-expired: <=0 ngày
-  - sparkle/pseudo chỉ bật khi có warning-*
-========================================================= */
+      /* Exam Warning CSS - giữ nguyên */
       .target-card:nth-child(2) {
         position: relative;
         overflow: hidden;
       }
 
-      /* Ẩn tất cả pseudo-elements và sparkle mặc định */
       .target-card:nth-child(2)::before,
       .target-card:nth-child(2)::after {
         display: none !important;
       }
 
-      /* Chỉ hiển thị khi có cảnh báo */
       .target-card:nth-child(2).warning-yellow::before,
       .target-card:nth-child(2).warning-yellow::after,
       .target-card:nth-child(2).warning-red::before,
@@ -1172,7 +1129,6 @@
         display: block !important;
       }
 
-      /* Sparkle chỉ hiển thị khi có cảnh báo */
       .target-card:nth-child(2).warning-yellow .sparkle,
       .target-card:nth-child(2).warning-red .sparkle,
       .target-card:nth-child(2).warning-expired .sparkle {
@@ -1185,7 +1141,6 @@
         opacity: 0.7;
       }
 
-      /* Vị trí sparkle */
       .target-card:nth-child(2) .sparkle:nth-child(1) {
         top: 20%;
         left: 15%;
@@ -1220,7 +1175,6 @@
         }
       }
 
-      /* ====== CẢNH BÁO MÀU VÀNG (30-60 ngày) ====== */
       .target-card:nth-child(2).warning-yellow {
         background: rgba(60, 40, 0, 0.7) !important;
         border: 1px solid rgba(255, 200, 0, 0.6) !important;
@@ -1245,7 +1199,6 @@
         }
       }
 
-      /* Hiệu ứng viền vàng */
       .target-card:nth-child(2).warning-yellow::before {
         content: "";
         position: absolute;
@@ -1271,13 +1224,11 @@
         }
       }
 
-      /* Hạt sparkle vàng */
       .target-card:nth-child(2).warning-yellow .sparkle {
         background: #ffcc00 !important;
         animation: sparkleMove 3s linear infinite !important;
       }
 
-      /* Hạt ánh sáng vàng */
       .target-card:nth-child(2).warning-yellow::after {
         content: "";
         position: absolute;
@@ -1306,7 +1257,6 @@
         }
       }
 
-      /* Chữ vàng */
       .target-card:nth-child(2).warning-yellow .card-title {
         color: #ffdd99 !important;
       }
@@ -1332,7 +1282,6 @@
         color: #ffcc99 !important;
       }
 
-      /* Hiệu ứng hover vàng */
       .target-card:nth-child(2).warning-yellow:hover {
         transform: translateY(-8px) !important;
         animation: cyberPulseHover 1.5s infinite alternate !important;
@@ -1357,8 +1306,6 @@
         }
       }
 
-      /* ====== CẢNH BÁO MÀU ĐỎ (<30 ngày) ====== */
-      /* Giữ nguyên phần CSS màu đỏ đã tạo */
       .target-card:nth-child(2).warning-red {
         background: rgba(60, 0, 0, 0.7) !important;
         border: 1px solid rgba(255, 50, 50, 0.8) !important;
@@ -1383,7 +1330,6 @@
         }
       }
 
-      /* Hiệu ứng viền đỏ */
       .target-card:nth-child(2).warning-red::before {
         animation: redBorderScan 2s linear infinite !important;
         background: linear-gradient(
@@ -1408,7 +1354,6 @@
         }
       }
 
-      /* Hạt sparkle đỏ */
       .target-card:nth-child(2).warning-red .sparkle {
         background: #ff3333 !important;
         animation: sparkleMove 2s linear infinite !important;
@@ -1438,7 +1383,6 @@
         }
       }
 
-      /* Chữ đỏ */
       .target-card:nth-child(2).warning-red .card-title {
         color: #ff9999 !important;
       }
@@ -1464,7 +1408,6 @@
         color: #ffaaaa !important;
       }
 
-      /* Hiệu ứng hover đỏ */
       .target-card:nth-child(2).warning-red:hover {
         animation: redPulseHover 1s infinite alternate !important;
         transform: translateY(-8px) !important;
@@ -1489,7 +1432,6 @@
         }
       }
 
-      /* ====== ĐÃ HẾT HẠN ====== */
       .target-card:nth-child(2).warning-expired {
         background: rgba(30, 30, 30, 0.7) !important;
         border: 1px solid rgba(100, 100, 100, 0.5) !important;
@@ -1511,7 +1453,6 @@
         }
       }
 
-      /* Viền xám */
       .target-card:nth-child(2).warning-expired::before {
         animation: expiredBorderScan 4s linear infinite !important;
         background: linear-gradient(
@@ -1522,7 +1463,6 @@
         ) !important;
       }
 
-      /* Hạt sparkle xám */
       .target-card:nth-child(2).warning-expired .sparkle {
         background: #888888 !important;
         animation: sparkleMove 5s linear infinite !important;
@@ -1550,7 +1490,6 @@
         }
       }
 
-      /* Chữ xám */
       .target-card:nth-child(2).warning-expired .card-title {
         color: #aaaaaa !important;
       }
@@ -1565,31 +1504,21 @@
         color: #999999 !important;
       }
 
-      /* Tắt hiệu ứng hover cho đã hết hạn */
       .target-card:nth-child(2).warning-expired:hover {
         animation: expiredPulse 3s infinite alternate !important;
         transform: none !important;
       }
-      /* ====== CẢNH BÁO CHO Ô TRẠNG THÁI (target-card thứ 3) ====== */
-      /* =========================================================
-  [CSS-12] STATUS WARNING STATE (chỉ áp dụng cho target-card thứ 3 = "Trạng thái")
-  - KHÔNG có class warning-green (giữ màu mặc định khi >60 ngày)
-  - warning-yellow: 30–60 ngày còn hạn
-  - warning-red: <30 ngày còn hạn
-  - warning-expired: <=0 ngày (hết hạn)
-========================================================= */
+
       .target-card:nth-child(3) {
         position: relative;
         overflow: hidden;
       }
 
-      /* Ẩn tất cả pseudo-elements và sparkle mặc định */
       .target-card:nth-child(3)::before,
       .target-card:nth-child(3)::after {
         display: none !important;
       }
 
-      /* Thêm sparkle vào HTML cho ô Trạng thái */
       .target-card:nth-child(3) .sparkle {
         position: absolute;
         width: 4px;
@@ -1601,7 +1530,6 @@
         display: none;
       }
 
-      /* Vị trí sparkle cho ô Trạng thái */
       .target-card:nth-child(3) .sparkle:nth-child(1) {
         top: 20%;
         left: 15%;
@@ -1620,7 +1548,6 @@
         animation-delay: 2s;
       }
 
-      /* Chỉ hiển thị khi có cảnh báo (KHÔNG có warning-green) */
       .target-card:nth-child(3).warning-yellow::before,
       .target-card:nth-child(3).warning-yellow::after,
       .target-card:nth-child(3).warning-red::before,
@@ -1636,14 +1563,12 @@
         display: block !important;
       }
 
-      /* ====== CẢNH BÁO MÀU VÀNG (30-60 ngày) ====== */
       .target-card:nth-child(3).warning-yellow {
         background: rgba(60, 40, 0, 0.7) !important;
         border: 1px solid rgba(255, 200, 0, 0.6) !important;
         animation: cyberPulse 2s infinite alternate !important;
       }
 
-      /* Hiệu ứng viền vàng */
       .target-card:nth-child(3).warning-yellow::before {
         content: "";
         position: absolute;
@@ -1655,13 +1580,11 @@
         animation: borderScan 3s linear infinite;
       }
 
-      /* Hạt sparkle vàng cho ô Trạng thái */
       .target-card:nth-child(3).warning-yellow .sparkle {
         background: #ffcc00 !important;
         animation: sparkleMove 3s linear infinite !important;
       }
 
-      /* Hạt ánh sáng vàng */
       .target-card:nth-child(3).warning-yellow::after {
         content: "";
         position: absolute;
@@ -1675,7 +1598,6 @@
         filter: blur(1px);
       }
 
-      /* Chữ vàng */
       .target-card:nth-child(3).warning-yellow .card-title {
         color: #ffdd99 !important;
       }
@@ -1690,20 +1612,17 @@
         color: #ffcc99 !important;
       }
 
-      /* Hiệu ứng hover vàng */
       .target-card:nth-child(3).warning-yellow:hover {
         transform: translateY(-8px) !important;
         animation: cyberPulseHover 1.5s infinite alternate !important;
       }
 
-      /* ====== CẢNH BÁO MÀU ĐỎ (<30 ngày) ====== */
       .target-card:nth-child(3).warning-red {
         background: rgba(60, 0, 0, 0.7) !important;
         border: 1px solid rgba(255, 50, 50, 0.8) !important;
         animation: redPulse 1.5s infinite alternate !important;
       }
 
-      /* Hiệu ứng viền đỏ */
       .target-card:nth-child(3).warning-red::before {
         animation: redBorderScan 2s linear infinite !important;
         background: linear-gradient(
@@ -1714,7 +1633,6 @@
         ) !important;
       }
 
-      /* Hạt sparkle đỏ */
       .target-card:nth-child(3).warning-red .sparkle {
         background: #ff3333 !important;
         animation: sparkleMove 2s linear infinite !important;
@@ -1729,7 +1647,6 @@
         animation: redParticleGlow 1s ease-in-out infinite alternate !important;
       }
 
-      /* Chữ đỏ */
       .target-card:nth-child(3).warning-red .card-title {
         color: #ff9999 !important;
       }
@@ -1744,20 +1661,17 @@
         color: #ffaaaa !important;
       }
 
-      /* Hiệu ứng hover đỏ */
       .target-card:nth-child(3).warning-red:hover {
         animation: redPulseHover 1s infinite alternate !important;
         transform: translateY(-8px) !important;
       }
 
-      /* ====== ĐÃ HẾT HẠN ====== */
       .target-card:nth-child(3).warning-expired {
         background: rgba(30, 30, 30, 0.7) !important;
         border: 1px solid rgba(100, 100, 100, 0.5) !important;
         animation: expiredPulse 3s infinite alternate !important;
       }
 
-      /* Viền xám */
       .target-card:nth-child(3).warning-expired::before {
         animation: expiredBorderScan 4s linear infinite !important;
         background: linear-gradient(
@@ -1768,7 +1682,6 @@
         ) !important;
       }
 
-      /* Hạt sparkle xám */
       .target-card:nth-child(3).warning-expired .sparkle {
         background: #888888 !important;
         animation: sparkleMove 5s linear infinite !important;
@@ -1783,7 +1696,6 @@
         animation: expiredParticleGlow 2s ease-in-out infinite alternate !important;
       }
 
-      /* Chữ xám */
       .target-card:nth-child(3).warning-expired .card-title {
         color: #aaaaaa !important;
       }
@@ -1798,7 +1710,6 @@
         color: #999999 !important;
       }
 
-      /* Tắt hiệu ứng hover cho đã hết hạn */
       .target-card:nth-child(3).warning-expired:hover {
         animation: expiredPulse 3s infinite alternate !important;
         transform: none !important;
@@ -1806,9 +1717,7 @@
     </style>
   </head>
   <body>
-    <!-- =========================================================
-  [HTML-1] BACKGROUND LAYERS (grid / scan / floating / glow)
-========================================================= -->
+    <!-- Background -->
     <div class="cyber-grid"></div>
     <div class="cyber-line"></div>
     <div class="floating-elements">
@@ -1819,17 +1728,15 @@
     </div>
     <div class="glow-effect glow-1"></div>
     <div class="glow-effect glow-2"></div>
-    <!-- =========================================================
-  [HTML-2] LICENSE GATE UI (khóa bản quyền)
-  - #licenseGate overlay
-  - nhập license / copy device / request reset
-  - hiển thị deviceId + deviceInfo
-========================================================= -->
 
+    <!-- Modal Overlay -->
+    <div class="modal-overlay" id="modalOverlay"></div>
+
+    <!-- License Gate -->
     <div class="license-gate" id="licenseGate">
       <div class="license-panel">
         <h2 class="panel-title">
-          <i class="fas fa-shield-halved"></i> KÍCH HOẠT BẢN QUYỀN1
+          <i class="fas fa-shield-halved"></i> KÍCH HOẠT BẢN QUYỀN
         </h2>
 
         <div class="license-small">
@@ -1876,13 +1783,11 @@
         </div>
       </div>
     </div>
-    <!-- =========================================================
-  [HTML-3] APP ROOT (UI chính)
-  - Ẩn khi chưa kích hoạt
-========================================================= -->
+
+    <!-- App Root -->
     <div id="appRoot">
       <div class="container">
-        <!-- [HTML-3.1] HEADER: Logo + User -->
+        <!-- Header -->
         <header>
           <div class="logo">
             <div class="logo-icon">
@@ -1899,9 +1804,9 @@
           </div>
         </header>
 
-        <!-- [HTML-3.2] MAIN CONTENT -->
+        <!-- Main Content -->
         <main class="main-content">
-          <!-- [HTML-3.2.1] MISSION PANEL: Mục tiêu + Thời hạn + Streak -->
+          <!-- Mission Panel -->
           <section class="mission-panel">
             <h2 class="panel-title">
               <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
@@ -1925,7 +1830,6 @@
                   Kỳ thi tháng 7 năm 2026
                 </div>
                 <div class="card-subtitle" id="examCountdown">Còn ...</div>
-                <!-- Thêm 3 sparkle cho hiệu ứng cyber -->
                 <div class="sparkle"></div>
                 <div class="sparkle"></div>
                 <div class="sparkle"></div>
@@ -1937,7 +1841,6 @@
                 </div>
                 <div class="card-value" id="statusValue">---</div>
                 <div class="card-subtitle" id="statusSubtitle">---</div>
-                <!-- Thêm 3 sparkle cho hiệu ứng cyber -->
                 <div class="sparkle"></div>
                 <div class="sparkle"></div>
                 <div class="sparkle"></div>
@@ -1953,13 +1856,13 @@
             </div>
           </section>
 
-          <!-- [HTML-3.2.2] MODULES PANEL: Vocabulary/Grammar/Listening/Reading -->
+          <!-- Modules Panel -->
           <section class="mission-panel">
             <h2 class="panel-title">
               <i class="fas fa-cogs"></i> MODULE ĐÀO TẠO
             </h2>
 
-            <div class="modules-wrapper">
+            <div class="modules-wrapper no-frame" id="modulesWrapper">
               <div class="modules-section">
                 <div class="module-card" data-module="vocab">
                   <div class="module-icon">
@@ -2030,35 +1933,26 @@
                   </div>
                 </div>
               </div>
+            </div>
 
-              <!-- Khung hiển thị nội dung module -->
-              <div class="module-display-frame" id="moduleDisplay">
-                <div class="frame-status">
-                  <div class="status-indicator" id="frameStatus">
-                    <span class="status-icon">🔓</span>
-                    <span class="status-text">Đang xem tạm thời</span>
-                  </div>
-                  <button
-                    class="clear-lock-btn"
-                    id="clearLockBtn"
-                    style="display: none"
-                  >
-                    <i class="fas fa-unlock"></i> Bỏ khóa
-                  </button>
+            <!-- Module Display Frame - Modal -->
+            <div class="module-display-frame hidden" id="moduleDisplay">
+              <div class="frame-status">
+                <div class="status-indicator" id="frameStatus">
+                  <span class="status-icon">🔓</span>
+                  <span class="status-text">Đang xem</span>
                 </div>
-                <div class="frame-header">
-                  <div class="frame-icon">
-                    <i class="fas fa-book"></i>
-                  </div>
-                  <div class="frame-title" id="frameTitle">Chọn module</div>
-                </div>
-                <div class="frame-content" id="frameContent">
-                  <div class="default-content">
-                    <p>Di chuột vào module bên trái để xem nội dung tạm thời</p>
-                    <p>Nhấn đúp để khóa nội dung cố định</p>
-                  </div>
-                </div>
+                <button class="close-modal-btn" id="closeModalBtn">
+                  <i class="fas fa-times"></i> Đóng
+                </button>
               </div>
+              <div class="frame-header">
+                <div class="frame-icon">
+                  <i class="fas fa-book"></i>
+                </div>
+                <div class="frame-title" id="frameTitle">Chọn module</div>
+              </div>
+              <div class="frame-content" id="frameContent"></div>
             </div>
 
             <a href="#" class="start-button">
@@ -2067,7 +1961,7 @@
           </section>
         </main>
 
-        <!-- [HTML-3.3] FOOTER -->
+        <!-- Footer -->
         <footer>
           <p>© 2025 N1 CYBERSPHERE - Hệ thống đào tạo JLPT N1 công nghệ cao</p>
           <p>Phiên bản 2.0 | Chế độ: Dark Mode | Kết nối: Stable</p>
@@ -2086,23 +1980,20 @@
   JS-6) BACKGROUND RECHECK (server ping định kỳ)
   JS-7) GATE FLOW (show/hide)
   JS-8) APP UI EFFECTS (progress/ripple/streak)
-  JS-9) MODULE DISPLAY LOGIC (hover/double-click/ESC) - ĐÃ SỬA
+  JS-9) MODULE DISPLAY LOGIC (CẬP NHẬT - Modal Center)
   JS-10) BOOT (IIFE)
 ========================================================= */
-      /**
-       * ====== CONFIG ======
-       * BẮT BUỘC: có server để verify, vì secret không được nằm trong client.
-       * Bạn đổi API_URL theo server của bạn.
-       */
+
+      // ====== CONFIG ======
       const API_URL = "https://n1-license-server.onrender.com/api";
       const LS_DEVICE_ID = "n1_device_id";
       const LS_ACTIVATED = "n1_activated_once";
       const LS_LICENSE = "n1_license";
       const LS_USER_NAME = "n1_user_name";
       const LS_EXAM_DATE = "n1_exam_date";
-      /** ====== Utils ====== */
+
+      // ====== Utils ======
       function uuidv4() {
-        // UUID đơn giản đủ dùng
         return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
           const r = (Math.random() * 16) | 0;
           const v = c === "x" ? r : (r & 0x3) | 0x8;
@@ -2132,18 +2023,18 @@
         el.classList.remove("error", "ok");
         if (type) el.classList.add(type);
       }
+
       function setUserName(name) {
         const el = document.getElementById("userNameText");
         if (!el) return;
         const safeName = (name || "").trim();
         if (!safeName) return;
-
         el.textContent = safeName + " 🎉";
         localStorage.setItem(LS_USER_NAME, safeName);
       }
 
       // ===== Exam date countdown =====
-      const DEFAULT_EXAM_DATE = "20260701"; // mặc định nếu server không trả (anh có thể đổi)
+      const DEFAULT_EXAM_DATE = "20260701";
 
       function parseYYYYMMDD(s) {
         const m = /^(\d{4})(\d{2})(\d{2})$/.exec(String(s || "").trim());
@@ -2195,7 +2086,6 @@
           return;
         }
 
-        // Lưu expiry vào localStorage để dùng offline
         localStorage.setItem("n1_expiry_date", expiryStr);
 
         const now = new Date();
@@ -2219,13 +2109,11 @@
           "warning-expired",
         );
 
-        // TỰ ĐỘNG KHÓA KHI HẾT HẠN
         if (remainingDays <= 0) {
           statusValueEl.textContent = "EXPIRED";
           statusSubtitleEl.textContent = `Quyền truy cập đã hết hạn từ: ${formatDDMMYYYY(expDate)}`;
           targetCardEl.classList.add("warning-expired");
 
-          // TỰ ĐỘNG KHÓA HỆ THỐNG
           localStorage.removeItem(LS_LICENSE);
           localStorage.removeItem(LS_ACTIVATED);
           showGate(true);
@@ -2248,16 +2136,12 @@
           statusSubtitleEl.innerHTML = `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(expDate)}<br>Còn ${remainingDays} ngày`;
         }
 
-        // KHỞI ĐỘNG COUNTDOWN TỰ ĐỘNG KIỂM TRA
-        // Xóa timer cũ nếu có
         if (window.__expiryCountdownTimer) {
           clearInterval(window.__expiryCountdownTimer);
         }
-        // Bắt đầu countdown mới
         startExpiryCountdown(expiryStr);
       }
 
-      // trả về số tháng + số ngày còn lại (ước lượng theo lịch, đủ đẹp để hiển thị)
       function diffMonthsDays(fromDate, toDate) {
         if (toDate <= fromDate) return { months: 0, days: 0 };
 
@@ -2289,7 +2173,7 @@
         const examCountdownEl = document.getElementById("examCountdown");
         const targetCardEl = document.querySelector(
           ".target-card:nth-child(2)",
-        ); // Lấy ô thời hạn
+        );
 
         if (
           !examMonthYearEl ||
@@ -2299,7 +2183,6 @@
         )
           return;
 
-        // ưu tiên: examDateStr từ server -> localStorage -> default
         const raw =
           examDateStr && String(examDateStr).trim()
             ? String(examDateStr).trim()
@@ -2313,10 +2196,8 @@
           return;
         }
 
-        // 07/2026
         examMonthYearEl.textContent = formatMonthYear(examDt);
 
-        // subtitle
         if (!examDateStr && !localStorage.getItem(LS_EXAM_DATE)) {
           examSubtitleEl.textContent = "Kỳ thi tháng 7 năm 2026";
         } else {
@@ -2326,7 +2207,6 @@
           examSubtitleEl.textContent = `Ngày thi chính thức : ${dd}/${mm}/${yyyy}`;
         }
 
-        // countdown theo ngày hiện tại của máy user
         const now = new Date();
         const today = new Date(
           now.getFullYear(),
@@ -2335,13 +2215,11 @@
         );
         const { months, days } = diffMonthsDays(today, examDt);
 
-        // Tính tổng số ngày còn lại
         const totalDays = Math.max(
           0,
           Math.round((examDt - today) / (1000 * 60 * 60 * 24)),
         );
 
-        // Logic hiển thị thông minh
         let countdownText = "";
         if (totalDays <= 0) {
           countdownText = "Kỳ thi JLPT đã diễn ra";
@@ -2354,14 +2232,10 @@
         }
 
         examCountdownEl.textContent = countdownText;
-
-        // Đổi màu cảnh báo dựa trên số ngày
         updateWarningColor(targetCardEl, totalDays);
       }
 
-      // Hàm đổi màu cảnh báo
       function updateWarningColor(cardElement, daysRemaining) {
-        // Xóa tất cả lớp màu cũ
         cardElement.classList.remove(
           "warning-yellow",
           "warning-red",
@@ -2369,16 +2243,12 @@
         );
 
         if (daysRemaining <= 0) {
-          // Đã hết hạn
           cardElement.classList.add("warning-expired");
         } else if (daysRemaining < 30) {
-          // Dưới 30 ngày: Màu đỏ cảnh báo
           cardElement.classList.add("warning-red");
         } else if (daysRemaining <= 60) {
-          // 30-60 ngày: Màu vàng cảnh báo
           cardElement.classList.add("warning-yellow");
         }
-        // Trên 60 ngày: KHÔNG thêm class, giữ nguyên màu xanh
       }
 
       async function copyText(text) {
@@ -2386,7 +2256,6 @@
           await navigator.clipboard.writeText(text);
           return true;
         } catch {
-          // fallback
           const ta = document.createElement("textarea");
           ta.value = text;
           document.body.appendChild(ta);
@@ -2397,9 +2266,7 @@
         }
       }
 
-      /** ====== API ======
-       * server sẽ verify license + bind 1 license vào 1 device
-       */
+      // ====== API ======
       async function verifyLicense(deviceId, license) {
         const res = await fetch(`${API_URL}/verify`, {
           method: "POST",
@@ -2410,13 +2277,12 @@
           const t = await res.text();
           throw new Error(t || "Verify failed");
         }
-        return res.json(); // { ok: true, expiry: "20260701", bound: true }
+        return res.json();
       }
 
       function startBackgroundRecheck(deviceId) {
-        const INTERVAL_MS = 90 * 1000; // 90 giây (anh có thể đổi 60s, 120s...)
+        const INTERVAL_MS = 90 * 1000;
 
-        // tránh setInterval nhiều lần nếu gọi lại
         if (window.__recheckTimer) return;
 
         async function tick() {
@@ -2437,7 +2303,6 @@
           } catch (e) {
             const msg = String(e?.message || "");
 
-            // ✅ server online trả về lỗi "cứng" => khóa ngay
             const hardBlock =
               msg.includes("Device revoked") ||
               msg.includes("Expired") ||
@@ -2455,7 +2320,6 @@
               return;
             }
 
-            // ✅ server offline / mạng lỗi => KHÔNG khóa
             setStatus(
               "Server kiểm tra đang offline. Hệ thống giữ trạng thái kích hoạt.",
               "error",
@@ -2473,26 +2337,24 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ deviceId, oldLicense, note }),
         });
-        // request-reset có thể chỉ log mail/slack, nên ok/không ok tùy bạn
         if (!res.ok) {
           const t = await res.text();
           throw new Error(t || "Request reset failed");
         }
         return res.json();
       }
-      /** ====== Expiry Countdown ====== */
+
+      // ====== Expiry Countdown ======
       function startExpiryCountdown(expiryStr) {
         if (!expiryStr) return;
 
         const expiryDt = parseYYYYMMDD(expiryStr);
         if (!expiryDt) return;
 
-        // Xóa timer cũ nếu có
         if (window.__expiryCountdownTimer) {
           clearInterval(window.__expiryCountdownTimer);
         }
 
-        // Tạo interval kiểm tra mỗi phút
         window.__expiryCountdownTimer = setInterval(() => {
           const now = new Date();
           const today = new Date(
@@ -2509,20 +2371,17 @@
           const msPerDay = 24 * 60 * 60 * 1000;
           const remainingDays = Math.ceil((expDate - today) / msPerDay);
 
-          // Nếu hết hạn (<= 0 ngày)
           if (remainingDays <= 0) {
             clearInterval(window.__expiryCountdownTimer);
             localStorage.removeItem(LS_LICENSE);
             localStorage.removeItem(LS_ACTIVATED);
 
-            // Hiển thị thông báo và khóa app
             showGate(true);
             setStatus(
               "License đã hết hạn. Vui lòng gia hạn để tiếp tục sử dụng.",
               "error",
             );
 
-            // Cập nhật UI ngay lập tức
             const statusValueEl = document.getElementById("statusValue");
             const statusSubtitleEl = document.getElementById("statusSubtitle");
             const targetCardEl = document.querySelector(
@@ -2541,9 +2400,10 @@
               targetCardEl.classList.add("warning-expired");
             }
           }
-        }, 60000); // Kiểm tra mỗi 60 giây
+        }, 60000);
       }
-      /** ====== Gate flow ====== */
+
+      // ====== Gate flow ======
       function showGate(show = true) {
         const gate = document.getElementById("licenseGate");
         const app = document.getElementById("appRoot");
@@ -2556,21 +2416,11 @@
         document.getElementById("deviceInfoText").textContent = getDeviceInfo();
       }
 
-      /* ====== MODULE DISPLAY LOGIC (hover + click lock + dblclick/ESC unlock) ====== */
-      /**
-       * State đúng theo yêu cầu:
-       * - hoveredModule: module đang hover (tạm thời)
-       * - lockedModule: module đang bị khóa (giữ sáng)
-       * - defaultContent: "Xin chào"
-       */
-      let hoveredModule = null;
+      // ====== MODULE DISPLAY LOGIC - MODAL CENTER ======
       let lockedModule = null;
-
-      // Chặn bug: dblclick sẽ bắn 2 click trước đó → bỏ qua click xảy ra sát ngay trước dblclick
       let lastDblClickAt = 0;
       const IGNORE_CLICK_AFTER_DBL_MS = 350;
 
-      // Dữ liệu nội dung cho các module (GIỮ NGUYÊN của bạn)
       const moduleContents = {
         vocab: {
           title: "TỪ VỰNG N1",
@@ -2704,158 +2554,115 @@
         });
       }
 
-      // ===== UI helpers theo yêu cầu =====
-      function showDefault() {
-        hoveredModule = null;
+      // Hiển thị modal
+      function showModuleModal() {
+        const modal = document.getElementById("moduleDisplay");
+        const overlay = document.getElementById("modalOverlay");
+        const wrapper = document.getElementById("modulesWrapper");
 
-        const frameTitle = document.getElementById("frameTitle");
-        const frameContent = document.getElementById("frameContent");
-        const frameIcon = document.querySelector(".frame-icon i");
-
-        frameTitle.textContent = "Xin chào";
-        if (frameIcon) frameIcon.className = "fas fa-book";
-
-        // giữ layout grid trong frame-content → set grid-column để không vỡ
-        frameContent.innerHTML = `
-    <div class="default-content" style="grid-column: 1 / -1; text-align:center; padding: 40px;">
-      <h3 style="color:#00ffcc; margin-bottom: 10px; font-size: 26px;">Xin chào</h3>
-      <p style="margin-bottom: 10px; font-size: 16px;">Rê chuột vào module để xem nhanh.</p>
-      <p style="margin-bottom: 10px; font-size: 16px;">Click để khóa. ESC hoặc double-click vào module đang khóa để bỏ khóa.</p>
-    </div>
-  `;
-
-        updateFrameStatus();
+        modal.classList.remove("hidden");
+        overlay.classList.add("active");
+        wrapper.classList.remove("no-frame");
+        wrapper.classList.add("has-frame");
       }
 
-      function renderModuleToPanel(moduleId) {
+      // Ẩn modal
+      function hideModuleModal() {
+        const modal = document.getElementById("moduleDisplay");
+        const overlay = document.getElementById("modalOverlay");
+        const wrapper = document.getElementById("modulesWrapper");
+
+        modal.classList.add("hidden");
+        overlay.classList.remove("active");
+        wrapper.classList.remove("has-frame");
+        wrapper.classList.add("no-frame");
+
+        // Reset states
+        lockedModule = null;
+        clearAllCardStates();
+      }
+
+      function renderModuleToModal(moduleId) {
         const data = moduleContents[moduleId];
         if (!data) return;
 
         const frameTitle = document.getElementById("frameTitle");
         const frameContent = document.getElementById("frameContent");
         const frameIcon = document.querySelector(".frame-icon i");
+        const frameStatus = document.getElementById("frameStatus");
+        const statusText = frameStatus.querySelector(".status-text");
 
         frameTitle.textContent = data.title;
         if (frameIcon) frameIcon.className = data.icon;
+
+        if (lockedModule === moduleId) {
+          frameStatus.classList.add("locked");
+          statusText.textContent = `Đã khóa: ${data.title}`;
+        } else {
+          frameStatus.classList.remove("locked");
+          statusText.textContent = `Đang xem: ${data.title}`;
+        }
 
         frameContent.innerHTML = "";
         data.items.forEach((item) => {
           const itemEl = document.createElement("div");
           itemEl.className = "content-item";
           itemEl.innerHTML = `
-      <div class="item-title">
-        <i class="fas fa-circle"></i> ${item.title}
-      </div>
-      <div class="item-desc">${item.desc}</div>
-      <div class="item-stats">${item.stats}</div>
-      <div class="item-progress">
-        <div class="item-progress-fill" style="width: ${item.progress}%"></div>
-      </div>
-    `;
+            <div class="item-title">
+              <i class="fas fa-circle"></i> ${item.title}
+            </div>
+            <div class="item-desc">${item.desc}</div>
+            <div class="item-stats">${item.stats}</div>
+            <div class="item-progress">
+              <div class="item-progress-fill" style="width: ${item.progress}%"></div>
+            </div>
+          `;
           frameContent.appendChild(itemEl);
         });
 
-        updateFrameStatus();
-      }
-
-      function updateFrameStatus() {
-        const frameStatus = document.getElementById("frameStatus");
-        const clearLockBtn = document.getElementById("clearLockBtn");
-        if (!frameStatus) return;
-
-        const statusIcon = frameStatus.querySelector(".status-icon");
-        const statusText = frameStatus.querySelector(".status-text");
-
-        if (lockedModule) {
-          frameStatus.classList.add("locked");
-          if (statusIcon) statusIcon.textContent = "🔒";
-          if (statusText)
-            statusText.textContent = `Đã khóa: ${moduleContents[lockedModule].title}`;
-          if (clearLockBtn) clearLockBtn.style.display = "block";
-        } else {
-          frameStatus.classList.remove("locked");
-          if (statusIcon) statusIcon.textContent = "🔓";
-          if (statusText)
-            statusText.textContent = hoveredModule
-              ? `Đang xem: ${moduleContents[hoveredModule].title}`
-              : "Đang xem tạm thời";
-          if (clearLockBtn) clearLockBtn.style.display = "none";
-        }
-      }
-
-      // ===== API theo yêu cầu: setActive / setLocked / unlock =====
-      function setActive(moduleId) {
-        // Nếu đã lock thì hover không có tác dụng
-        if (lockedModule) return;
-
-        hoveredModule = moduleId;
-
-        clearAllCardStates();
-        const card = getModuleCard(moduleId);
-        if (card) card.classList.add("active");
-
-        renderModuleToPanel(moduleId);
+        showModuleModal();
       }
 
       function setLocked(moduleId) {
         lockedModule = moduleId;
-        hoveredModule = null;
 
         clearAllCardStates();
         const card = getModuleCard(moduleId);
         if (card) card.classList.add("locked");
 
-        renderModuleToPanel(moduleId);
+        renderModuleToModal(moduleId);
       }
 
       function unlock() {
         lockedModule = null;
-        hoveredModule = null;
-
         clearAllCardStates();
-        showDefault();
+        hideModuleModal();
       }
 
-      // ===== Event binding đúng spec =====
       function setupModuleInteractions() {
         const moduleCards = document.querySelectorAll(".module-card");
 
         moduleCards.forEach((card) => {
           const moduleId = card.getAttribute("data-module");
 
-          // Hover (mouseenter/leave) — chỉ hoạt động khi chưa lock
-          card.addEventListener("mouseenter", () => {
-            if (lockedModule) return;
-            setActive(moduleId);
-          });
-
-          card.addEventListener("mouseleave", () => {
-            if (lockedModule) return;
-
-            // chỉ khi rời đúng module đang hover thì mới default
-            if (hoveredModule === moduleId) {
-              hoveredModule = null;
-              clearAllCardStates();
-              showDefault();
-            }
-          });
-
-          // Click trái để LOCK
+          // Click để mở modal
           card.addEventListener("click", (e) => {
             e.preventDefault();
 
-            // bỏ qua click sinh ra do dblclick
             const now = Date.now();
             if (now - lastDblClickAt < IGNORE_CLICK_AFTER_DBL_MS) return;
 
-            // Nếu click đúng module đang lock -> không làm gì (vẫn giữ lock, unlock chỉ dblclick/ESC/nút)
-            if (lockedModule === moduleId) return;
+            // Nếu click đúng module đang lock -> giữ lock
+            if (lockedModule === moduleId) {
+              renderModuleToModal(moduleId);
+              return;
+            }
 
-            // ✅ Nếu đang lock module khác mà click module này -> CHUYỂN LOCK sang module này
+            // Nếu đang lock module khác mà click module này -> CHUYỂN LOCK
             setLocked(moduleId);
           });
 
-          // Double-click chỉ để UNLOCK nếu đúng module đang lock
+          // Double-click để unlock nếu đang lock module này
           card.addEventListener("dblclick", (e) => {
             e.preventDefault();
             lastDblClickAt = Date.now();
@@ -2863,18 +2670,24 @@
             if (lockedModule === moduleId) {
               unlock();
             }
-            // dblclick lên module khác khi đang lock: không làm gì (đúng spec)
           });
 
-          // Chặn context menu (chuột phải)
           card.addEventListener("contextmenu", (e) => e.preventDefault());
         });
 
-        // Nút "Bỏ khóa" (không bắt buộc trong spec nhưng bạn đã có UI, dùng như unlock)
-        const clearLockBtn = document.getElementById("clearLockBtn");
-        if (clearLockBtn) clearLockBtn.addEventListener("click", unlock);
+        // Nút Đóng modal
+        const closeBtn = document.getElementById("closeModalBtn");
+        if (closeBtn) {
+          closeBtn.addEventListener("click", unlock);
+        }
 
-        // ESC để unlock
+        // Click overlay để đóng
+        const overlay = document.getElementById("modalOverlay");
+        if (overlay) {
+          overlay.addEventListener("click", unlock);
+        }
+
+        // ESC để đóng
         document.addEventListener("keydown", (e) => {
           if (e.key === "Escape" && lockedModule) {
             unlock();
@@ -2882,10 +2695,9 @@
         });
       }
 
-      /* ====== END MODULE DISPLAY LOGIC ====== */
-
+      // ====== App UI Effects ======
       function runAppUI() {
-        // === Progress bars ===
+        // Progress bars
         const progressData = {
           vocab: 65,
           grammar: 42,
@@ -2906,7 +2718,7 @@
           }, 300);
         }
 
-        // === Start button ripple effect ===
+        // Start button
         const startButton = document.querySelector(".start-button");
         startButton.addEventListener("click", function (e) {
           e.preventDefault();
@@ -2941,23 +2753,7 @@
           }, 300);
         });
 
-        // === Target cards hover effect ===
-        const targetCards = document.querySelectorAll(".target-card");
-        targetCards.forEach((card) => {
-          card.addEventListener("mouseenter", () => {
-            const afterElement = card.querySelector(".card-value");
-            if (afterElement)
-              afterElement.style.textShadow = "0 0 20px rgba(0, 255, 204, 0.8)";
-          });
-
-          card.addEventListener("mouseleave", () => {
-            const afterElement = card.querySelector(".card-value");
-            if (afterElement)
-              afterElement.style.textShadow = "0 0 10px rgba(0, 255, 204, 0.5)";
-          });
-        });
-
-        // === Streak counter animation ===
+        // Streak counter
         const streakDays = document.querySelector(".streak-days");
         let count = 0;
         const targetCount = 5;
@@ -2967,21 +2763,17 @@
           if (count === targetCount) clearInterval(countInterval);
         }, 200);
 
-        // === Setup module interactions ===
+        // Setup module interactions
         setupModuleInteractions();
 
-        // Hiển thị nội dung mặc định
-        showDefault();
-        // KIỂM TRA EXPIRY KHI APP KHỞI ĐỘNG (phòng trường hợp user đã mở app từ trước)
+        // Check expiry
         const savedExpiry = localStorage.getItem("n1_expiry_date");
         if (savedExpiry) {
           updateStatusUI(savedExpiry);
         } else {
-          // Nếu không có expiry trong localStorage, thử lấy từ server
           const license = localStorage.getItem(LS_LICENSE);
           if (license) {
             const deviceId = getOrCreateDeviceId();
-            // Gọi lại verify để cập nhật expiry mới nhất
             verifyLicense(deviceId, license)
               .then((r) => {
                 if (r && r.ok) {
@@ -2989,16 +2781,15 @@
                 }
               })
               .catch(() => {
-                // Nếu verify fail, vẫn hiển thị active
                 updateStatusUI("");
               });
           }
         }
-        // Debug
+
         console.log("App UI initialized");
       }
 
-      /** ====== Boot ====== */
+      // ====== Boot ======
       (async function boot() {
         const deviceId = getOrCreateDeviceId();
         fillDeviceUI(deviceId);
@@ -3006,10 +2797,12 @@
         const savedLicense = localStorage.getItem(LS_LICENSE);
         const licenseInput = document.getElementById("licenseInput");
         if (savedLicense) licenseInput.value = savedLicense;
+
         const savedName = localStorage.getItem(LS_USER_NAME);
         if (savedName) setUserName(savedName);
-        updateExamUI(""); // dùng localStorage nếu có, không có thì dùng DEFAULT_EXAM_DATE
-        setInterval(() => updateExamUI(""), 60 * 1000); // update mỗi phút
+
+        updateExamUI("");
+        setInterval(() => updateExamUI(""), 60 * 1000);
 
         const activatedOnce = localStorage.getItem(LS_ACTIVATED) === "1";
         if (activatedOnce && savedLicense) {
@@ -3020,7 +2813,6 @@
           showGate(true);
         }
 
-        // thử auto verify nếu có savedLicense
         if (savedLicense) {
           setStatus("Đang kiểm tra license...", "");
           try {
@@ -3029,12 +2821,8 @@
               localStorage.setItem(LS_ACTIVATED, "1");
               setStatus(`Kích hoạt OK (hạn: ${r.expiry})`, "ok");
               updateStatusUI(r.expiry);
-              // Lưu expiry date để kiểm tra offline
-              localStorage.setItem("n1_expiry_date", r.expiry);
-              // Lưu expiry date để kiểm tra offline
               localStorage.setItem("n1_expiry_date", r.expiry);
 
-              // NEW: set tên user từ server
               if (r.userName) setUserName(r.userName);
               if (r.examDate) localStorage.setItem(LS_EXAM_DATE, r.examDate);
               updateExamUI(r.examDate);
@@ -3053,7 +2841,7 @@
           }
         }
 
-        // Buttons
+        // Button events
         document
           .getElementById("btnCopyDevice")
           .addEventListener("click", async () => {
@@ -3079,7 +2867,6 @@
                 setStatus(`Kích hoạt OK (hạn: ${r.expiry})`, "ok");
                 updateStatusUI(r.expiry);
 
-                // NEW: set tên user từ server
                 if (r.userName) setUserName(r.userName);
                 if (r.examDate) localStorage.setItem(LS_EXAM_DATE, r.examDate);
                 updateExamUI(r.examDate);
@@ -3116,7 +2903,6 @@
                 "Nhập lý do cấp lại (vd: đổi máy / cài lại Windows / xóa trình duyệt):",
               ) || "";
 
-            // Tạo mã yêu cầu (copy được)
             const requestCode = `RESET|deviceId=${deviceId}|oldLicense=${oldLicense}|note=${note}`;
             await copyText(requestCode);
 
@@ -3125,7 +2911,6 @@
               "ok",
             );
 
-            // Nếu bạn có endpoint server thì gọi thêm (không có cũng không sao)
             try {
               await requestReset(deviceId, oldLicense, note);
             } catch {}
