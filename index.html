@@ -1904,7 +1904,7 @@
           <!-- [HTML-3.2.1] MISSION PANEL: Mục tiêu + Thời hạn + Streak -->
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
             </h2>
 
             <div class="target-info">
@@ -2848,12 +2848,10 @@
             const now = Date.now();
             if (now - lastDblClickAt < IGNORE_CLICK_AFTER_DBL_MS) return;
 
-            // Nếu đang lock module khác -> click không làm gì (đúng spec)
-            if (lockedModule && lockedModule !== moduleId) return;
-
-            // Nếu đang lock chính nó -> click cũng không unlock (spec: unlock chỉ dblclick/ESC)
+            // Nếu click đúng module đang lock -> không làm gì (vẫn giữ lock, unlock chỉ dblclick/ESC/nút)
             if (lockedModule === moduleId) return;
 
+            // ✅ Nếu đang lock module khác mà click module này -> CHUYỂN LOCK sang module này
             setLocked(moduleId);
           });
 
