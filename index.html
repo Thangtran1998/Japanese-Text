@@ -14,23 +14,21 @@
     />
     <style>
       /* =========================================================
-    [CSS-INDEX]
-    1) RESET + BODY THEME
-    2) BACKGROUND EFFECTS (grid/scan/float/glow)
-    3) LAYOUT WRAPPER (.container)
-    4) HEADER / BRANDING (logo + user)
-    5) PANELS / CARDS (mission-panel, target-card)
-    6) STREAK COUNTER
-    7) MODULES GRID + PROGRESS + START BUTTON
-    8) FOOTER
-    9) RESPONSIVE (@media)
-    10) LICENSE GATE (overlay activate)
-    11) EXAM WARNING STATE (target-card thứ 2)
-    12) MODULE DISPLAY FRAME (Khung hiển thị nội dung module) - CẬP NHẬT
-    13) MODULE INTERACTION STATES (hover/locked)
-    14) MODAL ANIMATION - HIỆU ỨNG HIỂN THỊ MODULE
-    15) SCROLL LOCK MANAGEMENT
-    ========================================================= */
+        [CSS-INDEX]
+        1) RESET + BODY THEME
+        2) BACKGROUND EFFECTS
+        3) LAYOUT WRAPPER (.container)
+        4) HEADER / BRANDING
+        5) PANELS / CARDS
+        6) STREAK COUNTER
+        7) MODULES GRID
+        8) FOOTER
+        9) RESPONSIVE
+        10) LICENSE GATE
+        11) EXAM WARNING STATE
+        12) STATUS WARNING STATE
+        13) MODULE MODAL DISPLAY (NEW)
+      ========================================================= */
 
       * {
         margin: 0;
@@ -56,14 +54,6 @@
             transparent 20%
           ),
           linear-gradient(to bottom, #0a0e17, #0c1220);
-      }
-
-      /* Scroll lock class - chỉ khóa scroll khi modal mở */
-      body.modal-open {
-        overflow: hidden;
-        position: fixed;
-        width: 100%;
-        height: 100%;
       }
 
       .cyber-grid {
@@ -320,31 +310,15 @@
         color: #ffdd99;
       }
 
-      /* ===== MODULES SECTION CẬP NHẬT ===== */
+      /* ===== MODULES GRID (full width luôn, vì frame không còn chiếm chỗ) ===== */
       .modules-wrapper {
-        display: flex;
-        gap: 30px;
         margin-top: 20px;
-        position: relative;
-        min-height: 600px;
       }
 
       .modules-section {
-        flex: 1;
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 25px;
-        width: 100%;
-        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-
-      .modules-wrapper.no-frame .modules-section {
-        max-width: 100%;
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .modules-wrapper.has-frame .modules-section {
-        max-width: calc(100% - 590px);
       }
 
       .module-card {
@@ -409,12 +383,6 @@
         text-shadow: 0 0 10px rgba(255, 0, 255, 0.5) !important;
       }
 
-      .module-card.active {
-        border-color: #00ffcc;
-        background: rgba(0, 40, 80, 0.8);
-        box-shadow: 0 0 25px rgba(0, 255, 204, 0.5);
-      }
-
       .module-card::before {
         content: "";
         position: absolute;
@@ -423,11 +391,6 @@
         width: 100%;
         height: 5px;
         background: linear-gradient(to right, #0066cc, #00a8ff);
-      }
-
-      .module-card.active::before {
-        background: linear-gradient(to right, #00ffcc, #00a8ff);
-        height: 5px;
       }
 
       .module-card.locked::before {
@@ -448,22 +411,11 @@
         border: 1px solid rgba(0, 150, 255, 0.3);
       }
 
-      .module-card.active .module-icon {
-        color: #00ffcc;
-        background: rgba(0, 150, 255, 0.3);
-        border-color: #00ffcc;
-      }
-
       .module-title {
         font-family: "Orbitron", sans-serif;
         font-size: 20px;
         margin-bottom: 10px;
         color: #00e5ff;
-      }
-
-      .module-card.active .module-title {
-        color: #00ffcc;
-        text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
       }
 
       .module-desc {
@@ -496,47 +448,62 @@
         color: #88d3ff;
       }
 
-      /* ===== MODULE DISPLAY FRAME - MODAL STYLE ===== */
+      /* ===== MODULE MODAL DISPLAY (NEW) ===== */
+      .module-display-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(2, 8, 18, 0.78);
+        backdrop-filter: blur(8px);
+        z-index: 9998;
+        display: none;
+        opacity: 0;
+        transition: opacity 220ms ease;
+      }
+
+      .module-display-backdrop.show {
+        display: block;
+        opacity: 1;
+      }
+
       .module-display-frame {
-        width: 560px;
-        height: 560px;
-        background: rgba(0, 20, 40, 0.95);
+        width: min(920px, calc(100vw - 40px));
+        height: min(620px, calc(100vh - 120px));
+        background: rgba(0, 20, 40, 0.92);
         border: 3px solid #ff00ff;
         border-radius: 15px;
-        padding: 30px;
+        padding: 26px;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%) scale(0.92);
+        opacity: 0;
+        z-index: 9999;
+        display: none;
         backdrop-filter: blur(15px);
         overflow: hidden;
         box-shadow:
           0 15px 40px rgba(0, 0, 0, 0.8),
           0 0 30px rgba(255, 0, 255, 0.7),
           inset 0 0 30px rgba(0, 150, 255, 0.1);
-        display: flex;
-        flex-direction: column;
-        z-index: 100;
-        animation: modalAppear 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 1;
-        transition: all 0.3s ease;
       }
 
-      @keyframes modalAppear {
+      .module-display-frame.show {
+        display: flex;
+        flex-direction: column;
+        animation: modalIn 320ms cubic-bezier(0.2, 1.05, 0.35, 1) forwards;
+      }
+
+      @keyframes modalIn {
         0% {
           opacity: 0;
-          transform: translate(-50%, -50%) scale(0.7);
+          transform: translate(-50%, -48%) scale(0.9);
+          filter: blur(2px);
         }
         100% {
           opacity: 1;
           transform: translate(-50%, -50%) scale(1);
+          filter: blur(0);
         }
-      }
-
-      .module-display-frame.hidden {
-        display: none !important;
-        opacity: 0;
-        visibility: hidden;
       }
 
       .module-display-frame::before {
@@ -553,65 +520,21 @@
       .module-display-frame::after {
         content: "";
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+        inset: 0;
         border-radius: 15px;
-        border: 2px solid rgba(255, 0, 255, 0.3);
+        border: 2px solid rgba(255, 0, 255, 0.25);
         pointer-events: none;
         z-index: 1;
-        animation: borderPulse 3s infinite alternate;
-      }
-
-      @keyframes borderPulse {
-        0% {
-          border-color: rgba(255, 0, 255, 0.2);
-          box-shadow: 0 0 10px rgba(255, 0, 255, 0.1);
-        }
-        100% {
-          border-color: rgba(255, 0, 255, 0.5);
-          box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
-        }
-      }
-
-      /* Modal Overlay - Không làm tối màn hình quá mức */
-      .modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.3);
-        backdrop-filter: blur(3px);
-        z-index: 99;
-        display: none;
-        animation: overlayFadeIn 0.3s ease;
-        pointer-events: auto;
-      }
-
-      .modal-overlay.active {
-        display: block;
-      }
-
-      @keyframes overlayFadeIn {
-        from {
-          opacity: 0;
-          backdrop-filter: blur(0px);
-        }
-        to {
-          opacity: 1;
-          backdrop-filter: blur(3px);
-        }
       }
 
       .frame-status {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 15px;
+        margin-bottom: 12px;
         padding-bottom: 10px;
         border-bottom: 1px solid rgba(255, 0, 255, 0.3);
+        z-index: 3;
       }
 
       .status-indicator {
@@ -627,33 +550,31 @@
         text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
       }
 
-      .close-modal-btn {
+      .close-lock-btn {
         background: rgba(255, 0, 255, 0.2);
         border: 1px solid rgba(255, 0, 255, 0.5);
         color: #ff00ff;
-        padding: 8px 15px;
-        border-radius: 5px;
-        font-size: 14px;
+        padding: 7px 12px;
+        border-radius: 8px;
+        font-size: 12px;
         cursor: pointer;
-        transition: all 0.3s;
-        display: flex;
-        align-items: center;
-        gap: 8px;
+        transition: all 0.25s;
       }
 
-      .close-modal-btn:hover {
-        background: rgba(255, 0, 255, 0.4);
-        box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
-        transform: scale(1.05);
+      .close-lock-btn:hover {
+        background: rgba(255, 0, 255, 0.38);
+        box-shadow: 0 0 10px rgba(255, 0, 255, 0.45);
+        transform: translateY(-1px);
       }
 
       .frame-header {
         display: flex;
         align-items: center;
-        gap: 15px;
-        margin-bottom: 20px;
-        padding-bottom: 15px;
+        gap: 14px;
+        margin-bottom: 16px;
+        padding-bottom: 14px;
         border-bottom: 1px solid rgba(0, 150, 255, 0.3);
+        z-index: 3;
       }
 
       .frame-icon {
@@ -676,18 +597,14 @@
         text-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
       }
 
-      /* CẬP NHẬT: Frame content với scroll chuẩn */
       .frame-content {
         flex: 1;
         overflow-y: auto;
-        overflow-x: hidden;
         padding-right: 10px;
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 20px;
-        scrollbar-width: thin;
-        scrollbar-color: #00a8ff rgba(0, 30, 60, 0.3);
-        max-height: calc(100% - 130px);
+        gap: 16px;
+        z-index: 3;
       }
 
       .frame-content::-webkit-scrollbar {
@@ -702,41 +619,34 @@
       .frame-content::-webkit-scrollbar-thumb {
         background: linear-gradient(to bottom, #00a8ff, #00ffcc);
         border-radius: 4px;
-        border: 1px solid rgba(0, 150, 255, 0.3);
-      }
-
-      .frame-content::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(to bottom, #00ffcc, #00a8ff);
-        box-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
       }
 
       .content-item {
-        background: rgba(0, 30, 60, 0.5);
+        background: rgba(0, 30, 60, 0.45);
         border-radius: 10px;
-        padding: 20px;
-        border: 1px solid rgba(0, 150, 255, 0.3);
-        transition: all 0.3s;
-        min-height: 180px;
+        padding: 16px;
+        border: 1px solid rgba(0, 150, 255, 0.25);
+        transition: all 0.25s;
+        min-height: 165px;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
       }
 
       .content-item:hover {
         background: rgba(0, 40, 80, 0.6);
         border-color: #00a8ff;
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0, 100, 255, 0.2);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 100, 255, 0.18);
       }
 
       .item-title {
         font-family: "Orbitron", sans-serif;
-        font-size: 18px;
+        font-size: 16px;
         color: #00e5ff;
-        margin-bottom: 12px;
+        margin-bottom: 10px;
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 8px;
       }
 
       .item-title i {
@@ -746,28 +656,28 @@
 
       .item-desc {
         color: #a0c8e0;
-        font-size: 15px;
-        line-height: 1.6;
-        margin-bottom: 15px;
-        flex-grow: 1;
+        font-size: 14px;
+        line-height: 1.55;
+        margin-bottom: 12px;
+        flex: 1;
       }
 
       .item-stats {
         display: flex;
         justify-content: space-between;
-        margin-top: 10px;
-        font-size: 13px;
+        margin-top: 6px;
+        font-size: 12px;
         color: #88d3ff;
-        background: rgba(0, 40, 80, 0.3);
-        padding: 8px 12px;
-        border-radius: 6px;
+        background: rgba(0, 40, 80, 0.25);
+        padding: 8px 10px;
+        border-radius: 8px;
       }
 
       .item-progress {
-        height: 6px;
+        height: 5px;
         background: rgba(0, 50, 100, 0.5);
         border-radius: 3px;
-        margin-top: 12px;
+        margin-top: 10px;
         overflow: hidden;
       }
 
@@ -776,8 +686,8 @@
         background: linear-gradient(to right, #00a8ff, #00ffcc);
         border-radius: 3px;
         width: 0%;
-        transition: width 1s ease-out;
-        box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+        transition: width 700ms ease-out;
+        box-shadow: 0 0 10px rgba(0, 255, 204, 0.25);
       }
 
       .start-button {
@@ -941,32 +851,10 @@
         font-size: 14px;
       }
 
-      @media (max-width: 1300px) {
-        .modules-wrapper {
-          flex-direction: column;
-        }
-
-        .modules-wrapper.has-frame .modules-section {
-          max-width: 100%;
-        }
-
-        .module-display-frame {
-          width: 90%;
-          max-width: 560px;
-          height: auto;
-          min-height: 500px;
-        }
-      }
-
       @media (max-width: 900px) {
         .modules-section {
           grid-template-columns: 1fr;
         }
-
-        .modules-wrapper.no-frame .modules-section {
-          grid-template-columns: 1fr;
-        }
-
         .frame-content {
           grid-template-columns: 1fr;
         }
@@ -976,33 +864,18 @@
         .target-info {
           flex-direction: column;
         }
-
         .target-card {
           min-width: 100%;
         }
-
         .logo-text {
           font-size: 22px;
         }
-
         .user-info {
           padding: 8px 15px;
         }
-
-        .module-display-frame {
-          width: 95%;
-          height: auto;
-          min-height: 450px;
-          padding: 20px;
-        }
-
-        .frame-content {
-          grid-template-columns: 1fr;
-          max-height: calc(100% - 120px);
-        }
       }
 
-      /* License Gate CSS - giữ nguyên */
+      /* ===== LICENSE GATE ===== */
       .license-gate {
         position: fixed;
         inset: 0;
@@ -1084,18 +957,6 @@
         border: 1px solid rgba(0, 150, 255, 0.25);
       }
 
-      .license-badge {
-        display: inline-flex;
-        gap: 10px;
-        align-items: center;
-        padding: 10px 12px;
-        border-radius: 12px;
-        border: 1px solid rgba(255, 153, 0, 0.35);
-        background: rgba(40, 20, 0, 0.25);
-        color: #ffdd99;
-        margin-top: 10px;
-      }
-
       .license-small {
         color: #a0c8e0;
         font-size: 13px;
@@ -1129,17 +990,15 @@
         color: #00ffcc;
       }
 
-      /* Exam Warning CSS - giữ nguyên */
+      /* ====== EXAM WARNING (giữ nguyên logic class) ====== */
       .target-card:nth-child(2) {
         position: relative;
         overflow: hidden;
       }
-
       .target-card:nth-child(2)::before,
       .target-card:nth-child(2)::after {
         display: none !important;
       }
-
       .target-card:nth-child(2).warning-yellow::before,
       .target-card:nth-child(2).warning-yellow::after,
       .target-card:nth-child(2).warning-red::before,
@@ -1148,13 +1007,11 @@
       .target-card:nth-child(2).warning-expired::after {
         display: block !important;
       }
-
       .target-card:nth-child(2).warning-yellow .sparkle,
       .target-card:nth-child(2).warning-red .sparkle,
       .target-card:nth-child(2).warning-expired .sparkle {
         display: block !important;
       }
-
       .target-card:nth-child(2).warning-yellow .sparkle,
       .target-card:nth-child(2).warning-red .sparkle,
       .target-card:nth-child(2).warning-expired .sparkle {
@@ -1166,25 +1023,21 @@
         animation: sparkleMove 4s linear infinite;
         opacity: 0.7;
       }
-
       .target-card:nth-child(2) .sparkle:nth-child(1) {
         top: 20%;
         left: 15%;
         animation-delay: 0s;
       }
-
       .target-card:nth-child(2) .sparkle:nth-child(2) {
         top: 60%;
         right: 20%;
         animation-delay: 1s;
       }
-
       .target-card:nth-child(2) .sparkle:nth-child(3) {
         bottom: 30%;
         left: 30%;
         animation-delay: 2s;
       }
-
       @keyframes sparkleMove {
         0%,
         100% {
@@ -1200,13 +1053,11 @@
           transform: translate(5px, -5px);
         }
       }
-
       .target-card:nth-child(2).warning-yellow {
         background: rgba(60, 40, 0, 0.7) !important;
         border: 1px solid rgba(255, 200, 0, 0.6) !important;
         animation: cyberPulse 2s infinite alternate !important;
       }
-
       @keyframes cyberPulse {
         0% {
           box-shadow:
@@ -1224,7 +1075,6 @@
           background: rgba(80, 60, 0, 0.8);
         }
       }
-
       .target-card:nth-child(2).warning-yellow::before {
         content: "";
         position: absolute;
@@ -1235,7 +1085,6 @@
         background: linear-gradient(90deg, transparent, #ffcc00, transparent);
         animation: borderScan 3s linear infinite;
       }
-
       @keyframes borderScan {
         0% {
           left: -100%;
@@ -1249,12 +1098,9 @@
           opacity: 0;
         }
       }
-
       .target-card:nth-child(2).warning-yellow .sparkle {
         background: #ffcc00 !important;
-        animation: sparkleMove 3s linear infinite !important;
       }
-
       .target-card:nth-child(2).warning-yellow::after {
         content: "";
         position: absolute;
@@ -1267,7 +1113,6 @@
         animation: particleGlow 1.5s ease-in-out infinite alternate;
         filter: blur(1px);
       }
-
       @keyframes particleGlow {
         0% {
           transform: scale(0.8);
@@ -1282,17 +1127,14 @@
             0 0 30px #ff9900;
         }
       }
-
       .target-card:nth-child(2).warning-yellow .card-title {
         color: #ffdd99 !important;
       }
-
       .target-card:nth-child(2).warning-yellow .card-value.special {
         color: #ffcc00 !important;
         text-shadow: 0 0 15px rgba(255, 204, 0, 0.8) !important;
         animation: textGlow 1.5s ease-in-out infinite alternate;
       }
-
       @keyframes textGlow {
         0% {
           text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
@@ -1303,41 +1145,14 @@
             0 0 30px rgba(255, 153, 0, 0.6);
         }
       }
-
       .target-card:nth-child(2).warning-yellow .card-subtitle {
         color: #ffcc99 !important;
       }
-
-      .target-card:nth-child(2).warning-yellow:hover {
-        transform: translateY(-8px) !important;
-        animation: cyberPulseHover 1.5s infinite alternate !important;
-      }
-
-      @keyframes cyberPulseHover {
-        0% {
-          box-shadow:
-            0 0 25px rgba(255, 200, 0, 0.7),
-            0 0 50px rgba(255, 150, 0, 0.5),
-            0 0 75px rgba(255, 100, 0, 0.3),
-            inset 0 0 30px rgba(255, 200, 0, 0.3);
-          background: rgba(90, 70, 0, 0.9);
-        }
-        100% {
-          box-shadow:
-            0 0 30px rgba(255, 200, 0, 0.9),
-            0 0 60px rgba(255, 150, 0, 0.7),
-            0 0 90px rgba(255, 100, 0, 0.5),
-            inset 0 0 40px rgba(255, 200, 0, 0.4);
-          background: rgba(100, 80, 0, 1);
-        }
-      }
-
       .target-card:nth-child(2).warning-red {
         background: rgba(60, 0, 0, 0.7) !important;
         border: 1px solid rgba(255, 50, 50, 0.8) !important;
         animation: redPulse 1.5s infinite alternate !important;
       }
-
       @keyframes redPulse {
         0% {
           box-shadow:
@@ -1355,7 +1170,6 @@
           background: rgba(80, 0, 0, 0.9);
         }
       }
-
       .target-card:nth-child(2).warning-red::before {
         animation: redBorderScan 2s linear infinite !important;
         background: linear-gradient(
@@ -1365,7 +1179,6 @@
           transparent
         ) !important;
       }
-
       @keyframes redBorderScan {
         0% {
           left: -100%;
@@ -1379,21 +1192,13 @@
           opacity: 0;
         }
       }
-
       .target-card:nth-child(2).warning-red .sparkle {
         background: #ff3333 !important;
-        animation: sparkleMove 2s linear infinite !important;
       }
-
       .target-card:nth-child(2).warning-red::after {
-        background: radial-gradient(
-          circle,
-          #ff3333,
-          transparent 70%
-        ) !important;
+        background: radial-gradient(circle, #ff3333, transparent 70%) !important;
         animation: redParticleGlow 1s ease-in-out infinite alternate !important;
       }
-
       @keyframes redParticleGlow {
         0% {
           transform: scale(0.8);
@@ -1408,17 +1213,14 @@
             0 0 40px #ff0000;
         }
       }
-
       .target-card:nth-child(2).warning-red .card-title {
         color: #ff9999 !important;
       }
-
       .target-card:nth-child(2).warning-red .card-value.special {
         color: #ff6666 !important;
         text-shadow: 0 0 20px rgba(255, 50, 50, 0.9) !important;
         animation: redTextGlow 1s ease-in-out infinite alternate !important;
       }
-
       @keyframes redTextGlow {
         0% {
           text-shadow: 0 0 15px rgba(255, 50, 50, 0.6);
@@ -1429,41 +1231,14 @@
             0 0 40px rgba(255, 0, 0, 0.7);
         }
       }
-
       .target-card:nth-child(2).warning-red .card-subtitle {
         color: #ffaaaa !important;
       }
-
-      .target-card:nth-child(2).warning-red:hover {
-        animation: redPulseHover 1s infinite alternate !important;
-        transform: translateY(-8px) !important;
-      }
-
-      @keyframes redPulseHover {
-        0% {
-          box-shadow:
-            0 0 30px rgba(255, 50, 50, 0.8),
-            0 0 60px rgba(255, 0, 0, 0.6),
-            0 0 90px rgba(200, 0, 0, 0.4),
-            inset 0 0 40px rgba(255, 50, 50, 0.4);
-          background: rgba(100, 0, 0, 1);
-        }
-        100% {
-          box-shadow:
-            0 0 40px rgba(255, 50, 50, 1),
-            0 0 80px rgba(255, 0, 0, 0.8),
-            0 0 120px rgba(200, 0, 0, 0.6),
-            inset 0 0 60px rgba(255, 50, 50, 0.6);
-          background: rgba(120, 0, 0, 1);
-        }
-      }
-
       .target-card:nth-child(2).warning-expired {
         background: rgba(30, 30, 30, 0.7) !important;
         border: 1px solid rgba(100, 100, 100, 0.5) !important;
         animation: expiredPulse 3s infinite alternate !important;
       }
-
       @keyframes expiredPulse {
         0% {
           box-shadow:
@@ -1479,72 +1254,15 @@
         }
       }
 
-      .target-card:nth-child(2).warning-expired::before {
-        animation: expiredBorderScan 4s linear infinite !important;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          #888888,
-          transparent
-        ) !important;
-      }
-
-      .target-card:nth-child(2).warning-expired .sparkle {
-        background: #888888 !important;
-        animation: sparkleMove 5s linear infinite !important;
-      }
-
-      .target-card:nth-child(2).warning-expired::after {
-        background: radial-gradient(
-          circle,
-          #888888,
-          transparent 70%
-        ) !important;
-        animation: expiredParticleGlow 2s ease-in-out infinite alternate !important;
-      }
-
-      @keyframes expiredParticleGlow {
-        0% {
-          transform: scale(0.7);
-          opacity: 0.3;
-          box-shadow: 0 0 5px #888888;
-        }
-        100% {
-          transform: scale(1);
-          opacity: 0.5;
-          box-shadow: 0 0 10px #888888;
-        }
-      }
-
-      .target-card:nth-child(2).warning-expired .card-title {
-        color: #aaaaaa !important;
-      }
-
-      .target-card:nth-child(2).warning-expired .card-value.special {
-        color: #888888 !important;
-        text-shadow: 0 0 10px rgba(136, 136, 136, 0.5) !important;
-        animation: none !important;
-      }
-
-      .target-card:nth-child(2).warning-expired .card-subtitle {
-        color: #999999 !important;
-      }
-
-      .target-card:nth-child(2).warning-expired:hover {
-        animation: expiredPulse 3s infinite alternate !important;
-        transform: none !important;
-      }
-
+      /* ====== STATUS WARNING STATE (giữ nguyên) ====== */
       .target-card:nth-child(3) {
         position: relative;
         overflow: hidden;
       }
-
       .target-card:nth-child(3)::before,
       .target-card:nth-child(3)::after {
         display: none !important;
       }
-
       .target-card:nth-child(3) .sparkle {
         position: absolute;
         width: 4px;
@@ -1555,25 +1273,21 @@
         opacity: 0.7;
         display: none;
       }
-
       .target-card:nth-child(3) .sparkle:nth-child(1) {
         top: 20%;
         left: 15%;
         animation-delay: 0s;
       }
-
       .target-card:nth-child(3) .sparkle:nth-child(2) {
         top: 60%;
         right: 20%;
         animation-delay: 1s;
       }
-
       .target-card:nth-child(3) .sparkle:nth-child(3) {
         bottom: 30%;
         left: 30%;
         animation-delay: 2s;
       }
-
       .target-card:nth-child(3).warning-yellow::before,
       .target-card:nth-child(3).warning-yellow::after,
       .target-card:nth-child(3).warning-red::before,
@@ -1582,19 +1296,16 @@
       .target-card:nth-child(3).warning-expired::after {
         display: block !important;
       }
-
       .target-card:nth-child(3).warning-yellow .sparkle,
       .target-card:nth-child(3).warning-red .sparkle,
       .target-card:nth-child(3).warning-expired .sparkle {
         display: block !important;
       }
-
       .target-card:nth-child(3).warning-yellow {
         background: rgba(60, 40, 0, 0.7) !important;
         border: 1px solid rgba(255, 200, 0, 0.6) !important;
         animation: cyberPulse 2s infinite alternate !important;
       }
-
       .target-card:nth-child(3).warning-yellow::before {
         content: "";
         position: absolute;
@@ -1605,12 +1316,9 @@
         background: linear-gradient(90deg, transparent, #ffcc00, transparent);
         animation: borderScan 3s linear infinite;
       }
-
       .target-card:nth-child(3).warning-yellow .sparkle {
         background: #ffcc00 !important;
-        animation: sparkleMove 3s linear infinite !important;
       }
-
       .target-card:nth-child(3).warning-yellow::after {
         content: "";
         position: absolute;
@@ -1623,32 +1331,22 @@
         animation: particleGlow 1.5s ease-in-out infinite alternate;
         filter: blur(1px);
       }
-
       .target-card:nth-child(3).warning-yellow .card-title {
         color: #ffdd99 !important;
       }
-
       .target-card:nth-child(3).warning-yellow .card-value {
         color: #ffcc00 !important;
         text-shadow: 0 0 15px rgba(255, 204, 0, 0.8) !important;
         animation: textGlow 1.5s ease-in-out infinite alternate !important;
       }
-
       .target-card:nth-child(3).warning-yellow .card-subtitle {
         color: #ffcc99 !important;
       }
-
-      .target-card:nth-child(3).warning-yellow:hover {
-        transform: translateY(-8px) !important;
-        animation: cyberPulseHover 1.5s infinite alternate !important;
-      }
-
       .target-card:nth-child(3).warning-red {
         background: rgba(60, 0, 0, 0.7) !important;
         border: 1px solid rgba(255, 50, 50, 0.8) !important;
         animation: redPulse 1.5s infinite alternate !important;
       }
-
       .target-card:nth-child(3).warning-red::before {
         animation: redBorderScan 2s linear infinite !important;
         background: linear-gradient(
@@ -1658,46 +1356,29 @@
           transparent
         ) !important;
       }
-
       .target-card:nth-child(3).warning-red .sparkle {
         background: #ff3333 !important;
-        animation: sparkleMove 2s linear infinite !important;
       }
-
       .target-card:nth-child(3).warning-red::after {
-        background: radial-gradient(
-          circle,
-          #ff3333,
-          transparent 70%
-        ) !important;
+        background: radial-gradient(circle, #ff3333, transparent 70%) !important;
         animation: redParticleGlow 1s ease-in-out infinite alternate !important;
       }
-
       .target-card:nth-child(3).warning-red .card-title {
         color: #ff9999 !important;
       }
-
       .target-card:nth-child(3).warning-red .card-value {
         color: #ff6666 !important;
         text-shadow: 0 0 20px rgba(255, 50, 50, 0.9) !important;
         animation: redTextGlow 1s ease-in-out infinite alternate !important;
       }
-
       .target-card:nth-child(3).warning-red .card-subtitle {
         color: #ffaaaa !important;
       }
-
-      .target-card:nth-child(3).warning-red:hover {
-        animation: redPulseHover 1s infinite alternate !important;
-        transform: translateY(-8px) !important;
-      }
-
       .target-card:nth-child(3).warning-expired {
         background: rgba(30, 30, 30, 0.7) !important;
         border: 1px solid rgba(100, 100, 100, 0.5) !important;
         animation: expiredPulse 3s infinite alternate !important;
       }
-
       .target-card:nth-child(3).warning-expired::before {
         animation: expiredBorderScan 4s linear infinite !important;
         background: linear-gradient(
@@ -1707,43 +1388,40 @@
           transparent
         ) !important;
       }
-
       .target-card:nth-child(3).warning-expired .sparkle {
         background: #888888 !important;
-        animation: sparkleMove 5s linear infinite !important;
       }
-
       .target-card:nth-child(3).warning-expired::after {
-        background: radial-gradient(
-          circle,
-          #888888,
-          transparent 70%
-        ) !important;
+        background: radial-gradient(circle, #888888, transparent 70%) !important;
         animation: expiredParticleGlow 2s ease-in-out infinite alternate !important;
       }
-
+      @keyframes expiredParticleGlow {
+        0% {
+          transform: scale(0.7);
+          opacity: 0.3;
+          box-shadow: 0 0 5px #888888;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 0.5;
+          box-shadow: 0 0 10px #888888;
+        }
+      }
       .target-card:nth-child(3).warning-expired .card-title {
         color: #aaaaaa !important;
       }
-
       .target-card:nth-child(3).warning-expired .card-value {
         color: #888888 !important;
         text-shadow: 0 0 10px rgba(136, 136, 136, 0.5) !important;
         animation: none !important;
       }
-
       .target-card:nth-child(3).warning-expired .card-subtitle {
         color: #999999 !important;
       }
-
-      .target-card:nth-child(3).warning-expired:hover {
-        animation: expiredPulse 3s infinite alternate !important;
-        transform: none !important;
-      }
     </style>
   </head>
+
   <body>
-    <!-- Background -->
     <div class="cyber-grid"></div>
     <div class="cyber-line"></div>
     <div class="floating-elements">
@@ -1755,10 +1433,7 @@
     <div class="glow-effect glow-1"></div>
     <div class="glow-effect glow-2"></div>
 
-    <!-- Modal Overlay - Giảm độ tối và blur -->
-    <div class="modal-overlay" id="modalOverlay"></div>
-
-    <!-- License Gate -->
+    <!-- LICENSE GATE -->
     <div class="license-gate" id="licenseGate">
       <div class="license-panel">
         <h2 class="panel-title">
@@ -1766,8 +1441,7 @@
         </h2>
 
         <div class="license-small">
-          Web của bạn đang bật chế độ <b>Khóa thiết bị</b>: 1 máy / 1
-          license.<br />
+          Web của bạn đang bật chế độ <b>Khóa thiết bị</b>: 1 máy / 1 license.<br />
           Nhập license để mở hệ thống.
         </div>
 
@@ -1810,10 +1484,8 @@
       </div>
     </div>
 
-    <!-- App Root -->
     <div id="appRoot">
       <div class="container">
-        <!-- Header -->
         <header>
           <div class="logo">
             <div class="logo-icon">
@@ -1830,9 +1502,7 @@
           </div>
         </header>
 
-        <!-- Main Content -->
         <main class="main-content">
-          <!-- Mission Panel -->
           <section class="mission-panel">
             <h2 class="panel-title">
               <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
@@ -1882,13 +1552,12 @@
             </div>
           </section>
 
-          <!-- Modules Panel -->
           <section class="mission-panel">
             <h2 class="panel-title">
               <i class="fas fa-cogs"></i> MODULE ĐÀO TẠO
             </h2>
 
-            <div class="modules-wrapper no-frame" id="modulesWrapper">
+            <div class="modules-wrapper">
               <div class="modules-section">
                 <div class="module-card" data-module="vocab">
                   <div class="module-icon">
@@ -1947,8 +1616,7 @@
                   </div>
                   <h3 class="module-title">ĐỌC HIỂU</h3>
                   <p class="module-desc">
-                    Phân tích văn bản học thuật, báo chí và tài liệu chuyên
-                    ngành.
+                    Phân tích văn bản học thuật, báo chí và tài liệu chuyên ngành.
                   </p>
                   <div class="progress-bar">
                     <div class="progress-fill" id="progress-reading"></div>
@@ -1961,33 +1629,12 @@
               </div>
             </div>
 
-            <!-- Module Display Frame - Modal -->
-            <div class="module-display-frame hidden" id="moduleDisplay">
-              <div class="frame-status">
-                <div class="status-indicator" id="frameStatus">
-                  <span class="status-icon">🔓</span>
-                  <span class="status-text">Đang xem</span>
-                </div>
-                <button class="close-modal-btn" id="closeModalBtn">
-                  <i class="fas fa-times"></i> Đóng
-                </button>
-              </div>
-              <div class="frame-header">
-                <div class="frame-icon">
-                  <i class="fas fa-book"></i>
-                </div>
-                <div class="frame-title" id="frameTitle">Chọn module</div>
-              </div>
-              <div class="frame-content" id="frameContent"></div>
-            </div>
-
             <a href="#" class="start-button">
               <i class="fas fa-play-circle"></i> KHỞI ĐỘNG HỆ THỐNG HỌC TẬP
             </a>
           </section>
         </main>
 
-        <!-- Footer -->
         <footer>
           <p>© 2025 N1 CYBERSPHERE - Hệ thống đào tạo JLPT N1 công nghệ cao</p>
           <p>Phiên bản 2.0 | Chế độ: Dark Mode | Kết nối: Stable</p>
@@ -1995,22 +1642,36 @@
       </div>
     </div>
 
+    <!-- BACKDROP + MODAL (Ẩn mặc định, chỉ hiện khi chọn module) -->
+    <div class="module-display-backdrop" id="moduleBackdrop"></div>
+
+    <div class="module-display-frame" id="moduleDisplay" aria-hidden="true">
+      <div class="frame-status">
+        <div class="status-indicator locked" id="frameStatus">
+          <span class="status-icon">🔒</span>
+          <span class="status-text">Đã chọn module</span>
+        </div>
+
+        <!-- Đổi “Bỏ khóa” => “Đóng” -->
+        <button class="close-lock-btn" id="closeModalBtn">
+          <i class="fas fa-xmark"></i> Đóng
+        </button>
+      </div>
+
+      <div class="frame-header">
+        <div class="frame-icon">
+          <i class="fas fa-book"></i>
+        </div>
+        <div class="frame-title" id="frameTitle">---</div>
+      </div>
+
+      <div class="frame-content" id="frameContent"></div>
+    </div>
+
     <script>
       /* =========================================================
-  [JS-INDEX]
-  JS-1) CONFIG + LocalStorage Keys
-  JS-2) DEVICE ID / DEVICE INFO
-  JS-3) UI HELPERS (status / username)
-  JS-4) EXAM COUNTDOWN + WARNING COLORS
-  JS-5) API CALLS (verify / request-reset)
-  JS-6) BACKGROUND RECHECK (server ping định kỳ)
-  JS-7) GATE FLOW (show/hide)
-  JS-8) APP UI EFFECTS (progress/ripple/streak)
-  JS-9) MODULE DISPLAY LOGIC (Modal Center + Scroll Management)
-  JS-10) BOOT (IIFE)
-========================================================= */
-
-      // ====== CONFIG ======
+        CONFIG + LocalStorage Keys
+      ========================================================= */
       const API_URL = "https://n1-license-server.onrender.com/api";
       const LS_DEVICE_ID = "n1_device_id";
       const LS_ACTIVATED = "n1_activated_once";
@@ -2018,7 +1679,6 @@
       const LS_USER_NAME = "n1_user_name";
       const LS_EXAM_DATE = "n1_exam_date";
 
-      // ====== Utils ======
       function uuidv4() {
         return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
           const r = (Math.random() * 16) | 0;
@@ -2059,7 +1719,9 @@
         localStorage.setItem(LS_USER_NAME, safeName);
       }
 
-      // ===== Exam date countdown =====
+      /* =========================================================
+        Exam date countdown (giữ nguyên)
+      ========================================================= */
       const DEFAULT_EXAM_DATE = "20260701";
 
       function parseYYYYMMDD(s) {
@@ -2069,11 +1731,7 @@
           mo = Number(m[2]) - 1,
           d = Number(m[3]);
         const dt = new Date(y, mo, d);
-        if (
-          dt.getFullYear() !== y ||
-          dt.getMonth() !== mo ||
-          dt.getDate() !== d
-        )
+        if (dt.getFullYear() !== y || dt.getMonth() !== mo || dt.getDate() !== d)
           return null;
         return dt;
       }
@@ -2089,83 +1747,6 @@
         const mm = String(dt.getMonth() + 1).padStart(2, "0");
         const yyyy = dt.getFullYear();
         return `${dd}/${mm}/${yyyy}`;
-      }
-
-      function updateStatusUI(expiryStr) {
-        const statusValueEl = document.getElementById("statusValue");
-        const statusSubtitleEl = document.getElementById("statusSubtitle");
-        const targetCardEl = document.querySelector(
-          ".target-card:nth-child(3)",
-        );
-
-        if (!statusValueEl || !statusSubtitleEl || !targetCardEl) return;
-
-        const expiryDt = parseYYYYMMDD(expiryStr);
-        if (!expiryDt) {
-          statusValueEl.textContent = "ACTIVE";
-          statusSubtitleEl.textContent = "Trạng thái bản quyền: Đã kích hoạt";
-          targetCardEl.classList.remove(
-            "warning-yellow",
-            "warning-red",
-            "warning-expired",
-          );
-          return;
-        }
-
-        localStorage.setItem("n1_expiry_date", expiryStr);
-
-        const now = new Date();
-        const today = new Date(
-          now.getFullYear(),
-          now.getMonth(),
-          now.getDate(),
-        );
-        const expDate = new Date(
-          expiryDt.getFullYear(),
-          expiryDt.getMonth(),
-          expiryDt.getDate(),
-        );
-
-        const msPerDay = 24 * 60 * 60 * 1000;
-        const remainingDays = Math.ceil((expDate - today) / msPerDay);
-
-        targetCardEl.classList.remove(
-          "warning-yellow",
-          "warning-red",
-          "warning-expired",
-        );
-
-        if (remainingDays <= 0) {
-          statusValueEl.textContent = "EXPIRED";
-          statusSubtitleEl.textContent = `Quyền truy cập đã hết hạn từ: ${formatDDMMYYYY(expDate)}`;
-          targetCardEl.classList.add("warning-expired");
-
-          localStorage.removeItem(LS_LICENSE);
-          localStorage.removeItem(LS_ACTIVATED);
-          showGate(true);
-          setStatus(
-            "License đã hết hạn. Vui lòng gia hạn để tiếp tục sử dụng.",
-            "error",
-          );
-          return;
-        }
-
-        statusValueEl.textContent = "ACTIVE";
-
-        if (remainingDays < 30) {
-          targetCardEl.classList.add("warning-red");
-          statusSubtitleEl.innerHTML = `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(expDate)}<br>Còn ${remainingDays} ngày`;
-        } else if (remainingDays <= 60) {
-          targetCardEl.classList.add("warning-yellow");
-          statusSubtitleEl.innerHTML = `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(expDate)}<br>Còn ${remainingDays} ngày`;
-        } else {
-          statusSubtitleEl.innerHTML = `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(expDate)}<br>Còn ${remainingDays} ngày`;
-        }
-
-        if (window.__expiryCountdownTimer) {
-          clearInterval(window.__expiryCountdownTimer);
-        }
-        startExpiryCountdown(expiryStr);
       }
 
       function diffMonthsDays(fromDate, toDate) {
@@ -2193,21 +1774,19 @@
         return { months, days };
       }
 
+      function updateWarningColor(cardElement, daysRemaining) {
+        cardElement.classList.remove("warning-yellow", "warning-red", "warning-expired");
+        if (daysRemaining <= 0) cardElement.classList.add("warning-expired");
+        else if (daysRemaining < 30) cardElement.classList.add("warning-red");
+        else if (daysRemaining <= 60) cardElement.classList.add("warning-yellow");
+      }
+
       function updateExamUI(examDateStr) {
         const examMonthYearEl = document.getElementById("examMonthYear");
         const examSubtitleEl = document.getElementById("examSubtitle");
         const examCountdownEl = document.getElementById("examCountdown");
-        const targetCardEl = document.querySelector(
-          ".target-card:nth-child(2)",
-        );
-
-        if (
-          !examMonthYearEl ||
-          !examSubtitleEl ||
-          !examCountdownEl ||
-          !targetCardEl
-        )
-          return;
+        const targetCardEl = document.querySelector(".target-card:nth-child(2)");
+        if (!examMonthYearEl || !examSubtitleEl || !examCountdownEl || !targetCardEl) return;
 
         const raw =
           examDateStr && String(examDateStr).trim()
@@ -2215,12 +1794,7 @@
             : localStorage.getItem(LS_EXAM_DATE) || DEFAULT_EXAM_DATE;
 
         const examDt = parseYYYYMMDD(raw);
-        if (!examDt) {
-          examMonthYearEl.textContent = "07/2026";
-          examSubtitleEl.textContent = "Kỳ thi tháng 7 năm 2026";
-          examCountdownEl.textContent = "Còn ...";
-          return;
-        }
+        if (!examDt) return;
 
         examMonthYearEl.textContent = formatMonthYear(examDt);
 
@@ -2234,47 +1808,194 @@
         }
 
         const now = new Date();
-        const today = new Date(
-          now.getFullYear(),
-          now.getMonth(),
-          now.getDate(),
-        );
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         const { months, days } = diffMonthsDays(today, examDt);
-
-        const totalDays = Math.max(
-          0,
-          Math.round((examDt - today) / (1000 * 60 * 60 * 24)),
-        );
+        const totalDays = Math.max(0, Math.round((examDt - today) / (1000 * 60 * 60 * 24)));
 
         let countdownText = "";
-        if (totalDays <= 0) {
-          countdownText = "Kỳ thi JLPT đã diễn ra";
-        } else if (months === 0) {
-          countdownText = `Còn ${days} ngày`;
-        } else if (months === 1) {
-          countdownText = `Còn 1 tháng ${days} ngày`;
-        } else {
-          countdownText = `Còn ${months} tháng ${days} ngày`;
-        }
+        if (totalDays <= 0) countdownText = "Kỳ thi JLPT đã diễn ra";
+        else if (months === 0) countdownText = `Còn ${days} ngày`;
+        else if (months === 1) countdownText = `Còn 1 tháng ${days} ngày`;
+        else countdownText = `Còn ${months} tháng ${days} ngày`;
 
         examCountdownEl.textContent = countdownText;
         updateWarningColor(targetCardEl, totalDays);
       }
 
-      function updateWarningColor(cardElement, daysRemaining) {
-        cardElement.classList.remove(
-          "warning-yellow",
-          "warning-red",
-          "warning-expired",
-        );
-
-        if (daysRemaining <= 0) {
-          cardElement.classList.add("warning-expired");
-        } else if (daysRemaining < 30) {
-          cardElement.classList.add("warning-red");
-        } else if (daysRemaining <= 60) {
-          cardElement.classList.add("warning-yellow");
+      /* =========================================================
+        API
+      ========================================================= */
+      async function verifyLicense(deviceId, license) {
+        const res = await fetch(`${API_URL}/verify`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ deviceId, license }),
+        });
+        if (!res.ok) {
+          const t = await res.text();
+          throw new Error(t || "Verify failed");
         }
+        return res.json();
+      }
+
+      async function requestReset(deviceId, oldLicense, note) {
+        const res = await fetch(`${API_URL}/request-reset`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ deviceId, oldLicense, note }),
+        });
+        if (!res.ok) {
+          const t = await res.text();
+          throw new Error(t || "Request reset failed");
+        }
+        return res.json();
+      }
+
+      function startBackgroundRecheck(deviceId) {
+        const INTERVAL_MS = 90 * 1000;
+        if (window.__recheckTimer) return;
+
+        async function tick() {
+          const license = localStorage.getItem(LS_LICENSE);
+          const activatedOnce = localStorage.getItem(LS_ACTIVATED) === "1";
+          if (!license || !activatedOnce) return;
+
+          try {
+            const r = await verifyLicense(deviceId, license);
+            if (r && r.ok) {
+              setStatus(`Kích hoạt OK (hạn: ${r.expiry})`, "ok");
+              updateStatusUI(r.expiry);
+              return;
+            }
+            throw new Error("Verify failed");
+          } catch (e) {
+            const msg = String(e?.message || "");
+            const hardBlock =
+              msg.includes("Device revoked") ||
+              msg.includes("Expired") ||
+              msg.includes("Invalid") ||
+              msg.includes("already bound");
+
+            if (hardBlock) {
+              localStorage.removeItem(LS_LICENSE);
+              localStorage.removeItem(LS_ACTIVATED);
+              setStatus("Quyền truy cập đã bị thu hồi hoặc license không còn hợp lệ.", "error");
+              showGate(true);
+              return;
+            }
+            setStatus("Server kiểm tra đang offline. Hệ thống giữ trạng thái kích hoạt.", "error");
+          }
+        }
+
+        tick();
+        window.__recheckTimer = setInterval(tick, INTERVAL_MS);
+      }
+
+      /* =========================================================
+        Status expiry (giữ nguyên)
+      ========================================================= */
+      function updateStatusUI(expiryStr) {
+        const statusValueEl = document.getElementById("statusValue");
+        const statusSubtitleEl = document.getElementById("statusSubtitle");
+        const targetCardEl = document.querySelector(".target-card:nth-child(3)");
+        if (!statusValueEl || !statusSubtitleEl || !targetCardEl) return;
+
+        const expiryDt = parseYYYYMMDD(expiryStr);
+        if (!expiryDt) {
+          statusValueEl.textContent = "ACTIVE";
+          statusSubtitleEl.textContent = "Trạng thái bản quyền: Đã kích hoạt";
+          targetCardEl.classList.remove("warning-yellow", "warning-red", "warning-expired");
+          return;
+        }
+
+        localStorage.setItem("n1_expiry_date", expiryStr);
+
+        const now = new Date();
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const expDate = new Date(expiryDt.getFullYear(), expiryDt.getMonth(), expiryDt.getDate());
+
+        const msPerDay = 24 * 60 * 60 * 1000;
+        const remainingDays = Math.ceil((expDate - today) / msPerDay);
+
+        targetCardEl.classList.remove("warning-yellow", "warning-red", "warning-expired");
+
+        if (remainingDays <= 0) {
+          statusValueEl.textContent = "EXPIRED";
+          statusSubtitleEl.textContent = `Quyền truy cập đã hết hạn từ: ${formatDDMMYYYY(expDate)}`;
+          targetCardEl.classList.add("warning-expired");
+
+          localStorage.removeItem(LS_LICENSE);
+          localStorage.removeItem(LS_ACTIVATED);
+          showGate(true);
+          setStatus("License đã hết hạn. Vui lòng gia hạn để tiếp tục sử dụng.", "error");
+          return;
+        }
+
+        statusValueEl.textContent = "ACTIVE";
+
+        if (remainingDays < 30) {
+          targetCardEl.classList.add("warning-red");
+          statusSubtitleEl.innerHTML = `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(expDate)}<br>Còn ${remainingDays} ngày`;
+        } else if (remainingDays <= 60) {
+          targetCardEl.classList.add("warning-yellow");
+          statusSubtitleEl.innerHTML = `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(expDate)}<br>Còn ${remainingDays} ngày`;
+        } else {
+          statusSubtitleEl.innerHTML = `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(expDate)}<br>Còn ${remainingDays} ngày`;
+        }
+
+        if (window.__expiryCountdownTimer) clearInterval(window.__expiryCountdownTimer);
+        startExpiryCountdown(expiryStr);
+      }
+
+      function startExpiryCountdown(expiryStr) {
+        const expiryDt = parseYYYYMMDD(expiryStr);
+        if (!expiryDt) return;
+
+        if (window.__expiryCountdownTimer) clearInterval(window.__expiryCountdownTimer);
+
+        window.__expiryCountdownTimer = setInterval(() => {
+          const now = new Date();
+          const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+          const expDate = new Date(expiryDt.getFullYear(), expiryDt.getMonth(), expiryDt.getDate());
+          const msPerDay = 24 * 60 * 60 * 1000;
+          const remainingDays = Math.ceil((expDate - today) / msPerDay);
+
+          if (remainingDays <= 0) {
+            clearInterval(window.__expiryCountdownTimer);
+            localStorage.removeItem(LS_LICENSE);
+            localStorage.removeItem(LS_ACTIVATED);
+
+            showGate(true);
+            setStatus("License đã hết hạn. Vui lòng gia hạn để tiếp tục sử dụng.", "error");
+
+            const statusValueEl = document.getElementById("statusValue");
+            const statusSubtitleEl = document.getElementById("statusSubtitle");
+            const targetCardEl = document.querySelector(".target-card:nth-child(3)");
+
+            if (statusValueEl) statusValueEl.textContent = "EXPIRED";
+            if (statusSubtitleEl)
+              statusSubtitleEl.textContent = `Quyền truy cập đã hết hạn từ: ${formatDDMMYYYY(expDate)}`;
+            if (targetCardEl) {
+              targetCardEl.classList.remove("warning-yellow", "warning-red", "warning-expired");
+              targetCardEl.classList.add("warning-expired");
+            }
+          }
+        }, 60000);
+      }
+
+      /* =========================================================
+        Gate
+      ========================================================= */
+      function showGate(show = true) {
+        const gate = document.getElementById("licenseGate");
+        const app = document.getElementById("appRoot");
+        gate.style.display = show ? "flex" : "none";
+        app.style.display = show ? "none" : "block";
+      }
+
+      function fillDeviceUI(deviceId) {
+        document.getElementById("deviceIdText").textContent = deviceId;
+        document.getElementById("deviceInfoText").textContent = getDeviceInfo();
       }
 
       async function copyText(text) {
@@ -2292,294 +2013,54 @@
         }
       }
 
-      // ====== API ======
-      async function verifyLicense(deviceId, license) {
-        const res = await fetch(`${API_URL}/verify`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ deviceId, license }),
-        });
-        if (!res.ok) {
-          const t = await res.text();
-          throw new Error(t || "Verify failed");
-        }
-        return res.json();
-      }
-
-      function startBackgroundRecheck(deviceId) {
-        const INTERVAL_MS = 90 * 1000;
-
-        if (window.__recheckTimer) return;
-
-        async function tick() {
-          const license = localStorage.getItem(LS_LICENSE);
-          const activatedOnce = localStorage.getItem(LS_ACTIVATED) === "1";
-          if (!license || !activatedOnce) return;
-
-          try {
-            const r = await verifyLicense(deviceId, license);
-
-            if (r && r.ok) {
-              setStatus(`Kích hoạt OK (hạn: ${r.expiry})`, "ok");
-              updateStatusUI(r.expiry);
-              return;
-            }
-
-            throw new Error("Verify failed");
-          } catch (e) {
-            const msg = String(e?.message || "");
-
-            const hardBlock =
-              msg.includes("Device revoked") ||
-              msg.includes("Expired") ||
-              msg.includes("Invalid") ||
-              msg.includes("already bound");
-
-            if (hardBlock) {
-              localStorage.removeItem(LS_LICENSE);
-              localStorage.removeItem(LS_ACTIVATED);
-              setStatus(
-                "Quyền truy cập đã bị thu hồi hoặc license không còn hợp lệ.",
-                "error",
-              );
-              showGate(true);
-              return;
-            }
-
-            setStatus(
-              "Server kiểm tra đang offline. Hệ thống giữ trạng thái kích hoạt.",
-              "error",
-            );
-          }
-        }
-
-        tick();
-        window.__recheckTimer = setInterval(tick, INTERVAL_MS);
-      }
-
-      async function requestReset(deviceId, oldLicense, note) {
-        const res = await fetch(`${API_URL}/request-reset`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ deviceId, oldLicense, note }),
-        });
-        if (!res.ok) {
-          const t = await res.text();
-          throw new Error(t || "Request reset failed");
-        }
-        return res.json();
-      }
-
-      // ====== Expiry Countdown ======
-      function startExpiryCountdown(expiryStr) {
-        if (!expiryStr) return;
-
-        const expiryDt = parseYYYYMMDD(expiryStr);
-        if (!expiryDt) return;
-
-        if (window.__expiryCountdownTimer) {
-          clearInterval(window.__expiryCountdownTimer);
-        }
-
-        window.__expiryCountdownTimer = setInterval(() => {
-          const now = new Date();
-          const today = new Date(
-            now.getFullYear(),
-            now.getMonth(),
-            now.getDate(),
-          );
-          const expDate = new Date(
-            expiryDt.getFullYear(),
-            expiryDt.getMonth(),
-            expiryDt.getDate(),
-          );
-
-          const msPerDay = 24 * 60 * 60 * 1000;
-          const remainingDays = Math.ceil((expDate - today) / msPerDay);
-
-          if (remainingDays <= 0) {
-            clearInterval(window.__expiryCountdownTimer);
-            localStorage.removeItem(LS_LICENSE);
-            localStorage.removeItem(LS_ACTIVATED);
-
-            showGate(true);
-            setStatus(
-              "License đã hết hạn. Vui lòng gia hạn để tiếp tục sử dụng.",
-              "error",
-            );
-
-            const statusValueEl = document.getElementById("statusValue");
-            const statusSubtitleEl = document.getElementById("statusSubtitle");
-            const targetCardEl = document.querySelector(
-              ".target-card:nth-child(3)",
-            );
-
-            if (statusValueEl) statusValueEl.textContent = "EXPIRED";
-            if (statusSubtitleEl)
-              statusSubtitleEl.textContent = `Quyền truy cập đã hết hạn từ: ${formatDDMMYYYY(expDate)}`;
-            if (targetCardEl) {
-              targetCardEl.classList.remove(
-                "warning-yellow",
-                "warning-red",
-                "warning-expired",
-              );
-              targetCardEl.classList.add("warning-expired");
-            }
-          }
-        }, 60000);
-      }
-
-      // ====== Gate flow ======
-      function showGate(show = true) {
-        const gate = document.getElementById("licenseGate");
-        const app = document.getElementById("appRoot");
-        gate.style.display = show ? "flex" : "none";
-        app.style.display = show ? "none" : "block";
-      }
-
-      function fillDeviceUI(deviceId) {
-        document.getElementById("deviceIdText").textContent = deviceId;
-        document.getElementById("deviceInfoText").textContent = getDeviceInfo();
-      }
-
-      // ====== SCROLL MANAGEMENT ======
-      function lockBodyScroll() {
-        const scrollY = window.scrollY;
-        document.body.style.top = `-${scrollY}px`;
-        document.body.classList.add("modal-open");
-      }
-
-      function unlockBodyScroll() {
-        const scrollY = parseInt(document.body.style.top || "0") * -1;
-        document.body.classList.remove("modal-open");
-        document.body.style.top = "";
-        window.scrollTo(0, scrollY);
-      }
-
-      // ====== MODULE DISPLAY LOGIC ======
+      /* =========================================================
+        MODULE MODAL LOGIC (NEW)
+        - Mặc định: ẩn modal
+        - Click module: mở modal ở giữa + lock module
+        - Click module khác: đổi lock sang module khác (modal vẫn mở)
+        - Đóng: nút "Đóng" / ESC / click backdrop
+      ========================================================= */
       let lockedModule = null;
-      let lastDblClickAt = 0;
-      const IGNORE_CLICK_AFTER_DBL_MS = 350;
 
       const moduleContents = {
         vocab: {
           title: "TỪ VỰNG N1",
           icon: "fas fa-book",
           items: [
-            {
-              title: "Từ vựng Chuyên ngành",
-              desc: "1000 từ vựng kinh tế, chính trị, khoa học kỹ thuật",
-              progress: 65,
-              stats: "Đã học: 650/1000 từ",
-            },
-            {
-              title: "Thành ngữ - Quán ngữ",
-              desc: "300 thành ngữ thông dụng trong giao tiếp nâng cao",
-              progress: 42,
-              stats: "Đã học: 126/300 thành ngữ",
-            },
-            {
-              title: "Từ đồng nghĩa/Trái nghĩa",
-              desc: "500 cặp từ đồng nghĩa và trái nghĩa N1",
-              progress: 28,
-              stats: "Đã học: 140/500 cặp từ",
-            },
-            {
-              title: "Từ vựng Hán tự N1",
-              desc: "800 từ Hán tự nâng cao với âm On/Kun",
-              progress: 75,
-              stats: "Đã học: 600/800 từ",
-            },
+            { title: "Từ vựng Chuyên ngành", desc: "1000 từ vựng kinh tế, chính trị, khoa học kỹ thuật", progress: 65, stats: "Đã học: 650/1000 từ" },
+            { title: "Thành ngữ - Quán ngữ", desc: "300 thành ngữ thông dụng trong giao tiếp nâng cao", progress: 42, stats: "Đã học: 126/300 thành ngữ" },
+            { title: "Từ đồng nghĩa/Trái nghĩa", desc: "500 cặp từ đồng nghĩa và trái nghĩa N1", progress: 28, stats: "Đã học: 140/500 cặp từ" },
+            { title: "Từ vựng Hán tự N1", desc: "800 từ Hán tự nâng cao với âm On/Kun", progress: 75, stats: "Đã học: 600/800 từ" },
           ],
         },
         grammar: {
           title: "NGỮ PHÁP N1",
           icon: "fas fa-language",
           items: [
-            {
-              title: "Ngữ pháp Văn viết",
-              desc: "100 cấu trúc ngữ pháp dùng trong văn bản học thuật",
-              progress: 42,
-              stats: "Đã học: 42/100 cấu trúc",
-            },
-            {
-              title: "Ngữ pháp Hội thoại",
-              desc: "50 mẫu câu đàm thoại nâng cao trong công việc",
-              progress: 60,
-              stats: "Đã học: 30/50 mẫu câu",
-            },
-            {
-              title: "Liên từ - Trợ từ N1",
-              desc: "70 liên từ và trợ từ phức tạp",
-              progress: 35,
-              stats: "Đã học: 25/70 từ",
-            },
-            {
-              title: "Mẫu câu So sánh",
-              desc: "30 mẫu câu so sánh nâng cao",
-              progress: 80,
-              stats: "Đã học: 24/30 mẫu câu",
-            },
+            { title: "Ngữ pháp Văn viết", desc: "100 cấu trúc ngữ pháp dùng trong văn bản học thuật", progress: 42, stats: "Đã học: 42/100 cấu trúc" },
+            { title: "Ngữ pháp Hội thoại", desc: "50 mẫu câu đàm thoại nâng cao trong công việc", progress: 60, stats: "Đã học: 30/50 mẫu câu" },
+            { title: "Liên từ - Trợ từ N1", desc: "70 liên từ và trợ từ phức tạp", progress: 35, stats: "Đã học: 25/70 từ" },
+            { title: "Mẫu câu So sánh", desc: "30 mẫu câu so sánh nâng cao", progress: 80, stats: "Đã học: 24/30 mẫu câu" },
           ],
         },
         listening: {
           title: "NGHE HIỂU",
           icon: "fas fa-headphones",
           items: [
-            {
-              title: "Nghe tin tức",
-              desc: "50 bài nghe tin tức NHK với tốc độ thực",
-              progress: 28,
-              stats: "Đã học: 14/50 bài",
-            },
-            {
-              title: "Hội thoại Công sở",
-              desc: "30 tình huống giao tiếp trong môi trường công ty",
-              progress: 45,
-              stats: "Đã học: 14/30 tình huống",
-            },
-            {
-              title: "Bài giảng Đại học",
-              desc: "20 bài giảng học thuật các chuyên ngành",
-              progress: 20,
-              stats: "Đã học: 4/20 bài",
-            },
-            {
-              title: "Phỏng vấn chuyên gia",
-              desc: "15 cuộc phỏng vấn với chuyên gia các lĩnh vực",
-              progress: 15,
-              stats: "Đã học: 2/15 bài",
-            },
+            { title: "Nghe tin tức", desc: "50 bài nghe tin tức NHK với tốc độ thực", progress: 28, stats: "Đã học: 14/50 bài" },
+            { title: "Hội thoại Công sở", desc: "30 tình huống giao tiếp trong môi trường công ty", progress: 45, stats: "Đã học: 14/30 tình huống" },
+            { title: "Bài giảng Đại học", desc: "20 bài giảng học thuật các chuyên ngành", progress: 20, stats: "Đã học: 4/20 bài" },
+            { title: "Phỏng vấn chuyên gia", desc: "15 cuộc phỏng vấn với chuyên gia các lĩnh vực", progress: 15, stats: "Đã học: 2/15 bài" },
           ],
         },
         reading: {
           title: "ĐỌC HIỂU",
           icon: "fas fa-file-alt",
           items: [
-            {
-              title: "Văn bản Học thuật",
-              desc: "25 bài đọc về khoa học, nghiên cứu chuyên sâu",
-              progress: 35,
-              stats: "Đã học: 9/25 bài",
-            },
-            {
-              title: "Báo chí - Tạp chí",
-              desc: "30 bài báo kinh tế, chính trị, xã hội",
-              progress: 40,
-              stats: "Đã học: 12/30 bài",
-            },
-            {
-              title: "Tiểu thuyết - Văn học",
-              desc: "15 trích đoạn tiểu thuyết đương đại",
-              progress: 25,
-              stats: "Đã học: 4/15 bài",
-            },
-            {
-              title: "Tài liệu Kỹ thuật",
-              desc: "20 tài liệu kỹ thuật, hướng dẫn sử dụng",
-              progress: 30,
-              stats: "Đã học: 6/20 bài",
-            },
+            { title: "Văn bản Học thuật", desc: "25 bài đọc về khoa học, nghiên cứu chuyên sâu", progress: 35, stats: "Đã học: 9/25 bài" },
+            { title: "Báo chí - Tạp chí", desc: "30 bài báo kinh tế, chính trị, xã hội", progress: 40, stats: "Đã học: 12/30 bài" },
+            { title: "Tiểu thuyết - Văn học", desc: "15 trích đoạn tiểu thuyết đương đại", progress: 25, stats: "Đã học: 4/15 bài" },
+            { title: "Tài liệu Kỹ thuật", desc: "20 tài liệu kỹ thuật, hướng dẫn sử dụng", progress: 30, stats: "Đã học: 6/20 bài" },
           ],
         },
       };
@@ -2589,43 +2070,23 @@
       }
 
       function clearAllCardStates() {
-        document.querySelectorAll(".module-card").forEach((c) => {
-          c.classList.remove("active", "locked");
-        });
+        document.querySelectorAll(".module-card").forEach((c) => c.classList.remove("locked"));
       }
 
-      // Hiển thị modal
-      function showModuleModal() {
+      function openModal() {
         const modal = document.getElementById("moduleDisplay");
-        const overlay = document.getElementById("modalOverlay");
-        const wrapper = document.getElementById("modulesWrapper");
-
-        modal.classList.remove("hidden");
-        overlay.classList.add("active");
-        wrapper.classList.remove("no-frame");
-        wrapper.classList.add("has-frame");
-
-        // Lock body scroll khi mở modal
-        lockBodyScroll();
+        const backdrop = document.getElementById("moduleBackdrop");
+        modal.classList.add("show");
+        backdrop.classList.add("show");
+        modal.setAttribute("aria-hidden", "false");
       }
 
-      // Ẩn modal
-      function hideModuleModal() {
+      function closeModal() {
         const modal = document.getElementById("moduleDisplay");
-        const overlay = document.getElementById("modalOverlay");
-        const wrapper = document.getElementById("modulesWrapper");
-
-        modal.classList.add("hidden");
-        overlay.classList.remove("active");
-        wrapper.classList.remove("has-frame");
-        wrapper.classList.add("no-frame");
-
-        // Unlock body scroll
-        unlockBodyScroll();
-
-        // Reset states
-        lockedModule = null;
-        clearAllCardStates();
+        const backdrop = document.getElementById("moduleBackdrop");
+        modal.classList.remove("show");
+        backdrop.classList.remove("show");
+        modal.setAttribute("aria-hidden", "true");
       }
 
       function renderModuleToModal(moduleId) {
@@ -2635,22 +2096,11 @@
         const frameTitle = document.getElementById("frameTitle");
         const frameContent = document.getElementById("frameContent");
         const frameIcon = document.querySelector(".frame-icon i");
-        const frameStatus = document.getElementById("frameStatus");
-        const statusText = frameStatus.querySelector(".status-text");
-        const statusIcon = frameStatus.querySelector(".status-icon");
+        const statusText = document.querySelector("#frameStatus .status-text");
 
         frameTitle.textContent = data.title;
         if (frameIcon) frameIcon.className = data.icon;
-
-        if (lockedModule === moduleId) {
-          frameStatus.classList.add("locked");
-          statusText.textContent = `Đã khóa: ${data.title}`;
-          if (statusIcon) statusIcon.textContent = "🔒";
-        } else {
-          frameStatus.classList.remove("locked");
-          statusText.textContent = `Đang xem: ${data.title}`;
-          if (statusIcon) statusIcon.textContent = "🔓";
-        }
+        if (statusText) statusText.textContent = `Đang xem: ${data.title}`;
 
         frameContent.innerHTML = "";
         data.items.forEach((item) => {
@@ -2668,14 +2118,9 @@
           `;
           frameContent.appendChild(itemEl);
         });
-
-        // Reset scroll position về đầu
-        frameContent.scrollTop = 0;
-
-        showModuleModal();
       }
 
-      function setLocked(moduleId) {
+      function lockAndOpen(moduleId) {
         lockedModule = moduleId;
 
         clearAllCardStates();
@@ -2683,96 +2128,58 @@
         if (card) card.classList.add("locked");
 
         renderModuleToModal(moduleId);
+        openModal();
       }
 
-      function unlock() {
-        hideModuleModal();
+      function unlockAndClose() {
+        lockedModule = null;
+        clearAllCardStates();
+        closeModal();
       }
 
       function setupModuleInteractions() {
-        const moduleCards = document.querySelectorAll(".module-card");
-
-        moduleCards.forEach((card) => {
+        document.querySelectorAll(".module-card").forEach((card) => {
           const moduleId = card.getAttribute("data-module");
-
-          // Click để mở modal
           card.addEventListener("click", (e) => {
             e.preventDefault();
-
-            const now = Date.now();
-            if (now - lastDblClickAt < IGNORE_CLICK_AFTER_DBL_MS) return;
-
-            // Nếu click đúng module đang lock -> giữ lock
-            if (lockedModule === moduleId) {
-              renderModuleToModal(moduleId);
-              return;
-            }
-
-            // Nếu đang lock module khác mà click module này -> CHUYỂN LOCK
-            setLocked(moduleId);
+            lockAndOpen(moduleId);
           });
-
-          // Double-click để unlock nếu đang lock module này
-          card.addEventListener("dblclick", (e) => {
-            e.preventDefault();
-            lastDblClickAt = Date.now();
-
-            if (lockedModule === moduleId) {
-              unlock();
-            }
-          });
-
           card.addEventListener("contextmenu", (e) => e.preventDefault());
         });
 
-        // Nút Đóng modal
-        const closeBtn = document.getElementById("closeModalBtn");
-        if (closeBtn) {
-          closeBtn.addEventListener("click", unlock);
-        }
+        // Đóng bằng nút
+        document.getElementById("closeModalBtn").addEventListener("click", unlockAndClose);
 
-        // Click overlay để đóng
-        const overlay = document.getElementById("modalOverlay");
-        if (overlay) {
-          overlay.addEventListener("click", unlock);
-        }
+        // Đóng bằng click backdrop
+        document.getElementById("moduleBackdrop").addEventListener("click", unlockAndClose);
 
-        // ESC để đóng
+        // ESC đóng
         document.addEventListener("keydown", (e) => {
-          if (e.key === "Escape" && lockedModule) {
-            unlock();
-          }
+          if (e.key === "Escape" && lockedModule) unlockAndClose();
         });
       }
 
-      // ====== App UI Effects ======
+      /* =========================================================
+        App UI
+      ========================================================= */
       function runAppUI() {
         // Progress bars
-        const progressData = {
-          vocab: 65,
-          grammar: 42,
-          listening: 28,
-          reading: 35,
-        };
-
+        const progressData = { vocab: 65, grammar: 42, listening: 28, reading: 35 };
         for (const [module, value] of Object.entries(progressData)) {
           const progressFill = document.getElementById(`progress-${module}`);
           const percentText = document.getElementById(`percent-${module}`);
-
           progressFill.style.width = "0%";
           percentText.textContent = "0%";
-
           setTimeout(() => {
             progressFill.style.width = `${value}%`;
             percentText.textContent = `${value}%`;
           }, 300);
         }
 
-        // Start button
+        // Start button ripple
         const startButton = document.querySelector(".start-button");
         startButton.addEventListener("click", function (e) {
           e.preventDefault();
-
           const ripple = document.createElement("div");
           ripple.style.position = "fixed";
           ripple.style.borderRadius = "50%";
@@ -2787,19 +2194,13 @@
           document.body.appendChild(ripple);
 
           const animation = ripple.animate(
-            [
-              { width: "10px", height: "10px", opacity: 1 },
-              { width: "200px", height: "200px", opacity: 0 },
-            ],
+            [{ width: "10px", height: "10px", opacity: 1 }, { width: "200px", height: "200px", opacity: 0 }],
             { duration: 800, easing: "ease-out" },
           );
-
           animation.onfinish = () => ripple.remove();
 
           setTimeout(() => {
-            alert(
-              "Hệ thống học tập N1 đang khởi động...\nChuẩn bị cho nhiệm vụ ngày hôm nay!",
-            );
+            alert("Hệ thống học tập N1 đang khởi động...\nChuẩn bị cho nhiệm vụ ngày hôm nay!");
           }, 300);
         });
 
@@ -2813,33 +2214,18 @@
           if (count === targetCount) clearInterval(countInterval);
         }, 200);
 
-        // Setup module interactions
         setupModuleInteractions();
 
-        // Check expiry
+        // Expiry check khi mở app
         const savedExpiry = localStorage.getItem("n1_expiry_date");
-        if (savedExpiry) {
-          updateStatusUI(savedExpiry);
-        } else {
-          const license = localStorage.getItem(LS_LICENSE);
-          if (license) {
-            const deviceId = getOrCreateDeviceId();
-            verifyLicense(deviceId, license)
-              .then((r) => {
-                if (r && r.ok) {
-                  updateStatusUI(r.expiry);
-                }
-              })
-              .catch(() => {
-                updateStatusUI("");
-              });
-          }
-        }
+        if (savedExpiry) updateStatusUI(savedExpiry);
 
         console.log("App UI initialized");
       }
 
-      // ====== Boot ======
+      /* =========================================================
+        Boot
+      ========================================================= */
       (async function boot() {
         const deviceId = getOrCreateDeviceId();
         fillDeviceUI(deviceId);
@@ -2881,90 +2267,62 @@
               runAppUI();
               return;
             }
-
             setStatus("License không hợp lệ hoặc đã hết hạn", "error");
-          } catch (e) {
-            setStatus(
-              "Không kiểm tra được license (server lỗi hoặc sai API_URL)",
-              "error",
-            );
+          } catch {
+            setStatus("Không kiểm tra được license (server lỗi hoặc sai API_URL)", "error");
           }
         }
 
-        // Button events
-        document
-          .getElementById("btnCopyDevice")
-          .addEventListener("click", async () => {
-            await copyText(deviceId);
-            setStatus(
-              "Đã copy deviceID. Gửi deviceID này để cấp license.",
-              "ok",
-            );
-          });
+        document.getElementById("btnCopyDevice").addEventListener("click", async () => {
+          await copyText(deviceId);
+          setStatus("Đã copy deviceID. Gửi deviceID này để cấp license.", "ok");
+        });
 
-        document
-          .getElementById("btnActivate")
-          .addEventListener("click", async () => {
-            const license = licenseInput.value.trim();
-            if (!license) return setStatus("Bạn chưa nhập license", "error");
+        document.getElementById("btnActivate").addEventListener("click", async () => {
+          const license = licenseInput.value.trim();
+          if (!license) return setStatus("Bạn chưa nhập license", "error");
 
-            setStatus("Đang kích hoạt...", "");
-            try {
-              const r = await verifyLicense(deviceId, license);
-              if (r && r.ok) {
-                localStorage.setItem(LS_LICENSE, license);
-                localStorage.setItem(LS_ACTIVATED, "1");
-                setStatus(`Kích hoạt OK (hạn: ${r.expiry})`, "ok");
-                updateStatusUI(r.expiry);
+          setStatus("Đang kích hoạt...", "");
+          try {
+            const r = await verifyLicense(deviceId, license);
+            if (r && r.ok) {
+              localStorage.setItem(LS_LICENSE, license);
+              localStorage.setItem(LS_ACTIVATED, "1");
+              setStatus(`Kích hoạt OK (hạn: ${r.expiry})`, "ok");
+              updateStatusUI(r.expiry);
 
-                if (r.userName) setUserName(r.userName);
-                if (r.examDate) localStorage.setItem(LS_EXAM_DATE, r.examDate);
-                updateExamUI(r.examDate);
+              if (r.userName) setUserName(r.userName);
+              if (r.examDate) localStorage.setItem(LS_EXAM_DATE, r.examDate);
+              updateExamUI(r.examDate);
 
-                showGate(false);
-                runAppUI();
-                startBackgroundRecheck(deviceId);
-              } else {
-                setStatus("License không hợp lệ hoặc đã hết hạn", "error");
-              }
-            } catch (e) {
-              const msg = e && e.message ? e.message : "unknown";
-              if (msg.includes("Expired")) {
-                setStatus("License đã hết hạn", "error");
-              } else if (msg.includes("Invalid")) {
-                setStatus("License không hợp lệ", "error");
-              } else if (msg.includes("already bound")) {
-                setStatus("License đã được dùng trên thiết bị khác", "error");
-              } else {
-                setStatus("Kích hoạt thất bại: " + msg, "error");
-              }
+              showGate(false);
+              runAppUI();
+              startBackgroundRecheck(deviceId);
+            } else {
+              setStatus("License không hợp lệ hoặc đã hết hạn", "error");
             }
-          });
+          } catch (e) {
+            const msg = e && e.message ? e.message : "unknown";
+            if (msg.includes("Expired")) setStatus("License đã hết hạn", "error");
+            else if (msg.includes("Invalid")) setStatus("License không hợp lệ", "error");
+            else if (msg.includes("already bound")) setStatus("License đã được dùng trên thiết bị khác", "error");
+            else setStatus("Kích hoạt thất bại: " + msg, "error");
+          }
+        });
 
-        document
-          .getElementById("btnRequestReset")
-          .addEventListener("click", async () => {
-            const oldLicense =
-              licenseInput.value.trim() ||
-              localStorage.getItem(LS_LICENSE) ||
-              "";
-            const note =
-              prompt(
-                "Nhập lý do cấp lại (vd: đổi máy / cài lại Windows / xóa trình duyệt):",
-              ) || "";
+        document.getElementById("btnRequestReset").addEventListener("click", async () => {
+          const oldLicense = licenseInput.value.trim() || localStorage.getItem(LS_LICENSE) || "";
+          const note =
+            prompt("Nhập lý do cấp lại (vd: đổi máy / cài lại Windows / xóa trình duyệt):") || "";
 
-            const requestCode = `RESET|deviceId=${deviceId}|oldLicense=${oldLicense}|note=${note}`;
-            await copyText(requestCode);
+          const requestCode = `RESET|deviceId=${deviceId}|oldLicense=${oldLicense}|note=${note}`;
+          await copyText(requestCode);
+          setStatus("Đã copy mã yêu cầu cấp lại. Dán mã này gửi cho ban quản trị.", "ok");
 
-            setStatus(
-              "Đã copy mã yêu cầu cấp lại. Dán mã này gửi cho ban quản trị.",
-              "ok",
-            );
-
-            try {
-              await requestReset(deviceId, oldLicense, note);
-            } catch {}
-          });
+          try {
+            await requestReset(deviceId, oldLicense, note);
+          } catch {}
+        });
       })();
     </script>
   </body>
