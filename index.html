@@ -1694,7 +1694,7 @@
         <main class="main-content">
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
             </h2>
 
             <div class="target-info">
@@ -2412,25 +2412,25 @@
 ========================================================= */
 
       // Dữ liệu bài kiểm tra cho từng mục trong module từ vựng
+      //Bắt đầu test data
       const testData = {
         // Bài test cho "Từ vựng Mimikara Oboeru"
         "Từ vựng Mimikara Oboeru": {
           title: "Mimikara Oboeru N1",
-          tests: [
-            {
+          tests: [{
               id: 1,
               name: "Bài test Mimikara ngày 1 phần 1 (1-20)",
-              questions: 20,
-              time: "15 phút",
-              difficulty: "Dễ",
+              questions: 39,
+              time: "39 phút",
+              difficulty: "Khó",
               url: "Mimikara-1-1.html",
             },
             {
               id: 2,
               name: "Bài test Mimikara ngày 1 phần 2 (21-40)",
-              questions: 20,
-              time: "15 phút",
-              difficulty: "Dễ",
+              questions: 40,
+              time: "40 phút",
+              difficulty: "Khó",
               url: "Mimikara-1-2.html",
             },
             {
@@ -2480,8 +2480,8 @@
               time: "30 phút",
               difficulty: "Khó",
               url: "Mimikara-2-3.html",
-            },
-          ],
+            }
+],
         },
         // Bài test cho "Từ vựng ThaoLeJP"
         "Từ vựng ThaoLeJP": {
@@ -2630,6 +2630,7 @@
           ],
         },
       };
+      //Kết thúc test data
 
       // Hàm mở test modal
       function openTestModal(itemTitle) {
