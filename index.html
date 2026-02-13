@@ -1694,7 +1694,7 @@
         <main class="main-content">
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
             </h2>
 
             <div class="target-info">
@@ -2685,23 +2685,26 @@
       </div>
     `;
 
-          // Thêm sự kiện click để chuyển hướng
           testItem.addEventListener("click", function (e) {
             e.preventDefault();
             e.stopPropagation();
+
             const url = this.getAttribute("data-test-url");
             const testName = this.getAttribute("data-test-name");
 
-            // Hiệu ứng click
+            // Hiệu ứng click (giữ lại)
             this.style.transform = "scale(0.98)";
             setTimeout(() => (this.style.transform = ""), 150);
 
-            // Chuyển hướng đến trang HTML khác
-            setTimeout(() => {
-              window.location.href = url;
-            }, 200);
+            // ✅ MỞ TAB MỚI (popup-safe vì chạy trực tiếp trong click)
+            const newTab = window.open(url, "_blank", "noopener,noreferrer");
 
-            console.log(`Chuyển đến: ${url} - ${testName}`);
+            // Nếu trình duyệt chặn popup thì fallback (mở cùng tab)
+            if (!newTab) {
+              window.location.href = url;
+            }
+
+            console.log(`Mở tab mới: ${url} - ${testName}`);
           });
 
           testList.appendChild(testItem);
@@ -3167,7 +3170,7 @@
               await requestReset(deviceId, oldLicense, note);
             } catch {}
           });
-          setupTestModalInteractions();
+        setupTestModalInteractions();
       })();
     </script>
     <!-- TEST MODAL (BÀI KIỂM TRA) -->
