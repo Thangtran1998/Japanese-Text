@@ -1693,7 +1693,7 @@
         <main class="main-content">
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
             </h2>
 
             <div class="target-info">
@@ -1848,7 +1848,9 @@
       </div>
 
       <div class="frame-header">
-        
+        <div class="frame-icon">
+          <i class="fas fa-book"></i>
+        </div>
         <div class="frame-title" id="frameTitle">---</div>
       </div>
 
@@ -2644,7 +2646,7 @@
         }
 
         // Cập nhật tiêu đề
-        testModalTitle.innerHTML = `<i class="fas fa-file-signature"></i> ${testInfo.title}`;
+        testModalTitle.textContent = testInfo.title;
 
         // Render danh sách bài test
         testList.innerHTML = "";
