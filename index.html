@@ -1694,7 +1694,7 @@
         <main class="main-content">
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
             </h2>
 
             <div class="target-info">
@@ -2700,18 +2700,9 @@
             // ✅ chỉ mở tab mới, KHÔNG đụng vào tab cũ
             const newTab = window.open(url, "_blank", "noopener,noreferrer");
 
-            // ✅ nếu bị chặn popup: giữ nguyên tab cũ, chỉ báo lỗi
-            if (!newTab) {
-              alert(
-                "Trình duyệt đang chặn mở tab mới. Hãy bật Allow pop-ups cho trang này.",
-              );
-              console.log(
-                "Popup bị chặn, không mở được tab mới:",
-                url,
-                testName,
-              );
-              return;
-            }
+            
+            if (!newTab) return;
+
 
             console.log(`Mở tab mới: ${url} - ${testName}`);
           });
