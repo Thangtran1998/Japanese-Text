@@ -1196,7 +1196,11 @@
         background: #ff3333 !important;
       }
       .target-card:nth-child(2).warning-red::after {
-        background: radial-gradient(circle, #ff3333, transparent 70%) !important;
+        background: radial-gradient(
+          circle,
+          #ff3333,
+          transparent 70%
+        ) !important;
         animation: redParticleGlow 1s ease-in-out infinite alternate !important;
       }
       @keyframes redParticleGlow {
@@ -1360,7 +1364,11 @@
         background: #ff3333 !important;
       }
       .target-card:nth-child(3).warning-red::after {
-        background: radial-gradient(circle, #ff3333, transparent 70%) !important;
+        background: radial-gradient(
+          circle,
+          #ff3333,
+          transparent 70%
+        ) !important;
         animation: redParticleGlow 1s ease-in-out infinite alternate !important;
       }
       .target-card:nth-child(3).warning-red .card-title {
@@ -1392,7 +1400,11 @@
         background: #888888 !important;
       }
       .target-card:nth-child(3).warning-expired::after {
-        background: radial-gradient(circle, #888888, transparent 70%) !important;
+        background: radial-gradient(
+          circle,
+          #888888,
+          transparent 70%
+        ) !important;
         animation: expiredParticleGlow 2s ease-in-out infinite alternate !important;
       }
       @keyframes expiredParticleGlow {
@@ -1418,6 +1430,181 @@
       .target-card:nth-child(3).warning-expired .card-subtitle {
         color: #999999 !important;
       }
+      /* ===== TEST MODAL (BÀI KIỂM TRA) ===== */
+      .test-modal-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(2, 8, 18, 0.85);
+        backdrop-filter: blur(12px);
+        z-index: 10000;
+        display: none;
+        opacity: 0;
+        transition: opacity 220ms ease;
+      }
+
+      .test-modal-backdrop.show {
+        display: block;
+        opacity: 1;
+      }
+
+      .test-modal-frame {
+        width: min(400px, calc(100vw - 60px));
+        height: min(500px, calc(100vh - 140px));
+        background: rgba(8, 20, 40, 0.95);
+        border: 2px solid #00a8ff;
+        border-radius: 15px;
+        padding: 20px;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%) scale(0.92);
+        opacity: 0;
+        z-index: 10001;
+        display: none;
+        backdrop-filter: blur(15px);
+        overflow: hidden;
+        box-shadow:
+          0 15px 40px rgba(0, 0, 0, 0.9),
+          0 0 30px rgba(0, 168, 255, 0.5);
+        flex-direction: column;
+      }
+
+      .test-modal-frame.show {
+        display: flex;
+        animation: testModalIn 300ms cubic-bezier(0.2, 1.05, 0.35, 1) forwards;
+      }
+
+      @keyframes testModalIn {
+        0% {
+          opacity: 0;
+          transform: translate(-50%, -48%) scale(0.9);
+        }
+        100% {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1);
+        }
+      }
+
+      .test-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(0, 168, 255, 0.3);
+        margin-bottom: 15px;
+      }
+
+      .test-modal-title {
+        font-family: "Orbitron", sans-serif;
+        font-size: 18px;
+        color: #00e5ff;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .test-modal-close {
+        background: rgba(255, 50, 50, 0.2);
+        border: 1px solid rgba(255, 50, 50, 0.5);
+        color: #ff6666;
+        padding: 6px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.25s;
+        font-size: 13px;
+      }
+
+      .test-modal-close:hover {
+        background: rgba(255, 50, 50, 0.4);
+        box-shadow: 0 0 10px rgba(255, 50, 50, 0.4);
+        transform: translateY(-1px);
+      }
+
+      .test-list {
+        flex: 1;
+        overflow-y: auto;
+        padding-right: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .test-list::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .test-list::-webkit-scrollbar-track {
+        background: rgba(0, 30, 60, 0.3);
+        border-radius: 3px;
+      }
+
+      .test-list::-webkit-scrollbar-thumb {
+        background: linear-gradient(to bottom, #00a8ff, #00ffcc);
+        border-radius: 3px;
+      }
+
+      .test-item {
+        background: rgba(0, 40, 80, 0.4);
+        border: 1px solid rgba(0, 168, 255, 0.2);
+        border-radius: 10px;
+        padding: 15px;
+        cursor: pointer;
+        transition: all 0.25s;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .test-item:hover {
+        background: rgba(0, 80, 120, 0.5);
+        border-color: #00a8ff;
+        transform: translateX(5px);
+        box-shadow: 0 5px 15px rgba(0, 100, 255, 0.3);
+      }
+
+      .test-item-icon {
+        width: 40px;
+        height: 40px;
+        background: rgba(0, 150, 200, 0.2);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #00ffcc;
+        font-size: 18px;
+      }
+
+      .test-item-content {
+        flex: 1;
+      }
+
+      .test-item-title {
+        font-weight: 600;
+        color: #e0f7ff;
+        margin-bottom: 5px;
+        font-size: 15px;
+      }
+
+      .test-item-meta {
+        display: flex;
+        gap: 15px;
+        font-size: 12px;
+        color: #88d3ff;
+      }
+
+      .test-item-meta i {
+        margin-right: 4px;
+        color: #ff9900;
+      }
+
+      .test-status-badge {
+        background: rgba(0, 200, 100, 0.2);
+        border: 1px solid rgba(0, 255, 100, 0.3);
+        color: #00ff99;
+        padding: 3px 8px;
+        border-radius: 12px;
+        font-size: 11px;
+      }
     </style>
   </head>
 
@@ -1441,7 +1628,8 @@
         </h2>
 
         <div class="license-small">
-          Web của bạn đang bật chế độ <b>Khóa thiết bị</b>: 1 máy / 1 license.<br />
+          Web của bạn đang bật chế độ <b>Khóa thiết bị</b>: 1 máy / 1
+          license.<br />
           Nhập license để mở hệ thống.
         </div>
 
@@ -1505,7 +1693,7 @@
         <main class="main-content">
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
             </h2>
 
             <div class="target-info">
@@ -1616,7 +1804,8 @@
                   </div>
                   <h3 class="module-title">ĐỌC HIỂU</h3>
                   <p class="module-desc">
-                    Phân tích văn bản học thuật, báo chí và tài liệu chuyên ngành.
+                    Phân tích văn bản học thuật, báo chí và tài liệu chuyên
+                    ngành.
                   </p>
                   <div class="progress-bar">
                     <div class="progress-fill" id="progress-reading"></div>
@@ -1731,7 +1920,11 @@
           mo = Number(m[2]) - 1,
           d = Number(m[3]);
         const dt = new Date(y, mo, d);
-        if (dt.getFullYear() !== y || dt.getMonth() !== mo || dt.getDate() !== d)
+        if (
+          dt.getFullYear() !== y ||
+          dt.getMonth() !== mo ||
+          dt.getDate() !== d
+        )
           return null;
         return dt;
       }
@@ -1775,18 +1968,31 @@
       }
 
       function updateWarningColor(cardElement, daysRemaining) {
-        cardElement.classList.remove("warning-yellow", "warning-red", "warning-expired");
+        cardElement.classList.remove(
+          "warning-yellow",
+          "warning-red",
+          "warning-expired",
+        );
         if (daysRemaining <= 0) cardElement.classList.add("warning-expired");
         else if (daysRemaining < 30) cardElement.classList.add("warning-red");
-        else if (daysRemaining <= 60) cardElement.classList.add("warning-yellow");
+        else if (daysRemaining <= 60)
+          cardElement.classList.add("warning-yellow");
       }
 
       function updateExamUI(examDateStr) {
         const examMonthYearEl = document.getElementById("examMonthYear");
         const examSubtitleEl = document.getElementById("examSubtitle");
         const examCountdownEl = document.getElementById("examCountdown");
-        const targetCardEl = document.querySelector(".target-card:nth-child(2)");
-        if (!examMonthYearEl || !examSubtitleEl || !examCountdownEl || !targetCardEl) return;
+        const targetCardEl = document.querySelector(
+          ".target-card:nth-child(2)",
+        );
+        if (
+          !examMonthYearEl ||
+          !examSubtitleEl ||
+          !examCountdownEl ||
+          !targetCardEl
+        )
+          return;
 
         const raw =
           examDateStr && String(examDateStr).trim()
@@ -1808,9 +2014,16 @@
         }
 
         const now = new Date();
-        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const today = new Date(
+          now.getFullYear(),
+          now.getMonth(),
+          now.getDate(),
+        );
         const { months, days } = diffMonthsDays(today, examDt);
-        const totalDays = Math.max(0, Math.round((examDt - today) / (1000 * 60 * 60 * 24)));
+        const totalDays = Math.max(
+          0,
+          Math.round((examDt - today) / (1000 * 60 * 60 * 24)),
+        );
 
         let countdownText = "";
         if (totalDays <= 0) countdownText = "Kỳ thi JLPT đã diễn ra";
@@ -1879,11 +2092,17 @@
             if (hardBlock) {
               localStorage.removeItem(LS_LICENSE);
               localStorage.removeItem(LS_ACTIVATED);
-              setStatus("Quyền truy cập đã bị thu hồi hoặc license không còn hợp lệ.", "error");
+              setStatus(
+                "Quyền truy cập đã bị thu hồi hoặc license không còn hợp lệ.",
+                "error",
+              );
               showGate(true);
               return;
             }
-            setStatus("Server kiểm tra đang offline. Hệ thống giữ trạng thái kích hoạt.", "error");
+            setStatus(
+              "Server kiểm tra đang offline. Hệ thống giữ trạng thái kích hoạt.",
+              "error",
+            );
           }
         }
 
@@ -1897,27 +2116,45 @@
       function updateStatusUI(expiryStr) {
         const statusValueEl = document.getElementById("statusValue");
         const statusSubtitleEl = document.getElementById("statusSubtitle");
-        const targetCardEl = document.querySelector(".target-card:nth-child(3)");
+        const targetCardEl = document.querySelector(
+          ".target-card:nth-child(3)",
+        );
         if (!statusValueEl || !statusSubtitleEl || !targetCardEl) return;
 
         const expiryDt = parseYYYYMMDD(expiryStr);
         if (!expiryDt) {
           statusValueEl.textContent = "ACTIVE";
           statusSubtitleEl.textContent = "Trạng thái bản quyền: Đã kích hoạt";
-          targetCardEl.classList.remove("warning-yellow", "warning-red", "warning-expired");
+          targetCardEl.classList.remove(
+            "warning-yellow",
+            "warning-red",
+            "warning-expired",
+          );
           return;
         }
 
         localStorage.setItem("n1_expiry_date", expiryStr);
 
         const now = new Date();
-        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-        const expDate = new Date(expiryDt.getFullYear(), expiryDt.getMonth(), expiryDt.getDate());
+        const today = new Date(
+          now.getFullYear(),
+          now.getMonth(),
+          now.getDate(),
+        );
+        const expDate = new Date(
+          expiryDt.getFullYear(),
+          expiryDt.getMonth(),
+          expiryDt.getDate(),
+        );
 
         const msPerDay = 24 * 60 * 60 * 1000;
         const remainingDays = Math.ceil((expDate - today) / msPerDay);
 
-        targetCardEl.classList.remove("warning-yellow", "warning-red", "warning-expired");
+        targetCardEl.classList.remove(
+          "warning-yellow",
+          "warning-red",
+          "warning-expired",
+        );
 
         if (remainingDays <= 0) {
           statusValueEl.textContent = "EXPIRED";
@@ -1927,7 +2164,10 @@
           localStorage.removeItem(LS_LICENSE);
           localStorage.removeItem(LS_ACTIVATED);
           showGate(true);
-          setStatus("License đã hết hạn. Vui lòng gia hạn để tiếp tục sử dụng.", "error");
+          setStatus(
+            "License đã hết hạn. Vui lòng gia hạn để tiếp tục sử dụng.",
+            "error",
+          );
           return;
         }
 
@@ -1943,7 +2183,8 @@
           statusSubtitleEl.innerHTML = `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(expDate)}<br>Còn ${remainingDays} ngày`;
         }
 
-        if (window.__expiryCountdownTimer) clearInterval(window.__expiryCountdownTimer);
+        if (window.__expiryCountdownTimer)
+          clearInterval(window.__expiryCountdownTimer);
         startExpiryCountdown(expiryStr);
       }
 
@@ -1951,12 +2192,21 @@
         const expiryDt = parseYYYYMMDD(expiryStr);
         if (!expiryDt) return;
 
-        if (window.__expiryCountdownTimer) clearInterval(window.__expiryCountdownTimer);
+        if (window.__expiryCountdownTimer)
+          clearInterval(window.__expiryCountdownTimer);
 
         window.__expiryCountdownTimer = setInterval(() => {
           const now = new Date();
-          const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-          const expDate = new Date(expiryDt.getFullYear(), expiryDt.getMonth(), expiryDt.getDate());
+          const today = new Date(
+            now.getFullYear(),
+            now.getMonth(),
+            now.getDate(),
+          );
+          const expDate = new Date(
+            expiryDt.getFullYear(),
+            expiryDt.getMonth(),
+            expiryDt.getDate(),
+          );
           const msPerDay = 24 * 60 * 60 * 1000;
           const remainingDays = Math.ceil((expDate - today) / msPerDay);
 
@@ -1966,17 +2216,26 @@
             localStorage.removeItem(LS_ACTIVATED);
 
             showGate(true);
-            setStatus("License đã hết hạn. Vui lòng gia hạn để tiếp tục sử dụng.", "error");
+            setStatus(
+              "License đã hết hạn. Vui lòng gia hạn để tiếp tục sử dụng.",
+              "error",
+            );
 
             const statusValueEl = document.getElementById("statusValue");
             const statusSubtitleEl = document.getElementById("statusSubtitle");
-            const targetCardEl = document.querySelector(".target-card:nth-child(3)");
+            const targetCardEl = document.querySelector(
+              ".target-card:nth-child(3)",
+            );
 
             if (statusValueEl) statusValueEl.textContent = "EXPIRED";
             if (statusSubtitleEl)
               statusSubtitleEl.textContent = `Quyền truy cập đã hết hạn từ: ${formatDDMMYYYY(expDate)}`;
             if (targetCardEl) {
-              targetCardEl.classList.remove("warning-yellow", "warning-red", "warning-expired");
+              targetCardEl.classList.remove(
+                "warning-yellow",
+                "warning-red",
+                "warning-expired",
+              );
               targetCardEl.classList.add("warning-expired");
             }
           }
@@ -2027,42 +2286,585 @@
           title: "TỪ VỰNG N1",
           icon: "fas fa-book",
           items: [
-            { title: "Từ vựng Chuyên ngành", desc: "1000 từ vựng kinh tế, chính trị, khoa học kỹ thuật", progress: 65, stats: "Đã học: 650/1000 từ" },
-            { title: "Thành ngữ - Quán ngữ", desc: "300 thành ngữ thông dụng trong giao tiếp nâng cao", progress: 42, stats: "Đã học: 126/300 thành ngữ" },
-            { title: "Từ đồng nghĩa/Trái nghĩa", desc: "500 cặp từ đồng nghĩa và trái nghĩa N1", progress: 28, stats: "Đã học: 140/500 cặp từ" },
-            { title: "Từ vựng Hán tự N1", desc: "800 từ Hán tự nâng cao với âm On/Kun", progress: 75, stats: "Đã học: 600/800 từ" },
+            {
+              title: "Từ vựng Mimikara Oboeru",
+              desc: "14 Unit, 1170 từ vựng thông dụng nhất",
+              progress: 65,
+              stats: "Đã học: 650/1170 từ",
+            },
+            {
+              title: "Từ vựng ThaoLeJP",
+              desc: "Hơn 2000 từ vựng tổng hợp và các loại từ đặc biệt",
+              progress: 42,
+              stats: "Đã học: 126/2000 từ",
+            },
+            {
+              title: "Từ đồng nghĩa/Trái nghĩa",
+              desc: "500 cặp từ đồng nghĩa và trái nghĩa N1",
+              progress: 28,
+              stats: "Đã học: 140/500 cặp từ",
+            },
+            {
+              title: "Từ vựng khó",
+              desc: "Tổng hợp các từ vựng cực khó từng xuất hiện trong đề thi JLPT",
+              progress: 75,
+              stats: "Đã học: 600/800 từ",
+            },
           ],
         },
         grammar: {
           title: "NGỮ PHÁP N1",
           icon: "fas fa-language",
           items: [
-            { title: "Ngữ pháp Văn viết", desc: "100 cấu trúc ngữ pháp dùng trong văn bản học thuật", progress: 42, stats: "Đã học: 42/100 cấu trúc" },
-            { title: "Ngữ pháp Hội thoại", desc: "50 mẫu câu đàm thoại nâng cao trong công việc", progress: 60, stats: "Đã học: 30/50 mẫu câu" },
-            { title: "Liên từ - Trợ từ N1", desc: "70 liên từ và trợ từ phức tạp", progress: 35, stats: "Đã học: 25/70 từ" },
-            { title: "Mẫu câu So sánh", desc: "30 mẫu câu so sánh nâng cao", progress: 80, stats: "Đã học: 24/30 mẫu câu" },
+            {
+              title: "Ngữ pháp Văn viết",
+              desc: "100 cấu trúc ngữ pháp dùng trong văn bản học thuật",
+              progress: 42,
+              stats: "Đã học: 42/100 cấu trúc",
+            },
+            {
+              title: "Ngữ pháp Hội thoại",
+              desc: "50 mẫu câu đàm thoại nâng cao trong công việc",
+              progress: 60,
+              stats: "Đã học: 30/50 mẫu câu",
+            },
+            {
+              title: "Liên từ - Trợ từ N1",
+              desc: "70 liên từ và trợ từ phức tạp",
+              progress: 35,
+              stats: "Đã học: 25/70 từ",
+            },
+            {
+              title: "Mẫu câu So sánh",
+              desc: "30 mẫu câu so sánh nâng cao",
+              progress: 80,
+              stats: "Đã học: 24/30 mẫu câu",
+            },
           ],
         },
         listening: {
           title: "NGHE HIỂU",
           icon: "fas fa-headphones",
           items: [
-            { title: "Nghe tin tức", desc: "50 bài nghe tin tức NHK với tốc độ thực", progress: 28, stats: "Đã học: 14/50 bài" },
-            { title: "Hội thoại Công sở", desc: "30 tình huống giao tiếp trong môi trường công ty", progress: 45, stats: "Đã học: 14/30 tình huống" },
-            { title: "Bài giảng Đại học", desc: "20 bài giảng học thuật các chuyên ngành", progress: 20, stats: "Đã học: 4/20 bài" },
-            { title: "Phỏng vấn chuyên gia", desc: "15 cuộc phỏng vấn với chuyên gia các lĩnh vực", progress: 15, stats: "Đã học: 2/15 bài" },
+            {
+              title: "Nghe tin tức",
+              desc: "50 bài nghe tin tức NHK với tốc độ thực",
+              progress: 28,
+              stats: "Đã học: 14/50 bài",
+            },
+            {
+              title: "Hội thoại Công sở",
+              desc: "30 tình huống giao tiếp trong môi trường công ty",
+              progress: 45,
+              stats: "Đã học: 14/30 tình huống",
+            },
+            {
+              title: "Bài giảng Đại học",
+              desc: "20 bài giảng học thuật các chuyên ngành",
+              progress: 20,
+              stats: "Đã học: 4/20 bài",
+            },
+            {
+              title: "Phỏng vấn chuyên gia",
+              desc: "15 cuộc phỏng vấn với chuyên gia các lĩnh vực",
+              progress: 15,
+              stats: "Đã học: 2/15 bài",
+            },
           ],
         },
         reading: {
           title: "ĐỌC HIỂU",
           icon: "fas fa-file-alt",
           items: [
-            { title: "Văn bản Học thuật", desc: "25 bài đọc về khoa học, nghiên cứu chuyên sâu", progress: 35, stats: "Đã học: 9/25 bài" },
-            { title: "Báo chí - Tạp chí", desc: "30 bài báo kinh tế, chính trị, xã hội", progress: 40, stats: "Đã học: 12/30 bài" },
-            { title: "Tiểu thuyết - Văn học", desc: "15 trích đoạn tiểu thuyết đương đại", progress: 25, stats: "Đã học: 4/15 bài" },
-            { title: "Tài liệu Kỹ thuật", desc: "20 tài liệu kỹ thuật, hướng dẫn sử dụng", progress: 30, stats: "Đã học: 6/20 bài" },
+            {
+              title: "Văn bản Học thuật",
+              desc: "25 bài đọc về khoa học, nghiên cứu chuyên sâu",
+              progress: 35,
+              stats: "Đã học: 9/25 bài",
+            },
+            {
+              title: "Báo chí - Tạp chí",
+              desc: "30 bài báo kinh tế, chính trị, xã hội",
+              progress: 40,
+              stats: "Đã học: 12/30 bài",
+            },
+            {
+              title: "Tiểu thuyết - Văn học",
+              desc: "15 trích đoạn tiểu thuyết đương đại",
+              progress: 25,
+              stats: "Đã học: 4/15 bài",
+            },
+            {
+              title: "Tài liệu Kỹ thuật",
+              desc: "20 tài liệu kỹ thuật, hướng dẫn sử dụng",
+              progress: 30,
+              stats: "Đã học: 6/20 bài",
+            },
           ],
         },
+      };
+      /* =========================================================
+  TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
+  - Click vào content-item trong modal từ vựng -> mở test modal
+  - Hiển thị danh sách bài test tương ứng
+  - Click test item -> chuyển hướng đến trang html khác
+========================================================= */
+
+      // Dữ liệu bài kiểm tra cho từng mục trong module từ vựng
+      const testData = {
+        // Bài test cho "Từ vựng Mimikara Oboeru"
+        "Từ vựng Mimikara Oboeru": {
+          title: "Mimikara Oboeru N1",
+          tests: [
+            {
+              id: 1,
+              name: "Bài test Mimikara ngày 1 phần 1 (1-20)",
+              questions: 20,
+              time: "15 phút",
+              difficulty: "Dễ",
+              url: "test-mimikara-day1-part1.html",
+            },
+            {
+              id: 2,
+              name: "Bài test Mimikara ngày 1 phần 2 (21-40)",
+              questions: 20,
+              time: "15 phút",
+              difficulty: "Dễ",
+              url: "test-mimikara-day1-part2.html",
+            },
+            {
+              id: 3,
+              name: "Bài test Mimikara ngày 2 phần 1 (41-60)",
+              questions: 20,
+              time: "15 phút",
+              difficulty: "Dễ",
+              url: "test-mimikara-day2-part1.html",
+            },
+            {
+              id: 4,
+              name: "Bài test Mimikara ngày 2 phần 2 (61-80)",
+              questions: 20,
+              time: "15 phút",
+              difficulty: "Trung bình",
+              url: "test-mimikara-day2-part2.html",
+            },
+            {
+              id: 5,
+              name: "Bài test Mimikara ngày 3 (81-100)",
+              questions: 20,
+              time: "15 phút",
+              difficulty: "Trung bình",
+              url: "test-mimikara-day3.html",
+            },
+            {
+              id: 6,
+              name: "Bài test Mimikara ngày 4 (101-120)",
+              questions: 20,
+              time: "15 phút",
+              difficulty: "Trung bình",
+              url: "test-mimikara-day4.html",
+            },
+            {
+              id: 7,
+              name: "Bài test Mimikara ngày 5 (121-140)",
+              questions: 20,
+              time: "15 phút",
+              difficulty: "Khó",
+              url: "test-mimikara-day5.html",
+            },
+            {
+              id: 8,
+              name: "Bài test Mimikara tổng hợp Unit 1",
+              questions: 50,
+              time: "30 phút",
+              difficulty: "Khó",
+              url: "test-mimikara-unit1.html",
+            },
+          ],
+        },
+        // Bài test cho "Từ vựng ThaoLeJP"
+        "Từ vựng ThaoLeJP": {
+          title: "Từ vựng ThaoLeJP N1",
+          tests: [
+            {
+              id: 1,
+              name: "Bài test Danh từ N1 phần 1",
+              questions: 25,
+              time: "20 phút",
+              difficulty: "Trung bình",
+              url: "test-thaolejp-noun1.html",
+            },
+            {
+              id: 2,
+              name: "Bài test Danh từ N1 phần 2",
+              questions: 25,
+              time: "20 phút",
+              difficulty: "Trung bình",
+              url: "test-thaolejp-noun2.html",
+            },
+            {
+              id: 3,
+              name: "Bài test Động từ N1 phần 1",
+              questions: 20,
+              time: "15 phút",
+              difficulty: "Trung bình",
+              url: "test-thaolejp-verb1.html",
+            },
+            {
+              id: 4,
+              name: "Bài test Động từ N1 phần 2",
+              questions: 20,
+              time: "15 phút",
+              difficulty: "Khó",
+              url: "test-thaolejp-verb2.html",
+            },
+            {
+              id: 5,
+              name: "Bài test Tính từ N1",
+              questions: 30,
+              time: "25 phút",
+              difficulty: "Trung bình",
+              url: "test-thaolejp-adj.html",
+            },
+            {
+              id: 6,
+              name: "Bài test Phó từ N1",
+              questions: 15,
+              time: "10 phút",
+              difficulty: "Khó",
+              url: "test-thaolejp-adv.html",
+            },
+          ],
+        },
+        // Bài test cho "Từ đồng nghĩa/Trái nghĩa"
+        "Từ đồng nghĩa/Trái nghĩa": {
+          title: "Từ đồng nghĩa - Trái nghĩa N1",
+          tests: [
+            {
+              id: 1,
+              name: "Bài test Đồng nghĩa phần 1",
+              questions: 20,
+              time: "15 phút",
+              difficulty: "Trung bình",
+              url: "test-synonym1.html",
+            },
+            {
+              id: 2,
+              name: "Bài test Đồng nghĩa phần 2",
+              questions: 20,
+              time: "15 phút",
+              difficulty: "Khó",
+              url: "test-synonym2.html",
+            },
+            {
+              id: 3,
+              name: "Bài test Trái nghĩa phần 1",
+              questions: 20,
+              time: "15 phút",
+              difficulty: "Trung bình",
+              url: "test-antonym1.html",
+            },
+            {
+              id: 4,
+              name: "Bài test Trái nghĩa phần 2",
+              questions: 20,
+              time: "15 phút",
+              difficulty: "Khó",
+              url: "test-antonym2.html",
+            },
+            {
+              id: 5,
+              name: "Bài test tổng hợp Đồng nghĩa - Trái nghĩa",
+              questions: 40,
+              time: "30 phút",
+              difficulty: "Khó",
+              url: "test-synonym-antonym.html",
+            },
+          ],
+        },
+        // Bài test cho "Từ vựng khó"
+        "Từ vựng khó": {
+          title: "Từ vựng khó N1",
+          tests: [
+            {
+              id: 1,
+              name: "Bài test Từ vựng khó đề thi 2010-2015",
+              questions: 30,
+              time: "25 phút",
+              difficulty: "Khó",
+              url: "test-hard-2010-2015.html",
+            },
+            {
+              id: 2,
+              name: "Bài test Từ vựng khó đề thi 2016-2020",
+              questions: 30,
+              time: "25 phút",
+              difficulty: "Khó",
+              url: "test-hard-2016-2020.html",
+            },
+            {
+              id: 3,
+              name: "Bài test Từ vựng khó đề thi 2021-2025",
+              questions: 30,
+              time: "25 phút",
+              difficulty: "Khó",
+              url: "test-hard-2021-2025.html",
+            },
+            {
+              id: 4,
+              name: "Bài test Từ vựng Kanji khó",
+              questions: 25,
+              time: "20 phút",
+              difficulty: "Khó",
+              url: "test-hard-kanji.html",
+            },
+            {
+              id: 5,
+              name: "Bài test Từ vựng Onomatopoeia",
+              questions: 20,
+              time: "15 phút",
+              difficulty: "Khó",
+              url: "test-onomatopoeia.html",
+            },
+          ],
+        },
+      };
+
+      // Hàm mở test modal
+      function openTestModal(itemTitle) {
+        const testModal = document.getElementById("testModal");
+        const testBackdrop = document.getElementById("testModalBackdrop");
+        const testList = document.getElementById("testList");
+        const testModalTitle = document.getElementById("testModalTitle");
+
+        // Lấy dữ liệu test tương ứng
+        const testInfo = testData[itemTitle];
+
+        if (!testInfo) {
+          console.log("Không có dữ liệu test cho:", itemTitle);
+          return;
+        }
+
+        // Cập nhật tiêu đề
+        testModalTitle.innerHTML = `<i class="fas fa-file-signature"></i> ${testInfo.title}`;
+
+        // Render danh sách bài test
+        testList.innerHTML = "";
+        testInfo.tests.forEach((test) => {
+          const testItem = document.createElement("div");
+          testItem.className = "test-item";
+          testItem.setAttribute("data-test-url", test.url);
+          testItem.setAttribute("data-test-name", test.name);
+
+          // Random trạng thái hoàn thành
+          const isCompleted = Math.random() > 0.7;
+          const badgeText = isCompleted ? "Đã hoàn thành" : "Chưa làm";
+          const badgeColor = isCompleted
+            ? "rgba(0, 200, 100, 0.2)"
+            : "rgba(255, 100, 0, 0.2)";
+          const badgeBorder = isCompleted
+            ? "rgba(0, 255, 100, 0.3)"
+            : "rgba(255, 150, 0, 0.3)";
+          const badgeTextColor = isCompleted ? "#00ff99" : "#ffaa00";
+
+          testItem.innerHTML = `
+      <div class="test-item-icon">
+        <i class="fas ${isCompleted ? "fa-check-circle" : "fa-clock"}"></i>
+      </div>
+      <div class="test-item-content">
+        <div class="test-item-title">${test.name}</div>
+        <div class="test-item-meta">
+          <span><i class="fas fa-question-circle"></i> ${test.questions} câu</span>
+          <span><i class="fas fa-hourglass-half"></i> ${test.time}</span>
+          <span><i class="fas fa-signal"></i> ${test.difficulty}</span>
+        </div>
+      </div>
+      <div class="test-status-badge" style="background: ${badgeColor}; border-color: ${badgeBorder}; color: ${badgeTextColor}">
+        ${badgeText}
+      </div>
+    `;
+
+          // Thêm sự kiện click để chuyển hướng
+          testItem.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const url = this.getAttribute("data-test-url");
+            const testName = this.getAttribute("data-test-name");
+
+            // Hiệu ứng click
+            this.style.transform = "scale(0.98)";
+            setTimeout(() => (this.style.transform = ""), 150);
+
+            // Chuyển hướng đến trang HTML khác
+            setTimeout(() => {
+              window.location.href = url;
+            }, 200);
+
+            console.log(`Chuyển đến: ${url} - ${testName}`);
+          });
+
+          testList.appendChild(testItem);
+        });
+
+        // Hiển thị modal
+        testModal.classList.add("show");
+        testBackdrop.classList.add("show");
+      }
+
+      // Hàm đóng test modal
+      function closeTestModal() {
+        const testModal = document.getElementById("testModal");
+        const testBackdrop = document.getElementById("testModalBackdrop");
+        testModal.classList.remove("show");
+        testBackdrop.classList.remove("show");
+      }
+
+      // Thêm sự kiện click cho các content-item trong modal từ vựng
+      function setupTestModalInteractions() {
+        // Lắng nghe sự kiện click trên frameContent (nơi chứa các content-item)
+        const frameContent = document.getElementById("frameContent");
+
+        if (frameContent) {
+          frameContent.addEventListener("click", function (e) {
+            // Tìm content-item được click
+            const contentItem = e.target.closest(".content-item");
+            if (!contentItem) return;
+
+            // Lấy tiêu đề của content-item
+            const itemTitleEl = contentItem.querySelector(".item-title");
+            if (!itemTitleEl) return;
+
+            // Bỏ qua ký tự icon, lấy text
+            let itemTitle =
+              itemTitleEl.childNodes[
+                itemTitleEl.childNodes.length - 1
+              ].textContent.trim();
+            if (!itemTitle) {
+              itemTitle = itemTitleEl.innerText.replace(/[●•◦]/g, "").trim();
+            }
+
+            console.log("Click vào content-item:", itemTitle);
+
+            // Kiểm tra xem có dữ liệu test cho item này không
+            if (testData[itemTitle]) {
+              openTestModal(itemTitle);
+            } else {
+              // Thử tìm kiếm gần đúng
+              const matchedKey = Object.keys(testData).find(
+                (key) => itemTitle.includes(key) || key.includes(itemTitle),
+              );
+
+              if (matchedKey) {
+                openTestModal(matchedKey);
+              } else {
+                console.log("Không tìm thấy dữ liệu test cho:", itemTitle);
+                // Alert thông báo demo
+                alert(`Bài kiểm tra cho "${itemTitle}" đang được cập nhật!`);
+              }
+            }
+          });
+        }
+
+        // Đóng test modal bằng nút X
+        const closeBtn = document.getElementById("closeTestModalBtn");
+        if (closeBtn) {
+          closeBtn.addEventListener("click", closeTestModal);
+        }
+
+        // Đóng test modal bằng click backdrop
+        const testBackdrop = document.getElementById("testModalBackdrop");
+        if (testBackdrop) {
+          testBackdrop.addEventListener("click", closeTestModal);
+        }
+
+        // Đóng bằng ESC
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape") {
+            const testModal = document.getElementById("testModal");
+            if (testModal.classList.contains("show")) {
+              closeTestModal();
+            }
+          }
+        });
+      }
+
+      // Gọi hàm setup sau khi modal module được khởi tạo
+      // Sửa lại hàm renderModuleToModal để thêm setup sau khi render
+      const originalRenderModuleToModal = renderModuleToModal;
+      renderModuleToModal = function (moduleId) {
+        originalRenderModuleToModal(moduleId);
+
+        // Chỉ setup cho module vocab
+        if (moduleId === "vocab") {
+          setTimeout(setupTestModalInteractions, 100);
+        }
+      };
+
+      // Thêm dữ liệu test mẫu cho các module khác (tùy chọn)
+      testData["Ngữ pháp Văn viết"] = {
+        title: "Ngữ pháp Văn viết N1",
+        tests: [
+          {
+            id: 1,
+            name: "Bài test Cấu trúc câu phức",
+            questions: 15,
+            time: "20 phút",
+            difficulty: "Khó",
+            url: "test-writing-grammar1.html",
+          },
+          {
+            id: 2,
+            name: "Bài test Kính ngữ trong văn viết",
+            questions: 20,
+            time: "25 phút",
+            difficulty: "Khó",
+            url: "test-writing-grammar2.html",
+          },
+        ],
+      };
+
+      testData["Nghe tin tức"] = {
+        title: "Nghe tin tức NHK",
+        tests: [
+          {
+            id: 1,
+            name: "Bài test Nghe tin tức số 1",
+            questions: 10,
+            time: "15 phút",
+            difficulty: "Trung bình",
+            url: "test-news1.html",
+          },
+          {
+            id: 2,
+            name: "Bài test Nghe tin tức số 2",
+            questions: 10,
+            time: "15 phút",
+            difficulty: "Trung bình",
+            url: "test-news2.html",
+          },
+        ],
+      };
+
+      testData["Văn bản Học thuật"] = {
+        title: "Đọc hiểu học thuật",
+        tests: [
+          {
+            id: 1,
+            name: "Bài đọc Khoa học xã hội",
+            questions: 8,
+            time: "20 phút",
+            difficulty: "Khó",
+            url: "test-academic1.html",
+          },
+          {
+            id: 2,
+            name: "Bài đọc Khoa học tự nhiên",
+            questions: 8,
+            time: "20 phút",
+            difficulty: "Khó",
+            url: "test-academic2.html",
+          },
+        ],
       };
 
       function getModuleCard(moduleId) {
@@ -2070,7 +2872,9 @@
       }
 
       function clearAllCardStates() {
-        document.querySelectorAll(".module-card").forEach((c) => c.classList.remove("locked"));
+        document
+          .querySelectorAll(".module-card")
+          .forEach((c) => c.classList.remove("locked"));
       }
 
       function openModal() {
@@ -2148,10 +2952,14 @@
         });
 
         // Đóng bằng nút
-        document.getElementById("closeModalBtn").addEventListener("click", unlockAndClose);
+        document
+          .getElementById("closeModalBtn")
+          .addEventListener("click", unlockAndClose);
 
         // Đóng bằng click backdrop
-        document.getElementById("moduleBackdrop").addEventListener("click", unlockAndClose);
+        document
+          .getElementById("moduleBackdrop")
+          .addEventListener("click", unlockAndClose);
 
         // ESC đóng
         document.addEventListener("keydown", (e) => {
@@ -2164,7 +2972,12 @@
       ========================================================= */
       function runAppUI() {
         // Progress bars
-        const progressData = { vocab: 65, grammar: 42, listening: 28, reading: 35 };
+        const progressData = {
+          vocab: 65,
+          grammar: 42,
+          listening: 28,
+          reading: 35,
+        };
         for (const [module, value] of Object.entries(progressData)) {
           const progressFill = document.getElementById(`progress-${module}`);
           const percentText = document.getElementById(`percent-${module}`);
@@ -2194,13 +3007,18 @@
           document.body.appendChild(ripple);
 
           const animation = ripple.animate(
-            [{ width: "10px", height: "10px", opacity: 1 }, { width: "200px", height: "200px", opacity: 0 }],
+            [
+              { width: "10px", height: "10px", opacity: 1 },
+              { width: "200px", height: "200px", opacity: 0 },
+            ],
             { duration: 800, easing: "ease-out" },
           );
           animation.onfinish = () => ripple.remove();
 
           setTimeout(() => {
-            alert("Hệ thống học tập N1 đang khởi động...\nChuẩn bị cho nhiệm vụ ngày hôm nay!");
+            alert(
+              "Hệ thống học tập N1 đang khởi động...\nChuẩn bị cho nhiệm vụ ngày hôm nay!",
+            );
           }, 300);
         });
 
@@ -2245,6 +3063,7 @@
           showGate(false);
           runAppUI();
           startBackgroundRecheck(deviceId);
+          setupTestModalInteractions();
         } else {
           showGate(true);
         }
@@ -2269,61 +3088,101 @@
             }
             setStatus("License không hợp lệ hoặc đã hết hạn", "error");
           } catch {
-            setStatus("Không kiểm tra được license (server lỗi hoặc sai API_URL)", "error");
+            setStatus(
+              "Không kiểm tra được license (server lỗi hoặc sai API_URL)",
+              "error",
+            );
           }
         }
 
-        document.getElementById("btnCopyDevice").addEventListener("click", async () => {
-          await copyText(deviceId);
-          setStatus("Đã copy deviceID. Gửi deviceID này để cấp license.", "ok");
-        });
+        document
+          .getElementById("btnCopyDevice")
+          .addEventListener("click", async () => {
+            await copyText(deviceId);
+            setStatus(
+              "Đã copy deviceID. Gửi deviceID này để cấp license.",
+              "ok",
+            );
+          });
 
-        document.getElementById("btnActivate").addEventListener("click", async () => {
-          const license = licenseInput.value.trim();
-          if (!license) return setStatus("Bạn chưa nhập license", "error");
+        document
+          .getElementById("btnActivate")
+          .addEventListener("click", async () => {
+            const license = licenseInput.value.trim();
+            if (!license) return setStatus("Bạn chưa nhập license", "error");
 
-          setStatus("Đang kích hoạt...", "");
-          try {
-            const r = await verifyLicense(deviceId, license);
-            if (r && r.ok) {
-              localStorage.setItem(LS_LICENSE, license);
-              localStorage.setItem(LS_ACTIVATED, "1");
-              setStatus(`Kích hoạt OK (hạn: ${r.expiry})`, "ok");
-              updateStatusUI(r.expiry);
+            setStatus("Đang kích hoạt...", "");
+            try {
+              const r = await verifyLicense(deviceId, license);
+              if (r && r.ok) {
+                localStorage.setItem(LS_LICENSE, license);
+                localStorage.setItem(LS_ACTIVATED, "1");
+                setStatus(`Kích hoạt OK (hạn: ${r.expiry})`, "ok");
+                updateStatusUI(r.expiry);
 
-              if (r.userName) setUserName(r.userName);
-              if (r.examDate) localStorage.setItem(LS_EXAM_DATE, r.examDate);
-              updateExamUI(r.examDate);
+                if (r.userName) setUserName(r.userName);
+                if (r.examDate) localStorage.setItem(LS_EXAM_DATE, r.examDate);
+                updateExamUI(r.examDate);
 
-              showGate(false);
-              runAppUI();
-              startBackgroundRecheck(deviceId);
-            } else {
-              setStatus("License không hợp lệ hoặc đã hết hạn", "error");
+                showGate(false);
+                runAppUI();
+                startBackgroundRecheck(deviceId);
+                setupTestModalInteractions();
+              } else {
+                setStatus("License không hợp lệ hoặc đã hết hạn", "error");
+              }
+            } catch (e) {
+              const msg = e && e.message ? e.message : "unknown";
+              if (msg.includes("Expired"))
+                setStatus("License đã hết hạn", "error");
+              else if (msg.includes("Invalid"))
+                setStatus("License không hợp lệ", "error");
+              else if (msg.includes("already bound"))
+                setStatus("License đã được dùng trên thiết bị khác", "error");
+              else setStatus("Kích hoạt thất bại: " + msg, "error");
             }
-          } catch (e) {
-            const msg = e && e.message ? e.message : "unknown";
-            if (msg.includes("Expired")) setStatus("License đã hết hạn", "error");
-            else if (msg.includes("Invalid")) setStatus("License không hợp lệ", "error");
-            else if (msg.includes("already bound")) setStatus("License đã được dùng trên thiết bị khác", "error");
-            else setStatus("Kích hoạt thất bại: " + msg, "error");
-          }
-        });
+          });
 
-        document.getElementById("btnRequestReset").addEventListener("click", async () => {
-          const oldLicense = licenseInput.value.trim() || localStorage.getItem(LS_LICENSE) || "";
-          const note =
-            prompt("Nhập lý do cấp lại (vd: đổi máy / cài lại Windows / xóa trình duyệt):") || "";
+        document
+          .getElementById("btnRequestReset")
+          .addEventListener("click", async () => {
+            const oldLicense =
+              licenseInput.value.trim() ||
+              localStorage.getItem(LS_LICENSE) ||
+              "";
+            const note =
+              prompt(
+                "Nhập lý do cấp lại (vd: đổi máy / cài lại Windows / xóa trình duyệt):",
+              ) || "";
 
-          const requestCode = `RESET|deviceId=${deviceId}|oldLicense=${oldLicense}|note=${note}`;
-          await copyText(requestCode);
-          setStatus("Đã copy mã yêu cầu cấp lại. Dán mã này gửi cho ban quản trị.", "ok");
+            const requestCode = `RESET|deviceId=${deviceId}|oldLicense=${oldLicense}|note=${note}`;
+            await copyText(requestCode);
+            setStatus(
+              "Đã copy mã yêu cầu cấp lại. Dán mã này gửi cho ban quản trị.",
+              "ok",
+            );
 
-          try {
-            await requestReset(deviceId, oldLicense, note);
-          } catch {}
-        });
+            try {
+              await requestReset(deviceId, oldLicense, note);
+            } catch {}
+          });
+          setupTestModalInteractions();
       })();
     </script>
+    <!-- TEST MODAL (BÀI KIỂM TRA) -->
+    <div class="test-modal-backdrop" id="testModalBackdrop"></div>
+
+    <div class="test-modal-frame" id="testModal">
+      <div class="test-modal-header">
+        <div class="test-modal-title">
+          <i class="fas fa-file-signature"></i>
+          <span id="testModalTitle">Bài kiểm tra</span>
+        </div>
+        <button class="test-modal-close" id="closeTestModalBtn">
+          <i class="fas fa-times"></i> Đóng
+        </button>
+      </div>
+      <div class="test-list" id="testList"></div>
+    </div>
   </body>
 </html>
