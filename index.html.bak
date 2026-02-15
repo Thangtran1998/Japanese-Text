@@ -1694,7 +1694,7 @@
         <main class="main-content">
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
             </h2>
 
             <div class="target-info">
@@ -2454,8 +2454,7 @@
         // Bài test cho "Từ vựng ThaoLeJP"
         "Từ vựng ThaoLeJP": {
           title: "Từ vựng ThaoLeJP N1",
-          tests: [
-            {
+          tests: [{
               id: 1,
               name: "Test Từ Vựng Ngày 1",
               questions: 40,
@@ -2463,7 +2462,119 @@
               difficulty: "Khó",
               url: "vocab-1.html",
             },
-          ],
+{
+              id: 2,
+              name: "Test Từ Vựng Ngày 2",
+              questions: 40,
+              time: "40 phút",
+              difficulty: "Khó",
+              url: "vocab-2.html",
+            },
+{
+              id: 3,
+              name: "Test Từ Vựng Ngày 3",
+              questions: 40,
+              time: "40 phút",
+              difficulty: "Khó",
+              url: "vocab-3.html",
+            },
+{
+              id: 4,
+              name: "Test Từ Vựng Ngày 4",
+              questions: 40,
+              time: "40 phút",
+              difficulty: "Khó",
+              url: "vocab-4.html",
+            },
+{
+              id: 5,
+              name: "Test Từ Vựng Ngày 5",
+              questions: 40,
+              time: "40 phút",
+              difficulty: "Khó",
+              url: "vocab-5.html",
+            },
+{
+              id: 6,
+              name: "Test Từ Vựng Ngày 6",
+              questions: 40,
+              time: "40 phút",
+              difficulty: "Khó",
+              url: "vocab-6.html",
+            },
+{
+              id: 7,
+              name: "Test Từ Vựng Ngày 7",
+              questions: 38,
+              time: "38 phút",
+              difficulty: "Khó",
+              url: "vocab-7.html",
+            },
+{
+              id: 8,
+              name: "Test Từ Vựng Ngày 8",
+              questions: 40,
+              time: "40 phút",
+              difficulty: "Khó",
+              url: "vocab-8.html",
+            },
+{
+              id: 9,
+              name: "Test Từ Vựng Ngày 9",
+              questions: 40,
+              time: "40 phút",
+              difficulty: "Khó",
+              url: "vocab-9.html",
+            },
+{
+              id: 10,
+              name: "Test Từ Vựng Ngày 10",
+              questions: 40,
+              time: "40 phút",
+              difficulty: "Khó",
+              url: "vocab-10.html",
+            },
+{
+              id: 11,
+              name: "Test Từ Vựng Ngày 11",
+              questions: 40,
+              time: "40 phút",
+              difficulty: "Khó",
+              url: "vocab-11.html",
+            },
+{
+              id: 12,
+              name: "Test Từ Vựng Ngày 12",
+              questions: 40,
+              time: "40 phút",
+              difficulty: "Khó",
+              url: "vocab-12.html",
+            },
+{
+              id: 13,
+              name: "Test Từ Vựng Ngày 13",
+              questions: 40,
+              time: "40 phút",
+              difficulty: "Khó",
+              url: "vocab-13.html",
+            },
+{
+              id: 14,
+              name: "Test Từ Vựng Ngày 14",
+              questions: 40,
+              time: "40 phút",
+              difficulty: "Khó",
+              url: "vocab-14.html",
+            },
+{
+              id: 15,
+              name: "Test Từ Vựng Ngày 15",
+              questions: 40,
+              time: "40 phút",
+              difficulty: "Khó",
+              url: "vocab-15.html",
+            }
+],
         },
         // Bài test cho "Từ đồng nghĩa/Trái nghĩa"
         "Từ đồng nghĩa/Trái nghĩa": {

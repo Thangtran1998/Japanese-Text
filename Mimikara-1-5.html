@@ -1,0 +1,2775 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Từ vựng Mimikara Unit 1 (81-100) - Cyberpunk Quiz</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ===== RESET & VARIABLES ===== */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary-glow: #00a8ff;
+        --secondary-glow: #00ffcc;
+        --danger-glow: #ff3366;
+        --warning-glow: #ff9900;
+        --bg-primary: #0a0e17;
+        --bg-secondary: rgba(0, 20, 40, 0.6);
+        --bg-tertiary: rgba(0, 30, 60, 0.5);
+        --border-glow: rgba(0, 150, 255, 0.3);
+        --text-primary: #e0f7ff;
+        --text-secondary: #a0c8e0;
+        --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        --sidebar-width: 320px;
+        --sidebar-collapsed-width: 60px;
+      }
+
+      body {
+        font-family: "Exo 2", sans-serif;
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+        min-height: 100vh;
+        overflow-x: hidden;
+        background-image:
+          radial-gradient(
+            circle at 20% 30%,
+            rgba(16, 64, 120, 0.15) 0%,
+            transparent 20%
+          ),
+          radial-gradient(
+            circle at 80% 70%,
+            rgba(0, 150, 200, 0.1) 0%,
+            transparent 20%
+          ),
+          linear-gradient(to bottom, #0a0e17, #0c1220);
+        padding: 20px;
+        max-width: 1600px;
+        margin: auto;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* ===== BACKGROUND EFFECTS ===== */
+      .cyber-grid {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image:
+          linear-gradient(rgba(0, 150, 255, 0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0, 150, 255, 0.05) 1px, transparent 1px);
+        background-size: 40px 40px;
+        z-index: -1;
+        opacity: 0.4;
+      }
+
+      .cyber-line {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .cyber-line::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(
+          to right,
+          transparent,
+          #00ffcc,
+          transparent
+        );
+        animation: scan 4s linear infinite;
+      }
+
+      @keyframes scan {
+        0% {
+          top: 0%;
+        }
+
+        100% {
+          top: 100%;
+        }
+      }
+
+      /* ===== FLOATING BUTTONS ===== */
+      .floating-btn-container {
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        transition: var(--transition-smooth);
+      }
+
+      .floating-btn-container.left {
+        left: 20px;
+      }
+
+      .floating-btn-container.right {
+        right: 20px;
+      }
+
+      .floating-btn-container.hidden {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      .floating-btn {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #1a2a3a, #0f1a24);
+        border: 2px solid var(--primary-glow);
+        color: var(--primary-glow);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 24px;
+        box-shadow: 0 0 20px rgba(0, 168, 255, 0.3);
+        transition: var(--transition-smooth);
+        position: relative;
+      }
+
+      .floating-btn:hover {
+        transform: scale(1.1);
+        border-color: var(--secondary-glow);
+        color: var(--secondary-glow);
+        box-shadow: 0 0 30px rgba(0, 255, 204, 0.5);
+      }
+
+      .floating-btn .badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: linear-gradient(135deg, #ff3366, #ff0066);
+        color: white;
+        border-radius: 50%;
+        width: 22px;
+        height: 22px;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        border: 2px solid var(--bg-primary);
+      }
+
+      .btn-tooltip {
+        position: absolute;
+        background: rgba(0, 20, 40, 0.95);
+        color: var(--secondary-glow);
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: 14px;
+        white-space: nowrap;
+        pointer-events: none;
+        opacity: 0;
+        transition: var(--transition-smooth);
+        border: 1px solid var(--border-glow);
+        font-family: "Orbitron", sans-serif;
+        font-weight: 500;
+        backdrop-filter: blur(10px);
+      }
+
+      .floating-btn.left .btn-tooltip {
+        left: 70px;
+      }
+
+      .floating-btn.right .btn-tooltip {
+        right: 70px;
+      }
+
+      .floating-btn:hover .btn-tooltip {
+        opacity: 1;
+      }
+
+      /* ===== SIDEBAR PANELS ===== */
+      .sidebar-panel {
+        position: fixed;
+        top: 100px;
+        bottom: 30px;
+        width: var(--sidebar-width);
+        background: rgba(0, 15, 30, 0.95);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--border-glow);
+        box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+        z-index: 9998;
+        transition: var(--transition-smooth);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        border-radius: 16px;
+      }
+
+      .sidebar-panel.left {
+        left: 20px;
+        transform: translateX(
+          calc(var(--sidebar-collapsed-width) - var(--sidebar-width) - 20px)
+        );
+        border-right: 2px solid var(--danger-glow);
+      }
+
+      .sidebar-panel.right {
+        right: 20px;
+        transform: translateX(
+          calc(var(--sidebar-width) - var(--sidebar-collapsed-width) + 20px)
+        );
+        border-left: 2px solid var(--primary-glow);
+      }
+
+      .sidebar-panel.left.active,
+      .sidebar-panel.right.active {
+        transform: translateX(0);
+      }
+
+      .sidebar-panel.left:not(.active) .sidebar-content,
+      .sidebar-panel.right:not(.active) .sidebar-content {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .sidebar-panel.left:not(.active) .sidebar-header,
+      .sidebar-panel.right:not(.active) .sidebar-header {
+        justify-content: center;
+        padding: 20px 0;
+        height: 100%;
+        display: flex;
+        align-items: center;
+      }
+
+      .sidebar-panel.left:not(.active) .sidebar-header h3 span,
+      .sidebar-panel.right:not(.active) .sidebar-header h3 span {
+        display: none;
+      }
+
+      .sidebar-panel.left:not(.active) .sidebar-header h3 i,
+      .sidebar-panel.right:not(.active) .sidebar-header h3 i {
+        margin: 0;
+        font-size: 28px;
+      }
+
+      .sidebar-panel.left:not(.active) .sidebar-close,
+      .sidebar-panel.right:not(.active) .sidebar-close {
+        display: none;
+      }
+
+      .sidebar-toggle {
+        position: absolute;
+        width: 30px;
+        height: 60px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-glow),
+          var(--secondary-glow)
+        );
+        border: none;
+        border-radius: 8px;
+        color: #0a0e17;
+        cursor: pointer;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        font-weight: bold;
+        transition: var(--transition-smooth);
+        z-index: 100;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .sidebar-panel.left.active .sidebar-toggle {
+        right: -15px;
+        display: flex;
+      }
+
+      .sidebar-panel.right.active .sidebar-toggle {
+        left: -15px;
+        display: flex;
+      }
+
+      .sidebar-toggle:hover {
+        transform: translateY(-50%) scale(1.1);
+        box-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+      }
+
+      .sidebar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 25px;
+        border-bottom: 1px solid rgba(0, 255, 204, 0.3);
+        transition: var(--transition-smooth);
+      }
+
+      .sidebar-header h3 {
+        font-family: "Orbitron", sans-serif;
+        color: var(--secondary-glow);
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0;
+      }
+
+      .sidebar-close {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #ff3366, #ff0066);
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--transition-smooth);
+      }
+
+      .sidebar-close:hover {
+        transform: rotate(90deg);
+        box-shadow: 0 0 20px rgba(255, 51, 102, 0.5);
+      }
+
+      .sidebar-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 25px;
+        transition: var(--transition-smooth);
+      }
+
+      /* ===== TIMER PANEL ===== */
+      .timer-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 10000;
+        background: rgba(0, 20, 40, 0.95);
+        border-radius: 15px;
+        padding: 15px 20px;
+        border: 1px solid var(--border-glow);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(15px);
+        width: 350px;
+        display: flex;
+        align-items: center;
+        transition: var(--transition-smooth);
+      }
+
+      .timer-controls {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        gap: 10px;
+      }
+
+      .timer-input-group {
+        display: flex;
+        gap: 8px;
+      }
+
+      .timer-input {
+        width: 70px;
+        height: 42px;
+        padding: 0 12px;
+        background: rgba(0, 10, 25, 0.9);
+        border: 1px solid rgba(0, 150, 255, 0.6);
+        border-radius: 10px;
+        color: var(--text-primary);
+        text-align: center;
+        font-family: "Orbitron", sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        transition: var(--transition-smooth);
+      }
+
+      .timer-input:focus {
+        outline: none;
+        border-color: var(--secondary-glow);
+        box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+      }
+
+      .set-btn {
+        width: 50px;
+        height: 42px;
+        background: linear-gradient(135deg, #0066cc, var(--primary-glow));
+        border: none;
+        border-radius: 10px;
+        color: white;
+        font-family: "Orbitron", sans-serif;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition-smooth);
+      }
+
+      .set-btn:hover {
+        background: linear-gradient(
+          135deg,
+          var(--primary-glow),
+          var(--secondary-glow)
+        );
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 168, 255, 0.4);
+      }
+
+      .start-btn {
+        width: 44px;
+        height: 42px;
+        background: linear-gradient(135deg, #00cc66, #00ff88);
+        border: none;
+        border-radius: 10px;
+        color: #0a0e17;
+        font-size: 16px;
+        cursor: pointer;
+        transition: var(--transition-smooth);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .start-btn:hover {
+        background: linear-gradient(135deg, #00ff88, var(--secondary-glow));
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4);
+      }
+
+      .timer-display {
+        min-width: 110px;
+        height: 42px;
+        font-family: "Orbitron", sans-serif;
+        font-size: 20px;
+        font-weight: 900;
+        color: var(--warning-glow);
+        text-shadow: 0 0 10px rgba(255, 153, 0, 0.5);
+        background: rgba(0, 0, 0, 0.4);
+        padding: 0 15px;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 153, 0, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* ===== MAIN CONTENT WRAPPER ===== */
+      .main-content-wrapper {
+        margin-left: calc(var(--sidebar-collapsed-width) + 20px);
+        margin-right: calc(var(--sidebar-collapsed-width) + 20px);
+        transition: var(--transition-smooth);
+        padding: 20px;
+        margin-top: 80px;
+      }
+
+      .main-content-wrapper.left-expanded {
+        margin-left: calc(var(--sidebar-width) + 40px);
+      }
+
+      .main-content-wrapper.right-expanded {
+        margin-right: calc(var(--sidebar-width) + 40px);
+      }
+
+      .main-quiz-container {
+        background: rgba(0, 20, 40, 0.6);
+        border-radius: 16px;
+        padding: 30px;
+        border: 1px solid var(--border-glow);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(10px);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .main-quiz-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(
+          to right,
+          var(--primary-glow),
+          var(--secondary-glow)
+        );
+      }
+
+      /* ===== QUIZ STYLES ===== */
+      .question-block {
+        background: var(--bg-tertiary);
+        border-radius: 12px;
+        padding: 25px;
+        margin-bottom: 25px;
+        border: 1px solid rgba(0, 150, 255, 0.2);
+        transition: var(--transition-smooth);
+        position: relative;
+      }
+
+      .question-block:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 100, 255, 0.3);
+        border-color: var(--primary-glow);
+      }
+
+      .question-number {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--secondary-glow);
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .question-text {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        line-height: 1.6;
+      }
+
+      .answer-option {
+        display: block;
+        margin-bottom: 12px;
+        padding: 15px 20px;
+        background: rgba(0, 40, 80, 0.4);
+        border: 1px solid rgba(0, 150, 255, 0.2);
+        border-radius: 10px;
+        color: var(--text-primary);
+        cursor: pointer;
+        transition: var(--transition-smooth);
+      }
+
+      .answer-option:hover {
+        background: rgba(0, 80, 160, 0.5);
+        border-color: var(--primary-glow);
+        transform: translateX(8px);
+        box-shadow: 0 5px 15px rgba(0, 100, 255, 0.3);
+      }
+
+      .answer-option input[type="radio"] {
+        margin-right: 15px;
+        transform: scale(1.2);
+        accent-color: var(--secondary-glow);
+      }
+
+      .detail-btn {
+        padding: 12px 24px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-glow),
+          var(--secondary-glow)
+        );
+        color: #0a0e17;
+        border: none;
+        border-radius: 8px;
+        font-family: "Orbitron", sans-serif;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 15px;
+        transition: var(--transition-smooth);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .detail-btn:hover {
+        background: linear-gradient(
+          135deg,
+          var(--secondary-glow),
+          var(--primary-glow)
+        );
+        box-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+        transform: translateY(-2px);
+      }
+
+      /* ===== READING COMPREHENSION ===== */
+      .reading-comprehension {
+        background: rgba(0, 30, 80, 0.6);
+        border-left: 4px solid var(--secondary-glow);
+        padding: 25px;
+        border-radius: 12px;
+        position: relative;
+        margin-bottom: 20px;
+        padding-top: 70px;
+      }
+
+      .reading-title {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(0, 255, 204, 0.2);
+        position: relative;
+        z-index: 5;
+      }
+
+      .reading-timer-container {
+        position: absolute;
+        top: 15px;
+        right: 25px;
+        width: 350px;
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--border-glow);
+        border-radius: 30px;
+        padding: 8px 15px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        z-index: 20;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        transition: var(--transition-smooth);
+      }
+
+      .highlight-controls {
+        position: absolute;
+        top: 15px;
+        right: 400px;
+        display: flex;
+        gap: 8px;
+        background: rgba(0, 20, 40, 0.9);
+        padding: 8px 15px;
+        border-radius: 30px;
+        border: 1px solid var(--border-glow);
+        z-index: 20;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        align-items: center;
+        height: 46px;
+        width: auto;
+      }
+
+      .highlight-btn {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        cursor: pointer;
+        transition: var(--transition-smooth);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .highlight-btn:hover {
+        transform: scale(1.15);
+        box-shadow: 0 0 15px currentColor;
+        border-color: white;
+      }
+
+      .highlight-btn.red {
+        background-color: #ff3333;
+        color: white;
+      }
+
+      .highlight-btn.blue {
+        background-color: #00a8ff;
+        color: white;
+      }
+
+      .highlight-btn.purple {
+        background-color: #aa00ff;
+        color: white;
+      }
+
+      .highlight-btn.black {
+        background-color: #000000;
+        color: white;
+        border-color: rgba(255, 255, 255, 0.5);
+      }
+
+      .highlight-btn.remove-btn {
+        background: linear-gradient(135deg, #ff3333, #ff6600);
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      .reading-timer-input {
+        width: 50px;
+        height: 32px;
+        background: rgba(0, 10, 25, 0.9);
+        border: 1px solid rgba(0, 150, 255, 0.4);
+        border-radius: 20px;
+        color: var(--text-primary);
+        text-align: center;
+        font-size: 13px;
+        padding: 0 8px;
+        transition: var(--transition-smooth);
+      }
+
+      .reading-timer-input:focus {
+        outline: none;
+        border-color: var(--secondary-glow);
+        box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+      }
+
+      .reading-timer-btn {
+        padding: 6px 14px;
+        background: linear-gradient(135deg, #0066cc, var(--primary-glow));
+        border: none;
+        border-radius: 20px;
+        color: white;
+        font-size: 12px;
+        cursor: pointer;
+        transition: var(--transition-smooth);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        font-weight: 500;
+        white-space: nowrap;
+      }
+
+      .reading-timer-btn i {
+        font-size: 11px;
+      }
+
+      .reading-timer-btn:hover {
+        background: linear-gradient(
+          135deg,
+          var(--primary-glow),
+          var(--secondary-glow)
+        );
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 168, 255, 0.4);
+      }
+
+      .reading-timer-display {
+        font-family: "Orbitron", sans-serif;
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--secondary-glow);
+        padding: 0 8px;
+        min-width: 60px;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 20px;
+        padding: 4px 10px;
+        border: 1px solid rgba(0, 255, 204, 0.3);
+        letter-spacing: 1px;
+      }
+
+      .reading-label {
+        background: linear-gradient(
+          135deg,
+          var(--primary-glow),
+          var(--secondary-glow)
+        );
+        color: #0a0e17;
+        padding: 5px 18px;
+        border-radius: 30px;
+        font-family: "Orbitron", sans-serif;
+        font-weight: 700;
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 15px rgba(0, 168, 255, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        position: relative;
+        overflow: hidden;
+        transition: var(--transition-smooth);
+        animation: reading-pulse 3s infinite ease-in-out;
+      }
+
+      .reading-label::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.3),
+          transparent
+        );
+        transition: left 0.5s ease;
+      }
+
+      .reading-label:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 25px rgba(0, 255, 204, 0.5);
+      }
+
+      .reading-label:hover::before {
+        left: 100%;
+      }
+
+      @keyframes reading-pulse {
+        0% {
+          box-shadow: 0 0 15px rgba(0, 168, 255, 0.3);
+        }
+
+        50% {
+          box-shadow: 0 0 25px rgba(0, 255, 204, 0.5);
+        }
+
+        100% {
+          box-shadow: 0 0 15px rgba(0, 168, 255, 0.3);
+        }
+      }
+
+      .sub-question-container {
+        margin: 25px 0 15px 25px;
+        padding-left: 20px;
+        border-left: 3px solid rgba(0, 150, 255, 0.3);
+      }
+
+      .sub-question-box {
+        background: rgba(0, 40, 80, 0.4);
+        border: 1px solid rgba(0, 150, 255, 0.2);
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 15px;
+      }
+
+      .sub-question-box p {
+        font-weight: 600;
+        color: var(--secondary-glow);
+        margin-bottom: 15px;
+        font-size: 17px;
+      }
+
+      .sub-question-options {
+        margin-top: 15px;
+      }
+
+      .sub-question-key {
+        font-size: 12px;
+        color: #888;
+        margin-left: 10px;
+        font-family: monospace;
+      }
+
+      /* ===== QUIZ HISTORY ===== */
+      #quizHistory {
+        max-height: 200px;
+        overflow-y: auto;
+        margin-top: 15px;
+      }
+
+      #quizHistory li {
+        background: rgba(0, 40, 80, 0.5);
+        padding: 10px;
+        margin-bottom: 8px;
+        border-radius: 6px;
+        border-left: 3px solid var(--primary-glow);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      /* ===== WRONG ANSWERS LIST ===== */
+      .wrong-answers-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .wrong-answer-item {
+        background: rgba(255, 51, 51, 0.1);
+        border-left: 4px solid #ff3366;
+        padding: 15px;
+        border-radius: 8px;
+        transition: var(--transition-smooth);
+      }
+
+      .wrong-answer-item:hover {
+        background: rgba(255, 51, 51, 0.2);
+        transform: translateX(5px);
+      }
+
+      /* ===== BUTTON STYLES ===== */
+      .cyber-button {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 10px;
+        background: linear-gradient(135deg, #0066cc, var(--primary-glow));
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-family: "Orbitron", sans-serif;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition-smooth);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .cyber-button::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: left 0.5s;
+      }
+
+      .cyber-button:hover {
+        background: linear-gradient(
+          135deg,
+          var(--primary-glow),
+          var(--secondary-glow)
+        );
+        transform: translateY(-2px);
+        box-shadow: 0 0 20px rgba(0, 168, 255, 0.5);
+      }
+
+      .cyber-button:hover::before {
+        left: 100%;
+      }
+
+      /* ===== POPUP STYLES ===== */
+      .time-up-alert,
+      .result-popup,
+      .detail-popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(0, 20, 40, 0.98);
+        border: 2px solid var(--secondary-glow);
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+        z-index: 100000;
+        backdrop-filter: blur(20px);
+        animation: popup-appear 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      @keyframes popup-appear {
+        0% {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(0.8);
+        }
+
+        100% {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1);
+        }
+      }
+
+      .time-up-alert {
+        background: linear-gradient(135deg, #ff3333, #ff6600);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .result-popup .score {
+        font-size: 48px;
+        font-weight: 900;
+        color: var(--warning-glow);
+        text-shadow: 0 0 20px rgba(255, 153, 0, 0.5);
+      }
+
+      .close-popup {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 30px;
+        color: var(--danger-glow);
+        cursor: pointer;
+        transition: var(--transition-smooth);
+      }
+
+      .close-popup:hover {
+        color: #ff3333;
+        transform: rotate(90deg);
+      }
+
+      /* ===== DETAIL POPUP SCROLL ===== */
+      .detail-popup .detail-scroll {
+        overflow-y: auto;
+        max-height: calc(80vh - 120px);
+        /* trừ phần header + padding */
+        padding-right: 10px;
+        /* chừa chỗ cho scrollbar */
+      }
+
+      /* (Tuỳ chọn) làm scrollbar đẹp hơn trên Chrome/Edge */
+      .detail-popup .detail-scroll::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      .detail-popup .detail-scroll::-webkit-scrollbar-thumb {
+        background: rgba(0, 255, 204, 0.35);
+        border-radius: 10px;
+        border: 2px solid rgba(0, 20, 40, 0.98);
+      }
+
+      .detail-popup .detail-scroll::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.25);
+        border-radius: 10px;
+      }
+
+      /* ===== DARK MODE TOGGLE ===== */
+      #darkModeToggleBtn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #4c7cff, #6f61e8);
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 24px;
+        box-shadow: 0 0 20px rgba(0, 168, 255, 0.3);
+        z-index: 10001;
+        transition: var(--transition-smooth);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #darkModeToggleBtn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 30px rgba(0, 255, 204, 0.5);
+      }
+
+      /* ===== CORRECT / WRONG ANSWER STYLES ===== */
+      .correct-answer {
+        color: #2e7d32;
+        font-weight: bold;
+        margin-left: 8px;
+      }
+
+      .wrong-answer {
+        color: #c62828;
+        font-weight: bold;
+        margin-left: 8px;
+      }
+
+      /* ===== RESPONSIVE ===== */
+      @media (max-width: 768px) {
+        .timer-container {
+          position: relative;
+          width: 100%;
+          top: 0;
+          right: 0;
+          margin-bottom: 20px;
+        }
+
+        .sidebar-panel {
+          width: 100%;
+          left: 0 !important;
+          right: 0 !important;
+          top: 0 !important;
+          bottom: 0 !important;
+          border-radius: 0;
+        }
+
+        .main-content-wrapper {
+          margin-left: 0 !important;
+          margin-right: 0 !important;
+        }
+
+        .floating-btn-container {
+          display: none;
+        }
+
+        .highlight-controls {
+          position: relative;
+          top: auto;
+          right: auto;
+          margin-top: 15px;
+        }
+      }
+
+      @media (max-width: 900px) {
+        .reading-timer-container {
+          position: relative;
+          top: auto;
+          right: auto;
+          width: 100%;
+          margin-top: 15px;
+          margin-bottom: 10px;
+          border-radius: 15px;
+        }
+
+        .highlight-controls {
+          position: relative;
+          top: auto;
+          right: auto;
+          width: 100%;
+          margin-top: 10px;
+          margin-bottom: 15px;
+          justify-content: center;
+          height: auto;
+        }
+
+        .reading-comprehension {
+          padding-top: 25px;
+        }
+      }
+      /* ===== BACK TO TOP BUTTON ===== */
+      #backToTopBtn {
+        position: fixed;
+        bottom: 70px; /* nằm phía trên nút dark mode để không đè nhau */
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: rgba(0, 20, 40, 0.95);
+        border: 2px solid var(--secondary-glow);
+        color: var(--secondary-glow);
+        cursor: pointer;
+        font-size: 22px;
+        z-index: 10002;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 20px rgba(0, 255, 204, 0.25);
+        backdrop-filter: blur(10px);
+        transition: var(--transition-smooth);
+
+        /* ẩn mặc định */
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translateY(10px);
+      }
+
+      #backToTopBtn.show {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+
+      #backToTopBtn:hover {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 0 30px rgba(0, 255, 204, 0.45);
+        border-color: var(--primary-glow);
+        color: var(--primary-glow);
+      }
+      /* ===== FIREWORKS EFFECT ===== */
+      .fireworks-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 999999;
+      }
+
+      .firework-particle {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        pointer-events: none;
+        animation: firework-explode 1.5s ease-out forwards;
+      }
+
+      @keyframes firework-explode {
+        0% {
+          transform: translate(0, 0) scale(1);
+          opacity: 1;
+        }
+        100% {
+          transform: translate(var(--tx), var(--ty)) scale(0.2);
+          opacity: 0;
+        }
+      }
+
+      /* Hiệu ứng confetti rơi (thay thế hoặc bổ sung) */
+      .confetti {
+        position: fixed;
+        width: 10px;
+        height: 10px;
+        background-color: #f00;
+        position: fixed;
+        top: -10px;
+        z-index: 999999;
+        animation: confetti-fall linear forwards;
+      }
+
+      @keyframes confetti-fall {
+        to {
+          transform: translateY(100vh) rotate(720deg);
+        }
+      }
+
+      @keyframes bounce {
+        from {
+          transform: translateX(-50%) translateY(0);
+        }
+        to {
+          transform: translateX(-50%) translateY(-20px);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Background Effects -->
+    <div class="cyber-grid"></div>
+    <div class="cyber-line"></div>
+
+    <!-- Main Title - SỬA: thêm placeholder cho tên bài test và tổng số câu -->
+    <h1 style="margin-bottom: 30px">
+      📚 CYBERPUNK QUIZ - TỪ VỰNG MIMIKARA UNIT 1 (81-100) (40 câu)
+    </h1>
+
+    <!-- Timer Panel -->
+    <div class="timer-container">
+      <div class="timer-controls">
+        <div class="timer-input-group">
+          <input
+            type="number"
+            id="setTimeInput"
+            class="timer-input"
+            placeholder="20"
+            min="1"
+            max="120"
+            value="20"
+          />
+          <button class="set-btn" onclick="setTimer()">Đặt</button>
+        </div>
+        <button class="start-btn" onclick="toggleTimer()">
+          <i class="fas fa-play"></i>
+        </button>
+        <span id="timerDisplay" class="timer-display">20:00</span>
+      </div>
+    </div>
+
+    <!-- Dark Mode Toggle -->
+    <button id="darkModeToggleBtn" onclick="toggleDarkMode()">🌙</button>
+    <!-- Back To Top -->
+    <button id="backToTopBtn" onclick="scrollToTop()" title="Lên đầu trang">
+      <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- FLOATING BUTTONS -->
+    <div id="leftFloatingBtn" class="floating-btn-container left">
+      <div class="floating-btn left" onclick="toggleSidebar('left')">
+        <i class="fas fa-times-circle"></i>
+        <span class="badge" id="wrongAnswersBadge">0</span>
+        <span class="btn-tooltip">Câu đã sai</span>
+      </div>
+    </div>
+    <div id="rightFloatingBtn" class="floating-btn-container right">
+      <div class="floating-btn right" onclick="toggleSidebar('right')">
+        <i class="fas fa-cog"></i>
+        <span class="btn-tooltip">Điều khiển</span>
+      </div>
+    </div>
+
+    <!-- LEFT SIDEBAR - Wrong Answers -->
+    <div id="leftSidebarPanel" class="sidebar-panel left">
+      <button class="sidebar-toggle" onclick="toggleSidebar('left')">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <div class="sidebar-header">
+        <h3>
+          <i class="fas fa-times-circle" style="color: #ff3366"></i
+          ><span>CÂU ĐÃ SAI</span>
+        </h3>
+        <button class="sidebar-close" onclick="forceCloseSidebar('left')">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="sidebar-content">
+        <div style="margin-bottom: 20px; display: flex; gap: 10px">
+          <button
+            class="cyber-button"
+            onclick="showWrongAnswers()"
+            style="flex: 2"
+          >
+            <i class="fas fa-eye"></i> Xem
+          </button>
+          <button
+            class="cyber-button"
+            onclick="practiceWrongAnswers()"
+            style="flex: 2"
+          >
+            <i class="fas fa-graduation-cap"></i> Luyện
+          </button>
+          <button
+            class="cyber-button"
+            onclick="clearWrongAnswers()"
+            style="
+              flex: 1;
+              background: linear-gradient(135deg, #ff3333, #ff6600);
+            "
+          >
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+        <div id="wrongAnswersList" class="wrong-answers-list"></div>
+      </div>
+    </div>
+
+    <!-- RIGHT SIDEBAR - Controls -->
+    <div id="rightSidebarPanel" class="sidebar-panel right">
+      <button class="sidebar-toggle" onclick="toggleSidebar('right')">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+      <div class="sidebar-header">
+        <h3>
+          <i class="fas fa-tasks" style="color: var(--secondary-glow)"></i
+          ><span>ĐIỀU KHIỂN</span>
+        </h3>
+        <button class="sidebar-close" onclick="forceCloseSidebar('right')">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="sidebar-content">
+        <button class="cyber-button" onclick="submitQuiz()">
+          <i class="fas fa-paper-plane"></i> Nộp bài
+        </button>
+        <button class="cyber-button" onclick="resetQuiz()">
+          <i class="fas fa-redo-alt"></i> Làm lại
+        </button>
+        <button
+          id="showAnswersBtn"
+          class="cyber-button"
+          onclick="showCorrectAnswers()"
+          style="
+            display: none;
+            background: linear-gradient(135deg, #00cc66, #00ff88);
+          "
+        >
+          <i class="fas fa-check-circle"></i> Hiện đáp án
+        </button>
+
+        <h4
+          style="
+            color: var(--secondary-glow);
+            margin: 20px 0 10px;
+            font-family: Orbitron;
+          "
+        >
+          <i class="fas fa-history"></i> LỊCH SỬ
+        </h4>
+        <ul id="quizHistory"></ul>
+
+        <h4
+          style="
+            color: var(--secondary-glow);
+            margin: 20px 0 10px;
+            font-family: Orbitron;
+          "
+        >
+          <i class="fas fa-edit"></i> CẬP NHẬT ĐÁP ÁN
+        </h4>
+        <input
+          type="text"
+          id="editKey"
+          placeholder="Ví dụ: q1 hoặc 4.1"
+          style="
+            width: 100%;
+            margin-bottom: 10px;
+            background: rgba(0, 10, 25, 0.9);
+            color: white;
+            border: 1px solid var(--border-glow);
+            border-radius: 6px;
+            padding: 10px;
+          "
+        />
+        <input
+          type="text"
+          id="editValue"
+          placeholder="Số đáp án (1-4)"
+          style="
+            width: 100%;
+            margin-bottom: 10px;
+            background: rgba(0, 10, 25, 0.9);
+            color: white;
+            border: 1px solid var(--border-glow);
+            border-radius: 6px;
+            padding: 10px;
+          "
+        />
+        <button
+          class="cyber-button"
+          onclick="updateAnswer()"
+          style="margin-bottom: 5px"
+        >
+          <i class="fas fa-save"></i> Cập nhật
+        </button>
+        <button
+          class="cyber-button"
+          id="clearAnswersBtn"
+          style="background: linear-gradient(135deg, #ff3333, #ff6600)"
+        >
+          <i class="fas fa-eraser"></i> Xóa cập nhật
+        </button>
+      </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="mainContentWrapper" class="main-content-wrapper">
+      <div class="main-quiz-container">
+        <!-- H2 - SỬA: thêm placeholder cho tên bài test -->
+        <h2
+          style="
+            margin-bottom: 25px;
+            border-bottom: 2px solid rgba(0, 255, 204, 0.3);
+            padding-bottom: 15px;
+          "
+        >
+          <i class="fas fa-file-alt" style="color: var(--secondary-glow)"></i>
+          TỪ VỰNG MIMIKARA UNIT 1 (81-100)
+        </h2>
+        <form id="quizForm"></form>
+      </div>
+    </div>
+
+    <!-- Popups -->
+    <div id="timeUpAlert" class="time-up-alert" style="display: none">
+      <i
+        class="fas fa-hourglass-end"
+        style="font-size: 40px; margin-bottom: 20px"
+      ></i>
+      <h2>⏰ HẾT THỜI GIAN!</h2>
+      <p style="margin-top: 10px">Bạn đã hết thời gian làm bài rồi!</p>
+    </div>
+
+    <div id="resultPopup" class="result-popup" style="display: none">
+      <span class="close-popup" onclick="closeResultPopup()">×</span>
+      <i
+        class="fas fa-trophy"
+        style="font-size: 50px; color: #ffd700; margin-bottom: 20px"
+      ></i>
+      <h3 style="color: var(--secondary-glow)">KẾT QUẢ CỦA BẠN</h3>
+      <div class="score" id="popupScore"></div>
+      <div id="popupComment" style="font-size: 20px; margin-top: 15px"></div>
+    </div>
+
+    <script>
+      // ==================== INITIALIZATION ====================
+      window.answers = JSON.parse(
+        localStorage.getItem("customAnswers") || "{}",
+      );
+      let readingComprehensionCount = 0;
+      const readingTimers = {};
+      const savedRanges = {};
+
+      // ==================== QUIZ DATA ====================
+      const quizData = [
+  {
+    number: 1,
+    question: '意図',
+    options: ['いと', 'しょうり', 'ちょうわ', 'かくしん'],
+    answer: '1',
+    detail: '🔴 意図（いと）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 意（い）＝ ý, ý nghĩ, ý định<br>  • 図（と）＝ kế hoạch, mưu đồ, dự định<br>- Nghĩa đen: ý đồ, dự định<br>- Nghĩa Hán Việt: Ý đồ<br>- Ý nghĩa: Ý định, mục đích mà người ta nhắm tới khi hành động hoặc suy nghĩ.<br>  → Thường chỉ ý định có chủ đích, có tính toán.<br><br>💬 Ví dụ:<br>1. 彼の真意は何なのか、意図がわからない。<br>　→ Tôi không hiểu ý đồ của anh ấy, ý thực sự của anh ấy là gì.<br><br>2. これは意図的なミスではない。<br>　→ Đây không phải là một sai lầm có chủ đích.<br><br>3. 彼女の発言には何か意図があるはずだ。<br>　→ Trong lời nói của cô ấy chắc chắn có ý đồ gì đó.<br><br>🧠 Cách nhớ:<br>- Ghép chữ 意 (ý) và 図 (kế hoạch) → "ý đồ", "kế hoạch trong đầu".<br>- Liên tưởng đến từ "ý đồ" trong tiếng Việt, cũng có nghĩa tương tự.<br><br>✨（連）Các từ kết nối: 意図がある・無い Có/không có ý đồ<br><br>➕（合）Các từ kết hợp: 意図的な (情報を意図的に漏らす) Có ý đồ, có chủ đích<br><br>↔️（類）Các từ liên quan: 狙い Mục tiêu, điều nhắm tới<br>                                                     目的 Mục đích<br>                                                     狙う Nhắm tới<br><br>📎（対）Các từ trái nghĩa:',
+    isReading: false
+  },
+  {
+    number: 2,
+    question: '向上',
+    options: ['けいか', 'こうじょう', 'あっぱく', 'しょうり'],
+    answer: '2',
+    detail: '🔴 向上（こうじょう）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 向（こう）＝ hướng về, đối diện<br>  • 上（じょう）＝ trên, lên cao<br>- Nghĩa đen: Hướng lên trên<br>- Nghĩa Hán Việt: Hướng thượng<br>- Ý nghĩa: Sự tiến bộ, cải thiện, nâng cao (trình độ, chất lượng, năng lực...)<br>  → Chỉ sự phát triển, trở nên tốt hơn so với trước.<br><br>💬 Ví dụ:<br>1. 技術の向上が求められる。<br>　→ Yêu cầu sự nâng cao kỹ thuật.<br><br>2. 生徒の学力向上に努める。<br>　→ Nỗ lực nâng cao học lực của học sinh.<br><br>3. サービスの質を向上させる。<br>　→ Nâng cao chất lượng dịch vụ.<br><br>🧠 Cách nhớ:<br>- Ghép nghĩa Hán Việt: "Hướng" (phía) + "Thượng" (trên) → Hướng lên trên, tức là tiến bộ, tốt lên.<br>- Liên tưởng: Một mũi tên chỉ hướng đi lên (↑) biểu thị sự cải thiện, tăng trưởng.<br><br>✨（連）Các từ kết nối:<br><br>➕（合）Các từ kết hợp: 向上心 Tinh thần cầu tiến (向上心が強い)<br><br>↔️（類）Các từ liên quan: 進歩する Tiến bộ<br>上向く (うわむく) Quay lên trên (mặt vật lý, 向上 không có nghĩa này), tình hình có xu hướng tốt lên<br><br>📎（対）Các từ trái nghĩa: 低下 Suy giảm',
+    isReading: false
+  },
+  {
+    number: 3,
+    question: '活気',
+    options: ['かっき', 'きょうせい', 'いと', 'しょうり'],
+    answer: '1',
+    detail: '🔴 活気（かっき）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 活（かつ）＝ sống, hoạt động<br>  • 気（き）＝ khí, tinh thần, không khí<br>- Nghĩa đen: Khí thế hoạt động<br>- Nghĩa Hán Việt: Hoạt khí<br>- Ý nghĩa: Không khí sôi nổi, náo nhiệt, tràn đầy sinh lực và năng lượng.<br>  → Chỉ sự nhộn nhịp, đầy sức sống của một nơi chốn hoặc một nhóm người.<br><br>💬 Ví dụ:<br>1. この町は活気にあふれている。<br>　→ Thị trấn này tràn đầy sức sống.<br><br>2. 会議に活気がなかった。<br>　→ Cuộc họp không có không khí sôi nổi.<br><br>3. 市場の活気が好きだ。<br>　→ Tôi thích không khí nhộn nhịp của chợ.<br><br>🧠 Cách nhớ:<br>- "活" là hoạt động, "気" là không khí → "Không khí hoạt động" tức là sôi nổi, nhộn nhịp.<br>- Liên tưởng đến một khu chợ đông đúc, ồn ào, mọi người mua bán tấp nập → đó chính là "活気".<br><br>✨（連）Các từ kết nối: 活気がある・無い Có/không có sự hoạt bát<br>                        活気に満ちている Tràn đầy sự hoạt bát<br>                        活気に溢れている (あふれている) Tràn đầy sự hoạt bát<br>                        活気に乏しい (とぼしい) Thiếu sự hoạt bát<br><br>➕（合）Các từ kết hợp: <br><br>↔️（類）Các từ liên quan: <br><br>📎（対）Các từ trái nghĩa:',
+    isReading: false
+  },
+  {
+    number: 4,
+    question: '迫力',
+    options: ['はくりょく', 'きせい', 'いと', 'かくしん'],
+    answer: '1',
+    detail: '🔴 迫力（はくりょく）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 迫（はく）＝ ép, thúc, áp sát<br>  • 力（りょく）＝ sức mạnh, năng lực<br>- Nghĩa đen: Sức mạnh áp đảo, sức ép mạnh mẽ<br>- Nghĩa Hán Việt: Bách lực<br>- Ý nghĩa: Sức mạnh, sự lôi cuốn, sự ấn tượng mạnh mẽ đến mức áp đảo người khác.<br>  → Thường dùng để miêu tả sự hiện diện, biểu diễn, tác phẩm nghệ thuật có sức ảnh hưởng lớn.<br><br>💬 Ví dụ:<br>1. 彼の演技は迫力がある。<br>　→ Diễn xuất của anh ấy rất có sức lôi cuốn.<br><br>2. 迫力のあるシーンに観客は息をのんだ。<br>　→ Khán giả nín thở trước cảnh tượng đầy kịch tính.<br><br>3. この絵は迫力に欠ける。<br>　→ Bức tranh này thiếu đi sức sống/sức hút.<br><br>🧠 Cách nhớ:<br>- "迫" (bách) nghĩa là áp sát, "力" (lực) là sức mạnh. Ghép lại là "sức mạnh áp sát" → sức mạnh lôi cuốn, ấn tượng mạnh.<br>- Liên tưởng đến một cảnh hành động "áp đảo" và "mãnh liệt" trong phim.<br><br>✨（連）Các từ kết nối: 迫力がある・無い Có/không có sức lôi cuốn<br>                        迫力に欠ける Thiếu đi sức quyến rũ<br><br>➕（合）Các từ kết hợp: 大迫力 Siêu quyến rũ<br>                        迫力満点 Sức lôi cuốn 100%<br><br>↔️（類）Các từ liên quan: <br><br>📎（対）Các từ trái nghĩa:',
+    isReading: false
+  },
+  {
+    number: 5,
+    question: '勝利',
+    options: ['こうぎ', 'しょうり', 'たいこう', 'げんそく'],
+    answer: '2',
+    detail: '🔴 勝利（しょうり）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 勝（しょう）＝ chiến thắng, thắng lợi<br>  • 利（り）＝ lợi ích, thuận lợi<br>- Nghĩa đen: Chiến thắng và thuận lợi.<br>- Nghĩa Hán Việt: Thắng lợi<br>- Ý nghĩa: Sự chiến thắng, kết quả thắng cuộc trong một cuộc thi đấu, tranh chấp hoặc nỗ lực.<br>  → Chỉ trạng thái đạt được mục tiêu, vượt qua đối thủ.<br><br>💬 Ví dụ:<br>1. 我がチームが決勝戦で勝利した。<br>　→ Đội của chúng tôi đã giành chiến thắng trong trận chung kết.<br><br>2. 勝利の栄光を手に入れた。<br>　→ Đã nắm bắt được vinh quang của chiến thắng.<br><br>3. 長い戦いの末、ついに勝利を収めた。<br>　→ Sau một cuộc chiến dài, cuối cùng đã giành được chiến thắng.<br><br>🧠 Cách nhớ:<br>- Ghép chữ 勝 (thắng) và 利 (lợi) → "Thắng lợi".<br>- Liên tưởng đến cảm giác vui sướng, hân hoan khi "thắng" và có "lợi".<br><br>✨（連）Các từ kết nối: 勝利を収める Giành chiến thắng<br><br>➕（合）Các từ kết hợp: 勝利者 Người chiến thắng<br>                        勝利投手 (しょうりとうしゅ) Người ném bóng ăn điểm<br>                        勝利宣言 (しょうりせんげん) Tuyên bố chiến thắng<br><br>↔️（類）Các từ liên quan: <br><br>📎（対）Các từ trái nghĩa: 敗北 (はいぼく)  Thất bại, thua trận<br>                          敗退 (はいたい) Bị loại sau khi thua',
+    isReading: false
+  },
+  {
+    number: 6,
+    question: '適応',
+    options: ['きょうせい', 'てきおう', 'いと', 'こうじょう'],
+    answer: '2',
+    detail: '🔴 適応（てきおう）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 適（てき）＝ phù hợp, thích hợp<br>  • 応（おう）＝ ứng phó, đáp ứng<br>- Nghĩa đen: Ứng phó một cách phù hợp.<br>- Nghĩa Hán Việt: Thích ứng.<br>- Ý nghĩa: Sự thay đổi để phù hợp với hoàn cảnh, điều kiện mới.<br>  → Hành động hoặc quá trình điều chỉnh bản thân, chức năng, cấu trúc để trở nên phù hợp với môi trường hoặc tình huống mới.<br><br>💬 Ví dụ:<br>1. 新しい環境に適応するのは大変だ。<br>　→ Việc thích nghi với môi trường mới rất vất vả.<br><br>2. このソフトは様々なOSに適応している。<br>　→ Phần mềm này thích ứng với nhiều hệ điều hành khác nhau.<br><br>3. 生物は環境の変化に適応して進化する。<br>　→ Sinh vật tiến hóa bằng cách thích ứng với sự thay đổi của môi trường.<br><br>🧠 Cách nhớ:<br>- Ghép nghĩa Hán Việt: "Thích" (phù hợp) + "Ứng" (ứng phó) = Thích ứng.<br>- Liên tưởng: "Tekio" nghe như "Tech-Oh" - Công nghệ (Tech) luôn phải thích ứng (Oh, phù hợp) với nhu cầu mới.<br><br>✨（連）Các từ kết nối:<br><br>➕（合）Các từ kết hợp: 適応力 Năng lực thích nghi<br>                        適応性 Tính thích ứng, thích nghi<br><br>↔️（類）Các từ liên quan: 順応 Thích nghi với môi trường mới (Thuận theo hoàn cảnh)<br>                          適応 Thích nghi với môi trường mới (Phù hợp với điều kiện)<br><br>📎（対）Các từ trái nghĩa:',
+    isReading: false
+  },
+  {
+    number: 7,
+    question: '調和',
+    options: ['あっぱく', 'ちょうわ', 'いと', 'てきおう'],
+    answer: '2',
+    detail: '🔴 調和（ちょうわ）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 調（ちょう）＝ điều chỉnh, điều hòa<br>  • 和（わ）＝ hòa bình, hòa hợp<br>- Nghĩa đen: Sự điều chỉnh để hòa hợp.<br>- Nghĩa Hán Việt: Điều hòa<br>- Ý nghĩa: Trạng thái cân bằng, hài hòa, không có mâu thuẫn giữa các yếu tố, bộ phận hoặc con người.<br>  → Thường dùng trong nghệ thuật, thiết kế, âm nhạc, mối quan hệ xã hội.<br><br>💬 Ví dụ:<br>1. この部屋の色はとても調和が取れている。<br>　→ Màu sắc trong căn phòng này rất hài hòa.<br><br>2. チームの調和を保つことが大切だ。<br>　→ Việc duy trì sự hài hòa trong nhóm là rất quan trọng.<br><br>3. 自然と人間の調和が求められている。<br>　→ Sự hài hòa giữa thiên nhiên và con người đang được mong cầu.<br><br>🧠 Cách nhớ:<br>- Ghép nghĩa Hán Việt: "Điều" (調) là điều chỉnh, "Hòa" (和) là hòa hợp. Điều chỉnh để đạt được sự hòa hợp.<br>- Liên tưởng đến một bản nhạc hay, các nốt "điều hòa" (調和) với nhau.<br><br>✨（連）Các từ kết nối: 調和がある・無い Có/không có sự hài hòa, cân bằng, hòa hợp<br>                        調和が取れる Lấy được sự hài hòa, cân bằng, hòa hợp<br>                        調和を取る Tạo ra sự hài hòa, đạt được sự cân bằng, hòa hợp<br>                        調和を欠く Thiếu sự hài hòa<br><br>➕（合）Các từ kết hợp: <br><br>↔️（類）Các từ liên quan: 釣り合い Cân bằng, tương xứng, hài hòa (Vật lý, kinh tế,mối quan hệ)<br>                          バランス Cân bằng<br>                          統一 Thống nhất<br><br>📎（対）Các từ trái nghĩa:',
+    isReading: false
+  },
+  {
+    number: 8,
+    question: '権力',
+    options: ['けんりょく', 'こうぎ', 'げんそく', 'てきおう'],
+    answer: '1',
+    detail: '🔴 権力（けんりょく）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 権（けん）＝ quyền, thế lực<br>  • 力（りょく）＝ sức mạnh, lực lượng<br>- Nghĩa đen: Sức mạnh của quyền lực.<br>- Nghĩa Hán Việt: Quyền lực.<br>- Ý nghĩa: Sức mạnh để chỉ huy, chi phối người khác hoặc xã hội; quyền lực chính trị.<br>  → Thường chỉ quyền lực chính trị, xã hội có thể chi phối người khác.<br><br>💬 Ví dụ:<br>1. 彼は会社で絶大な権力を持っている。<br>　→ Anh ấy có quyền lực tuyệt đối trong công ty.<br><br>2. 権力の集中は危険だ。<br>　→ Sự tập trung quyền lực là nguy hiểm.<br><br>3. 歴史は権力闘争の繰り返しである。<br>　→ Lịch sử là sự lặp lại của những cuộc đấu tranh giành quyền lực.<br><br>🧠 Cách nhớ:<br>- Ghép hai chữ Hán: 権 (quyền) + 力 (lực) = Quyền lực.<br>- Liên tưởng đến hình ảnh một người nắm quyền (権) và có sức mạnh (力) để chỉ huy.<br><br>✨（連）Các từ kết nối: 権力を握る Nắm quyền lực, thâu tóm<br>                        権力を振るう Thể hiện quyền lực, sử dụng quyền lực<br><br>➕（合）Các từ kết hợp: 権力者 Người có quyền lực<br>                        権力闘争 (けんりょくとうそう) Cuộc đấu tranh giành quyền lực<br>                        国家権力 Quyền lực quốc gia<br><br>↔️（類）Các từ liên quan: 権限 Quyền hạn (quyền lực được giới hạn trong phạm vi nhất định)<br><br>📎（対）Các từ trái nghĩa:',
+    isReading: false
+  },
+  {
+    number: 9,
+    question: '権威',
+    options: ['たいこう', 'けんい', 'かっき', 'ちょうわ'],
+    answer: '2',
+    detail: '🔴 権威（けんい）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 権（けん）＝ quyền lực, thẩm quyền<br>  • 威（い）＝ uy nghi, oai phong<br>- Nghĩa đen: Quyền uy, sức mạnh từ địa vị hoặc năng lực được công nhận.<br>- Nghĩa Hán Việt: Quyền uy<br>- Ý nghĩa: Sức mạnh hoặc ảnh hưởng xuất phát từ địa vị, chức vụ, năng lực hoặc kiến thức được mọi người công nhận và tôn trọng, có khả năng chi phối người khác.<br>  → Thường chỉ sự tôn trọng và tin tưởng dựa trên năng lực thực tế hoặc địa vị chính thức.<br><br>💬 Ví dụ:<br>1. 彼はこの分野の権威として知られている。<br>　→ Ông ấy được biết đến như một chuyên gia có uy tín trong lĩnh vực này.<br><br>2. 親の権威を借りて威張るのはよくない。<br>　→ Việc dựa vào uy quyền của bố mẹ để ra oai là không tốt.<br><br>3. その理論は学術的な権威を持っている。<br>　→ Lý thuyết đó có uy tín trong học thuật.<br><br>🧠 Cách nhớ:<br>- Ghép chữ 権 (quyền lực) và 威 (uy nghi) → "quyền uy", tức là sức mạnh và sự tôn trọng đi kèm với quyền lực.<br>- Liên tưởng đến một người có chức vụ cao (quyền) và phong thái đáng kính (uy).<br><br>✨（連）Các từ kết nối:<br><br>➕（合）Các từ kết hợp: 権威者 Nguời có quyền uy<br><br>↔️（類）Các từ liên quan: 権勢 Quyền lực đi kèm với sức mạnh, uy thế, khả năng chi phối người khác<br>                          権威を笠に着る(かさにきる)“Mặc cái nón của uy quyền” → dùng uy quyền của mình để áp chế, ra oai, hoặc hành xử tùy tiện<br><br>📎（対）Các từ trái nghĩa:',
+    isReading: false
+  },
+  {
+    number: 10,
+    question: '圧迫',
+    options: ['いと', 'あっぱく', 'こうじょう', 'けんりょく'],
+    answer: '2',
+    detail: '🔴 圧迫（あっぱく）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 圧（あつ）＝ áp lực, đè nén<br>  • 迫（はく）＝ thúc ép, bức bách<br>- Nghĩa đen: Dùng sức mạnh để đè nén, thúc ép.<br>- Nghĩa Hán Việt: Áp bách<br>- Ý nghĩa: Hành động dùng sức mạnh hoặc uy quyền để đè nén, kiềm chế, tạo ra cảm giác khó chịu, ngột ngạt.<br>  → Thường dùng để chỉ sự đè nén về thể chất, tinh thần, hoặc trong các mối quan hệ xã hội, quyền lực.<br><br>💬 Ví dụ:<br>1. 周囲からの圧迫を感じる。<br>　→ Cảm thấy áp lực từ xung quanh.<br><br>2. 彼は圧迫的な態度で話した。<br>　→ Anh ấy đã nói chuyện với thái độ áp đảo.<br><br>3. 胸が圧迫されるような痛みがあった。<br>　→ Có một cơn đau như bị đè nén ở ngực.<br><br>🧠 Cách nhớ:<br>- Ghép hai chữ Hán: "Áp" (圧 - áp lực) + "Bách" (迫 - thúc bách) = "Áp bách" (圧迫 - đè nén, thúc ép).<br>- Liên tưởng đến việc bị "áp" (đè) và "bách" (ép) khiến không thể thở được.<br><br>✨（連）Các từ kết nối: <br><br>➕（合）Các từ kết hợp: 圧迫感 Cảm giác ngột ngạt<br><br>↔️（類）Các từ liên quan: 抑圧 (よくあつ)  Hành động ép buộc hoặc kìm nén ai đó, thường là về tinh thần, quyền tự do hoặc cảm xúc<br><br>📎（対）Các từ trái nghĩa:',
+    isReading: false
+  },
+  {
+    number: 11,
+    question: '強制',
+    options: ['きょうせい', 'げんそく', 'けいか', 'しょうり'],
+    answer: '1',
+    detail: '🔴 強制（きょうせい）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 強（きょう）＝ mạnh, cưỡng<br>  • 制（せい）＝ chế, kiểm soát<br>- Nghĩa đen: Sự kiểm soát mạnh mẽ, bắt buộc.<br>- Nghĩa Hán Việt: Cưỡng chế<br>- Ý nghĩa: Hành động bắt buộc ai đó làm hoặc không làm điều gì đó, thường bằng quyền lực hoặc luật lệ.<br>  → Mang tính áp đặt, không tự nguyện.<br><br>💬 Ví dụ:<br>1. 法律で強制される義務がある。<br>　→ Có nghĩa vụ bị bắt buộc bởi luật pháp.<br><br>2. その契約には強制力がある。<br>　→ Hợp đồng đó có tính chất bắt buộc (tính cưỡng chế).<br><br>3. 彼は強制的に病院へ連れて行かれた。<br>　→ Anh ấy bị đưa đến bệnh viện một cách cưỡng ép.<br><br>🧠 Cách nhớ:<br>- Ghép 強 (mạnh, cưỡng) + 制 (chế ngự, kiểm soát) → "Kiểm soát một cách mạnh mẽ" = Cưỡng chế, bắt buộc.<br>- Liên tưởng đến cảnh sát (quyền lực) "chế" ngự, "cưỡng" bức tội phạm phải tuân theo.<br><br>✨（連）Các từ kết nối:<br><br>➕（合）Các từ kết hợp: 強制的な Một cách cưỡng ép<br>                        強制送還 (そうかん) Trục xuất, cưỡng chế hồi hương (thường dùng trong luật di trú)<br>                        強制労働 Lao động cưỡng bức, lao động bắt buộc<br><br>↔️（類）Các từ liên quan: 強要 Cưỡng ép, ép buộc, bắt buộc ai đó làm điều gì (thường bằng đe dọa hoặc uy lực)<br>                          強いる (しいる) Ép buộc ai làm việc gì, người bị ép thường không muốn<br><br>📎（対）Các từ trái nghĩa:',
+    isReading: false
+  },
+  {
+    number: 12,
+    question: '規制',
+    options: ['しょうり', 'かくしん', 'きせい', 'いと'],
+    answer: '3',
+    detail: '🔴 規制（きせい）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 規（き）＝ quy tắc, tiêu chuẩn<br>  • 制（せい）＝ chế độ, kiểm soát<br>- Nghĩa đen: Sự kiểm soát bằng quy tắc.<br>- Nghĩa Hán Việt: Quy chế.<br>- Ý nghĩa: Sự hạn chế, kiểm soát hoặc quy định được đặt ra bởi luật pháp, quy tắc hoặc chính quyền.<br>  → Chỉ các quy tắc, hạn chế được thiết lập để kiểm soát, quản lý một hoạt động, hành vi nào đó.<br><br>💬 Ví dụ:<br>1. この地域では建築の規制が厳しい。<br>　→ Ở khu vực này, quy định về xây dựng rất nghiêm ngặt.<br><br>2. 政府は新しい安全規制を導入した。<br>　→ Chính phủ đã đưa ra quy định an toàn mới.<br><br>3. インターネット上のコンテンツに規制をかけるべきだという意見もある。<br>　→ Cũng có ý kiến cho rằng nên áp đặt kiểm soát đối với nội dung trên internet.<br><br>🧠 Cách nhớ:<br>- "Quy" (規) là quy tắc, "chế" (制) là chế ngự, kiểm soát. Ghép lại là "quy chế" - dùng quy tắc để chế ngự, kiểm soát.<br>- Liên tưởng đến biển báo giao thông (交通規制) - đó là những "quy định" để "kiểm soát" việc đi lại.<br><br>✨（連）Các từ kết nối: 規制がある・無い Có/không có quy định, kiểm soát<br>                        規制を強める・緩める (ゆるめる) Siết chặt, buông lỏng kiểm soát<br>                        規制を敷く・解く・解除 Áp đặt, bãi bỏ kiểm soát<br><br>➕（合）Các từ kết hợp: 規制緩和 (きせいかんわ) Nới lỏng quy định<br>                        交通規制 Kiểm soát giao thông<br>                        規制解除 Bãi bỏ kiểm soát<br><br>↔️（類）Các từ liên quan: <br><br>📎（対）Các từ trái nghĩa:',
+    isReading: false
+  },
+  {
+    number: 13,
+    question: '拒否',
+    options: ['はくりょく', 'けんりょく', 'しょうり', 'きょひ'],
+    answer: '4',
+    detail: '🔴 拒否（きょひ）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 拒（きょ）＝ từ chối, cự tuyệt<br>  • 否（ひ）＝ không, phủ định<br>- Nghĩa đen: Từ chối, phủ định.<br>- Nghĩa Hán Việt: Cự phủ.<br>- Ý nghĩa: Hành động từ chối, không chấp nhận một yêu cầu, đề nghị, ý kiến hoặc sự việc nào đó.<br>  → Thể hiện thái độ phản đối, không đồng ý.<br><br>💬 Ví dụ:<br>1. 彼はその申し出をきっぱりと拒否した。<br>　→ Anh ấy đã thẳng thừng từ chối lời đề nghị đó.<br><br>2. 入国を拒否されることもある。<br>　→ Đôi khi việc nhập cảnh cũng bị từ chối.<br><br>3. 面接で何度も拒否された。<br>　→ Tôi đã bị từ chối nhiều lần trong các cuộc phỏng vấn.<br><br>🧠 Cách nhớ:<br>- Ghép nghĩa Hán Việt: "Cự" (chống cự) + "Phủ" (phủ nhận) = chống lại và phủ nhận → từ chối.<br>- Liên tưởng: "KYO HI" (きょひ) nghe như "cự phủ" trong tiếng Việt.<br><br>✨（連）Các từ kết nối:<br><br>➕（合）Các từ kết hợp: 拒否権 Quyền phủ quyết<br>                        拒否反応 Phản ứng từ chối, phản kháng; trong y học còn là phản ứng đào thải<br><br>↔️（類）Các từ liên quan: 拒絶 Sự từ chối, bác bỏ; phản đối hoàn toàn<br><br>📎（対）Các từ trái nghĩa: 承諾 Thừa nhận, chấp nhận',
+    isReading: false
+  },
+  {
+    number: 14,
+    question: '対抗',
+    options: ['ちょうわ', 'かっき', 'きぼ', 'たいこう'],
+    answer: '4',
+    detail: '🔴 対抗（たいこう）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 対（たい）＝ đối diện, đối lập<br>  • 抗（こう）＝ chống lại, kháng cự<br>- Nghĩa đen: Đối đầu và chống lại<br>- Nghĩa Hán Việt: Đối kháng<br>- Ý nghĩa: Hành động đối đầu, cạnh tranh hoặc chống lại một đối thủ, một thế lực hay một tình huống.<br>  → Thể hiện sự cạnh tranh, đối đầu hoặc phản kháng.<br><br>💬 Ví dụ:<br>1. 彼は強力な対抗馬として選挙に立候補した。<br>　→ Anh ấy đã ra ứng cử như một đối thủ cạnh tranh mạnh mẽ.<br><br>2. 新製品は市場のリーダーに対抗するために開発された。<br>　→ Sản phẩm mới được phát triển để cạnh tranh với nhà dẫn đầu thị trường.<br><br>3. チームは優勝候補との対抗戦に勝利した。<br>　→ Đội đã giành chiến thắng trong trận đối đầu với ứng viên vô địch.<br><br>🧠 Cách nhớ:<br>- Ghép hai chữ Hán: "Đối" (đối mặt) + "Kháng" (kháng cự) = Hành động đối mặt và chống lại.<br>- Liên tưởng đến một cuộc thi đấu (対戦 - taisen) nơi hai bên "kháng" cự lẫn nhau.<br><br>✨（連）Các từ kết nối:<br><br>➕（合）Các từ kết hợp: 対抗策 Biện pháp đối phó, phương án phản kháng hoặc chống lại<br>                        対抗馬 (たいこうば) Đối thủ cạnh tranh<br>                        対抗戦 Trận đối đầu<br><br>↔️（類）Các từ liên quan:<br><br>📎（対）Các từ trái nghĩa:',
+    isReading: false
+  },
+  {
+    number: 15,
+    question: '抗議',
+    options: ['はくりょく', 'こうぎ', 'きょうせい', 'かくしん'],
+    answer: '2',
+    detail: '🔴 抗議（こうぎ）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 抗（こう）＝ chống lại, phản kháng<br>  • 議（ぎ）＝ thảo luận, ý kiến<br>- Nghĩa đen: Ý kiến chống đối<br>- Nghĩa Hán Việt: Kháng nghị<br>- Ý nghĩa: Hành động bày tỏ sự phản đối, không đồng ý một cách chính thức hoặc công khai đối với một hành động, quyết định, tình huống nào đó.<br>  → Thường được thực hiện bằng văn bản, lời nói hoặc hành động tập thể.<br><br>💬 Ví dụ:<br>1. 住民が工事の騒音について市に抗議した。<br>　→ Cư dân đã phản đối với thành phố về tiếng ồn công trường.<br><br>2. その不当な決定に対して、強い抗議の声が上がった。<br>　→ Đã có tiếng nói phản đối mạnh mẽ đối với quyết định bất công đó.<br><br>3. 抗議文を送付して、公式に意見を表明した。<br>　→ Đã gửi văn bản phản đối để chính thức bày tỏ ý kiến.<br><br>🧠 Cách nhớ:<br>- Ghép nghĩa Hán Việt: "Kháng" (chống lại) + "Nghị" (bàn bạc, ý kiến) = Ý kiến chống đối.<br>- Liên tưởng: "Công ty" (こうぎ) nhận nhiều "phản đối" (抗議) từ khách hàng.<br><br>✨（連）Các từ kết nối: 抗議を申し入れる Đưa ra phản đối, chính thức gửi kiến nghị, trình bày sự phản kháng<br><br>➕（合）Các từ kết hợp: 抗議集会 Cuộc tập hợp của nhiều người để bày tỏ sự phản đối hoặc kiến nghị<br>                        抗議デモ Cuộc biểu tình phản đối<br><br>↔️（類）Các từ liên quan: 抗議の声を上げる Lên tiếng phản đối, bày tỏ sự bất đồng hoặc phản kháng<br><br>📎（対）Các từ trái nghĩa:',
+    isReading: false
+  },
+  {
+    number: 16,
+    question: '革新',
+    options: ['ちょうわ', 'けいか', 'かくしん', 'きせい'],
+    answer: '3',
+    detail: '🔴 革新（かくしん）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 革（かく）＝ thay đổi, cải cách<br>  • 新（しん）＝ mới<br>- Nghĩa đen: Thay đổi để trở nên mới mẻ.<br>- Nghĩa Hán Việt: Cách tân<br>- Ý nghĩa: Sự đổi mới, cải cách mang tính sáng tạo, tạo ra những thay đổi lớn và tích cực.<br>  → Nhấn mạnh sự mới mẻ, sáng tạo, cải thiện hiệu quả hoặc chất lượng.<br><br>💬 Ví dụ:<br>1. この会社は技術革新に力を入れている。<br>　→ Công ty này đang tập trung sức lực vào cải cách kỹ thuật.<br><br>2. 社会を革新するようなアイデアが必要だ。<br>　→ Cần những ý tưởng có thể cải cách xã hội.<br><br>3. 彼の考え方は本当に革新的だ。<br>　→ Cách suy nghĩ của anh ấy thực sự mang tính cách tân.<br><br>🧠 Cách nhớ:<br>- "革" là da thuộc, từ da cũ thành vật liệu mới → "thay đổi, cải tạo".<br>- "新" là mới. Ghép lại: "Cải tạo để trở nên mới mẻ" → "cách tân, đổi mới".<br><br>✨（連）Các từ kết nối: <br><br>➕（合）Các từ kết hợp: 革新的な Mang tính cải cách<br>                        革新政党 (かくしんせいとう) Chính đảng cải cách<br>                        技術革新 Cải cách về kỹ thuật<br><br>↔️（類）Các từ liên quan: 改革 Cải cách, sửa đổi hệ thống / tổ chức / chính sách (Nhấn mạnh thay đổi từ bên trong, cải thiện cấu trúc hiện có)<br>                          革新 Nhấn mạnh mới mẻ, sáng tạo, cải thiện hiệu quả hoặc chất lượng<br><br>📎（対）Các từ trái nghĩa: 保守 Bảo thủ, giữ gìn truyền thống, duy trì hiện trạng',
+    isReading: false
+  },
+  {
+    number: 17,
+    question: '原則',
+    options: ['げんそく', 'あっぱく', 'いと', 'こうじょう'],
+    answer: '1',
+    detail: '🔴 原則（げんそく）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 原（げん）＝ nguồn gốc, nguyên thủy<br>  • 則（そく）＝ quy tắc, luật lệ<br>- Nghĩa đen: Quy tắc gốc, quy tắc cơ bản.<br>- Nghĩa Hán Việt: Nguyên tắc.<br>- Ý nghĩa: Quy tắc cơ bản, tổng quát, dùng làm hướng dẫn hành vi hoặc quyết định, có thể linh hoạt áp dụng.<br>  → Khác với "規則" (quy tắc cụ thể, cứng nhắc) và "法則" (định luật tự nhiên, khách quan).<br><br>💬 Ví dụ:<br>1. 原則として、このルールに従ってください。<br>　→ Về nguyên tắc, hãy tuân theo quy tắc này.<br><br>2. 彼は原則を守る人だ。<br>　→ Anh ấy là người tuân thủ nguyên tắc.<br><br>3. 原則は守るべきだが、例外もある。<br>　→ Nguyên tắc thì nên tuân theo, nhưng cũng có ngoại lệ.<br><br>🧠 Cách nhớ:<br>- "原" (nguồn gốc) + "則" (quy tắc) = quy tắc gốc, quy tắc cơ bản.<br>- Liên tưởng: Nguyên tắc là thứ cơ bản nhất, làm nền tảng cho các quy tắc khác.<br><br>✨（連）Các từ kết nối: 原則として Về nguyên tắc<br><br>➕（合）Các từ kết hợp: 原則的な Mang tính nguyên tắc<br><br>↔️（類）Các từ liên quan: 法則 Định luật, quy luật (Quy luật tự nhiên hoặc khoa học, mang tính chung, khách quan, không thể thay đổi)<br>                          規則 Quy tắc, nội quy (Các quy tắc do con người đặt ra để quản lý hành vi trong tổ chức, lớp học, công ty, trò chơi…)<br>                          原則 Nguyên tắc, phương châm cơ bản (Quy tắc cơ bản, tổng quát, dùng làm hướng dẫn hành vi hoặc quyết định, có thể linh hoạt áp dụng)<br><br>📎（対）Các từ trái nghĩa:',
+    isReading: false
+  },
+  {
+    number: 18,
+    question: '経過',
+    options: ['けいか', 'かくしん', 'いと', 'きぼ'],
+    answer: '1',
+    detail: '🔴 経過（けいか）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 経（けい）＝ trải qua, kinh qua<br>  • 過（か）＝ quá, vượt qua<br>- Nghĩa đen: Sự trôi qua, sự diễn biến của thời gian hoặc sự việc.<br>- Nghĩa Hán Việt: Kinh quá<br>- Ý nghĩa: Quá trình, diễn biến, sự tiến triển của một sự việc theo thời gian.<br>  → Chỉ sự thay đổi hoặc tiến triển từ trạng thái này sang trạng thái khác.<br><br>💬 Ví dụ:<br>1. 時間の経過とともに傷は癒えた。<br>　→ Vết thương lành lại theo thời gian trôi qua.<br><br>2. 事件の経過を詳しく報告する。<br>　→ Báo cáo chi tiết diễn biến của vụ việc.<br><br>3. 治療の経過は良好だ。<br>　→ Diễn biến của quá trình điều trị rất tốt.<br><br>🧠 Cách nhớ:<br>- Ghép nghĩa Hán Việt "Kinh" (trải qua) và "Quá" (vượt qua) → "Trải qua" một quá trình.<br>- Liên tưởng đến đồng hồ (thời gian) và một con đường (sự việc) đang diễn ra.<br><br>✨（連）Các từ kết nối:<br><br>➕（合）Các từ kết hợp: 途中経過　Diễn biến trong quá trình<br><br>↔️（類）Các từ liên quan:<br><br>📎（対）Các từ trái nghĩa:',
+    isReading: false
+  },
+  {
+    number: 19,
+    question: '中継',
+    options: ['いと', 'きょひ', 'ちゅうけい', 'けんりょく'],
+    answer: '3',
+    detail: '🔴 中継（ちゅうけい）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 中（ちゅう）＝ ở giữa, bên trong<br>  • 継（けい）＝ tiếp nối, kế thừa<br>- Nghĩa đen: Sự tiếp nối ở giữa, sự chuyển tiếp trung gian.<br>- Nghĩa Hán Việt: Trung kế<br>- Ý nghĩa: Chỉ việc truyền tải, chuyển tiếp thông tin, tín hiệu (như hình ảnh, âm thanh) từ nơi này đến nơi khác, thường thông qua một trạm trung gian.<br>  → Thường được sử dụng trong lĩnh vực truyền hình, phát thanh, viễn thông để chỉ việc phát sóng trực tiếp hoặc truyền dẫn tín hiệu.<br><br>💬 Ví dụ:<br>1. オリンピックの試合を中継する。<br>　→ Truyền hình trực tiếp trận đấu Olympic.<br><br>2. 衛星を使って海外のニュースを中継した。<br>　→ Đã truyền dẫn tin tức từ nước ngoài bằng vệ tinh.<br><br>3. この番組は全国に中継されます。<br>　→ Chương trình này sẽ được phát sóng trực tiếp trên toàn quốc.<br><br>🧠 Cách nhớ:<br>- Ghép nghĩa Hán Việt "Trung" (ở giữa) và "Kế" (kế tiếp, nối tiếp) → việc tiếp nối ở khoảng giữa, như một trạm trung chuyển tín hiệu.<br>- Liên tưởng đến một "trạm trung gian" (中) có nhiệm vụ "tiếp tục truyền" (継) tín hiệu truyền hình đi xa hơn.<br><br>✨（連）Các từ kết nối:<br><br>➕（合）Các từ kết hợp: 中継局 Đài truyền hình<br>                        中継車 Xe truyền hình<br>                        中継放送 Phát trực tiếp<br>                        衛星中継 Truyền dẫn / phát sóng thông qua vệ tinh<br>                        生中継 Phát sóng trực tiếp đến khán giả mà không qua ghi hình hay chỉnh sửa trước<br>                        実況中継 Phát sóng trực tiếp kèm bình luận, tường thuật chi tiết từng hành động<br><br>↔️（類）Các từ liên quan:<br><br>📎（対）Các từ trái nghĩa:',
+    isReading: false
+  },
+  {
+    number: 20,
+    question: '規模',
+    options: ['ちゅうけい', 'かくしん', 'きぼ', 'ちょうわ'],
+    answer: '3',
+    detail: '🔴 規模（きぼ）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 規（き）＝ quy tắc, tiêu chuẩn<br>  • 模（ぼ）＝ mẫu, hình mẫu<br>- Nghĩa đen: Mẫu, khuôn theo quy tắc.<br>- Nghĩa Hán Việt: Quy mô<br>- Ý nghĩa: Quy mô, phạm vi, mức độ lớn nhỏ của một sự việc, tổ chức hay dự án.<br>  → Chỉ phạm vi, độ lớn, tầm cỡ.<br><br>💬 Ví dụ:<br>1. このプロジェクトは規模が大きい。<br>　→ Dự án này có quy mô lớn.<br><br>2. 会社の事業規模を拡大する。<br>　→ Mở rộng quy mô kinh doanh của công ty.<br><br>3. 小規模なイベントを開催する。<br>　→ Tổ chức một sự kiện có quy mô nhỏ.<br><br>🧠 Cách nhớ:<br>- "Quy" (規) là quy tắc, "mô" (模) là mẫu mã → "Quy mô" là khuôn mẫu, phạm vi được xác định bởi các quy tắc.<br>- Liên tưởng đến từ "scale" trong tiếng Anh, cũng chỉ quy mô, tỷ lệ.<br><br>✨（連）Các từ kết nối: 規模を拡大・縮小 Phóng to, thu nhỏ quy mô<br>                        規模を広げる Mở rộng quy mô<br><br>➕（合）Các từ kết hợp: 大規模・小規模 Quy mô lớn, nhỏ<br><br>↔️（類）Các từ liên quan: スケール (scale) Quy mô, tầm cỡ, phạm vi, tỷ lệ<br>                          サイズ Kích cỡ<br><br>📎（対）Các từ trái nghĩa:',
+    isReading: false
+  },
+  {
+    number: 21,
+    question: 'Mục đích, ý đồ',
+    options: ['圧迫', '意図', '強制', '経過'],
+    answer: '2',
+    detail: '🔴 意図（いと）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 意（い）＝ ý, ý nghĩ, ý định<br>  • 図（と）＝ kế hoạch, mưu đồ, dự định<br>- Nghĩa đen: ý đồ, dự định<br>- Nghĩa Hán Việt: Ý đồ<br>- Ý nghĩa: Ý định, mục đích mà người ta nhắm tới khi hành động hoặc suy nghĩ.<br>  → Thường chỉ ý định có chủ đích, có tính toán.<br><br>💬 Ví dụ:<br>1. 彼の真意は何なのか、意図がわからない。<br>　→ Tôi không hiểu ý đồ của anh ấy, ý thực sự của anh ấy là gì.<br><br>2. これは意図的なミスではない。<br>　→ Đây không phải là một sai lầm có chủ đích.<br><br>3. 彼女の発言には何か意図があるはずだ。<br>　→ Trong lời nói của cô ấy chắc chắn có ý đồ gì đó.<br><br>🧠 Cách nhớ:<br>- Ghép chữ 意 (ý) và 図 (kế hoạch) → "ý đồ", "kế hoạch trong đầu".<br>- Liên tưởng đến từ "ý đồ" trong tiếng Việt, cũng có nghĩa tương tự.<br><br>✨（連）Các từ kết nối: 意図がある・無い Có/không có ý đồ<br><br>➕（合）Các từ kết hợp: 意図的な (情報を意図的に漏らす) Có ý đồ, có chủ đích<br><br>↔️（類）Các từ liên quan: 狙い Mục tiêu, điều nhắm tới<br>                          目的 Mục đích<br>                          狙う Nhắm tới<br><br>📎（対）Các từ trái nghĩa:',
+    isReading: false
+  },
+  {
+    number: 22,
+    question: 'Nâng cao, cải thiện',
+    options: ['向上', '革新', '圧迫', '規模'],
+    answer: '1',
+    detail: '🔴 向上（こうじょう）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 向（こう）＝ hướng về, đối diện<br>  • 上（じょう）＝ trên, lên cao<br>- Nghĩa đen: Hướng lên trên<br>- Nghĩa Hán Việt: Hướng thượng<br>- Ý nghĩa: Sự tiến bộ, cải thiện, nâng cao (trình độ, chất lượng, năng lực...)<br>  → Chỉ sự phát triển, trở nên tốt hơn so với trước.<br><br>💬 Ví dụ:<br>1. 技術の向上が求められる。<br>　→ Yêu cầu sự nâng cao kỹ thuật.<br><br>2. 生徒の学力向上に努める。<br>　→ Nỗ lực nâng cao học lực của học sinh.<br><br>3. サービスの質を向上させる。<br>　→ Nâng cao chất lượng dịch vụ.<br><br>🧠 Cách nhớ:<br>- Ghép nghĩa Hán Việt: "Hướng" (phía) + "Thượng" (trên) → Hướng lên trên, tức là tiến bộ, tốt lên.<br>- Liên tưởng: Một mũi tên chỉ hướng đi lên (↑) biểu thị sự cải thiện, tăng trưởng.<br><br>✨（連）Các từ kết nối:<br><br>➕（合）Các từ kết hợp: 向上心 Tinh thần cầu tiến (向上心が強い)<br><br>↔️（類）Các từ liên quan: 進歩する Tiến bộ<br>                          上向く (うわむく) Quay lên trên (mặt vật lý, 向上 không có nghĩa này), tình hình có xu hướng tốt lên<br><br>📎（対）Các từ trái nghĩa: 低下 Suy giảm',
+    isReading: false
+  },
+  {
+    number: 23,
+    question: 'Hoạt bát, sôi nổi',
+    options: ['迫力', '規制', '活気', '拒否'],
+    answer: '3',
+    detail: '🔴 活気（かっき）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 活（かつ）＝ sống, hoạt động<br>  • 気（き）＝ khí, tinh thần, không khí<br>- Nghĩa đen: Khí thế hoạt động<br>- Nghĩa Hán Việt: Hoạt khí<br>- Ý nghĩa: Không khí sôi nổi, náo nhiệt, tràn đầy sinh lực và năng lượng.<br>  → Chỉ sự nhộn nhịp, đầy sức sống của một nơi chốn hoặc một nhóm người.<br><br>💬 Ví dụ:<br>1. この町は活気にあふれている。<br>　→ Thị trấn này tràn đầy sức sống.<br><br>2. 会議に活気がなかった。<br>　→ Cuộc họp không có không khí sôi nổi.<br><br>3. 市場の活気が好きだ。<br>　→ Tôi thích không khí nhộn nhịp của chợ.<br><br>🧠 Cách nhớ:<br>- "活" là hoạt động, "気" là không khí → "Không khí hoạt động" tức là sôi nổi, nhộn nhịp.<br>- Liên tưởng đến một khu chợ đông đúc, ồn ào, mọi người mua bán tấp nập → đó chính là "活気".<br><br>✨（連）Các từ kết nối: 活気がある・無い Có/không có sự hoạt bát<br>                        活気に満ちている Tràn đầy sự hoạt bát<br>                        活気に溢れている (あふれている) Tràn đầy sự hoạt bát<br>                        活気に乏しい (とぼしい) Thiếu sự hoạt bát<br><br>➕（合）Các từ kết hợp: <br><br>↔️（類）Các từ liên quan: <br><br>📎（対）Các từ trái nghĩa:',
+    isReading: false
+  },
+  {
+    number: 24,
+    question: 'Sức lôi cuốn, quyến rũ',
+    options: ['中継', '迫力', '権威', '強制'],
+    answer: '2',
+    detail: '🔴 迫力（はくりょく）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 迫（はく）＝ ép, thúc, áp sát<br>  • 力（りょく）＝ sức mạnh, năng lực<br>- Nghĩa đen: Sức mạnh áp đảo, sức ép mạnh mẽ<br>- Nghĩa Hán Việt: Bách lực<br>- Ý nghĩa: Sức mạnh, sự lôi cuốn, sự ấn tượng mạnh mẽ đến mức áp đảo người khác.<br>  → Thường dùng để miêu tả sự hiện diện, biểu diễn, tác phẩm nghệ thuật có sức ảnh hưởng lớn.<br><br>💬 Ví dụ:<br>1. 彼の演技は迫力がある。<br>　→ Diễn xuất của anh ấy rất có sức lôi cuốn.<br><br>2. 迫力のあるシーンに観客は息をのんだ。<br>　→ Khán giả nín thở trước cảnh tượng đầy kịch tính.<br><br>3. この絵は迫力に欠ける。<br>　→ Bức tranh này thiếu đi sức sống/sức hút.<br><br>🧠 Cách nhớ:<br>- "迫" (bách) nghĩa là áp sát, "力" (lực) là sức mạnh. Ghép lại là "sức mạnh áp sát" → sức mạnh lôi cuốn, ấn tượng mạnh.<br>- Liên tưởng đến một cảnh hành động "áp đảo" và "mãnh liệt" trong phim.<br><br>✨（連）Các từ kết nối: 迫力がある・無い Có/không có sức lôi cuốn<br>                        迫力に欠ける Thiếu đi sức quyến rũ<br><br>➕（合）Các từ kết hợp: 大迫力 Siêu quyến rũ<br>                        迫力満点 Sức lôi cuốn 100%<br><br>↔️（類）Các từ liên quan: <br><br>📎（対）Các từ trái nghĩa:',
+    isReading: false
+  },
+  {
+    number: 25,
+    question: 'Chiến thắng (Danh từ)',
+    options: ['権威', '意図', '対抗', '勝利'],
+    answer: '4',
+    detail: '🔴 勝利（しょうり）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 勝（しょう）＝ chiến thắng, thắng lợi<br>  • 利（り）＝ lợi ích, thuận lợi<br>- Nghĩa đen: Chiến thắng và thuận lợi.<br>- Nghĩa Hán Việt: Thắng lợi<br>- Ý nghĩa: Sự chiến thắng, kết quả thắng cuộc trong một cuộc thi đấu, tranh chấp hoặc nỗ lực.<br>  → Chỉ trạng thái đạt được mục tiêu, vượt qua đối thủ.<br><br>💬 Ví dụ:<br>1. 我がチームが決勝戦で勝利した。<br>　→ Đội của chúng tôi đã giành chiến thắng trong trận chung kết.<br><br>2. 勝利の栄光を手に入れた。<br>　→ Đã nắm bắt được vinh quang của chiến thắng.<br><br>3. 長い戦いの末、ついに勝利を収めた。<br>　→ Sau một cuộc chiến dài, cuối cùng đã giành được chiến thắng.<br><br>🧠 Cách nhớ:<br>- Ghép chữ 勝 (thắng) và 利 (lợi) → "Thắng lợi".<br>- Liên tưởng đến cảm giác vui sướng, hân hoan khi "thắng" và có "lợi".<br><br>✨（連）Các từ kết nối: 勝利を収める Giành chiến thắng<br><br>➕（合）Các từ kết hợp: 勝利者 Người chiến thắng<br>                        勝利投手 (しょうりとうしゅ) Người ném bóng ăn điểm<br>                        勝利宣言 (しょうりせんげん) Tuyên bố chiến thắng<br><br>↔️（類）Các từ liên quan: <br><br>📎（対）Các từ trái nghĩa: 敗北 (はいぼく)  Thất bại, thua trận<br>                          敗退 (はいたい) Bị loại sau khi thua',
+    isReading: false
+  },
+  {
+    number: 26,
+    question: 'Thích ứng, thích nghi',
+    options: ['経過', '適応', '意図', '活気'],
+    answer: '2',
+    detail: '🔴 適応（てきおう）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 適（てき）＝ phù hợp, thích hợp<br>  • 応（おう）＝ ứng phó, đáp ứng<br>- Nghĩa đen: Ứng phó một cách phù hợp.<br>- Nghĩa Hán Việt: Thích ứng.<br>- Ý nghĩa: Sự thay đổi để phù hợp với hoàn cảnh, điều kiện mới.<br>  → Hành động hoặc quá trình điều chỉnh bản thân, chức năng, cấu trúc để trở nên phù hợp với môi trường hoặc tình huống mới.<br><br>💬 Ví dụ:<br>1. 新しい環境に適応するのは大変だ。<br>　→ Việc thích nghi với môi trường mới rất vất vả.<br><br>2. このソフトは様々なOSに適応している。<br>　→ Phần mềm này thích ứng với nhiều hệ điều hành khác nhau.<br><br>3. 生物は環境の変化に適応して進化する。<br>　→ Sinh vật tiến hóa bằng cách thích ứng với sự thay đổi của môi trường.<br><br>🧠 Cách nhớ:<br>- Ghép nghĩa Hán Việt: "Thích" (phù hợp) + "Ứng" (ứng phó) = Thích ứng.<br>- Liên tưởng: "Tekio" nghe như "Tech-Oh" - Công nghệ (Tech) luôn phải thích ứng (Oh, phù hợp) với nhu cầu mới.<br><br>✨（連）Các từ kết nối:<br><br>➕（合）Các từ kết hợp: 適応力 Năng lực thích nghi<br>                        適応性 Tính thích ứng, thích nghi<br><br>↔️（類）Các từ liên quan: 順応 Thích nghi với môi trường mới (Thuận theo hoàn cảnh)<br>                          適応 Thích nghi với môi trường mới (Phù hợp với điều kiện)<br><br>📎（対）Các từ trái nghĩa:',
+    isReading: false
+  },
+  {
+    number: 27,
+    question: 'Điều hòa, điều tiết, hài hòa, cân bằng, hòa hợp',
+    options: ['調和', '規模', '中継', '権威'],
+    answer: '1',
+    detail: '🔴 調和（ちょうわ）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 調（ちょう）＝ điều chỉnh, điều hòa<br>  • 和（わ）＝ hòa bình, hòa hợp<br>- Nghĩa đen: Sự điều chỉnh để hòa hợp.<br>- Nghĩa Hán Việt: Điều hòa<br>- Ý nghĩa: Trạng thái cân bằng, hài hòa, không có mâu thuẫn giữa các yếu tố, bộ phận hoặc con người.<br>  → Thường dùng trong nghệ thuật, thiết kế, âm nhạc, mối quan hệ xã hội.<br><br>💬 Ví dụ:<br>1. この部屋の色はとても調和が取れている。<br>　→ Màu sắc trong căn phòng này rất hài hòa.<br><br>2. チームの調和を保つことが大切だ。<br>　→ Việc duy trì sự hài hòa trong nhóm là rất quan trọng.<br><br>3. 自然と人間の調和が求められている。<br>　→ Sự hài hòa giữa thiên nhiên và con người đang được mong cầu.<br><br>🧠 Cách nhớ:<br>- Ghép nghĩa Hán Việt: "Điều" (調) là điều chỉnh, "Hòa" (和) là hòa hợp. Điều chỉnh để đạt được sự hòa hợp.<br>- Liên tưởng đến một bản nhạc hay, các nốt "điều hòa" (調和) với nhau.<br><br>✨（連）Các từ kết nối: 調和がある・無い Có/không có sự hài hòa, cân bằng, hòa hợp<br>                        調和が取れる Lấy được sự hài hòa, cân bằng, hòa hợp<br>                        調和を取る Tạo ra sự hài hòa, đạt được sự cân bằng, hòa hợp<br>                        調和を欠く Thiếu sự hài hòa<br><br>➕（合）Các từ kết hợp: <br><br>↔️（類）Các từ liên quan: 釣り合い Cân bằng, tương xứng, hài hòa (Vật lý, kinh tế,mối quan hệ)<br>                          バランス Cân bằng<br>                          統一 Thống nhất<br><br>📎（対）Các từ trái nghĩa:',
+    isReading: false
+  },
+  {
+    number: 28,
+    question: 'Quyền lực',
+    options: ['適応', '拒否', '権力', '強制'],
+    answer: '3',
+    detail: '🔴 権力（けんりょく）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 権（けん）＝ quyền, thế lực<br>  • 力（りょく）＝ sức mạnh, lực lượng<br>- Nghĩa đen: Sức mạnh của quyền lực.<br>- Nghĩa Hán Việt: Quyền lực.<br>- Ý nghĩa: Sức mạnh để chỉ huy, chi phối người khác hoặc xã hội; quyền lực chính trị.<br>  → Thường chỉ quyền lực chính trị, xã hội có thể chi phối người khác.<br><br>💬 Ví dụ:<br>1. 彼は会社で絶大な権力を持っている。<br>　→ Anh ấy có quyền lực tuyệt đối trong công ty.<br><br>2. 権力の集中は危険だ。<br>　→ Sự tập trung quyền lực là nguy hiểm.<br><br>3. 歴史は権力闘争の繰り返しである。<br>　→ Lịch sử là sự lặp lại của những cuộc đấu tranh giành quyền lực.<br><br>🧠 Cách nhớ:<br>- Ghép hai chữ Hán: 権 (quyền) + 力 (lực) = Quyền lực.<br>- Liên tưởng đến hình ảnh một người nắm quyền (権) và có sức mạnh (力) để chỉ huy.<br><br>✨（連）Các từ kết nối: 権力を握る Nắm quyền lực, thâu tóm<br>                        権力を振るう Thể hiện quyền lực, sử dụng quyền lực<br><br>➕（合）Các từ kết hợp: 権力者 Người có quyền lực<br>                        権力闘争 (けんりょくとうそう) Cuộc đấu tranh giành quyền lực<br>                        国家権力 Quyền lực quốc gia<br><br>↔️（類）Các từ liên quan: 権限 Quyền hạn (quyền lực được giới hạn trong phạm vi nhất định)<br><br>📎（対）Các từ trái nghĩa:',
+    isReading: false
+  },
+  {
+    number: 29,
+    question: 'Quyền uy đi kèm với sự tôn trọng, uy tín',
+    options: ['意図', '原則', '権威', '活気'],
+    answer: '3',
+    detail: '🔴 権威（けんい）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 権（けん）＝ quyền lực, thẩm quyền<br>  • 威（い）＝ uy nghi, oai phong<br>- Nghĩa đen: Quyền uy, sức mạnh từ địa vị hoặc năng lực được công nhận.<br>- Nghĩa Hán Việt: Quyền uy<br>- Ý nghĩa: Sức mạnh hoặc ảnh hưởng xuất phát từ địa vị, chức vụ, năng lực hoặc kiến thức được mọi người công nhận và tôn trọng, có khả năng chi phối người khác.<br>  → Thường chỉ sự tôn trọng và tin tưởng dựa trên năng lực thực tế hoặc địa vị chính thức.<br><br>💬 Ví dụ:<br>1. 彼はこの分野の権威として知られている。<br>　→ Ông ấy được biết đến như một chuyên gia có uy tín trong lĩnh vực này.<br><br>2. 親の権威を借りて威張るのはよくない。<br>　→ Việc dựa vào uy quyền của bố mẹ để ra oai là không tốt.<br><br>3. その理論は学術的な権威を持っている。<br>　→ Lý thuyết đó có uy tín trong học thuật.<br><br>🧠 Cách nhớ:<br>- Ghép chữ 権 (quyền lực) và 威 (uy nghi) → "quyền uy", tức là sức mạnh và sự tôn trọng đi kèm với quyền lực.<br>- Liên tưởng đến một người có chức vụ cao (quyền) và phong thái đáng kính (uy).<br><br>✨（連）Các từ kết nối:<br><br>➕（合）Các từ kết hợp: 権威者 Nguời có quyền uy<br><br>↔️（類）Các từ liên quan: 権勢 Quyền lực đi kèm với sức mạnh, uy thế, khả năng chi phối người khác<br>                          権威を笠に着る(かさにきる)“Mặc cái nón của uy quyền” → dùng uy quyền của mình để áp chế, ra oai, hoặc hành xử tùy tiện<br><br>📎（対）Các từ trái nghĩa:',
+    isReading: false
+  },
+  {
+    number: 30,
+    question: 'Ép buộc, áp lực, sức ép (tạo áp lực hoặc ép buộc ai đó, hoặc tình trạng bị áp lực)',
+    options: ['圧迫', '調和', '抗議', '強制'],
+    answer: '1',
+    detail: '🔴 圧迫（あっぱく）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 圧（あつ）＝ áp lực, đè nén<br>  • 迫（はく）＝ thúc ép, bức bách<br>- Nghĩa đen: Dùng sức mạnh để đè nén, thúc ép.<br>- Nghĩa Hán Việt: Áp bách<br>- Ý nghĩa: Hành động dùng sức mạnh hoặc uy quyền để đè nén, kiềm chế, tạo ra cảm giác khó chịu, ngột ngạt.<br>  → Thường dùng để chỉ sự đè nén về thể chất, tinh thần, hoặc trong các mối quan hệ xã hội, quyền lực.<br><br>💬 Ví dụ:<br>1. 周囲からの圧迫を感じる。<br>　→ Cảm thấy áp lực từ xung quanh.<br><br>2. 彼は圧迫的な態度で話した。<br>　→ Anh ấy đã nói chuyện với thái độ áp đảo.<br><br>3. 胸が圧迫されるような痛みがあった。<br>　→ Có một cơn đau như bị đè nén ở ngực.<br><br>🧠 Cách nhớ:<br>- Ghép hai chữ Hán: "Áp" (圧 - áp lực) + "Bách" (迫 - thúc bách) = "Áp bách" (圧迫 - đè nén, thúc ép).<br>- Liên tưởng đến việc bị "áp" (đè) và "bách" (ép) khiến không thể thở được.<br><br>✨（連）Các từ kết nối: <br><br>➕（合）Các từ kết hợp: 圧迫感 Cảm giác ngột ngạt<br><br>↔️（類）Các từ liên quan: 抑圧 (よくあつ)  Hành động ép buộc hoặc kìm nén ai đó, thường là về tinh thần, quyền tự do hoặc cảm xúc<br><br>📎（対）Các từ trái nghĩa:',
+    isReading: false
+  },
+  {
+    number: 31,
+    question: 'Cưỡng chế, ép buộc',
+    options: ['適応', '意図', '強制', '権威'],
+    answer: '3',
+    detail: '🔴 強制（きょうせい）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 強（きょう）＝ mạnh, cưỡng<br>  • 制（せい）＝ chế, kiểm soát<br>- Nghĩa đen: Sự kiểm soát mạnh mẽ, bắt buộc.<br>- Nghĩa Hán Việt: Cưỡng chế<br>- Ý nghĩa: Hành động bắt buộc ai đó làm hoặc không làm điều gì đó, thường bằng quyền lực hoặc luật lệ.<br>  → Mang tính áp đặt, không tự nguyện.<br><br>💬 Ví dụ:<br>1. 法律で強制される義務がある。<br>　→ Có nghĩa vụ bị bắt buộc bởi luật pháp.<br><br>2. その契約には強制力がある。<br>　→ Hợp đồng đó có tính chất bắt buộc (tính cưỡng chế).<br><br>3. 彼は強制的に病院へ連れて行かれた。<br>　→ Anh ấy bị đưa đến bệnh viện một cách cưỡng ép.<br><br>🧠 Cách nhớ:<br>- Ghép 強 (mạnh, cưỡng) + 制 (chế ngự, kiểm soát) → "Kiểm soát một cách mạnh mẽ" = Cưỡng chế, bắt buộc.<br>- Liên tưởng đến cảnh sát (quyền lực) "chế" ngự, "cưỡng" bức tội phạm phải tuân theo.<br><br>✨（連）Các từ kết nối:<br><br>➕（合）Các từ kết hợp: 強制的な Một cách cưỡng ép<br>                        強制送還 (そうかん) Trục xuất, cưỡng chế hồi hương (thường dùng trong luật di trú)<br>                        強制労働 Lao động cưỡng bức, lao động bắt buộc<br><br>↔️（類）Các từ liên quan: 強要 Cưỡng ép, ép buộc, bắt buộc ai đó làm điều gì (thường bằng đe dọa hoặc uy lực)<br>                          強いる (しいる) Ép buộc ai làm việc gì, người bị ép thường không muốn<br><br>📎（対）Các từ trái nghĩa:',
+    isReading: false
+  },
+  {
+    number: 32,
+    question: 'Việc thiết lập hoặc thực hiện các quy định để kiểm soát, hạn chế hành vi, hoạt động',
+    options: ['活気', '規制', '革新', '強制'],
+    answer: '2',
+    detail: '🔴 規制（きせい）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 規（き）＝ quy tắc, tiêu chuẩn<br>  • 制（せい）＝ chế độ, kiểm soát<br>- Nghĩa đen: Sự kiểm soát bằng quy tắc.<br>- Nghĩa Hán Việt: Quy chế.<br>- Ý nghĩa: Sự hạn chế, kiểm soát hoặc quy định được đặt ra bởi luật pháp, quy tắc hoặc chính quyền.<br>  → Chỉ các quy tắc, hạn chế được thiết lập để kiểm soát, quản lý một hoạt động, hành vi nào đó.<br><br>💬 Ví dụ:<br>1. この地域では建築の規制が厳しい。<br>　→ Ở khu vực này, quy định về xây dựng rất nghiêm ngặt.<br><br>2. 政府は新しい安全規制を導入した。<br>　→ Chính phủ đã đưa ra quy định an toàn mới.<br><br>3. インターネット上のコンテンツに規制をかけるべきだという意見もある。<br>　→ Cũng có ý kiến cho rằng nên áp đặt kiểm soát đối với nội dung trên internet.<br><br>🧠 Cách nhớ:<br>- "Quy" (規) là quy tắc, "chế" (制) là chế ngự, kiểm soát. Ghép lại là "quy chế" - dùng quy tắc để chế ngự, kiểm soát.<br>- Liên tưởng đến biển báo giao thông (交通規制) - đó là những "quy định" để "kiểm soát" việc đi lại.<br><br>✨（連）Các từ kết nối: 規制がある・無い Có/không có quy định, kiểm soát<br>                        規制を強める・緩める (ゆるめる) Siết chặt, buông lỏng kiểm soát<br>                        規制を敷く・解く・解除 Áp đặt, bãi bỏ kiểm soát<br><br>➕（合）Các từ kết hợp: 規制緩和 (きせいかんわ) Nới lỏng quy định<br>                        交通規制 Kiểm soát giao thông<br>                        規制解除 Bãi bỏ kiểm soát<br><br>↔️（類）Các từ liên quan: <br><br>📎（対）Các từ trái nghĩa:',
+    isReading: false
+  },
+  {
+    number: 33,
+    question: 'Từ chối, phủ quyết',
+    options: ['向上', '拒否', '中継', '規模'],
+    answer: '2',
+    detail: '🔴 拒否（きょひ）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 拒（きょ）＝ từ chối, cự tuyệt<br>  • 否（ひ）＝ không, phủ định<br>- Nghĩa đen: Từ chối, phủ định.<br>- Nghĩa Hán Việt: Cự phủ.<br>- Ý nghĩa: Hành động từ chối, không chấp nhận một yêu cầu, đề nghị, ý kiến hoặc sự việc nào đó.<br>  → Thể hiện thái độ phản đối, không đồng ý.<br><br>💬 Ví dụ:<br>1. 彼はその申し出をきっぱりと拒否した。<br>　→ Anh ấy đã thẳng thừng từ chối lời đề nghị đó.<br><br>2. 入国を拒否されることもある。<br>　→ Đôi khi việc nhập cảnh cũng bị từ chối.<br><br>3. 面接で何度も拒否された。<br>　→ Tôi đã bị từ chối nhiều lần trong các cuộc phỏng vấn.<br><br>🧠 Cách nhớ:<br>- Ghép nghĩa Hán Việt: "Cự" (chống cự) + "Phủ" (phủ nhận) = chống lại và phủ nhận → từ chối.<br>- Liên tưởng: "KYO HI" (きょひ) nghe như "cự phủ" trong tiếng Việt.<br><br>✨（連）Các từ kết nối:<br><br>➕（合）Các từ kết hợp: 拒否権 Quyền phủ quyết<br>                        拒否反応 Phản ứng từ chối, phản kháng; trong y học còn là phản ứng đào thải<br><br>↔️（類）Các từ liên quan: 拒絶 Sự từ chối, bác bỏ; phản đối hoàn toàn<br><br>📎（対）Các từ trái nghĩa: 承諾 Thừa nhận, chấp nhận',
+    isReading: false
+  },
+  {
+    number: 34,
+    question: 'Đối đầu, đấu lại',
+    options: ['対抗', '拒否', '中継', '向上'],
+    answer: '1',
+    detail: '🔴 対抗（たいこう）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 対（たい）＝ đối diện, đối lập<br>  • 抗（こう）＝ chống lại, kháng cự<br>- Nghĩa đen: Đối đầu và chống lại<br>- Nghĩa Hán Việt: Đối kháng<br>- Ý nghĩa: Hành động đối đầu, cạnh tranh hoặc chống lại một đối thủ, một thế lực hay một tình huống.<br>  → Thể hiện sự cạnh tranh, đối đầu hoặc phản kháng.<br><br>💬 Ví dụ:<br>1. 彼は強力な対抗馬として選挙に立候補した。<br>　→ Anh ấy đã ra ứng cử như một đối thủ cạnh tranh mạnh mẽ.<br><br>2. 新製品は市場のリーダーに対抗するために開発された。<br>　→ Sản phẩm mới được phát triển để cạnh tranh với nhà dẫn đầu thị trường.<br><br>3. チームは優勝候補との対抗戦に勝利した。<br>　→ Đội đã giành chiến thắng trong trận đối đầu với ứng viên vô địch.<br><br>🧠 Cách nhớ:<br>- Ghép hai chữ Hán: "Đối" (đối mặt) + "Kháng" (kháng cự) = Hành động đối mặt và chống lại.<br>- Liên tưởng đến một cuộc thi đấu (対戦 - taisen) nơi hai bên "kháng" cự lẫn nhau.<br><br>✨（連）Các từ kết nối:<br><br>➕（合）Các từ kết hợp: 対抗策 Biện pháp đối phó, phương án phản kháng hoặc chống lại<br>                        対抗馬 (たいこうば) Đối thủ cạnh tranh<br>                        対抗戦 Trận đối đầu<br><br>↔️（類）Các từ liên quan:<br><br>📎（対）Các từ trái nghĩa:',
+    isReading: false
+  },
+  {
+    number: 35,
+    question: 'Phản đối, chống lại',
+    options: ['権力', '活気', '抗議', '適応'],
+    answer: '3',
+    detail: '🔴 抗議（こうぎ）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 抗（こう）＝ chống lại, phản kháng<br>  • 議（ぎ）＝ thảo luận, ý kiến<br>- Nghĩa đen: Ý kiến chống đối<br>- Nghĩa Hán Việt: Kháng nghị<br>- Ý nghĩa: Hành động bày tỏ sự phản đối, không đồng ý một cách chính thức hoặc công khai đối với một hành động, quyết định, tình huống nào đó.<br>  → Thường được thực hiện bằng văn bản, lời nói hoặc hành động tập thể.<br><br>💬 Ví dụ:<br>1. 住民が工事の騒音について市に抗議した。<br>　→ Cư dân đã phản đối với thành phố về tiếng ồn công trường.<br><br>2. その不当な決定に対して、強い抗議の声が上がった。<br>　→ Đã có tiếng nói phản đối mạnh mẽ đối với quyết định bất công đó.<br><br>3. 抗議文を送付して、公式に意見を表明した。<br>　→ Đã gửi văn bản phản đối để chính thức bày tỏ ý kiến.<br><br>🧠 Cách nhớ:<br>- Ghép nghĩa Hán Việt: "Kháng" (chống lại) + "Nghị" (bàn bạc, ý kiến) = Ý kiến chống đối.<br>- Liên tưởng: "Công ty" (こうぎ) nhận nhiều "phản đối" (抗議) từ khách hàng.<br><br>✨（連）Các từ kết nối: 抗議を申し入れる Đưa ra phản đối, chính thức gửi kiến nghị, trình bày sự phản kháng<br><br>➕（合）Các từ kết hợp: 抗議集会 Cuộc tập hợp của nhiều người để bày tỏ sự phản đối hoặc kiến nghị<br>                        抗議デモ Cuộc biểu tình phản đối<br><br>↔️（類）Các từ liên quan: 抗議の声を上げる Lên tiếng phản đối, bày tỏ sự bất đồng hoặc phản kháng<br><br>📎（対）Các từ trái nghĩa:',
+    isReading: false
+  },
+  {
+    number: 36,
+    question: 'Cải cách',
+    options: ['中継', '経過', '権威', '革新'],
+    answer: '4',
+    detail: '🔴 革新（かくしん）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 革（かく）＝ thay đổi, cải cách<br>  • 新（しん）＝ mới<br>- Nghĩa đen: Thay đổi để trở nên mới mẻ.<br>- Nghĩa Hán Việt: Cách tân<br>- Ý nghĩa: Sự đổi mới, cải cách mang tính sáng tạo, tạo ra những thay đổi lớn và tích cực.<br>  → Nhấn mạnh sự mới mẻ, sáng tạo, cải thiện hiệu quả hoặc chất lượng.<br><br>💬 Ví dụ:<br>1. この会社は技術革新に力を入れている。<br>　→ Công ty này đang tập trung sức lực vào cải cách kỹ thuật.<br><br>2. 社会を革新するようなアイデアが必要だ。<br>　→ Cần những ý tưởng có thể cải cách xã hội.<br><br>3. 彼の考え方は本当に革新的だ。<br>　→ Cách suy nghĩ của anh ấy thực sự mang tính cách tân.<br><br>🧠 Cách nhớ:<br>- "革" là da thuộc, từ da cũ thành vật liệu mới → "thay đổi, cải tạo".<br>- "新" là mới. Ghép lại: "Cải tạo để trở nên mới mẻ" → "cách tân, đổi mới".<br><br>✨（連）Các từ kết nối: <br><br>➕（合）Các từ kết hợp: 革新的な Mang tính cải cách<br>                        革新政党 (かくしんせいとう) Chính đảng cải cách<br>                        技術革新 Cải cách về kỹ thuật<br><br>↔️（類）Các từ liên quan: 改革 Cải cách, sửa đổi hệ thống / tổ chức / chính sách (Nhấn mạnh thay đổi từ bên trong, cải thiện cấu trúc hiện có)<br>                          革新 Nhấn mạnh mới mẻ, sáng tạo, cải thiện hiệu quả hoặc chất lượng<br><br>📎（対）Các từ trái nghĩa: 保守 Bảo thủ, giữ gìn truyền thống, duy trì hiện trạng',
+    isReading: false
+  },
+  {
+    number: 37,
+    question: 'Nguyên tắc',
+    options: ['適応', '原則', '権威', '革新'],
+    answer: '2',
+    detail: '🔴 原則（げんそく）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 原（げん）＝ nguồn gốc, nguyên thủy<br>  • 則（そく）＝ quy tắc, luật lệ<br>- Nghĩa đen: Quy tắc gốc, quy tắc cơ bản.<br>- Nghĩa Hán Việt: Nguyên tắc.<br>- Ý nghĩa: Quy tắc cơ bản, tổng quát, dùng làm hướng dẫn hành vi hoặc quyết định, có thể linh hoạt áp dụng.<br>  → Khác với "規則" (quy tắc cụ thể, cứng nhắc) và "法則" (định luật tự nhiên, khách quan).<br><br>💬 Ví dụ:<br>1. 原則として、このルールに従ってください。<br>　→ Về nguyên tắc, hãy tuân theo quy tắc này.<br><br>2. 彼は原則を守る人だ。<br>　→ Anh ấy là người tuân thủ nguyên tắc.<br><br>3. 原則は守るべきだが、例外もある。<br>　→ Nguyên tắc thì nên tuân theo, nhưng cũng có ngoại lệ.<br><br>🧠 Cách nhớ:<br>- "原" (nguồn gốc) + "則" (quy tắc) = quy tắc gốc, quy tắc cơ bản.<br>- Liên tưởng: Nguyên tắc là thứ cơ bản nhất, làm nền tảng cho các quy tắc khác.<br><br>✨（連）Các từ kết nối: 原則として Về nguyên tắc<br><br>➕（合）Các từ kết hợp: 原則的な Mang tính nguyên tắc<br><br>↔️（類）Các từ liên quan: 法則 Định luật, quy luật (Quy luật tự nhiên hoặc khoa học, mang tính chung, khách quan, không thể thay đổi)<br>                          規則 Quy tắc, nội quy (Các quy tắc do con người đặt ra để quản lý hành vi trong tổ chức, lớp học, công ty, trò chơi…)<br>                          原則 Nguyên tắc, phương châm cơ bản (Quy tắc cơ bản, tổng quát, dùng làm hướng dẫn hành vi hoặc quyết định, có thể linh hoạt áp dụng)<br><br>📎（対）Các từ trái nghĩa:',
+    isReading: false
+  },
+  {
+    number: 38,
+    question: 'Trải qua, trôi qua, quá trình',
+    options: ['規模', '経過', '権威', '向上'],
+    answer: '2',
+    detail: '🔴 経過（けいか）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 経（けい）＝ trải qua, kinh qua<br>  • 過（か）＝ quá, vượt qua<br>- Nghĩa đen: Sự trôi qua, sự diễn biến của thời gian hoặc sự việc.<br>- Nghĩa Hán Việt: Kinh quá<br>- Ý nghĩa: Quá trình, diễn biến, sự tiến triển của một sự việc theo thời gian.<br>  → Chỉ sự thay đổi hoặc tiến triển từ trạng thái này sang trạng thái khác.<br><br>💬 Ví dụ:<br>1. 時間の経過とともに傷は癒えた。<br>　→ Vết thương lành lại theo thời gian trôi qua.<br><br>2. 事件の経過を詳しく報告する。<br>　→ Báo cáo chi tiết diễn biến của vụ việc.<br><br>3. 治療の経過は良好だ。<br>　→ Diễn biến của quá trình điều trị rất tốt.<br><br>🧠 Cách nhớ:<br>- Ghép nghĩa Hán Việt "Kinh" (trải qua) và "Quá" (vượt qua) → "Trải qua" một quá trình.<br>- Liên tưởng đến đồng hồ (thời gian) và một con đường (sự việc) đang diễn ra.<br><br>✨（連）Các từ kết nối:<br><br>➕（合）Các từ kết hợp: 途中経過　Diễn biến trong quá trình<br><br>↔️（類）Các từ liên quan:<br><br>📎（対）Các từ trái nghĩa:',
+    isReading: false
+  },
+  {
+    number: 39,
+    question: 'Trực tiếp, truyền hình trực tiếp',
+    options: ['勝利', '中継', '革新', '規制'],
+    answer: '2',
+    detail: '🔴 中継（ちゅうけい）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 中（ちゅう）＝ ở giữa, bên trong<br>  • 継（けい）＝ tiếp nối, kế thừa<br>- Nghĩa đen: Sự tiếp nối ở giữa, sự chuyển tiếp trung gian.<br>- Nghĩa Hán Việt: Trung kế<br>- Ý nghĩa: Chỉ việc truyền tải, chuyển tiếp thông tin, tín hiệu (như hình ảnh, âm thanh) từ nơi này đến nơi khác, thường thông qua một trạm trung gian.<br>  → Thường được sử dụng trong lĩnh vực truyền hình, phát thanh, viễn thông để chỉ việc phát sóng trực tiếp hoặc truyền dẫn tín hiệu.<br><br>💬 Ví dụ:<br>1. オリンピックの試合を中継する。<br>　→ Truyền hình trực tiếp trận đấu Olympic.<br><br>2. 衛星を使って海外のニュースを中継した。<br>　→ Đã truyền dẫn tin tức từ nước ngoài bằng vệ tinh.<br><br>3. この番組は全国に中継されます。<br>　→ Chương trình này sẽ được phát sóng trực tiếp trên toàn quốc.<br><br>🧠 Cách nhớ:<br>- Ghép nghĩa Hán Việt "Trung" (ở giữa) và "Kế" (kế tiếp, nối tiếp) → việc tiếp nối ở khoảng giữa, như một trạm trung chuyển tín hiệu.<br>- Liên tưởng đến một "trạm trung gian" (中) có nhiệm vụ "tiếp tục truyền" (継) tín hiệu truyền hình đi xa hơn.<br><br>✨（連）Các từ kết nối:<br><br>➕（合）Các từ kết hợp: 中継局 Đài truyền hình<br>                        中継車 Xe truyền hình<br>                        中継放送 Phát trực tiếp<br>                        衛星中継 Truyền dẫn / phát sóng thông qua vệ tinh<br>                        生中継 Phát sóng trực tiếp đến khán giả mà không qua ghi hình hay chỉnh sửa trước<br>                        実況中継 Phát sóng trực tiếp kèm bình luận, tường thuật chi tiết từng hành động<br><br>↔️（類）Các từ liên quan:<br><br>📎（対）Các từ trái nghĩa:',
+    isReading: false
+  },
+  {
+    number: 40,
+    question: 'Quy mô',
+    options: ['適応', '規模', '調和', '活気'],
+    answer: '2',
+    detail: '🔴 規模（きぼ）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 規（き）＝ quy tắc, tiêu chuẩn<br>  • 模（ぼ）＝ mẫu, hình mẫu<br>- Nghĩa đen: Mẫu, khuôn theo quy tắc.<br>- Nghĩa Hán Việt: Quy mô<br>- Ý nghĩa: Quy mô, phạm vi, mức độ lớn nhỏ của một sự việc, tổ chức hay dự án.<br>  → Chỉ phạm vi, độ lớn, tầm cỡ.<br><br>💬 Ví dụ:<br>1. このプロジェクトは規模が大きい。<br>　→ Dự án này có quy mô lớn.<br><br>2. 会社の事業規模を拡大する。<br>　→ Mở rộng quy mô kinh doanh của công ty.<br><br>3. 小規模なイベントを開催する。<br>　→ Tổ chức một sự kiện có quy mô nhỏ.<br><br>🧠 Cách nhớ:<br>- "Quy" (規) là quy tắc, "mô" (模) là mẫu mã → "Quy mô" là khuôn mẫu, phạm vi được xác định bởi các quy tắc.<br>- Liên tưởng đến từ "scale" trong tiếng Anh, cũng chỉ quy mô, tỷ lệ.<br><br>✨（連）Các từ kết nối: 規模を拡大・縮小 Phóng to, thu nhỏ quy mô<br>                        規模を広げる Mở rộng quy mô<br><br>➕（合）Các từ kết hợp: 大規模・小規模 Quy mô lớn, nhỏ<br><br>↔️（類）Các từ liên quan: スケール (scale) Quy mô, tầm cỡ, phạm vi, tỷ lệ<br>                          サイズ Kích cỡ<br><br>📎（対）Các từ trái nghĩa:',
+    isReading: false
+  }
+]; 
+
+      // ==================== TIMER FUNCTIONS ====================
+      let timerInterval;
+      let defaultTime = 20;
+      let remainingTime = defaultTime * 60;
+      let isTimerRunning = false;
+
+      function setTimer() {
+        const inputMinutes = parseInt(
+          document.getElementById("setTimeInput").value,
+        );
+        if (!isNaN(inputMinutes) && inputMinutes > 0) {
+          defaultTime = inputMinutes;
+          remainingTime = defaultTime * 60;
+          updateTimerDisplay();
+        }
+      }
+
+      function toggleTimer() {
+        isTimerRunning ? pauseTimer() : startTimer();
+      }
+
+      function startTimer() {
+        if (isTimerRunning) return;
+        isTimerRunning = true;
+        document.querySelector(".start-btn").classList.add("running");
+        document.querySelector(".start-btn").innerHTML =
+          '<i class="fas fa-pause"></i>';
+        if (timerInterval) clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+          remainingTime--;
+          updateTimerDisplay();
+          if (remainingTime <= 60)
+            document.getElementById("timerDisplay").classList.add("warning");
+          if (remainingTime <= 0) {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            isTimerRunning = false;
+            document.querySelector(".start-btn").classList.remove("running");
+            document.querySelector(".start-btn").innerHTML =
+              '<i class="fas fa-play"></i>';
+            document.getElementById("timeUpAlert").style.display = "block";
+            setTimeout(
+              () =>
+                (document.getElementById("timeUpAlert").style.display = "none"),
+              3000,
+            );
+          }
+        }, 1000);
+      }
+
+      function pauseTimer() {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        isTimerRunning = false;
+        document.querySelector(".start-btn").classList.remove("running");
+        document.querySelector(".start-btn").innerHTML =
+          '<i class="fas fa-play"></i>';
+      }
+
+      function resetTimer() {
+        pauseTimer();
+        remainingTime = defaultTime * 60;
+        updateTimerDisplay();
+        document.getElementById("timerDisplay").classList.remove("warning");
+      }
+
+      function updateTimerDisplay() {
+        const minutes = Math.floor(remainingTime / 60);
+        const seconds = remainingTime % 60;
+        document.getElementById("timerDisplay").textContent =
+          `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+      }
+
+      // ==================== READING TIMER FUNCTIONS ====================
+      function setReadingTimer(idx) {
+        const inputEl = document.getElementById(`readTimeInput-${idx}`);
+        if (!inputEl) return;
+        const minutes = parseInt(inputEl.value);
+        if (isNaN(minutes) || minutes <= 0) {
+          alert("Nhập số phút ≥ 1.");
+          return;
+        }
+        readingTimers[idx] = {
+          remaining: minutes * 60,
+          original: minutes * 60,
+          intervalId: null,
+        };
+        updateReadingTimerDisplay(idx);
+      }
+
+      function startReadingTimer(idx) {
+        if (!readingTimers[idx])
+          readingTimers[idx] = {
+            remaining: 60,
+            original: 60,
+            intervalId: null,
+          };
+        if (readingTimers[idx].intervalId) return;
+        readingTimers[idx].intervalId = setInterval(() => {
+          const timerObj = readingTimers[idx];
+          timerObj.remaining--;
+          updateReadingTimerDisplay(idx);
+          if (timerObj.remaining <= 0) {
+            clearInterval(timerObj.intervalId);
+            timerObj.intervalId = null;
+            showTimeUpAlert(idx);
+          }
+        }, 1000);
+      }
+
+      function resetReadingTimer(idx) {
+        const timerObj = readingTimers[idx];
+        if (timerObj) {
+          if (timerObj.intervalId) {
+            clearInterval(timerObj.intervalId);
+            timerObj.intervalId = null;
+          }
+          timerObj.remaining = timerObj.original || 0;
+          updateReadingTimerDisplay(idx);
+        }
+      }
+
+      function updateReadingTimerDisplay(idx) {
+        const disp = document.getElementById(`readingTimerDisplay-${idx}`);
+        if (!disp) return;
+        const timerObj = readingTimers[idx] || { remaining: 0 };
+        let sec = timerObj.remaining < 0 ? 0 : timerObj.remaining;
+        const m = Math.floor(sec / 60);
+        const s = sec % 60;
+        disp.textContent = `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+      }
+
+      function showTimeUpAlert(idx) {
+        const readingBlock = document.querySelector(
+          `.reading-comprehension[data-index='${idx}']`,
+        );
+        if (!readingBlock) return;
+        const readingLabel = readingBlock.querySelector(".reading-label");
+        const readingName = readingLabel
+          ? readingLabel.textContent.trim()
+          : `Đọc hiểu ${idx + 1}`;
+        const alertDiv = document.createElement("div");
+        alertDiv.innerHTML = `⏰ Hết thời gian của <strong>${readingName}</strong> rồi!`;
+        alertDiv.style.cssText = `position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #d32f2f; color: white; padding: 20px 40px; border-radius: 5px; font-size: 24px; z-index: 100000; box-shadow: 0 4px 8px rgba(0,0,0,0.2);`;
+        document.body.appendChild(alertDiv);
+        setTimeout(() => alertDiv.remove(), 3000);
+      }
+
+      // ==================== HIGHLIGHT FUNCTIONS ====================
+      function highlightSelection(idx, color) {
+        const selection = window.getSelection();
+        const range =
+          savedRanges[idx] ||
+          (selection.rangeCount > 0
+            ? selection.getRangeAt(0).cloneRange()
+            : null);
+        if (!range || range.collapsed) {
+          alert(
+            "Vui lòng bôi đen văn bản trong phần đọc hiểu trước khi đổi màu.",
+          );
+          return;
+        }
+        const readingBlock = document.querySelector(
+          `.reading-comprehension[data-index="${idx}"]`,
+        );
+        if (
+          !readingBlock ||
+          !readingBlock.contains(range.commonAncestorContainer)
+        ) {
+          alert("Vui lòng chọn văn bản trong phần đọc hiểu tương ứng.");
+          return;
+        }
+        const fragment = range.extractContents();
+        const span = document.createElement("span");
+        span.style.color = color;
+        span.style.fontWeight = "bold";
+        span.appendChild(fragment);
+        range.insertNode(span);
+        savedRanges[idx] = null;
+        selection.removeAllRanges();
+      }
+
+      function removeHighlights(idx) {
+        const readingBlock = document.querySelector(
+          `.reading-comprehension[data-index="${idx}"]`,
+        );
+        if (!readingBlock) return;
+        const highlightedSpans = readingBlock.querySelectorAll(
+          'span[style*="color:"]',
+        );
+        highlightedSpans.forEach((span) => {
+          const content = document.createDocumentFragment();
+          while (span.firstChild) content.appendChild(span.firstChild);
+          span.parentNode.insertBefore(content, span);
+          span.parentNode.removeChild(span);
+        });
+      }
+
+      function findAncestor(el, fn) {
+        while (el) {
+          if (fn(el)) return el;
+          el = el.parentNode;
+        }
+        return null;
+      }
+
+      // Save selection for highlight
+      document.addEventListener("mouseup", function (e) {
+        const sel = window.getSelection();
+        if (sel.isCollapsed) return;
+        const range = sel.getRangeAt(0);
+        const readingBlock = findAncestor(
+          range.commonAncestorContainer,
+          (el) =>
+            el.classList && el.classList.contains("reading-comprehension"),
+        );
+        if (readingBlock) {
+          const idx = parseInt(readingBlock.getAttribute("data-index"));
+          savedRanges[idx] = range.cloneRange();
+        }
+      });
+
+      // ==================== RENDER QUIZ ====================
+      function renderQuiz() {
+        const form = document.getElementById("quizForm");
+        if (!form) return;
+        form.innerHTML = "";
+        readingComprehensionCount = 0;
+
+        quizData.forEach((q, index) => {
+          const div = document.createElement("div");
+          div.classList.add("question-block");
+
+          if (q.isReading) {
+            readingComprehensionCount++;
+            let subQuestionsHtml = "";
+            if (q.subQuestions && q.subQuestions.length > 0) {
+              subQuestionsHtml = q.subQuestions
+                .map(
+                  (subQ, subIndex) => `
+              <div class="sub-question-container">
+                <div class="sub-question-box">
+                  <p><strong>${subQ.number}.</strong> ${subQ.subQuestion} <span class="sub-question-key">[key: q${index}_${subIndex}]</span></p>
+                  <div class="sub-question-options">
+                    ${subQ.options
+                      .map(
+                        (opt, optIndex) => `
+                      <label class="answer-option">
+                        <input type="radio" name="q${index}_${subIndex}" value="${optIndex + 1}">
+                        ${opt}
+                      </label>
+                    `,
+                      )
+                      .join("")}
+                  </div>
+                </div>
+              </div>
+            `,
+                )
+                .join("");
+            }
+
+            div.innerHTML = `
+            <div class="reading-comprehension" data-index="${index}">
+              <div class="reading-title">
+                <span class="reading-label">ĐỌC HIỂU ${readingComprehensionCount}</span>
+              </div>
+              <div class="highlight-controls">
+                <div class="highlight-btn red" onclick="highlightSelection(${index}, '#ff3333'); event.preventDefault();" title="Đỏ"></div>
+                <div class="highlight-btn blue" onclick="highlightSelection(${index}, '#00a8ff'); event.preventDefault();" title="Xanh"></div>
+                <div class="highlight-btn purple" onclick="highlightSelection(${index}, '#aa00ff'); event.preventDefault();" title="Tím"></div>
+                <div class="highlight-btn black" onclick="highlightSelection(${index}, '#000000'); event.preventDefault();" title="Đen"></div>
+                <div class="highlight-btn remove-btn" onclick="removeHighlights(${index}); event.preventDefault();" title="Xóa highlight"><i class="fas fa-times"></i></div>
+              </div>
+              <div class="reading-timer-container" data-timer-index="${index}">
+                <input type="number" class="reading-timer-input" id="readTimeInput-${index}" placeholder="1" min="1" max="120" value="5">
+                <button type="button" class="reading-timer-btn" onclick="setReadingTimer(${index}); event.preventDefault();"><i class="fas fa-clock"></i> Đặt</button>
+                <button type="button" class="reading-timer-btn" onclick="startReadingTimer(${index}); event.preventDefault();"><i class="fas fa-play"></i></button>
+                <button type="button" class="reading-timer-btn" onclick="resetReadingTimer(${index}); event.preventDefault();"><i class="fas fa-undo"></i></button>
+                <span class="reading-timer-display" id="readingTimerDisplay-${index}">00:00</span>
+              </div>
+              <div class="reading-content">
+                <p><strong>${q.question}</strong></p>
+                <p>${q.content}</p>
+              </div>
+              ${subQuestionsHtml}
+            </div>
+          `;
+            if (q.subQuestions) {
+              q.subQuestions.forEach((subQ, subIndex) => {
+                if (!window.quizAnswers) window.quizAnswers = {};
+                window.quizAnswers[`q${index}_${subIndex}`] = subQ.answer;
+              });
+            }
+          } else {
+            div.innerHTML = `
+            <div class="question-number"><span style="background: linear-gradient(135deg, var(--primary-glow), var(--secondary-glow)); color: #0a0e17; padding: 5px 12px; border-radius: 20px; font-size: 16px;">Câu ${q.number}</span></div>
+            <p class="question-text">${q.question}</p>
+          `;
+            q.options.forEach((opt, i) => {
+              const label = document.createElement("label");
+              label.classList.add("answer-option");
+              label.innerHTML = `<input type="radio" name="q${index}" value="${i + 1}"> ${opt}`;
+              div.appendChild(label);
+            });
+            const detailBtn = document.createElement("button");
+            detailBtn.classList.add("detail-btn");
+            detailBtn.innerHTML =
+              '<i class="fas fa-info-circle"></i> Xem chi tiết';
+            detailBtn.addEventListener("click", (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              showQuestionDetail(index);
+            });
+            div.appendChild(detailBtn);
+            if (!window.quizAnswers) window.quizAnswers = {};
+            window.quizAnswers[`q${index}`] = q.answer;
+          }
+          form.appendChild(div);
+        });
+      }
+
+      // ==================== SIDEBAR TOGGLE ====================
+      function toggleSidebar(side) {
+        const panel = document.getElementById(`${side}SidebarPanel`);
+        const floatingBtn = document.getElementById(`${side}FloatingBtn`);
+        const wrapper = document.getElementById("mainContentWrapper");
+        const isActive = panel.classList.contains("active");
+        if (!isActive) {
+          panel.classList.add("active");
+          floatingBtn.classList.add("hidden");
+          if (side === "left") wrapper.classList.add("left-expanded");
+          else wrapper.classList.add("right-expanded");
+        } else {
+          panel.classList.remove("active");
+          floatingBtn.classList.remove("hidden");
+          if (side === "left") wrapper.classList.remove("left-expanded");
+          else wrapper.classList.remove("right-expanded");
+        }
+        localStorage.setItem(`${side}SidebarActive`, !isActive);
+      }
+
+      function forceCloseSidebar(side) {
+        const panel = document.getElementById(`${side}SidebarPanel`);
+        const floatingBtn = document.getElementById(`${side}FloatingBtn`);
+        const wrapper = document.getElementById("mainContentWrapper");
+        panel.classList.remove("active");
+        floatingBtn.classList.remove("hidden");
+        if (side === "left") wrapper.classList.remove("left-expanded");
+        else wrapper.classList.remove("right-expanded");
+        localStorage.setItem(`${side}SidebarActive`, "false");
+      }
+      // ==================== FIREWORKS EFFECT ====================
+      function launchFireworks() {
+        // Tạo container nếu chưa có
+        let container = document.querySelector(".fireworks-container");
+        if (!container) {
+          container = document.createElement("div");
+          container.className = "fireworks-container";
+          document.body.appendChild(container);
+        }
+
+        // Số lượng pháo hoa
+        const particleCount = 150;
+
+        for (let i = 0; i < particleCount; i++) {
+          setTimeout(() => {
+            createFireworkParticle(container);
+          }, i * 20); // Mỗi hạt cách nhau 20ms
+        }
+
+        // Thêm confetti rơi
+        for (let i = 0; i < 50; i++) {
+          setTimeout(() => {
+            createConfetti();
+          }, i * 30);
+        }
+
+        // Tự động xóa container sau 5 giây
+        setTimeout(() => {
+          if (container) container.remove();
+        }, 5000);
+      }
+
+      function createFireworkParticle(container) {
+        const particle = document.createElement("div");
+        particle.className = "firework-particle";
+
+        // Màu sắc ngẫu nhiên rực rỡ
+        const colors = [
+          "#ff3333",
+          "#ff9933",
+          "#ffff33",
+          "#33ff33",
+          "#33ffff",
+          "#3366ff",
+          "#9933ff",
+          "#ff33ff",
+          "#ff0066",
+          "#ff6600",
+          "#ffcc00",
+          "#00ffcc",
+        ];
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        particle.style.backgroundColor = color;
+        particle.style.boxShadow = `0 0 15px ${color}`;
+
+        // Vị trí trung tâm màn hình
+        const x = window.innerWidth / 2 + (Math.random() - 0.5) * 300;
+        const y = window.innerHeight / 2 + (Math.random() - 0.5) * 200;
+
+        particle.style.left = x + "px";
+        particle.style.top = y + "px";
+
+        // Hướng bay ngẫu nhiên
+        const tx = (Math.random() - 0.5) * 500;
+        const ty = (Math.random() - 0.5) * 500;
+
+        particle.style.setProperty("--tx", tx + "px");
+        particle.style.setProperty("--ty", ty + "px");
+
+        container.appendChild(particle);
+
+        // Tự xóa sau khi animation kết thúc
+        setTimeout(() => particle.remove(), 1500);
+      }
+
+      function createConfetti() {
+        const confetti = document.createElement("div");
+        confetti.className = "confetti";
+
+        // Màu sắc ngẫu nhiên
+        const colors = [
+          "#f00",
+          "#0f0",
+          "#00f",
+          "#ff0",
+          "#f0f",
+          "#0ff",
+          "#ff8800",
+        ];
+        confetti.style.backgroundColor =
+          colors[Math.floor(Math.random() * colors.length)];
+
+        // Hình dạng ngẫu nhiên (vuông, tròn, chữ nhật)
+        const shapes = ["50%", "0", "20%"];
+        confetti.style.borderRadius =
+          shapes[Math.floor(Math.random() * shapes.length)];
+
+        // Vị trí ngẫu nhiên
+        confetti.style.left = Math.random() * 100 + "%";
+
+        // Kích thước ngẫu nhiên
+        const size = 5 + Math.random() * 10;
+        confetti.style.width = size + "px";
+        confetti.style.height = size + "px";
+
+        // Thời gian rơi ngẫu nhiên
+        const duration = 3 + Math.random() * 4;
+        confetti.style.animation = `confetti-fall ${duration}s linear forwards`;
+
+        document.body.appendChild(confetti);
+
+        // Tự xóa sau khi rơi xong
+        setTimeout(() => confetti.remove(), duration * 1000);
+      }
+
+      // Thêm hiệu ứng âm thanh (tùy chọn)
+      function playVictorySound() {
+        try {
+          const audioContext = new (
+            window.AudioContext || window.webkitAudioContext
+          )();
+
+          // Tạo âm thanh đơn giản
+          const osc = audioContext.createOscillator();
+          const gainNode = audioContext.createGain();
+
+          osc.type = "sine";
+          osc.frequency.value = 523.25; // C5
+
+          gainNode.gain.value = 0.1;
+          gainNode.gain.exponentialRampToValueAtTime(
+            0.01,
+            audioContext.currentTime + 2,
+          );
+
+          osc.connect(gainNode);
+          gainNode.connect(audioContext.destination);
+
+          osc.start();
+          osc.stop(audioContext.currentTime + 2);
+        } catch (e) {
+          console.log("Không thể phát âm thanh", e);
+        }
+      }
+
+      // ==================== QUIZ FUNCTIONS ====================
+      function submitQuiz() {
+        const form = document.getElementById("quizForm");
+        let correctAnswers = 0;
+        let totalQuestions = 0;
+
+        quizData.forEach((q) => {
+          if (q.isReading && q.subQuestions)
+            totalQuestions += q.subQuestions.length;
+          else totalQuestions++;
+        });
+
+        quizData.forEach((q, index) => {
+          if (q.isReading && q.subQuestions) {
+            q.subQuestions.forEach((subQ, subIndex) => {
+              const name = `q${index}_${subIndex}`;
+              const selected = form.querySelector(
+                `input[name='${name}']:checked`,
+              );
+              const correct =
+                (window.answers && window.answers[name]) ||
+                (window.quizAnswers && window.quizAnswers[name]);
+              if (selected && selected.value === correct) {
+                correctAnswers++;
+                selected.parentElement.innerHTML +=
+                  ' <span class="correct-answer">✅ Đúng</span>';
+              } else if (selected) {
+                selected.parentElement.innerHTML +=
+                  ' <span class="wrong-answer">❌ Sai</span>';
+                saveWrongAnswer(
+                  name,
+                  subQ.subQuestion,
+                  selected.value,
+                  correct,
+                );
+              }
+            });
+          } else {
+            const name = `q${index}`;
+            const selected = form.querySelector(
+              `input[name='${name}']:checked`,
+            );
+            const correct =
+              (window.answers && window.answers[name]) ||
+              (window.quizAnswers && window.quizAnswers[name]);
+            if (selected && selected.value === correct) {
+              correctAnswers++;
+              selected.parentElement.innerHTML +=
+                ' <span class="correct-answer">✅ Đúng</span>';
+            } else if (selected) {
+              selected.parentElement.innerHTML +=
+                ' <span class="wrong-answer">❌ Sai</span>';
+              saveWrongAnswer(name, q.question, selected.value, correct);
+            }
+          }
+        });
+
+        const percentage = Math.round((correctAnswers / totalQuestions) * 100);
+        document.getElementById("popupScore").textContent =
+          `${correctAnswers}/${totalQuestions} (${percentage}%)`;
+        document.getElementById("popupComment").innerHTML =
+          getResultComment(percentage);
+        document.getElementById("resultPopup").style.display = "block";
+        saveQuizHistory(correctAnswers, percentage);
+        document.getElementById("showAnswersBtn").style.display = "flex";
+        form
+          .querySelectorAll("input")
+          .forEach((input) => (input.disabled = true));
+        pauseTimer();
+        // ===== THÊM ĐOẠN NÀY ĐỂ KÍCH HOẠT PHÁO HOA KHI ĐẠT 100% =====
+        if (percentage === 100) {
+          launchFireworks();
+          // Phát âm thanh nếu muốn (cần sự tương tác của user trước đó)
+          // playVictorySound();
+
+          // Thêm hiệu ứng đặc biệt cho popup
+          const popup = document.getElementById("resultPopup");
+          popup.style.animation = "popup-appear 0.3s, glow-pulse 1s infinite";
+
+          // Thêm class đặc biệt
+          popup.classList.add("perfect-score");
+
+          // Tạo thông báo
+          const perfectMsg = document.createElement("div");
+          perfectMsg.style.cssText = `
+      position: fixed;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, gold, orange);
+      color: #000;
+      padding: 20px 40px;
+      border-radius: 50px;
+      font-size: 32px;
+      font-weight: bold;
+      z-index: 200000;
+      animation: bounce 0.5s ease infinite alternate;
+      text-shadow: 2px 2px 4px rgba(255,255,255,0.5);
+      box-shadow: 0 0 30px gold;
+    `;
+          perfectMsg.innerHTML = "🎉🎆 PERFECT! 100% 🎆🎉";
+          document.body.appendChild(perfectMsg);
+
+          setTimeout(() => perfectMsg.remove(), 4000);
+        }
+      }
+
+      function resetQuiz() {
+        const form = document.getElementById("quizForm");
+        if (form) form.reset();
+        Object.values(readingTimers).forEach((obj) => {
+          if (obj.intervalId) clearInterval(obj.intervalId);
+        });
+        renderQuiz();
+        closeResultPopup();
+        document.getElementById("showAnswersBtn").style.display = "none";
+        document.getElementById("showAnswersBtn").disabled = false;
+        resetTimer();
+      }
+
+      function showCorrectAnswers() {
+        quizData.forEach((q, idx) => {
+          if (q.isReading && q.subQuestions) {
+            q.subQuestions.forEach((subQ, subIdx) => {
+              const name = `q${idx}_${subIdx}`;
+              const correct =
+                (window.answers && window.answers[name]) ||
+                (window.quizAnswers && window.quizAnswers[name]);
+              document
+                .querySelectorAll(`input[name='${name}']`)
+                .forEach((input) => {
+                  const label = input.parentElement;
+                  if (
+                    input.value === correct &&
+                    !label.innerHTML.includes("✅ Đáp án đúng")
+                  ) {
+                    label.innerHTML +=
+                      ' <span class="correct-answer">✅ Đáp án đúng</span>';
+                  }
+                });
+            });
+          } else {
+            const name = `q${idx}`;
+            const correct =
+              (window.answers && window.answers[name]) ||
+              (window.quizAnswers && window.quizAnswers[name]);
+            document
+              .querySelectorAll(`input[name='${name}']`)
+              .forEach((input) => {
+                const label = input.parentElement;
+                if (
+                  input.value === correct &&
+                  !label.innerHTML.includes("✅ Đáp án đúng")
+                ) {
+                  label.innerHTML +=
+                    ' <span class="correct-answer">✅ Đáp án đúng</span>';
+                }
+              });
+          }
+        });
+        document.getElementById("showAnswersBtn").disabled = true;
+      }
+
+      function showQuestionDetail(index) {
+        const question = quizData[index];
+        const detailValue = question.detail || "Không có chi tiết bổ sung";
+        const detailPopup = document.createElement("div");
+        detailPopup.className = "detail-popup";
+        detailPopup.style.cssText = `
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0,20,40,0.98);
+  color: white;
+  padding: 30px;
+  border-radius: 20px;
+  border: 2px solid var(--secondary-glow);
+  box-shadow: 0 20px 50px rgba(0,255,204,0.2);
+  z-index: 200000;
+  width: min(720px, 92vw);
+  max-height: 80vh;         /* ✅ GIỚI HẠN CHIỀU CAO */
+  overflow: hidden;         /* ✅ ẨN TRÀN, CUỘN SẼ NẰM Ở VÙNG CON */
+  backdrop-filter: blur(20px);
+`;
+
+        detailPopup.innerHTML = `
+  <div style="position: relative; display: flex; flex-direction: column; height: 100%;">
+    <button onclick="this.parentElement.parentElement.remove()"
+      style="position: absolute; top: -15px; right: -15px; background: #ff3333; color: white; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; font-size: 20px; display: flex; align-items: center; justify-content: center;">
+      ✕
+    </button>
+
+    <h3 style="color: var(--secondary-glow); margin-bottom: 14px; font-family: Orbitron;">
+      <i class="fas fa-info-circle"></i> GIẢI THÍCH
+    </h3>
+
+    <!-- KHUNG CUỘN -->
+    <div class="detail-scroll">
+      <p style="line-height: 1.8; font-size: 16px; margin: 0;">${detailValue}</p>
+    </div>
+  </div>
+`;
+
+        document.body.appendChild(detailPopup);
+      }
+
+      function getResultComment(percentage) {
+        if (percentage >= 90) return "🏆 素晴らしいいいい - Xuất sắc!";
+        if (percentage >= 70) return "🌟 いいね！ - Khá tốt!";
+        if (percentage >= 50) return "📚 いいよー - Cần cố gắng thêm!";
+        return "💪 大丈夫、頑張れ！ - Đừng nản, cố lên!";
+      }
+
+      function saveQuizHistory(score, percentage) {
+        const list = document.getElementById("quizHistory");
+        if (!list) return;
+        const time = new Date().toLocaleTimeString("vi-VN");
+        const li = document.createElement("li");
+        li.innerHTML = `<span><i class="fas fa-clock"></i> ${time}</span><span style="color: var(--secondary-glow);">${score}/${Object.keys(window.quizAnswers || {}).length} (${percentage}%)</span><button onclick="this.parentElement.remove()" style="background: none; border: none; color: #ff6b6b; cursor: pointer;">×</button>`;
+        list.prepend(li);
+      }
+
+      function closeResultPopup() {
+        document.getElementById("resultPopup").style.display = "none";
+      }
+
+      // ==================== WRONG ANSWERS ====================
+      function saveWrongAnswer(
+        questionKey,
+        questionText,
+        userAnswer,
+        correctAnswer,
+      ) {
+        let wrongAnswers = JSON.parse(
+          localStorage.getItem("wrongAnswers") || "[]",
+        );
+        wrongAnswers.push({
+          id: Date.now(),
+          questionKey,
+          questionText,
+          userAnswer,
+          correctAnswer,
+          timestamp: new Date().toLocaleString("vi-VN"),
+        });
+        localStorage.setItem("wrongAnswers", JSON.stringify(wrongAnswers));
+        updateWrongAnswersBadge();
+        displayWrongAnswers();
+      }
+
+      function displayWrongAnswers() {
+        const wrongAnswers = JSON.parse(
+          localStorage.getItem("wrongAnswers") || "[]",
+        );
+        const container = document.getElementById("wrongAnswersList");
+        if (!container) return;
+        if (wrongAnswers.length === 0) {
+          container.innerHTML =
+            '<p style="text-align: center; color: #999; padding: 20px;">🎉 Chưa có câu sai nào!</p>';
+          return;
+        }
+        let html = "";
+        wrongAnswers
+          .sort((a, b) => b.timestamp.localeCompare(a.timestamp))
+          .forEach((item, index) => {
+            html += `
+          <div class="wrong-answer-item">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+              <strong style="color: #ff3366;">#${index + 1}</strong>
+              <button onclick="removeWrongAnswer(${item.id})" style="background: none; border: none; color: #ff3366; cursor: pointer; font-size: 16px;">✕</button>
+            </div>
+            <p style="margin-bottom: 8px; font-size: 14px;">${item.questionText}</p>
+            <div style="display: flex; gap: 15px; font-size: 13px;">
+              <span style="color: #ff6b6b;">❌ ${item.userAnswer}</span>
+              <span style="color: #00ff88;">✅ ${item.correctAnswer}</span>
+              <span style="color: #999;">${item.timestamp}</span>
+            </div>
+          </div>
+        `;
+          });
+        container.innerHTML = html;
+      }
+
+      function updateWrongAnswersBadge() {
+        const wrongAnswers = JSON.parse(
+          localStorage.getItem("wrongAnswers") || "[]",
+        );
+        const badge = document.getElementById("wrongAnswersBadge");
+        if (badge) {
+          badge.textContent = wrongAnswers.length;
+          badge.style.display = wrongAnswers.length > 0 ? "flex" : "none";
+        }
+      }
+
+      function showWrongAnswers() {
+        displayWrongAnswers();
+        const leftPanel = document.getElementById("leftSidebarPanel");
+        const leftFloatingBtn = document.getElementById("leftFloatingBtn");
+        const wrapper = document.getElementById("mainContentWrapper");
+        if (!leftPanel.classList.contains("active")) {
+          leftPanel.classList.add("active");
+          leftFloatingBtn.classList.add("hidden");
+          wrapper.classList.add("left-expanded");
+          localStorage.setItem("leftSidebarActive", "true");
+        }
+      }
+
+      function removeWrongAnswer(id) {
+        let wrongAnswers = JSON.parse(
+          localStorage.getItem("wrongAnswers") || "[]",
+        );
+        wrongAnswers = wrongAnswers.filter((item) => item.id !== id);
+        localStorage.setItem("wrongAnswers", JSON.stringify(wrongAnswers));
+        displayWrongAnswers();
+        updateWrongAnswersBadge();
+      }
+
+      function clearWrongAnswers() {
+        if (confirm("Bạn có chắc muốn xóa tất cả lịch sử câu sai?")) {
+          localStorage.removeItem("wrongAnswers");
+          displayWrongAnswers();
+          updateWrongAnswersBadge();
+        }
+      }
+
+      function practiceWrongAnswers() {
+        const wrongAnswers = JSON.parse(
+          localStorage.getItem("wrongAnswers") || "[]",
+        );
+        if (wrongAnswers.length === 0) {
+          alert("🎉 Chưa có câu sai nào để luyện tập!");
+          return;
+        }
+        alert("🚀 Chức năng luyện tập đang phát triển!");
+      }
+
+      // ==================== CẬP NHẬT ĐÁP ÁN - SỬA THEO YÊU CẦU ====================
+      function findKeyBySubQNumber(number) {
+        for (let i = 0; i < quizData.length; i++) {
+          const q = quizData[i];
+          if (!q.isReading) {
+            if (q.number == number) return `q${i}`;
+          } else if (q.subQuestions) {
+            for (let j = 0; j < q.subQuestions.length; j++) {
+              const subQ = q.subQuestions[j];
+              if (subQ.number == number) return `q${i}_${j}`;
+            }
+          }
+        }
+        return null;
+      }
+
+      function updateAnswer() {
+        let keyOrNumber = document.getElementById("editKey").value.trim();
+        const value = document.getElementById("editValue").value.trim();
+
+        if (!window.answers) window.answers = {};
+
+        // Nếu nhập số, tự động dò key theo subQ.number
+        if (/^\d+(\.\d+)?$/.test(keyOrNumber)) {
+          const mappedKey = findKeyBySubQNumber(keyOrNumber);
+          if (!mappedKey) {
+            alert(`❌ Không tìm thấy câu hỏi số ${keyOrNumber}!`);
+            return;
+          }
+          keyOrNumber = mappedKey;
+        }
+
+        if (keyOrNumber && value) {
+          window.answers[keyOrNumber] = value;
+          localStorage.setItem("customAnswers", JSON.stringify(window.answers));
+          alert(
+            `✅ Đáp án của ${keyOrNumber} đã được cập nhật thành ${value}.`,
+          );
+          document.getElementById("editKey").value = "";
+          document.getElementById("editValue").value = "";
+        } else {
+          alert("❌ Vui lòng nhập đầy đủ thông tin!");
+        }
+      }
+
+      function clearUpdatedAnswers() {
+        const ok = confirm("Bạn có chắc muốn xóa cập nhật đáp án không?");
+        if (!ok) return;
+        localStorage.removeItem("customAnswers");
+        window.answers = {};
+        alert("✅ Đã xóa hết các cập nhật đáp án.");
+      }
+
+      // ==================== DARK MODE ====================
+      function toggleDarkMode() {
+        document.body.classList.toggle("dark");
+        const btn = document.getElementById("darkModeToggleBtn");
+        const isDark = document.body.classList.contains("dark");
+        btn.textContent = isDark ? "☀️" : "🌙";
+        localStorage.setItem("darkMode", isDark ? "1" : "0");
+      }
+
+      function applyDarkMode(isDark) {
+        document.body.classList.toggle("dark", isDark);
+        const btn = document.getElementById("darkModeToggleBtn");
+        if (btn) btn.textContent = isDark ? "☀️" : "🌙";
+      }
+      // ==================== BACK TO TOP ====================
+      function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function updateBackToTopVisibility() {
+        const btn = document.getElementById("backToTopBtn");
+        if (!btn) return;
+        if (window.scrollY > 300) btn.classList.add("show");
+        else btn.classList.remove("show");
+      }
+
+      // ==================== INITIALIZATION ====================
+      window.onload = function () {
+        renderQuiz();
+        updateTimerDisplay();
+        displayWrongAnswers();
+        updateWrongAnswersBadge();
+
+        const savedDarkMode = localStorage.getItem("darkMode");
+        if (savedDarkMode) applyDarkMode(savedDarkMode === "1");
+
+        const leftActive = localStorage.getItem("leftSidebarActive") === "true";
+        const rightActive =
+          localStorage.getItem("rightSidebarActive") === "true";
+        const wrapper = document.getElementById("mainContentWrapper");
+
+        if (leftActive) {
+          document.getElementById("leftSidebarPanel").classList.add("active");
+          document.getElementById("leftFloatingBtn").classList.add("hidden");
+          wrapper.classList.add("left-expanded");
+        }
+        if (rightActive) {
+          document.getElementById("rightSidebarPanel").classList.add("active");
+          document.getElementById("rightFloatingBtn").classList.add("hidden");
+          wrapper.classList.add("right-expanded");
+        }
+      };
+
+      // Scroll effect for timer
+      window.addEventListener("scroll", function () {
+        const timer = document.querySelector(".timer-container");
+        if (timer) {
+          timer.style.opacity = window.scrollY > 100 ? "0.9" : "1";
+          timer.style.transform =
+            window.scrollY > 100 ? "scale(0.98)" : "scale(1)";
+        }
+        updateBackToTopVisibility();
+      });
+
+      // Event listeners
+      document
+        .getElementById("clearAnswersBtn")
+        .addEventListener("click", clearUpdatedAnswers);
+    </script>
+  </body>
+</html>
