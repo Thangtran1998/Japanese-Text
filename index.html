@@ -1606,6 +1606,16 @@
         border-radius: 12px;
         font-size: 11px;
       }
+      /* Khóa scroll ngoài khi mở popup */
+body.modal-open {
+  overflow: hidden;
+}
+
+/* (Tuỳ chọn) mượt hơn trên mobile */
+body.modal-open {
+  touch-action: none;
+}
+
     </style>
   </head>
 
@@ -1694,7 +1704,7 @@
         <main class="main-content">
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
             </h2>
 
             <div class="target-info">
