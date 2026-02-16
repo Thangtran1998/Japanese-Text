@@ -2710,7 +2710,7 @@
               </div>
               <div class="reading-content">
                 <p><strong>${q.question}</strong></p>
-                <p>${q.content}</p>
+                ${q.content ? `<p>${q.content}</p>` : ``}
               </div>
               ${subQuestionsHtml}
             </div>

@@ -1512,6 +1512,191 @@
           opacity: 1;
         }
       }
+      /* ===== MAIN AUDIO PLAYER STYLES ===== */
+      #mainAudioSelect {
+        outline: none;
+        transition: var(--transition-smooth);
+      }
+
+      #mainAudioSelect:hover {
+        border-color: var(--secondary-glow);
+        box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+      }
+
+      #mainAudioSelect option {
+        background: #0a0e17;
+        color: var(--text-primary);
+      }
+
+      #mainPlayPauseBtn {
+        background: linear-gradient(135deg, #00cc66, #00ff88);
+        border: none;
+        border-radius: 5px;
+        color: #0a0e17;
+        padding: 8px 15px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        transition: var(--transition-smooth);
+      }
+
+      #mainPlayPauseBtn:hover {
+        background: linear-gradient(135deg, #00ff88, var(--secondary-glow));
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4);
+      }
+
+      #mainPlayPauseBtn.playing {
+        background: linear-gradient(135deg, #ff3333, #ff6600);
+      }
+
+      #mainVolumeSlider {
+        -webkit-appearance: none;
+        height: 4px;
+        background: linear-gradient(
+          90deg,
+          var(--primary-glow),
+          var(--secondary-glow)
+        );
+        border-radius: 2px;
+        outline: none;
+      }
+
+      #mainVolumeSlider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--secondary-glow);
+        cursor: pointer;
+        border: 2px solid white;
+        box-shadow: 0 0 10px var(--secondary-glow);
+      }
+
+      /* Responsive */
+      @media (max-width: 900px) {
+        .main-quiz-container > div:first-child {
+          flex-direction: column;
+          gap: 15px;
+        }
+
+        .main-quiz-container > div:first-child > div {
+          width: 100%;
+          flex-wrap: wrap;
+        }
+
+        #mainAudioSelect {
+          min-width: 150px;
+        }
+      }
+      /* ===== CUSTOM SEEK BAR STYLES ===== */
+      #mainSeekBar {
+        -webkit-appearance: none;
+        appearance: none;
+        height: 6px;
+        background: linear-gradient(
+          90deg,
+          var(--primary-glow),
+          var(--secondary-glow)
+        );
+        border-radius: 3px;
+        outline: none;
+      }
+
+      #mainSeekBar::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: white;
+        cursor: pointer;
+        border: 2px solid var(--secondary-glow);
+        box-shadow: 0 0 10px var(--secondary-glow);
+        transition: all 0.2s;
+      }
+
+      #mainSeekBar::-webkit-slider-thumb:hover {
+        transform: scale(1.2);
+        box-shadow: 0 0 15px var(--secondary-glow);
+      }
+
+      #mainSeekBar::-moz-range-thumb {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: white;
+        cursor: pointer;
+        border: 2px solid var(--secondary-glow);
+        box-shadow: 0 0 10px var(--secondary-glow);
+        transition: all 0.2s;
+      }
+
+      #mainSeekBar::-moz-range-thumb:hover {
+        transform: scale(1.2);
+        box-shadow: 0 0 15px var(--secondary-glow);
+      }
+
+      /* Speed select styling */
+      #mainSpeedSelect {
+        background: rgba(0, 10, 25, 0.9);
+        color: var(--text-primary);
+        border: 1px solid rgba(0, 150, 255, 0.4);
+        border-radius: 5px;
+        padding: 5px;
+        cursor: pointer;
+        outline: none;
+        transition: all 0.3s;
+      }
+
+      #mainSpeedSelect:hover {
+        border-color: var(--secondary-glow);
+        box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+      }
+
+      #mainSpeedSelect option {
+        background: #0a0e17;
+        color: var(--text-primary);
+      }
+      /* ===== CUSTOM DROPDOWN STYLES ===== */
+      #mainAudioSelect {
+        background: rgba(0, 10, 25, 0.9);
+        color: var(--text-primary);
+        border: 1px solid rgba(0, 150, 255, 0.6);
+        border-radius: 5px;
+        padding: 8px 15px;
+        min-width: 250px;
+        cursor: pointer;
+        outline: none;
+        font-family: monospace;
+        transition: all 0.3s;
+      }
+
+      #mainAudioSelect:hover {
+        border-color: var(--secondary-glow);
+        box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+      }
+
+      #mainAudioSelect option {
+        background: #0a0e17;
+        color: var(--text-primary);
+        padding: 10px;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        #mainAudioSelect {
+          min-width: 100%;
+          margin-bottom: 10px;
+        }
+      }
+      /* Style cho option disabled */
+      #mainAudioSelect option:disabled {
+        color: #ff6666;
+        font-style: italic;
+        background: rgba(255, 50, 50, 0.1);
+      }
     </style>
   </head>
 
@@ -1715,6 +1900,7 @@
     <!-- MAIN CONTENT -->
     <div id="mainContentWrapper" class="main-content-wrapper">
       <div class="main-quiz-container">
+<!-- Không có audio chính -->
         <!-- H2 - SỬA: thêm placeholder cho tên bài test -->
         <h2
           style="
@@ -2100,7 +2286,7 @@
               </div>
               <div class="reading-content">
                 <p><strong>${q.question}</strong></p>
-                <p>${q.content}</p>
+                ${q.content ? `<p>${q.content}</p>` : ``}
               </div>
               ${subQuestionsHtml}
             </div>
@@ -2857,6 +3043,668 @@
       document
         .getElementById("clearAnswersBtn")
         .addEventListener("click", clearUpdatedAnswers);
+      // ==================== MAIN AUDIO PLAYER FUNCTIONS - GIỮ NGUYÊN TRẠNG THÁI BAN ĐẦU THEO EXCEL ====================
+      let mainAudio = null;
+      let isMainAudioPlaying = false;
+      let previousVolume = 1; // Lưu volume trước khi mute
+      let isSeeking = false; // Đang tua thì không cập nhật thanh trượt
+
+      // Sử dụng multiple event listeners để đảm bảo DOM đã sẵn sàng
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", function () {
+          console.log("DOMContentLoaded - Đang khởi tạo audio player...");
+          setTimeout(initAudioPlayer, 100);
+        });
+      } else {
+        console.log("DOM đã sẵn sàng - Đang khởi tạo audio player...");
+        setTimeout(initAudioPlayer, 100);
+      }
+
+      // Hàm khởi tạo chính
+      function getHtmlSelectedOption(selectEl) {
+        // Lấy option có ATTRIBUTE selected trong HTML (không phải property do browser restore)
+        let opt = selectEl.querySelector("option[selected]");
+        if (!opt) {
+          // fallback an toàn: nếu không có, dùng option đang selectedIndex hoặc option đầu
+          opt =
+            selectEl.options[selectEl.selectedIndex] ||
+            selectEl.options[0] ||
+            null;
+        }
+        return opt;
+      }
+
+      function forceBackToHtmlDefault(selectEl) {
+        const htmlSelected = getHtmlSelectedOption(selectEl);
+        if (!htmlSelected) return null;
+
+        // Ép select quay đúng về default theo HTML
+        selectEl.value = htmlSelected.value;
+        return htmlSelected;
+      }
+
+      function disableAudioControls(reasonText) {
+        const btn = document.getElementById("mainPlayPauseBtn");
+        const seekBar = document.getElementById("mainSeekBar");
+
+        if (btn) {
+          btn.disabled = true;
+          btn.style.opacity = "0.5";
+          btn.style.cursor = "not-allowed";
+          btn.title = reasonText ? reasonText : "Không có file audio hợp lệ";
+        }
+
+        if (seekBar) {
+          seekBar.disabled = true;
+          seekBar.style.opacity = "0.5";
+          seekBar.style.cursor = "not-allowed";
+        }
+
+        if (mainAudio) {
+          mainAudio.pause();
+          isMainAudioPlaying = false;
+          mainAudio.removeAttribute("src");
+          while (mainAudio.firstChild)
+            mainAudio.removeChild(mainAudio.firstChild);
+          mainAudio.load();
+        }
+      }
+
+      function loadFromHtmlSelectedOption() {
+        const audioSelect = document.getElementById("mainAudioSelect");
+        if (!audioSelect) return;
+
+        // 1) MỖI LẦN LOAD: ép về option có attribute selected trong HTML
+        const htmlSelected = forceBackToHtmlDefault(audioSelect);
+        if (!htmlSelected) return;
+
+        // 2) JS LUÔN LẤY option đang selected TRONG SELECT để load
+        const opt = audioSelect.options[audioSelect.selectedIndex];
+        const val = opt ? opt.value : "";
+
+        if (val) {
+          changeAudioFile(val);
+        } else {
+          // Trường hợp warning option (disabled + selected) hoặc option trống
+          disableAudioControls(opt ? opt.textContent.trim() : "");
+        }
+
+        // 3) CHỈ restore tốc độ phát (được phép)
+        restorePlaybackSpeed();
+      }
+
+      function initAudioPlayer() {
+        initMainAudio();
+
+        // Load mặc định ngay sau khi init
+        loadFromHtmlSelectedOption();
+      }
+
+      // DOM ready
+      document.addEventListener("DOMContentLoaded", initAudioPlayer);
+
+      // BẮT BUỘC: xử lý back/forward cache + refresh kiểu restore form state
+      window.addEventListener("pageshow", function () {
+        loadFromHtmlSelectedOption();
+      });
+
+      // Hàm load audio mặc định từ selected option
+      function loadDefaultAudio() {
+        console.log("loadDefaultAudio được gọi");
+
+        const audioSelect = document.getElementById("mainAudioSelect");
+        if (!audioSelect) {
+          console.error("Không tìm thấy mainAudioSelect");
+          return;
+        }
+
+        // Log để debug
+        console.log("Số lượng options:", audioSelect.options.length);
+        for (let i = 0; i < audioSelect.options.length; i++) {
+          console.log(
+            `Option ${i}: value="${audioSelect.options[i].value}", selected=${audioSelect.options[i].selected}, text="${audioSelect.options[i].text}"`,
+          );
+        }
+
+        // Lấy option đang được selected trong HTML (do Java code set)
+        const selectedIndex = audioSelect.selectedIndex;
+        console.log("selectedIndex:", selectedIndex);
+
+        if (selectedIndex === -1) {
+          console.log("Không có option nào được selected");
+          return;
+        }
+
+        const selectedOption = audioSelect.options[selectedIndex];
+        console.log("Selected option:", selectedOption);
+
+        if (!selectedOption) {
+          console.log("Không tìm thấy selected option");
+          return;
+        }
+
+        const selectedValue = selectedOption.value;
+        console.log("Selected value:", selectedValue);
+
+        // KHÔNG lưu vào localStorage, chỉ dựa vào selected từ HTML
+        if (selectedValue && selectedValue !== "") {
+          // Có file được chọn (file Excel tồn tại)
+          console.log("Load file mặc định từ Excel:", selectedValue);
+          changeAudioFile(selectedValue);
+        } else {
+          // Không có giá trị (option thông báo đang được selected)
+          console.log("File Excel không tồn tại, hiển thị thông báo");
+
+          // Disable nút play
+          const btn = document.getElementById("mainPlayPauseBtn");
+          if (btn) {
+            btn.disabled = true;
+            btn.style.opacity = "0.5";
+            btn.style.cursor = "not-allowed";
+            btn.title =
+              "Không tìm thấy file audio từ Excel: " +
+              (selectedOption.text || "").replace("⚠️ ", "");
+          }
+
+          // Disable thanh seek bar
+          const seekBar = document.getElementById("mainSeekBar");
+          if (seekBar) {
+            seekBar.disabled = true;
+            seekBar.style.opacity = "0.5";
+            seekBar.style.cursor = "not-allowed";
+          }
+
+          // Reset audio element
+          if (mainAudio) {
+            mainAudio.pause();
+            mainAudio.removeAttribute("src");
+            while (mainAudio.firstChild) {
+              mainAudio.removeChild(mainAudio.firstChild);
+            }
+            mainAudio.load();
+          }
+        }
+
+        // Khôi phục tốc độ phát (giữ nguyên nếu muốn)
+        restorePlaybackSpeed();
+      }
+
+      function initMainAudio() {
+        mainAudio = document.getElementById("mainAudio");
+        if (!mainAudio) {
+          console.error("Không tìm thấy element audio!");
+          return;
+        }
+        console.log("Đã tìm thấy mainAudio");
+
+        // Volume control
+        const volumeSlider = document.getElementById("mainVolumeSlider");
+        if (volumeSlider) {
+          volumeSlider.addEventListener("input", function (e) {
+            if (mainAudio) {
+              const volume = parseFloat(e.target.value);
+              mainAudio.volume = volume;
+              mainAudio.muted = volume === 0;
+              previousVolume = volume > 0 ? volume : previousVolume;
+              updateVolumeIcon();
+              console.log("Volume:", volume);
+            }
+          });
+        }
+
+        // Time update
+        mainAudio.addEventListener("timeupdate", function () {
+          if (!isSeeking) {
+            updateSeekBar();
+          }
+          updateMainAudioTime();
+          updateCurrentTime();
+        });
+
+        // Audio ended
+        mainAudio.addEventListener("ended", function () {
+          console.log("Audio kết thúc");
+          isMainAudioPlaying = false;
+          const btn = document.getElementById("mainPlayPauseBtn");
+          if (btn) {
+            btn.innerHTML = '<i class="fas fa-play"></i> Phát';
+            btn.style.background = "linear-gradient(135deg, #00cc66, #00ff88)";
+          }
+
+          const seekBar = document.getElementById("mainSeekBar");
+          if (seekBar) {
+            seekBar.value = 0;
+          }
+        });
+
+        // Load metadata
+        mainAudio.addEventListener("loadedmetadata", function () {
+          console.log("Đã tải metadata, duration:", mainAudio.duration);
+          updateMainAudioTime();
+          updateDuration();
+
+          const seekBar = document.getElementById("mainSeekBar");
+          if (seekBar) {
+            seekBar.max = 100;
+          }
+
+          // Áp dụng tốc độ đã lưu
+          const savedSpeed = localStorage.getItem("audioPlaybackSpeed");
+          if (savedSpeed && mainAudio) {
+            mainAudio.playbackRate = parseFloat(savedSpeed);
+          }
+
+          // Tự động phát lại nếu đang ở chế độ phát
+          if (isMainAudioPlaying) {
+            mainAudio
+              .play()
+              .catch((e) => console.log("Không thể tự động phát:", e));
+          }
+        });
+
+        // Error handling
+        mainAudio.addEventListener("error", function (e) {
+          console.error("Lỗi audio:", e);
+          showAudioError();
+        });
+      }
+
+      // Hàm thay đổi file audio từ dropdown
+      function changeAudioFile(fileName) {
+        console.log("changeAudioFile được gọi với fileName:", fileName);
+
+        if (!fileName || fileName === "") {
+          console.log("fileName rỗng, disable controls");
+
+          // Disable các controls
+          const btn = document.getElementById("mainPlayPauseBtn");
+          if (btn) {
+            btn.disabled = true;
+            btn.style.opacity = "0.5";
+            btn.style.cursor = "not-allowed";
+            btn.title = "Vui lòng chọn file audio hợp lệ";
+          }
+
+          const seekBar = document.getElementById("mainSeekBar");
+          if (seekBar) {
+            seekBar.disabled = true;
+            seekBar.style.opacity = "0.5";
+            seekBar.style.cursor = "not-allowed";
+          }
+
+          // Dừng audio hiện tại
+          if (mainAudio) {
+            mainAudio.pause();
+            isMainAudioPlaying = false;
+          }
+
+          return;
+        }
+
+        console.log("Chuyển sang file audio:", fileName);
+        loadAudioFile(fileName);
+
+        // Enable các controls
+        const btn = document.getElementById("mainPlayPauseBtn");
+        if (btn) {
+          btn.disabled = false;
+          btn.style.opacity = "1";
+          btn.style.cursor = "pointer";
+          btn.title = "";
+        }
+
+        const seekBar = document.getElementById("mainSeekBar");
+        if (seekBar) {
+          seekBar.disabled = false;
+          seekBar.style.opacity = "1";
+          seekBar.style.cursor = "pointer";
+        }
+      }
+
+      // Hàm tải file audio
+      function loadAudioFile(fileName) {
+        if (!fileName) return;
+
+        console.log("loadAudioFile:", fileName);
+
+        if (!mainAudio) {
+          mainAudio = document.getElementById("mainAudio");
+          if (!mainAudio) {
+            console.error("Không tìm thấy mainAudio trong loadAudioFile");
+            return;
+          }
+        }
+
+        // Dừng audio hiện tại
+        mainAudio.pause();
+        isMainAudioPlaying = false;
+
+        // Cập nhật UI
+        const btn = document.getElementById("mainPlayPauseBtn");
+        if (btn) {
+          btn.innerHTML = '<i class="fas fa-play"></i> Phát';
+          btn.style.background = "linear-gradient(135deg, #00cc66, #00ff88)";
+        }
+
+        // Tạo đường dẫn mới
+        const audioPath = "audios/" + fileName;
+        console.log("Đang tải audio:", audioPath);
+
+        // Xóa các source cũ
+        while (mainAudio.firstChild) {
+          mainAudio.removeChild(mainAudio.firstChild);
+        }
+
+        // Thêm source mới
+        const fileExt = fileName.split(".").pop().toLowerCase();
+        let mimeType = "audio/mpeg";
+        if (fileExt === "m4a") mimeType = "audio/mp4";
+        else if (fileExt === "wav") mimeType = "audio/wav";
+        else if (fileExt === "ogg") mimeType = "audio/ogg";
+
+        const source = document.createElement("source");
+        source.src = audioPath;
+        source.type = mimeType;
+        mainAudio.appendChild(source);
+
+        // Load lại audio
+        mainAudio.load();
+
+        // Reset seek bar
+        const seekBar = document.getElementById("mainSeekBar");
+        if (seekBar) {
+          seekBar.value = 0;
+          seekBar.disabled = false;
+        }
+
+        // Reset thời gian hiển thị
+        document.getElementById("mainCurrentTime").textContent = "00:00";
+        document.getElementById("mainDuration").textContent = "00:00";
+        document.getElementById("mainAudioTime").textContent = "00:00";
+      }
+
+      // Hàm khôi phục tốc độ phát
+      function restorePlaybackSpeed() {
+        const savedSpeed = localStorage.getItem("audioPlaybackSpeed");
+        const speedSelect = document.getElementById("mainSpeedSelect");
+
+        if (savedSpeed && speedSelect) {
+          speedSelect.value = savedSpeed;
+          console.log("Đã khôi phục tốc độ phát:", savedSpeed);
+
+          if (mainAudio) {
+            mainAudio.playbackRate = parseFloat(savedSpeed);
+          }
+        }
+      }
+
+      // Hàm thay đổi tốc độ phát
+      function changePlaybackSpeed(speed) {
+        if (!mainAudio) {
+          mainAudio = document.getElementById("mainAudio");
+        }
+
+        if (mainAudio) {
+          const speedValue = parseFloat(speed);
+          mainAudio.playbackRate = speedValue;
+          console.log("Tốc độ phát:", mainAudio.playbackRate);
+
+          // Lưu tốc độ vào localStorage (chỉ lưu tốc độ, không lưu file)
+          localStorage.setItem("audioPlaybackSpeed", speed);
+
+          showSpeedNotification(speed);
+        }
+      }
+
+      // Các hàm còn lại giữ nguyên...
+      function showSpeedNotification(speed) {
+        const oldNotif = document.getElementById("speedNotification");
+        if (oldNotif) oldNotif.remove();
+
+        const notif = document.createElement("div");
+        notif.id = "speedNotification";
+        notif.innerHTML = `⚡ Tốc độ: ${speed}x`;
+        notif.style.cssText = `
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(135deg, var(--primary-glow), var(--secondary-glow));
+        color: #0a0e17;
+        padding: 10px 25px;
+        border-radius: 30px;
+        font-weight: bold;
+        z-index: 100000;
+        animation: speedFade 2s forwards;
+        box-shadow: 0 0 20px rgba(0,255,204,0.5);
+        border: 2px solid white;
+    `;
+
+        const style = document.createElement("style");
+        style.innerHTML = `
+        @keyframes speedFade {
+            0% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+            20% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            80% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+        }
+    `;
+        document.head.appendChild(style);
+
+        document.body.appendChild(notif);
+
+        setTimeout(() => {
+          if (notif) notif.remove();
+          if (style) style.remove();
+        }, 2000);
+      }
+
+      function updateVolumeIcon() {
+        const icon = document.getElementById("mainVolumeIcon");
+        if (!icon || !mainAudio) return;
+
+        if (mainAudio.muted || mainAudio.volume === 0) {
+          icon.className = "fas fa-volume-mute";
+        } else if (mainAudio.volume < 0.5) {
+          icon.className = "fas fa-volume-down";
+        } else {
+          icon.className = "fas fa-volume-up";
+        }
+      }
+
+      function toggleMute(event) {
+        if (event) {
+          event.stopPropagation();
+        }
+
+        console.log("toggleMute được gọi");
+
+        if (!mainAudio) {
+          mainAudio = document.getElementById("mainAudio");
+          if (!mainAudio) {
+            alert("Không tìm thấy audio!");
+            return;
+          }
+        }
+
+        const icon = document.getElementById("mainVolumeIcon");
+        const volumeSlider = document.getElementById("mainVolumeSlider");
+
+        if (!icon || !volumeSlider) return;
+
+        if (mainAudio.muted) {
+          mainAudio.muted = false;
+          mainAudio.volume = previousVolume;
+          volumeSlider.value = previousVolume;
+        } else {
+          previousVolume = mainAudio.volume > 0 ? mainAudio.volume : 1;
+          mainAudio.muted = true;
+          volumeSlider.value = 0;
+        }
+
+        updateVolumeIcon();
+        console.log("Mute state:", mainAudio.muted);
+      }
+
+      function toggleMainAudio() {
+        console.log("toggleMainAudio được gọi");
+
+        if (!mainAudio) {
+          mainAudio = document.getElementById("mainAudio");
+          if (!mainAudio) {
+            alert("Không tìm thấy audio! Vui lòng load lại trang.");
+            return;
+          }
+        }
+
+        const btn = document.getElementById("mainPlayPauseBtn");
+        if (!btn) return;
+
+        if (isMainAudioPlaying) {
+          mainAudio.pause();
+          btn.innerHTML = '<i class="fas fa-play"></i> Phát';
+          btn.style.background = "linear-gradient(135deg, #00cc66, #00ff88)";
+          isMainAudioPlaying = false;
+          console.log("Đã tạm dừng audio");
+        } else {
+          console.log("Đang thử phát audio...");
+
+          // Kiểm tra xem có source không
+          if (!mainAudio.querySelector("source") && !mainAudio.src) {
+            // Nếu không có source, lấy từ dropdown hiện tại
+            const audioSelect = document.getElementById("mainAudioSelect");
+            if (audioSelect && audioSelect.value) {
+              loadAudioFile(audioSelect.value);
+            } else {
+              alert("Không có file audio nào được chọn!");
+              return;
+            }
+          }
+
+          var playPromise = mainAudio.play();
+
+          if (playPromise !== undefined) {
+            playPromise
+              .then(function () {
+                console.log("Play audio thành công!");
+                btn.innerHTML = '<i class="fas fa-pause"></i> Dừng';
+                btn.style.background =
+                  "linear-gradient(135deg, #ff3333, #ff6600)";
+                isMainAudioPlaying = true;
+                updateDuration();
+
+                const savedSpeed = localStorage.getItem("audioPlaybackSpeed");
+                if (
+                  savedSpeed &&
+                  mainAudio.playbackRate !== parseFloat(savedSpeed)
+                ) {
+                  mainAudio.playbackRate = parseFloat(savedSpeed);
+                }
+              })
+              .catch(function (error) {
+                console.error("Lỗi khi play audio:", error);
+
+                if (error.name === "NotAllowedError") {
+                  alert(
+                    "Trình duyệt chặn phát audio. Vui lòng nhấn nút Phát lại!",
+                  );
+                } else if (error.name === "NotSupportedError") {
+                  alert("Định dạng audio không được hỗ trợ!");
+                } else {
+                  alert("Không thể phát audio. Lỗi: " + error.message);
+                }
+
+                btn.innerHTML = '<i class="fas fa-play"></i> Phát lại';
+                btn.style.background =
+                  "linear-gradient(135deg, #00cc66, #00ff88)";
+              });
+          }
+        }
+      }
+
+      function updateMainAudioTime() {
+        const timeSpan = document.getElementById("mainAudioTime");
+        if (!timeSpan || !mainAudio) return;
+
+        const remaining = Math.max(
+          0,
+          (mainAudio.duration || 0) - (mainAudio.currentTime || 0),
+        );
+        const remainingFormatted = formatTime(remaining);
+        timeSpan.textContent = remainingFormatted;
+      }
+
+      function formatTime(seconds) {
+        if (isNaN(seconds) || seconds === Infinity || seconds <= 0)
+          return "00:00";
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+      }
+
+      function updateDuration() {
+        const durationSpan = document.getElementById("mainDuration");
+        if (durationSpan && mainAudio) {
+          durationSpan.textContent = formatTime(mainAudio.duration || 0);
+        }
+      }
+
+      function updateCurrentTime() {
+        const currentSpan = document.getElementById("mainCurrentTime");
+        if (currentSpan && mainAudio) {
+          currentSpan.textContent = formatTime(mainAudio.currentTime || 0);
+        }
+      }
+
+      function updateSeekBar() {
+        const seekBar = document.getElementById("mainSeekBar");
+        if (seekBar && mainAudio && mainAudio.duration && !seekBar.disabled) {
+          const percent = (mainAudio.currentTime / mainAudio.duration) * 100;
+          seekBar.value = percent;
+        }
+      }
+
+      function seekAudio(value) {
+        if (!mainAudio || !mainAudio.duration) return;
+
+        isSeeking = true;
+        const seekTime = (value / 100) * mainAudio.duration;
+        mainAudio.currentTime = seekTime;
+
+        updateCurrentTime();
+
+        setTimeout(() => {
+          isSeeking = false;
+        }, 100);
+      }
+
+      function showAudioError() {
+        const btn = document.getElementById("mainPlayPauseBtn");
+        if (btn) {
+          btn.innerHTML =
+            '<i class="fas fa-exclamation-triangle"></i> Lỗi file';
+          btn.style.background = "linear-gradient(135deg, #ff3333, #ff6600)";
+        }
+      }
+
+      // Hàm reset tốc độ về mặc định (1x)
+      function resetPlaybackSpeed() {
+        const defaultSpeed = "1";
+
+        localStorage.removeItem("audioPlaybackSpeed");
+
+        const speedSelect = document.getElementById("mainSpeedSelect");
+        if (speedSelect) {
+          speedSelect.value = defaultSpeed;
+        }
+
+        if (mainAudio) {
+          mainAudio.playbackRate = 1;
+        }
+
+        showSpeedNotification(defaultSpeed);
+        console.log("Đã reset tốc độ về 1x");
+      }
     </script>
   </body>
 </html>
