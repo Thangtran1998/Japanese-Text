@@ -1927,7 +1927,6 @@
 <option value="Mimikara-1-3.mp3" >Mimikara-1-3.mp3</option>
 <option value="Mimikara-1-4.mp3" selected>Mimikara-1-4.mp3</option>
 <option value="Mimikara-1-5.mp3" >Mimikara-1-5.mp3</option>
-<option value="Mimikara-1-51.mp3" >Mimikara-1-51.mp3</option>
 <option value="N1_Try Test 1.3.mp3" >N1_Try Test 1.3.mp3</option>
 <option value="N1_Try Test 10.3.mp3" >N1_Try Test 10.3.mp3</option>
 <option value="N1_Try Test 2.3.mp3" >N1_Try Test 2.3.mp3</option>
@@ -2137,6 +2136,47 @@
       let readingComprehensionCount = 0;
       const readingTimers = {};
       const savedRanges = {};
+
+
+      // ==================== PROGRESS CONFIG (đồng bộ theo User ID) ====================
+      const API_URL = "https://n1-license-server.onrender.com/api";
+      const LS_DEVICE_ID = "n1_device_id";
+      const LS_LICENSE = "n1_license";
+
+      function getTestId() {
+        const p = new URL(location.href).pathname;
+        return p.split("/").pop() || "unknown.html";
+      }
+
+      function makeAttemptId() {
+        return `${Date.now()}_${Math.random().toString(16).slice(2)}`;
+      }
+
+      async function tryMarkPerfect() {
+        const deviceId = localStorage.getItem(LS_DEVICE_ID) || "";
+        const license = localStorage.getItem(LS_LICENSE) || "";
+        if (!deviceId || !license) return;
+
+        const testId = getTestId();
+        const attemptId = makeAttemptId();
+
+        try {
+          const res = await fetch(`${API_URL}/progress/mark-perfect`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ deviceId, license, testId, attemptId }),
+          });
+          if (!res.ok) return;
+
+          const data = await res.json();
+          if (data && data.ok) {
+            console.log("[PROGRESS] saved", { testId, ...data });
+          }
+        } catch (e) {
+          console.log("progress api offline", e);
+        }
+      }
+
 
       // ==================== QUIZ DATA ====================
       const quizData = [
@@ -3032,6 +3072,7 @@
         // ===== THÊM ĐOẠN NÀY ĐỂ KÍCH HOẠT PHÁO HOA KHI ĐẠT 100% =====
         if (percentage === 100) {
           launchFireworks();
+          tryMarkPerfect();
           // Phát âm thanh nếu muốn (cần sự tương tác của user trước đó)
           // playVictorySound();
 

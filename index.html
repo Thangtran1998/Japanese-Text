@@ -1879,6 +1879,7 @@ body.modal-open {
       const LS_LICENSE = "n1_license";
       const LS_USER_NAME = "n1_user_name";
       const LS_EXAM_DATE = "n1_exam_date";
+      const LS_USER_ID = "n1_user_id";
 
       function uuidv4() {
         return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
@@ -2061,6 +2062,65 @@ body.modal-open {
           throw new Error(t || "Verify failed");
         }
         return res.json();
+      }
+
+
+      async function getProgressMap(deviceId, license, testIds) {
+        if (!deviceId || !license || !Array.isArray(testIds) || testIds.length === 0)
+          return {};
+
+        try {
+          const res = await fetch(`${API_URL}/progress/get`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ deviceId, license, testIds }),
+          });
+
+          if (!res.ok) return {};
+          const r = await res.json();
+          if (!r || !r.ok || !r.data) return {};
+          return r.data || {};
+        } catch {
+          return {};
+        }
+      }
+
+      function badgeFromProgress(p) {
+        const perfectCount = Number(p?.perfectCount || 0);
+        if (perfectCount >= 3) {
+          return {
+            text: "Đã hoàn thành",
+            icon: "fa-check-circle",
+            bg: "rgba(0, 200, 100, 0.2)",
+            border: "rgba(0, 255, 100, 0.3)",
+            color: "#00ff99",
+          };
+        }
+        if (perfectCount === 2) {
+          return {
+            text: "Tiến độ 67% (2/3)",
+            icon: "fa-chart-line",
+            bg: "rgba(0, 168, 255, 0.18)",
+            border: "rgba(0, 168, 255, 0.35)",
+            color: "#66d9ff",
+          };
+        }
+        if (perfectCount === 1) {
+          return {
+            text: "Tiến độ 33% (1/3)",
+            icon: "fa-chart-line",
+            bg: "rgba(0, 168, 255, 0.12)",
+            border: "rgba(0, 168, 255, 0.28)",
+            color: "#66d9ff",
+          };
+        }
+        return {
+          text: "Chưa làm",
+          icon: "fa-clock",
+          bg: "rgba(255, 100, 0, 0.2)",
+          border: "rgba(255, 150, 0, 0.3)",
+          color: "#ffaa00",
+        };
       }
 
       async function requestReset(deviceId, oldLicense, note) {
@@ -2691,7 +2751,7 @@ body.modal-open {
       //Kết thúc test data
 
       // Hàm mở test modal
-      function openTestModal(itemTitle) {
+      async function openTestModal(itemTitle) {
         const testModal = document.getElementById("testModal");
         const testBackdrop = document.getElementById("testModalBackdrop");
         const testList = document.getElementById("testList");
@@ -2710,26 +2770,25 @@ body.modal-open {
 
         // Render danh sách bài test
         testList.innerHTML = "";
+
+        // ===== Lấy progress từ server (đồng bộ theo User ID) =====
+        const deviceId = localStorage.getItem(LS_DEVICE_ID) || "";
+        const license = localStorage.getItem(LS_LICENSE) || "";
+        const testIds = testInfo.tests.map((t) => t.url);
+        const progressMap = await getProgressMap(deviceId, license, testIds);
+
         testInfo.tests.forEach((test) => {
           const testItem = document.createElement("div");
           testItem.className = "test-item";
           testItem.setAttribute("data-test-url", test.url);
           testItem.setAttribute("data-test-name", test.name);
-
-          // Random trạng thái hoàn thành
-          const isCompleted = Math.random() > 0.7;
-          const badgeText = isCompleted ? "Đã hoàn thành" : "Chưa làm";
-          const badgeColor = isCompleted
-            ? "rgba(0, 200, 100, 0.2)"
-            : "rgba(255, 100, 0, 0.2)";
-          const badgeBorder = isCompleted
-            ? "rgba(0, 255, 100, 0.3)"
-            : "rgba(255, 150, 0, 0.3)";
-          const badgeTextColor = isCompleted ? "#00ff99" : "#ffaa00";
+          // ===== Trạng thái thật từ server =====
+          const p = progressMap[test.url] || { perfectCount: 0 };
+          const b = badgeFromProgress(p);
 
           testItem.innerHTML = `
       <div class="test-item-icon">
-        <i class="fas ${isCompleted ? "fa-check-circle" : "fa-clock"}"></i>
+        <i class="fas ${b.icon}"></i>
       </div>
       <div class="test-item-content">
         <div class="test-item-title">${test.name}</div>
@@ -2739,8 +2798,8 @@ body.modal-open {
           <span><i class="fas fa-signal"></i> ${test.difficulty}</span>
         </div>
       </div>
-      <div class="test-status-badge" style="background: ${badgeColor}; border-color: ${badgeBorder}; color: ${badgeTextColor}">
-        ${badgeText}
+      <div class="test-status-badge" style="background: ${b.bg}; border-color: ${b.border}; color: ${b.color}">
+        ${b.text}
       </div>
     `;
 
@@ -3142,6 +3201,10 @@ body.modal-open {
               if (r.userName) setUserName(r.userName);
               if (r.examDate) localStorage.setItem(LS_EXAM_DATE, r.examDate);
               updateExamUI(r.examDate);
+
+                if (r.userId) localStorage.setItem(LS_USER_ID, r.userId);
+
+              if (r.userId) localStorage.setItem(LS_USER_ID, r.userId);
 
               showGate(false);
               runAppUI();
