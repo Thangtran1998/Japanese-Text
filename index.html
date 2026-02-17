@@ -1616,6 +1616,22 @@
       body.modal-open {
         touch-action: none;
       }
+            /* Style cho test-status-badge */
+      .test-status-badge {
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        min-width: 100px;
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+      
+      /* Hiệu ứng hover cho test item */
+      .test-item:hover .test-status-badge {
+        transform: scale(1.05);
+        box-shadow: 0 0 15px currentColor;
+      }
     </style>
   </head>
 
@@ -1704,7 +1720,7 @@
         <main class="main-content">
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
             </h2>
 
             <div class="target-info">
@@ -2588,6 +2604,119 @@
           ],
         },
       };
+      // ==================== LẤY TRẠNG THÁI BÀI TEST TỪ SERVER ====================
+      async function getTestStatus(testName) {
+        const userId = localStorage.getItem('n1_user_id');
+        const license = localStorage.getItem('n1_license');
+        
+        console.log('Kiểm tra thông tin user:', { userId, license });
+        
+        if (!userId || !license) {
+          console.log('Chưa đăng nhập, không thể lấy trạng thái');
+          return { count: 0, completed: false };
+        }
+        
+        try {
+          const url = `https://n1-license-server.onrender.com/api/get-test-status?userId=${encodeURIComponent(userId)}&testName=${encodeURIComponent(testName)}`;
+          console.log('Gọi API:', url);
+          
+          const response = await fetch(url);
+          const data = await response.json();
+          console.log('Kết quả từ server:', data);
+          
+          return data;
+        } catch (error) {
+          console.error('Lỗi lấy trạng thái:', error);
+          return { count: 0, completed: false };
+        }
+      }
+
+      // ==================== CẬP NHẬT HIỂN THỊ BÀI TEST TRONG MODAL ====================
+      async function updateTestDisplay() {
+        console.log('Đang cập nhật hiển thị bài test...');
+        
+        // Kiểm tra xem có đang ở modal vocab không
+        const frameTitle = document.getElementById('frameTitle');
+        if (!frameTitle) {
+          console.log('Không tìm thấy frameTitle');
+          return;
+        }
+        
+        console.log('Frame title hiện tại:', frameTitle.textContent);
+        
+        // Chỉ update khi đang ở modal từ vựng
+        if (frameTitle.textContent !== 'TỪ VỰNG N1') {
+          console.log('Không phải modal từ vựng, bỏ qua');
+          return;
+        }
+        
+        // Lấy tất cả các item test
+        const testItems = document.querySelectorAll('.test-item');
+        console.log('Số lượng test items:', testItems.length);
+        
+        if (testItems.length === 0) {
+          console.log('Không tìm thấy test items');
+          return;
+        }
+        
+        // Duyệt từng item và cập nhật
+        for (let item of testItems) {
+          const testUrl = item.getAttribute('data-test-url');
+          const testName = item.getAttribute('data-test-name-key');
+          
+          console.log('Xử lý item:', { testUrl, testName });
+          
+          if (!testUrl) continue;
+          
+          // Lấy tên test từ URL nếu không có testName
+          let finalTestName = testName;
+          if (!finalTestName) {
+            finalTestName = testUrl.replace('.html', '');
+          }
+          
+          console.log('Final test name:', finalTestName);
+          
+          // Lấy trạng thái từ server
+          const status = await getTestStatus(finalTestName);
+          console.log('Status nhận được:', status);
+          
+          // Tìm badge trong item
+          const badge = item.querySelector('.test-status-badge');
+          if (badge) {
+            console.log('Cập nhật badge:', badge);
+            
+            if (status.completed) {
+              // Đã hoàn thành (3 lần)
+              badge.textContent = 'Đã hoàn thành';
+              badge.style.background = 'rgba(0, 200, 100, 0.2)';
+              badge.style.borderColor = 'rgba(0, 255, 100, 0.3)';
+              badge.style.color = '#00ff99';
+              badge.style.fontWeight = 'bold';
+              
+            } else if (status.count > 0) {
+              // Đã làm được 1-2 lần
+              const percent = Math.round((status.count / 3) * 100);
+              badge.textContent = `${percent}% (${status.count}/3)`;
+              badge.style.background = 'rgba(255, 153, 0, 0.2)';
+              badge.style.borderColor = 'rgba(255, 153, 0, 0.3)';
+              badge.style.color = '#ffaa00';
+              badge.style.fontWeight = 'bold';
+              
+            } else {
+              // Chưa làm lần nào
+              badge.textContent = 'Chưa làm';
+              badge.style.background = 'rgba(255, 100, 0, 0.2)';
+              badge.style.borderColor = 'rgba(255, 150, 0, 0.3)';
+              badge.style.color = '#ffaa00';
+              badge.style.fontWeight = 'normal';
+            }
+          } else {
+            console.log('Không tìm thấy badge trong item');
+          }
+        }
+        
+        console.log('Cập nhật hoàn tất');
+      }
       /* =========================================================
   TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
   - Click vào content-item trong modal từ vựng -> mở test modal
@@ -2609,6 +2738,7 @@
               time: "39 phút",
               difficulty: "Khó",
               url: "Mimikara-1-1.html",
+              testName: "Mimikara-1-1",
             },
             {
               id: 2,
@@ -2617,6 +2747,7 @@
               time: "40 phút",
               difficulty: "Khó",
               url: "Mimikara-1-2.html",
+              testName: "Mimikara-1-2", 
             },
             {
               id: 3,
@@ -2625,6 +2756,7 @@
               time: "36 phút",
               difficulty: "Khó",
               url: "Mimikara-1-3.html",
+              testName: "Mimikara-1-3", 
             },
             {
               id: 4,
@@ -2633,6 +2765,7 @@
               time: "40 phút",
               difficulty: "Khó",
               url: "Mimikara-1-4.html",
+              testName: "Mimikara-1-4", 
             },
             {
               id: 5,
@@ -2641,6 +2774,7 @@
               time: "40 phút",
               difficulty: "Khó",
               url: "Mimikara-1-5.html",
+              testName: "Mimikara-1-5", 
             },
           ],
         },
@@ -2890,8 +3024,9 @@
           testItem.className = "test-item";
           testItem.setAttribute("data-test-url", test.url);
           testItem.setAttribute("data-test-name", test.name);
+          testItem.setAttribute("data-test-name-key", test.testName || test.url.replace('.html', ''));
 
-          // Random trạng thái hoàn thành
+          // Random trạng thái hoàn thành (tạm thời, sẽ được update sau)
           const isCompleted = Math.random() > 0.7;
           const badgeText = isCompleted ? "Đã hoàn thành" : "Chưa làm";
           const badgeColor = isCompleted
@@ -2941,6 +3076,10 @@
 
           testList.appendChild(testItem);
         });
+        // Sau khi render xong, cập nhật trạng thái từ server
+        setTimeout(() => {
+          updateTestDisplay();
+        }, 500);
 
         // Hiển thị modal
         testModal.classList.add("show");
@@ -3129,36 +3268,62 @@
         modal.setAttribute("aria-hidden", "true");
       }
 
-      function renderModuleToModal(moduleId) {
-        const data = moduleContents[moduleId];
-        if (!data) return;
+            // Lưu lại hàm gốc (nếu có)
+      
+      
+      // Ghi đè hàm renderModuleToModal
+      window.renderModuleToModal = function(moduleId) {
+        console.log('🔄 renderModuleToModal được gọi với moduleId:', moduleId);
+        
+        // Gọi hàm gốc để render nội dung
+        if (typeof originalRenderModuleToModal === 'function') {
+          originalRenderModuleToModal(moduleId);
+        } else {
+          // Fallback nếu chưa có hàm gốc
+          const data = moduleContents[moduleId];
+          if (!data) return;
 
-        const frameTitle = document.getElementById("frameTitle");
-        const frameContent = document.getElementById("frameContent");
-        const frameIcon = document.querySelector(".frame-icon i");
-        const statusText = document.querySelector("#frameStatus .status-text");
+          const frameTitle = document.getElementById("frameTitle");
+          const frameContent = document.getElementById("frameContent");
+          const frameIcon = document.querySelector(".frame-icon i");
+          const statusText = document.querySelector("#frameStatus .status-text");
 
-        frameTitle.textContent = data.title;
-        if (frameIcon) frameIcon.className = data.icon;
-        if (statusText) statusText.textContent = `Đang xem: ${data.title}`;
+          frameTitle.textContent = data.title;
+          if (frameIcon) frameIcon.className = data.icon;
+          if (statusText) statusText.textContent = `Đang xem: ${data.title}`;
 
-        frameContent.innerHTML = "";
-        data.items.forEach((item) => {
-          const itemEl = document.createElement("div");
-          itemEl.className = "content-item";
-          itemEl.innerHTML = `
-            <div class="item-title">
-              <i class="fas fa-circle"></i> ${item.title}
-            </div>
-            <div class="item-desc">${item.desc}</div>
-            <div class="item-stats">${item.stats}</div>
-            <div class="item-progress">
-              <div class="item-progress-fill" style="width: ${item.progress}%"></div>
-            </div>
-          `;
-          frameContent.appendChild(itemEl);
-        });
-      }
+          frameContent.innerHTML = "";
+          data.items.forEach((item) => {
+            const itemEl = document.createElement("div");
+            itemEl.className = "content-item";
+            itemEl.innerHTML = `
+              <div class="item-title">
+                <i class="fas fa-circle"></i> ${item.title}
+              </div>
+              <div class="item-desc">${item.desc}</div>
+              <div class="item-stats">${item.stats}</div>
+              <div class="item-progress">
+                <div class="item-progress-fill" style="width: ${item.progress}%"></div>
+              </div>
+            `;
+            frameContent.appendChild(itemEl);
+          });
+        }
+        
+        // Nếu là module từ vựng, cập nhật hiển thị bài test
+        if (moduleId === 'vocab') {
+          console.log('📚 Đây là module vocab, sẽ cập nhật hiển thị sau 1 giây');
+          
+          // Đợi DOM render xong rồi mới update
+          setTimeout(async () => {
+            console.log('⏰ Bắt đầu updateTestDisplay...');
+            await updateTestDisplay();
+            console.log('✅ UpdateTestDisplay hoàn tất');
+          }, 1000);
+        } else {
+          console.log('❌ Không phải module vocab, bỏ qua:', moduleId);
+        }
+      };
 
       function lockAndOpen(moduleId) {
         lockedModule = moduleId;
@@ -3169,6 +3334,11 @@
 
         renderModuleToModal(moduleId);
         openModal();
+        if (moduleId === 'vocab') {
+          setTimeout(() => {
+            updateTestDisplay();
+          }, 800);
+        }
       }
 
       function unlockAndClose() {
@@ -3447,6 +3617,7 @@
           });
         setupTestModalInteractions();
       })();
+      
     </script>
     <!-- TEST MODAL (BÀI KIỂM TRA) -->
     <div class="test-modal-backdrop" id="testModalBackdrop"></div>
