@@ -1608,30 +1608,15 @@
         font-size: 11px;
       }
       /* Khóa scroll ngoài khi mở popup */
-      body.modal-open {
-        overflow: hidden;
-      }
+body.modal-open {
+  overflow: hidden;
+}
 
-      /* (Tuỳ chọn) mượt hơn trên mobile */
-      body.modal-open {
-        touch-action: none;
-      }
-            /* Style cho test-status-badge */
-      .test-status-badge {
-        padding: 4px 10px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 600;
-        min-width: 100px;
-        text-align: center;
-        transition: all 0.3s ease;
-      }
-      
-      /* Hiệu ứng hover cho test item */
-      .test-item:hover .test-status-badge {
-        transform: scale(1.05);
-        box-shadow: 0 0 15px currentColor;
-      }
+/* (Tuỳ chọn) mượt hơn trên mobile */
+body.modal-open {
+  touch-action: none;
+}
+
     </style>
   </head>
 
@@ -1651,7 +1636,7 @@
     <div class="license-gate" id="licenseGate">
       <div class="license-panel">
         <h2 class="panel-title">
-          <i class="fas fa-shield-halved"></i> KÍCH HOẠT BẢN QUYỀN1
+          <i class="fas fa-shield-halved"></i> KÍCH HOẠT BẢN QUYỀN
         </h2>
 
         <div class="license-small">
@@ -1894,10 +1879,6 @@
       const LS_LICENSE = "n1_license";
       const LS_USER_NAME = "n1_user_name";
       const LS_EXAM_DATE = "n1_exam_date";
-      // ===== GROUP USER (NEW) =====
-      const LS_USER_ID = "n1_user_id";
-      const LS_USER_PROFILE = "n1_user_profile"; // JSON
-      const LS_USER_LICENSES = "n1_user_licenses"; // JSON: { [userId]: [license1, license2...] }
 
       function uuidv4() {
         return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
@@ -1937,75 +1918,6 @@
         if (!safeName) return;
         el.textContent = safeName + " 🎉";
         localStorage.setItem(LS_USER_NAME, safeName);
-      }
-      // ==============================
-      // GROUP USER HELPERS (NEW)
-      // ==============================
-      function loadUserProfile() {
-        try {
-          return JSON.parse(localStorage.getItem(LS_USER_PROFILE) || "null");
-        } catch {
-          return null;
-        }
-      }
-
-      function saveUserProfile(profile) {
-        localStorage.setItem(LS_USER_PROFILE, JSON.stringify(profile || null));
-        if (profile?.userId) localStorage.setItem(LS_USER_ID, profile.userId);
-      }
-
-      function applyUserProfile(profile) {
-        if (!profile) return;
-
-        if (profile.userName) setUserName(profile.userName);
-
-        if (profile.examDate) {
-          localStorage.setItem(LS_EXAM_DATE, profile.examDate);
-          updateExamUI(profile.examDate);
-        }
-
-        if (profile.expiry) {
-          localStorage.setItem("n1_expiry_date", profile.expiry);
-          updateStatusUI(profile.expiry);
-        }
-      }
-
-      function loadUserLicensesMap() {
-        try {
-          return JSON.parse(localStorage.getItem(LS_USER_LICENSES) || "{}");
-        } catch {
-          return {};
-        }
-      }
-
-      function saveUserLicensesMap(map) {
-        localStorage.setItem(LS_USER_LICENSES, JSON.stringify(map || {}));
-      }
-
-      function addLicenseToUser(userId, license) {
-        if (!userId || !license) return;
-        const map = loadUserLicensesMap();
-        const arr = Array.isArray(map[userId]) ? map[userId] : [];
-        if (!arr.includes(license)) arr.push(license);
-        map[userId] = arr;
-        saveUserLicensesMap(map);
-      }
-
-      // Xoá toàn bộ quyền theo USER (tác dụng cho mọi license trong user)
-      function clearAllForUser(userId) {
-        const map = loadUserLicensesMap();
-        if (userId && map[userId]) {
-          delete map[userId];
-          saveUserLicensesMap(map);
-        }
-
-        localStorage.removeItem(LS_USER_PROFILE);
-        localStorage.removeItem(LS_USER_ID);
-
-        // giữ tương thích logic cũ
-        localStorage.removeItem(LS_LICENSE);
-        localStorage.removeItem(LS_ACTIVATED);
-        localStorage.removeItem("n1_expiry_date");
       }
 
       /* =========================================================
@@ -2163,137 +2075,42 @@
         }
         return res.json();
       }
-      // ==============================
-      // TRY VERIFY ANY LICENSE FOR USER (NEW)
-      // ==============================
-      async function tryVerifyAnyLicenseForUser(deviceId) {
-        const profile = loadUserProfile();
-        const userId = profile?.userId || localStorage.getItem(LS_USER_ID);
-        if (!userId) return null;
 
-        const map = loadUserLicensesMap();
-        const list = Array.isArray(map[userId]) ? map[userId] : [];
-
-        // ưu tiên license hiện tại (key cũ) + input đang có
-        const legacy = localStorage.getItem(LS_LICENSE);
-        const inputVal = (
-          document.getElementById("licenseInput")?.value || ""
-        ).trim();
-
-        const merged = [];
-        if (inputVal) merged.push(inputVal);
-        if (legacy) merged.push(legacy);
-        for (const l of list) if (!merged.includes(l)) merged.push(l);
-
-        for (const lic of merged) {
-          try {
-            const r = await verifyLicense(deviceId, lic);
-            if (r && r.ok) {
-              // bắt buộc server trả userId, nếu chưa có thì userId sẽ null -> bạn nên thêm bên server
-              const newProfile = {
-                userId: r.userId || userId,
-                userName: r.userName,
-                examDate: r.examDate,
-                expiry: r.expiry,
-                userStatus: r.userStatus || "ACTIVE",
-              };
-
-              saveUserProfile(newProfile);
-              applyUserProfile(newProfile);
-
-              localStorage.setItem(LS_LICENSE, lic);
-              localStorage.setItem(LS_ACTIVATED, "1");
-              addLicenseToUser(newProfile.userId, lic);
-
-              return { ok: true, license: lic, profile: newProfile };
-            }
-          } catch {
-            // bỏ qua -> thử license khác
-          }
-        }
-        return null;
-      }
-
-      // Sửa lại hàm startBackgroundRecheck
       function startBackgroundRecheck(deviceId) {
-        const INTERVAL_MS = 90 * 1000; // 90 giây
-
-        // Clear timer cũ nếu có
-        if (window.__recheckTimer) {
-          clearInterval(window.__recheckTimer);
-          window.__recheckTimer = null;
-        }
+        const INTERVAL_MS = 90 * 1000;
+        if (window.__recheckTimer) return;
 
         async function tick() {
-          console.log(
-            "🔄 Background recheck running at:",
-            new Date().toLocaleTimeString(),
-          );
-
           const license = localStorage.getItem(LS_LICENSE);
           const activatedOnce = localStorage.getItem(LS_ACTIVATED) === "1";
-
-          if (!license || !activatedOnce) {
-            console.log("⏹️ No active license, stopping recheck");
-            if (window.__recheckTimer) {
-              clearInterval(window.__recheckTimer);
-              window.__recheckTimer = null;
-            }
-            return;
-          }
+          if (!license || !activatedOnce) return;
 
           try {
             const r = await verifyLicense(deviceId, license);
-            console.log("✅ Verify result:", r);
-
             if (r && r.ok) {
               setStatus(`Kích hoạt OK (hạn: ${r.expiry})`, "ok");
               updateStatusUI(r.expiry);
               return;
             }
-
-            // Nếu không ok, throw error để vào catch
             throw new Error("Verify failed");
           } catch (e) {
             const msg = String(e?.message || "");
-            console.error("❌ Recheck error:", msg);
-
             const hardBlock =
-              msg.includes("User revoked") ||
               msg.includes("Device revoked") ||
               msg.includes("Expired") ||
               msg.includes("Invalid") ||
-              msg.includes("already bound") ||
-              msg.includes("not found") || // Thêm case license không tồn tại
-              msg.includes("revoked"); // Thêm case chung
+              msg.includes("already bound");
 
             if (hardBlock) {
-              console.log("🔒 License revoked! Showing gate...");
-
-              const profile = loadUserProfile();
-              const userId =
-                profile?.userId || localStorage.getItem(LS_USER_ID);
-
-              // Xóa toàn bộ dữ liệu
-              clearAllForUser(userId);
-
-              // Cập nhật UI
+              localStorage.removeItem(LS_LICENSE);
+              localStorage.removeItem(LS_ACTIVATED);
               setStatus(
                 "Quyền truy cập đã bị thu hồi hoặc license không còn hợp lệ.",
                 "error",
               );
-
-              // Hiện màn hình khóa NGAY LẬP TỨC
               showGate(true);
-
-              // Dừng timer vì đã logout
-              if (window.__recheckTimer) {
-                clearInterval(window.__recheckTimer);
-                window.__recheckTimer = null;
-              }
               return;
             }
-
             setStatus(
               "Server kiểm tra đang offline. Hệ thống giữ trạng thái kích hoạt.",
               "error",
@@ -2301,14 +2118,8 @@
           }
         }
 
-        // Chạy ngay lập tức
         tick();
-
-        // Set interval mới
         window.__recheckTimer = setInterval(tick, INTERVAL_MS);
-        console.log(
-          `⏰ Recheck timer started, interval: ${INTERVAL_MS / 1000}s`,
-        );
       }
 
       /* =========================================================
@@ -2604,119 +2415,6 @@
           ],
         },
       };
-      // ==================== LẤY TRẠNG THÁI BÀI TEST TỪ SERVER ====================
-      async function getTestStatus(testName) {
-        const userId = localStorage.getItem('n1_user_id');
-        const license = localStorage.getItem('n1_license');
-        
-        console.log('Kiểm tra thông tin user:', { userId, license });
-        
-        if (!userId || !license) {
-          console.log('Chưa đăng nhập, không thể lấy trạng thái');
-          return { count: 0, completed: false };
-        }
-        
-        try {
-          const url = `https://n1-license-server.onrender.com/api/get-test-status?userId=${encodeURIComponent(userId)}&testName=${encodeURIComponent(testName)}`;
-          console.log('Gọi API:', url);
-          
-          const response = await fetch(url);
-          const data = await response.json();
-          console.log('Kết quả từ server:', data);
-          
-          return data;
-        } catch (error) {
-          console.error('Lỗi lấy trạng thái:', error);
-          return { count: 0, completed: false };
-        }
-      }
-
-      // ==================== CẬP NHẬT HIỂN THỊ BÀI TEST TRONG MODAL ====================
-      async function updateTestDisplay() {
-        console.log('Đang cập nhật hiển thị bài test...');
-        
-        // Kiểm tra xem có đang ở modal vocab không
-        const frameTitle = document.getElementById('frameTitle');
-        if (!frameTitle) {
-          console.log('Không tìm thấy frameTitle');
-          return;
-        }
-        
-        console.log('Frame title hiện tại:', frameTitle.textContent);
-        
-        // Chỉ update khi đang ở modal từ vựng
-        if (frameTitle.textContent !== 'TỪ VỰNG N1') {
-          console.log('Không phải modal từ vựng, bỏ qua');
-          return;
-        }
-        
-        // Lấy tất cả các item test
-        const testItems = document.querySelectorAll('.test-item');
-        console.log('Số lượng test items:', testItems.length);
-        
-        if (testItems.length === 0) {
-          console.log('Không tìm thấy test items');
-          return;
-        }
-        
-        // Duyệt từng item và cập nhật
-        for (let item of testItems) {
-          const testUrl = item.getAttribute('data-test-url');
-          const testName = item.getAttribute('data-test-name-key');
-          
-          console.log('Xử lý item:', { testUrl, testName });
-          
-          if (!testUrl) continue;
-          
-          // Lấy tên test từ URL nếu không có testName
-          let finalTestName = testName;
-          if (!finalTestName) {
-            finalTestName = testUrl.replace('.html', '');
-          }
-          
-          console.log('Final test name:', finalTestName);
-          
-          // Lấy trạng thái từ server
-          const status = await getTestStatus(finalTestName);
-          console.log('Status nhận được:', status);
-          
-          // Tìm badge trong item
-          const badge = item.querySelector('.test-status-badge');
-          if (badge) {
-            console.log('Cập nhật badge:', badge);
-            
-            if (status.completed) {
-              // Đã hoàn thành (3 lần)
-              badge.textContent = 'Đã hoàn thành';
-              badge.style.background = 'rgba(0, 200, 100, 0.2)';
-              badge.style.borderColor = 'rgba(0, 255, 100, 0.3)';
-              badge.style.color = '#00ff99';
-              badge.style.fontWeight = 'bold';
-              
-            } else if (status.count > 0) {
-              // Đã làm được 1-2 lần
-              const percent = Math.round((status.count / 3) * 100);
-              badge.textContent = `${percent}% (${status.count}/3)`;
-              badge.style.background = 'rgba(255, 153, 0, 0.2)';
-              badge.style.borderColor = 'rgba(255, 153, 0, 0.3)';
-              badge.style.color = '#ffaa00';
-              badge.style.fontWeight = 'bold';
-              
-            } else {
-              // Chưa làm lần nào
-              badge.textContent = 'Chưa làm';
-              badge.style.background = 'rgba(255, 100, 0, 0.2)';
-              badge.style.borderColor = 'rgba(255, 150, 0, 0.3)';
-              badge.style.color = '#ffaa00';
-              badge.style.fontWeight = 'normal';
-            }
-          } else {
-            console.log('Không tìm thấy badge trong item');
-          }
-        }
-        
-        console.log('Cập nhật hoàn tất');
-      }
       /* =========================================================
   TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
   - Click vào content-item trong modal từ vựng -> mở test modal
@@ -2730,15 +2428,13 @@
         // Bài test cho "Từ vựng Mimikara Oboeru"
         "Từ vựng Mimikara Oboeru": {
           title: "Mimikara Oboeru N1",
-          tests: [
-            {
+          tests: [{
               id: 1,
               name: "Từ vựng Mimikara Unit 1 (1-20)",
               questions: 39,
               time: "39 phút",
               difficulty: "Khó",
               url: "Mimikara-1-1.html",
-              testName: "Mimikara-1-1",
             },
             {
               id: 2,
@@ -2747,42 +2443,37 @@
               time: "40 phút",
               difficulty: "Khó",
               url: "Mimikara-1-2.html",
-              testName: "Mimikara-1-2", 
             },
-            {
+{
               id: 3,
               name: "Từ vựng Mimikara Unit 1 (41-60)",
               questions: 36,
               time: "36 phút",
               difficulty: "Khó",
               url: "Mimikara-1-3.html",
-              testName: "Mimikara-1-3", 
             },
-            {
+{
               id: 4,
               name: "Từ vựng Mimikara Unit 1 (61-80)",
               questions: 40,
               time: "40 phút",
               difficulty: "Khó",
               url: "Mimikara-1-4.html",
-              testName: "Mimikara-1-4", 
             },
-            {
+{
               id: 5,
               name: "Từ vựng Mimikara Unit 1 (81-100)",
               questions: 40,
               time: "40 phút",
               difficulty: "Khó",
               url: "Mimikara-1-5.html",
-              testName: "Mimikara-1-5", 
-            },
-          ],
+            }
+],
         },
         // Bài test cho "Từ vựng ThaoLeJP"
         "Từ vựng ThaoLeJP": {
           title: "Từ vựng ThaoLeJP N1",
-          tests: [
-            {
+          tests: [{
               id: 1,
               name: "Test Từ Vựng Ngày 1",
               questions: 40,
@@ -2790,7 +2481,7 @@
               difficulty: "Khó",
               url: "vocab-1.html",
             },
-            {
+{
               id: 2,
               name: "Test Từ Vựng Ngày 2",
               questions: 40,
@@ -2798,7 +2489,7 @@
               difficulty: "Khó",
               url: "vocab-2.html",
             },
-            {
+{
               id: 3,
               name: "Test Từ Vựng Ngày 3",
               questions: 40,
@@ -2806,7 +2497,7 @@
               difficulty: "Khó",
               url: "vocab-3.html",
             },
-            {
+{
               id: 4,
               name: "Test Từ Vựng Ngày 4",
               questions: 40,
@@ -2814,7 +2505,7 @@
               difficulty: "Khó",
               url: "vocab-4.html",
             },
-            {
+{
               id: 5,
               name: "Test Từ Vựng Ngày 5",
               questions: 40,
@@ -2822,7 +2513,7 @@
               difficulty: "Khó",
               url: "vocab-5.html",
             },
-            {
+{
               id: 6,
               name: "Test Từ Vựng Ngày 6",
               questions: 40,
@@ -2830,7 +2521,7 @@
               difficulty: "Khó",
               url: "vocab-6.html",
             },
-            {
+{
               id: 7,
               name: "Test Từ Vựng Ngày 7",
               questions: 38,
@@ -2838,7 +2529,7 @@
               difficulty: "Khó",
               url: "vocab-7.html",
             },
-            {
+{
               id: 8,
               name: "Test Từ Vựng Ngày 8",
               questions: 40,
@@ -2846,7 +2537,7 @@
               difficulty: "Khó",
               url: "vocab-8.html",
             },
-            {
+{
               id: 9,
               name: "Test Từ Vựng Ngày 9",
               questions: 40,
@@ -2854,7 +2545,7 @@
               difficulty: "Khó",
               url: "vocab-9.html",
             },
-            {
+{
               id: 10,
               name: "Test Từ Vựng Ngày 10",
               questions: 40,
@@ -2862,7 +2553,7 @@
               difficulty: "Khó",
               url: "vocab-10.html",
             },
-            {
+{
               id: 11,
               name: "Test Từ Vựng Ngày 11",
               questions: 40,
@@ -2870,7 +2561,7 @@
               difficulty: "Khó",
               url: "vocab-11.html",
             },
-            {
+{
               id: 12,
               name: "Test Từ Vựng Ngày 12",
               questions: 40,
@@ -2878,7 +2569,7 @@
               difficulty: "Khó",
               url: "vocab-12.html",
             },
-            {
+{
               id: 13,
               name: "Test Từ Vựng Ngày 13",
               questions: 40,
@@ -2886,7 +2577,7 @@
               difficulty: "Khó",
               url: "vocab-13.html",
             },
-            {
+{
               id: 14,
               name: "Test Từ Vựng Ngày 14",
               questions: 40,
@@ -2894,15 +2585,15 @@
               difficulty: "Khó",
               url: "vocab-14.html",
             },
-            {
+{
               id: 15,
               name: "Test Từ Vựng Ngày 15",
               questions: 40,
               time: "40 phút",
               difficulty: "Khó",
               url: "vocab-15.html",
-            },
-          ],
+            }
+],
         },
         // Bài test cho "Từ đồng nghĩa/Trái nghĩa"
         "Từ đồng nghĩa/Trái nghĩa": {
@@ -3024,9 +2715,8 @@
           testItem.className = "test-item";
           testItem.setAttribute("data-test-url", test.url);
           testItem.setAttribute("data-test-name", test.name);
-          testItem.setAttribute("data-test-name-key", test.testName || test.url.replace('.html', ''));
 
-          // Random trạng thái hoàn thành (tạm thời, sẽ được update sau)
+          // Random trạng thái hoàn thành
           const isCompleted = Math.random() > 0.7;
           const badgeText = isCompleted ? "Đã hoàn thành" : "Chưa làm";
           const badgeColor = isCompleted
@@ -3076,10 +2766,6 @@
 
           testList.appendChild(testItem);
         });
-        // Sau khi render xong, cập nhật trạng thái từ server
-        setTimeout(() => {
-          updateTestDisplay();
-        }, 500);
 
         // Hiển thị modal
         testModal.classList.add("show");
@@ -3268,62 +2954,36 @@
         modal.setAttribute("aria-hidden", "true");
       }
 
-            // Lưu lại hàm gốc (nếu có)
-      
-      
-      // Ghi đè hàm renderModuleToModal
-      window.renderModuleToModal = function(moduleId) {
-        console.log('🔄 renderModuleToModal được gọi với moduleId:', moduleId);
-        
-        // Gọi hàm gốc để render nội dung
-        if (typeof originalRenderModuleToModal === 'function') {
-          originalRenderModuleToModal(moduleId);
-        } else {
-          // Fallback nếu chưa có hàm gốc
-          const data = moduleContents[moduleId];
-          if (!data) return;
+      function renderModuleToModal(moduleId) {
+        const data = moduleContents[moduleId];
+        if (!data) return;
 
-          const frameTitle = document.getElementById("frameTitle");
-          const frameContent = document.getElementById("frameContent");
-          const frameIcon = document.querySelector(".frame-icon i");
-          const statusText = document.querySelector("#frameStatus .status-text");
+        const frameTitle = document.getElementById("frameTitle");
+        const frameContent = document.getElementById("frameContent");
+        const frameIcon = document.querySelector(".frame-icon i");
+        const statusText = document.querySelector("#frameStatus .status-text");
 
-          frameTitle.textContent = data.title;
-          if (frameIcon) frameIcon.className = data.icon;
-          if (statusText) statusText.textContent = `Đang xem: ${data.title}`;
+        frameTitle.textContent = data.title;
+        if (frameIcon) frameIcon.className = data.icon;
+        if (statusText) statusText.textContent = `Đang xem: ${data.title}`;
 
-          frameContent.innerHTML = "";
-          data.items.forEach((item) => {
-            const itemEl = document.createElement("div");
-            itemEl.className = "content-item";
-            itemEl.innerHTML = `
-              <div class="item-title">
-                <i class="fas fa-circle"></i> ${item.title}
-              </div>
-              <div class="item-desc">${item.desc}</div>
-              <div class="item-stats">${item.stats}</div>
-              <div class="item-progress">
-                <div class="item-progress-fill" style="width: ${item.progress}%"></div>
-              </div>
-            `;
-            frameContent.appendChild(itemEl);
-          });
-        }
-        
-        // Nếu là module từ vựng, cập nhật hiển thị bài test
-        if (moduleId === 'vocab') {
-          console.log('📚 Đây là module vocab, sẽ cập nhật hiển thị sau 1 giây');
-          
-          // Đợi DOM render xong rồi mới update
-          setTimeout(async () => {
-            console.log('⏰ Bắt đầu updateTestDisplay...');
-            await updateTestDisplay();
-            console.log('✅ UpdateTestDisplay hoàn tất');
-          }, 1000);
-        } else {
-          console.log('❌ Không phải module vocab, bỏ qua:', moduleId);
-        }
-      };
+        frameContent.innerHTML = "";
+        data.items.forEach((item) => {
+          const itemEl = document.createElement("div");
+          itemEl.className = "content-item";
+          itemEl.innerHTML = `
+            <div class="item-title">
+              <i class="fas fa-circle"></i> ${item.title}
+            </div>
+            <div class="item-desc">${item.desc}</div>
+            <div class="item-stats">${item.stats}</div>
+            <div class="item-progress">
+              <div class="item-progress-fill" style="width: ${item.progress}%"></div>
+            </div>
+          `;
+          frameContent.appendChild(itemEl);
+        });
+      }
 
       function lockAndOpen(moduleId) {
         lockedModule = moduleId;
@@ -3334,11 +2994,6 @@
 
         renderModuleToModal(moduleId);
         openModal();
-        if (moduleId === 'vocab') {
-          setTimeout(() => {
-            updateTestDisplay();
-          }, 800);
-        }
       }
 
       function unlockAndClose() {
@@ -3453,9 +3108,7 @@
       (async function boot() {
         const deviceId = getOrCreateDeviceId();
         fillDeviceUI(deviceId);
-        //Hiện DeviceID
-        //console.log("DEVICE ID:", deviceId);
-        //alert("DEVICE ID: " + deviceId);
+
         const savedLicense = localStorage.getItem(LS_LICENSE);
         const licenseInput = document.getElementById("licenseInput");
         if (savedLicense) licenseInput.value = savedLicense;
@@ -3467,23 +3120,14 @@
         setInterval(() => updateExamUI(""), 60 * 1000);
 
         const activatedOnce = localStorage.getItem(LS_ACTIVATED) === "1";
-
-        if (activatedOnce) {
-          // cho UI chạy trước để user không bị chờ
+        if (activatedOnce && savedLicense) {
           showGate(false);
           runAppUI();
           startBackgroundRecheck(deviceId);
           setupTestModalInteractions();
-
-          // verify theo nhóm user (có thể dùng license khác nếu license hiện tại chết)
-          const ok = await tryVerifyAnyLicenseForUser(deviceId);
-          if (ok && ok.ok) {
-            return; // đã refresh profile/hạn dùng
-          }
+        } else {
+          showGate(true);
         }
-
-        // nếu không verify được -> bật gate
-        showGate(true);
 
         if (savedLicense) {
           setStatus("Đang kiểm tra license...", "");
@@ -3491,30 +3135,18 @@
             const r = await verifyLicense(deviceId, savedLicense);
             if (r && r.ok) {
               localStorage.setItem(LS_ACTIVATED, "1");
-              localStorage.setItem(LS_LICENSE, savedLicense);
-
-              const profile = {
-                userId: r.userId,
-                userName: r.userName,
-                examDate: r.examDate,
-                expiry: r.expiry,
-                userStatus: r.userStatus || "ACTIVE",
-              };
-
-              if (!profile.userId)
-                profile.userId =
-                  localStorage.getItem(LS_USER_ID) || "U_" + savedLicense;
-
-              saveUserProfile(profile);
-              applyUserProfile(profile);
-              addLicenseToUser(profile.userId, savedLicense);
-
               setStatus(`Kích hoạt OK (hạn: ${r.expiry})`, "ok");
+              updateStatusUI(r.expiry);
+              localStorage.setItem("n1_expiry_date", r.expiry);
+
+              if (r.userName) setUserName(r.userName);
+              if (r.examDate) localStorage.setItem(LS_EXAM_DATE, r.examDate);
+              updateExamUI(r.examDate);
+
               showGate(false);
               runAppUI();
               return;
             }
-
             setStatus("License không hợp lệ hoặc đã hết hạn", "error");
           } catch {
             setStatus(
@@ -3543,40 +3175,20 @@
             setStatus("Đang kích hoạt...", "");
             try {
               const r = await verifyLicense(deviceId, license);
-
               if (r && r.ok) {
-                // 1) Lưu profile theo USER (GROUP)
-                const profile = {
-                  userId: r.userId, // <<<<< server cần trả
-                  userName: r.userName,
-                  examDate: r.examDate,
-                  expiry: r.expiry,
-                  userStatus: r.userStatus || "ACTIVE",
-                };
-
-                // Nếu server CHƯA trả userId thì tạm fallback (không khuyến nghị)
-                if (!profile.userId) {
-                  // fallback tạm: coi license như userId (xấu nhưng chạy)
-                  profile.userId = "U_" + license;
-                }
-
-                saveUserProfile(profile);
-                applyUserProfile(profile);
-
-                // 2) Gom license vào user
-                addLicenseToUser(profile.userId, license);
-
-                // 3) Giữ tương thích logic hiện tại
                 localStorage.setItem(LS_LICENSE, license);
                 localStorage.setItem(LS_ACTIVATED, "1");
-
                 setStatus(`Kích hoạt OK (hạn: ${r.expiry})`, "ok");
+                updateStatusUI(r.expiry);
+
+                if (r.userName) setUserName(r.userName);
+                if (r.examDate) localStorage.setItem(LS_EXAM_DATE, r.examDate);
+                updateExamUI(r.examDate);
 
                 showGate(false);
                 runAppUI();
                 startBackgroundRecheck(deviceId);
                 setupTestModalInteractions();
-                return;
               } else {
                 setStatus("License không hợp lệ hoặc đã hết hạn", "error");
               }
@@ -3617,7 +3229,6 @@
           });
         setupTestModalInteractions();
       })();
-      
     </script>
     <!-- TEST MODAL (BÀI KIỂM TRA) -->
     <div class="test-modal-backdrop" id="testModalBackdrop"></div>
