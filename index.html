@@ -1704,7 +1704,7 @@
         <main class="main-content">
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
             </h2>
 
             <div class="target-info">
@@ -3283,6 +3283,10 @@
       (async function boot() {
         const deviceId = getOrCreateDeviceId();
         fillDeviceUI(deviceId);
+        //Hiện DeviceID
+        console.log("DEVICE ID:", deviceId);
+        alert("DEVICE ID: " + deviceId);
+
 
         const savedLicense = localStorage.getItem(LS_LICENSE);
         const licenseInput = document.getElementById("licenseInput");
