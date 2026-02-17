@@ -1697,6 +1697,10 @@
         font-style: italic;
         background: rgba(255, 50, 50, 0.1);
       }
+            @keyframes bounce {
+        0%, 100% { transform: translate(-50%, -50%); }
+        50% { transform: translate(-50%, -70%); }
+      }
     </style>
   </head>
 
@@ -2130,6 +2134,93 @@
     </div>
 
     <script>
+            // ==================== LƯU KẾT QUẢ HOÀN THÀNH LÊN SERVER ====================
+      async function saveCompletionToServer() {
+        // Lấy thông tin user từ localStorage (đã có từ index.html)
+        const userId = localStorage.getItem('n1_user_id');
+        const license = localStorage.getItem('n1_license');
+        const deviceId = localStorage.getItem('n1_device_id');
+        
+        if (!userId || !license) {
+          console.log('Chưa đăng nhập, không thể lưu kết quả');
+          return false;
+        }
+
+        // Tên bài test (lấy từ tiêu đề)
+        const testName = 'Mimikara-1-1'; // Có thể lấy từ data attribute hoặc hardcode
+        
+        try {
+          const response = await fetch('https://n1-license-server.onrender.com/api/save-test-result', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              userId: userId,
+              license: license,
+              deviceId: deviceId,
+              testName: testName,
+              score: 100 // Chỉ gọi khi đạt 100%
+            })
+          });
+          
+          const data = await response.json();
+          console.log('Kết quả lưu:', data);
+          
+          if (data && data.ok) {
+            // Hiển thị thông báo nếu đã đủ 3 lần
+            if (data.completed) {
+              // Tạo thông báo đẹp
+              const notif = document.createElement('div');
+              notif.innerHTML = '🎉 CHÚC MỪNG! Bạn đã hoàn thành bài học này! 🎉';
+              notif.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: linear-gradient(135deg, gold, #ffaa00);
+                color: #000;
+                padding: 30px 50px;
+                border-radius: 20px;
+                font-size: 28px;
+                font-weight: bold;
+                z-index: 200000;
+                box-shadow: 0 0 50px gold;
+                border: 3px solid white;
+                text-align: center;
+                animation: bounce 0.5s;
+              `;
+              document.body.appendChild(notif);
+              setTimeout(() => notif.remove(), 4000);
+            } else {
+              // Thông báo đã ghi nhận lần đạt 100%
+              const notif = document.createElement('div');
+              notif.innerHTML = `✅ Đã ghi nhận lần đạt 100%! (${data.count}/3)`;
+              notif.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #00cc66, #00ff88);
+                color: #000;
+                padding: 15px 25px;
+                border-radius: 10px;
+                font-size: 16px;
+                font-weight: bold;
+                z-index: 200000;
+                box-shadow: 0 0 20px #00ff88;
+                border: 1px solid white;
+              `;
+              document.body.appendChild(notif);
+              setTimeout(() => notif.remove(), 3000);
+            }
+            return true;
+          }
+          return false;
+        } catch (error) {
+          console.error('Lỗi khi lưu kết quả:', error);
+          return false;
+        }
+      }
       // ==================== INITIALIZATION ====================
       window.answers = JSON.parse(
         localStorage.getItem("customAnswers") || "{}",
@@ -3022,7 +3113,10 @@
           .forEach((input) => (input.disabled = true));
         pauseTimer();
         // ===== THÊM ĐOẠN NÀY ĐỂ KÍCH HOẠT PHÁO HOA KHI ĐẠT 100% =====
-        if (percentage === 100) {
+                if (percentage === 100) {
+          // Gọi API lưu kết quả
+          saveCompletionToServer();
+          
           launchFireworks();
           // Phát âm thanh nếu muốn (cần sự tương tác của user trước đó)
           // playVictorySound();
