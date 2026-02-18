@@ -1636,7 +1636,7 @@ body.modal-open {
     <div class="license-gate" id="licenseGate">
       <div class="license-panel">
         <h2 class="panel-title">
-          <i class="fas fa-shield-halved"></i> KÍCH HOẠT BẢN QUYỀN
+          <i class="fas fa-shield-halved"></i> KÍCH HOẠT BẢN QUYỀN1
         </h2>
 
         <div class="license-small">
@@ -1705,7 +1705,7 @@ body.modal-open {
         <main class="main-content">
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
             </h2>
 
             <div class="target-info">
@@ -2157,8 +2157,10 @@ body.modal-open {
             const msg = String(e?.message || "");
             const hardBlock =
               msg.includes("Device revoked") ||
+              msg.includes("User revoked") ||
               msg.includes("Expired") ||
               msg.includes("Invalid") ||
+              msg.includes("License not found") ||
               msg.includes("already bound");
 
             if (hardBlock) {
@@ -3168,7 +3170,7 @@ body.modal-open {
         const deviceId = getOrCreateDeviceId();
         fillDeviceUI(deviceId);
 
-        const savedLicense = localStorage.getItem(LS_LICENSE);
+        const savedLicense = localStorage.getItem(LS_LICENSE) || "";
         const licenseInput = document.getElementById("licenseInput");
         if (savedLicense) licenseInput.value = savedLicense;
 
@@ -3178,57 +3180,70 @@ body.modal-open {
         updateExamUI("");
         setInterval(() => updateExamUI(""), 60 * 1000);
 
-        const activatedOnce = localStorage.getItem(LS_ACTIVATED) === "1";
-        if (activatedOnce && savedLicense) {
+        // Mặc định: CHƯA cho vào app cho đến khi verify OK
+        showGate(true);
+
+        async function handleVerifiedOK(r, licenseUsed) {
+          localStorage.setItem(LS_LICENSE, licenseUsed);
+          localStorage.setItem(LS_ACTIVATED, "1");
+
+          setStatus(`Kích hoạt OK (hạn: ${r.expiry})`, "ok");
+          updateStatusUI(r.expiry);
+          localStorage.setItem("n1_expiry_date", r.expiry);
+
+          if (r.userName) setUserName(r.userName);
+          if (r.examDate) localStorage.setItem(LS_EXAM_DATE, r.examDate);
+          updateExamUI(r.examDate);
+
+          if (r.userId) localStorage.setItem(LS_USER_ID, r.userId);
+
           showGate(false);
           runAppUI();
           startBackgroundRecheck(deviceId);
           setupTestModalInteractions();
-        } else {
-          showGate(true);
         }
 
+        // Nếu đã có license lưu sẵn -> verify NGAY LẬP TỨC.
         if (savedLicense) {
           setStatus("Đang kiểm tra license...", "");
           try {
             const r = await verifyLicense(deviceId, savedLicense);
             if (r && r.ok) {
-              localStorage.setItem(LS_ACTIVATED, "1");
-              setStatus(`Kích hoạt OK (hạn: ${r.expiry})`, "ok");
-              updateStatusUI(r.expiry);
-              localStorage.setItem("n1_expiry_date", r.expiry);
-
-              if (r.userName) setUserName(r.userName);
-              if (r.examDate) localStorage.setItem(LS_EXAM_DATE, r.examDate);
-              updateExamUI(r.examDate);
-
-                if (r.userId) localStorage.setItem(LS_USER_ID, r.userId);
-
-              if (r.userId) localStorage.setItem(LS_USER_ID, r.userId);
-
-              showGate(false);
-              runAppUI();
+              await handleVerifiedOK(r, savedLicense);
               return;
             }
-            setStatus("License không hợp lệ hoặc đã hết hạn", "error");
-          } catch {
-            setStatus(
-              "Không kiểm tra được license (server lỗi hoặc sai API_URL)",
-              "error",
-            );
+            throw new Error("Verify failed");
+          } catch (e) {
+            const msg = String(e?.message || "");
+            const hardBlock =
+              msg.includes("Device revoked") ||
+              msg.includes("User revoked") ||
+              msg.includes("Expired") ||
+              msg.includes("Invalid") ||
+              msg.includes("License not found") ||
+              msg.includes("already bound");
+
+            if (hardBlock) {
+              localStorage.removeItem(LS_LICENSE);
+              localStorage.removeItem(LS_ACTIVATED);
+              setStatus("License đã bị thu hồi/không hợp lệ. Vui lòng nhập license mới.", "error");
+            } else {
+              setStatus("Không kiểm tra được license (server lỗi / mất mạng).", "error");
+            }
+
+            showGate(true);
           }
         }
 
+        // Nút copy deviceId
         document
           .getElementById("btnCopyDevice")
           .addEventListener("click", async () => {
             await copyText(deviceId);
-            setStatus(
-              "Đã copy deviceID. Gửi deviceID này để cấp license.",
-              "ok",
-            );
+            setStatus("Đã copy deviceID. Gửi deviceID này để cấp license.", "ok");
           });
 
+        // Nút kích hoạt
         document
           .getElementById("btnActivate")
           .addEventListener("click", async () => {
@@ -3239,34 +3254,29 @@ body.modal-open {
             try {
               const r = await verifyLicense(deviceId, license);
               if (r && r.ok) {
-                localStorage.setItem(LS_LICENSE, license);
-                localStorage.setItem(LS_ACTIVATED, "1");
-                setStatus(`Kích hoạt OK (hạn: ${r.expiry})`, "ok");
-                updateStatusUI(r.expiry);
-
-                if (r.userName) setUserName(r.userName);
-                if (r.examDate) localStorage.setItem(LS_EXAM_DATE, r.examDate);
-                updateExamUI(r.examDate);
-
-                showGate(false);
-                runAppUI();
-                startBackgroundRecheck(deviceId);
-                setupTestModalInteractions();
+                await handleVerifiedOK(r, license);
               } else {
                 setStatus("License không hợp lệ hoặc đã hết hạn", "error");
               }
             } catch (e) {
-              const msg = e && e.message ? e.message : "unknown";
-              if (msg.includes("Expired"))
+              const msg = String(e?.message || "unknown");
+              if (msg.includes("User revoked"))
+                setStatus("Tài khoản đã bị khóa (User revoked). Liên hệ admin.", "error");
+              else if (msg.includes("Device revoked"))
+                setStatus("Thiết bị đã bị khóa (Device revoked). Liên hệ admin.", "error");
+              else if (msg.includes("Expired"))
                 setStatus("License đã hết hạn", "error");
               else if (msg.includes("Invalid"))
                 setStatus("License không hợp lệ", "error");
+              else if (msg.includes("License not found"))
+                setStatus("License không tồn tại trên server", "error");
               else if (msg.includes("already bound"))
                 setStatus("License đã được dùng trên thiết bị khác", "error");
               else setStatus("Kích hoạt thất bại: " + msg, "error");
             }
           });
 
+        // Nút yêu cầu cấp lại (giữ nguyên)
         document
           .getElementById("btnRequestReset")
           .addEventListener("click", async () => {
@@ -3290,8 +3300,7 @@ body.modal-open {
               await requestReset(deviceId, oldLicense, note);
             } catch {}
           });
-        setupTestModalInteractions();
-      })();
+      })();;
     </script>
     <!-- TEST MODAL (BÀI KIỂM TRA) -->
     <div class="test-modal-backdrop" id="testModalBackdrop"></div>
