@@ -1704,7 +1704,7 @@
         <main class="main-content">
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
             </h2>
 
             <div class="target-info">
@@ -2920,6 +2920,15 @@
           }
         });
       }
+      // ✅ FIX: Script nằm trước HTML của TEST MODAL nên lần gọi setup đầu tiên
+      // chưa tìm thấy #closeTestModalBtn / #testModalBackdrop.
+      // Đợi DOM parse xong rồi setup lại để nút Đóng + click ra ngoài hoạt động.
+      window.addEventListener("DOMContentLoaded", () => {
+        try {
+          setupTestModalInteractions();
+        } catch (e) {}
+      });
+
       // Thêm dữ liệu test mẫu cho các module khác (tùy chọn)
       testData["Ngữ pháp Văn viết"] = {
         title: "Ngữ pháp Văn viết N1",
