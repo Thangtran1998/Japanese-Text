@@ -1704,7 +1704,7 @@
         <main class="main-content">
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
             </h2>
 
             <div class="target-info">
@@ -3179,9 +3179,19 @@
         updateExamUI("");
         setInterval(() => updateExamUI(""), 60 * 1000);
 
-        // Mặc định: CHƯA cho vào app cho đến khi verify OK
-        showGate(true);
+        // [QUAN TRỌNG] Kiểm tra trạng thái kích hoạt NGAY LẬP TỨC
+        const activatedOnce = localStorage.getItem(LS_ACTIVATED) === "1";
+        if (activatedOnce && savedLicense) {
+          // Nếu đã kích hoạt: Ẩn gate và HIỂN THỊ APP ngay lập tức
+          showGate(false);
+          runAppUI();
+          startBackgroundRecheck(deviceId);
+        } else {
+          // Nếu chưa kích hoạt: Hiện gate
+          showGate(true);
+        }
 
+        // Hàm xử lý khi kích hoạt thành công
         async function handleVerifiedOK(r, licenseUsed) {
           localStorage.setItem(LS_LICENSE, licenseUsed);
           localStorage.setItem(LS_ACTIVATED, "1");
@@ -3201,13 +3211,21 @@
           startBackgroundRecheck(deviceId);
         }
 
-        // Nếu đã có license lưu sẵn -> verify NGAY LẬP TỨC.
+        // Nếu đã có license lưu sẵn -> verify NGAY LẬP TỨC (kiểm tra lại với server)
         if (savedLicense) {
           setStatus("Đang kiểm tra license...", "");
           try {
             const r = await verifyLicense(deviceId, savedLicense);
             if (r && r.ok) {
-              await handleVerifiedOK(r, savedLicense);
+              // Cập nhật lại thông tin từ server
+              localStorage.setItem(LS_ACTIVATED, "1");
+              setStatus(`Kích hoạt OK (hạn: ${r.expiry})`, "ok");
+              updateStatusUI(r.expiry);
+              localStorage.setItem("n1_expiry_date", r.expiry);
+
+              if (r.userName) setUserName(r.userName);
+              if (r.examDate) localStorage.setItem(LS_EXAM_DATE, r.examDate);
+              updateExamUI(r.examDate);
               return;
             }
             throw new Error("Verify failed");
@@ -3228,14 +3246,14 @@
                 "License đã bị thu hồi/không hợp lệ. Vui lòng nhập license mới.",
                 "error",
               );
+              showGate(true); // Hiện gate nếu license không còn hợp lệ
             } else {
               setStatus(
                 "Không kiểm tra được license (server lỗi / mất mạng).",
                 "error",
               );
+              // Giữ nguyên trạng thái (nếu đã ẩn gate thì vẫn ẩn, nếu chưa thì vẫn hiện)
             }
-
-            showGate(true);
           }
         }
 
@@ -3289,7 +3307,7 @@
             }
           });
 
-        // Nút yêu cầu cấp lại (giữ nguyên)
+        // Nút yêu cầu cấp lại
         document
           .getElementById("btnRequestReset")
           .addEventListener("click", async () => {
