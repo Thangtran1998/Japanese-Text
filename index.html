@@ -1608,15 +1608,14 @@
         font-size: 11px;
       }
       /* Khóa scroll ngoài khi mở popup */
-body.modal-open {
-  overflow: hidden;
-}
+      body.modal-open {
+        overflow: hidden;
+      }
 
-/* (Tuỳ chọn) mượt hơn trên mobile */
-body.modal-open {
-  touch-action: none;
-}
-
+      /* (Tuỳ chọn) mượt hơn trên mobile */
+      body.modal-open {
+        touch-action: none;
+      }
     </style>
   </head>
 
@@ -1636,7 +1635,7 @@ body.modal-open {
     <div class="license-gate" id="licenseGate">
       <div class="license-panel">
         <h2 class="panel-title">
-          <i class="fas fa-shield-halved"></i> KÍCH HOẠT BẢN QUYỀN1
+          <i class="fas fa-shield-halved"></i> KÍCH HOẠT BẢN QUYỀN
         </h2>
 
         <div class="license-small">
@@ -1705,7 +1704,7 @@ body.modal-open {
         <main class="main-content">
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
             </h2>
 
             <div class="target-info">
@@ -2064,9 +2063,13 @@ body.modal-open {
         return res.json();
       }
 
-
       async function getProgressMap(deviceId, license, testIds) {
-        if (!deviceId || !license || !Array.isArray(testIds) || testIds.length === 0)
+        if (
+          !deviceId ||
+          !license ||
+          !Array.isArray(testIds) ||
+          testIds.length === 0
+        )
           return {};
 
         try {
@@ -2483,14 +2486,16 @@ body.modal-open {
   - Hiển thị danh sách bài test tương ứng
   - Click test item -> chuyển hướng đến trang html khác
 ========================================================= */
-
+      let __testModalSetupDone = false;
+      let __openTestModalToken = 0;
       // Dữ liệu bài kiểm tra cho từng mục trong module từ vựng
       //Bắt đầu test data
       const testData = {
         // Bài test cho "Từ vựng Mimikara Oboeru"
         "Từ vựng Mimikara Oboeru": {
           title: "Mimikara Oboeru N1",
-          tests: [{
+          tests: [
+            {
               id: 1,
               name: "Từ vựng Mimikara Unit 1 (1-20)",
               questions: 39,
@@ -2506,7 +2511,7 @@ body.modal-open {
               difficulty: "Khó",
               url: "Mimikara-1-2.html",
             },
-{
+            {
               id: 3,
               name: "Từ vựng Mimikara Unit 1 (41-60)",
               questions: 36,
@@ -2514,7 +2519,7 @@ body.modal-open {
               difficulty: "Khó",
               url: "Mimikara-1-3.html",
             },
-{
+            {
               id: 4,
               name: "Từ vựng Mimikara Unit 1 (61-80)",
               questions: 40,
@@ -2522,20 +2527,21 @@ body.modal-open {
               difficulty: "Khó",
               url: "Mimikara-1-4.html",
             },
-{
+            {
               id: 5,
               name: "Từ vựng Mimikara Unit 1 (81-100)",
               questions: 40,
               time: "40 phút",
               difficulty: "Khó",
               url: "Mimikara-1-5.html",
-            }
-],
+            },
+          ],
         },
         // Bài test cho "Từ vựng ThaoLeJP"
         "Từ vựng ThaoLeJP": {
           title: "Từ vựng ThaoLeJP N1",
-          tests: [{
+          tests: [
+            {
               id: 1,
               name: "Test Từ Vựng Ngày 1",
               questions: 40,
@@ -2543,7 +2549,7 @@ body.modal-open {
               difficulty: "Khó",
               url: "vocab-1.html",
             },
-{
+            {
               id: 2,
               name: "Test Từ Vựng Ngày 2",
               questions: 40,
@@ -2551,7 +2557,7 @@ body.modal-open {
               difficulty: "Khó",
               url: "vocab-2.html",
             },
-{
+            {
               id: 3,
               name: "Test Từ Vựng Ngày 3",
               questions: 40,
@@ -2559,7 +2565,7 @@ body.modal-open {
               difficulty: "Khó",
               url: "vocab-3.html",
             },
-{
+            {
               id: 4,
               name: "Test Từ Vựng Ngày 4",
               questions: 40,
@@ -2567,7 +2573,7 @@ body.modal-open {
               difficulty: "Khó",
               url: "vocab-4.html",
             },
-{
+            {
               id: 5,
               name: "Test Từ Vựng Ngày 5",
               questions: 40,
@@ -2575,7 +2581,7 @@ body.modal-open {
               difficulty: "Khó",
               url: "vocab-5.html",
             },
-{
+            {
               id: 6,
               name: "Test Từ Vựng Ngày 6",
               questions: 40,
@@ -2583,7 +2589,7 @@ body.modal-open {
               difficulty: "Khó",
               url: "vocab-6.html",
             },
-{
+            {
               id: 7,
               name: "Test Từ Vựng Ngày 7",
               questions: 38,
@@ -2591,7 +2597,7 @@ body.modal-open {
               difficulty: "Khó",
               url: "vocab-7.html",
             },
-{
+            {
               id: 8,
               name: "Test Từ Vựng Ngày 8",
               questions: 40,
@@ -2599,7 +2605,7 @@ body.modal-open {
               difficulty: "Khó",
               url: "vocab-8.html",
             },
-{
+            {
               id: 9,
               name: "Test Từ Vựng Ngày 9",
               questions: 40,
@@ -2607,7 +2613,7 @@ body.modal-open {
               difficulty: "Khó",
               url: "vocab-9.html",
             },
-{
+            {
               id: 10,
               name: "Test Từ Vựng Ngày 10",
               questions: 40,
@@ -2615,7 +2621,7 @@ body.modal-open {
               difficulty: "Khó",
               url: "vocab-10.html",
             },
-{
+            {
               id: 11,
               name: "Test Từ Vựng Ngày 11",
               questions: 40,
@@ -2623,7 +2629,7 @@ body.modal-open {
               difficulty: "Khó",
               url: "vocab-11.html",
             },
-{
+            {
               id: 12,
               name: "Test Từ Vựng Ngày 12",
               questions: 40,
@@ -2631,7 +2637,7 @@ body.modal-open {
               difficulty: "Khó",
               url: "vocab-12.html",
             },
-{
+            {
               id: 13,
               name: "Test Từ Vựng Ngày 13",
               questions: 40,
@@ -2639,7 +2645,7 @@ body.modal-open {
               difficulty: "Khó",
               url: "vocab-13.html",
             },
-{
+            {
               id: 14,
               name: "Test Từ Vựng Ngày 14",
               questions: 40,
@@ -2647,15 +2653,15 @@ body.modal-open {
               difficulty: "Khó",
               url: "vocab-14.html",
             },
-{
+            {
               id: 15,
               name: "Test Từ Vựng Ngày 15",
               questions: 40,
               time: "40 phút",
               difficulty: "Khó",
               url: "vocab-15.html",
-            }
-],
+            },
+          ],
         },
         // Bài test cho "Từ đồng nghĩa/Trái nghĩa"
         "Từ đồng nghĩa/Trái nghĩa": {
@@ -2754,6 +2760,7 @@ body.modal-open {
 
       // Hàm mở test modal
       async function openTestModal(itemTitle) {
+        const token = ++__openTestModalToken;
         const testModal = document.getElementById("testModal");
         const testBackdrop = document.getElementById("testModalBackdrop");
         const testList = document.getElementById("testList");
@@ -2778,6 +2785,7 @@ body.modal-open {
         const license = localStorage.getItem(LS_LICENSE) || "";
         const testIds = testInfo.tests.map((t) => t.url);
         const progressMap = await getProgressMap(deviceId, license, testIds);
+        if (token !== __openTestModalToken) return;
 
         testInfo.tests.forEach((test) => {
           const testItem = document.createElement("div");
@@ -2843,6 +2851,9 @@ body.modal-open {
 
       // Thêm sự kiện click cho các content-item trong modal từ vựng
       function setupTestModalInteractions() {
+        if (__testModalSetupDone) return;
+        __testModalSetupDone = true;
+
         // Lắng nghe sự kiện click trên frameContent (nơi chứa các content-item)
         const frameContent = document.getElementById("frameContent");
 
@@ -2909,19 +2920,6 @@ body.modal-open {
           }
         });
       }
-
-      // Gọi hàm setup sau khi modal module được khởi tạo
-      // Sửa lại hàm renderModuleToModal để thêm setup sau khi render
-      const originalRenderModuleToModal = renderModuleToModal;
-      renderModuleToModal = function (moduleId) {
-        originalRenderModuleToModal(moduleId);
-
-        // Chỉ setup cho module vocab
-        if (moduleId === "vocab") {
-          setTimeout(setupTestModalInteractions, 100);
-        }
-      };
-
       // Thêm dữ liệu test mẫu cho các module khác (tùy chọn)
       testData["Ngữ pháp Văn viết"] = {
         title: "Ngữ pháp Văn viết N1",
@@ -3155,6 +3153,7 @@ body.modal-open {
         }, 200);
 
         setupModuleInteractions();
+        setupTestModalInteractions();
 
         // Expiry check khi mở app
         const savedExpiry = localStorage.getItem("n1_expiry_date");
@@ -3200,7 +3199,6 @@ body.modal-open {
           showGate(false);
           runAppUI();
           startBackgroundRecheck(deviceId);
-          setupTestModalInteractions();
         }
 
         // Nếu đã có license lưu sẵn -> verify NGAY LẬP TỨC.
@@ -3226,9 +3224,15 @@ body.modal-open {
             if (hardBlock) {
               localStorage.removeItem(LS_LICENSE);
               localStorage.removeItem(LS_ACTIVATED);
-              setStatus("License đã bị thu hồi/không hợp lệ. Vui lòng nhập license mới.", "error");
+              setStatus(
+                "License đã bị thu hồi/không hợp lệ. Vui lòng nhập license mới.",
+                "error",
+              );
             } else {
-              setStatus("Không kiểm tra được license (server lỗi / mất mạng).", "error");
+              setStatus(
+                "Không kiểm tra được license (server lỗi / mất mạng).",
+                "error",
+              );
             }
 
             showGate(true);
@@ -3240,7 +3244,10 @@ body.modal-open {
           .getElementById("btnCopyDevice")
           .addEventListener("click", async () => {
             await copyText(deviceId);
-            setStatus("Đã copy deviceID. Gửi deviceID này để cấp license.", "ok");
+            setStatus(
+              "Đã copy deviceID. Gửi deviceID này để cấp license.",
+              "ok",
+            );
           });
 
         // Nút kích hoạt
@@ -3261,9 +3268,15 @@ body.modal-open {
             } catch (e) {
               const msg = String(e?.message || "unknown");
               if (msg.includes("User revoked"))
-                setStatus("Tài khoản đã bị khóa (User revoked). Liên hệ admin.", "error");
+                setStatus(
+                  "Tài khoản đã bị khóa (User revoked). Liên hệ admin.",
+                  "error",
+                );
               else if (msg.includes("Device revoked"))
-                setStatus("Thiết bị đã bị khóa (Device revoked). Liên hệ admin.", "error");
+                setStatus(
+                  "Thiết bị đã bị khóa (Device revoked). Liên hệ admin.",
+                  "error",
+                );
               else if (msg.includes("Expired"))
                 setStatus("License đã hết hạn", "error");
               else if (msg.includes("Invalid"))
@@ -3300,7 +3313,7 @@ body.modal-open {
               await requestReset(deviceId, oldLicense, note);
             } catch {}
           });
-      })();;
+      })();
     </script>
     <!-- TEST MODAL (BÀI KIỂM TRA) -->
     <div class="test-modal-backdrop" id="testModalBackdrop"></div>
