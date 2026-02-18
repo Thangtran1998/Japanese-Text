@@ -1652,6 +1652,80 @@
         color: white;
         box-shadow: 0 0 15px rgba(0, 168, 255, 0.5);
       }
+            /* Điều chỉnh khoảng cách cho test items */
+      .test-list {
+        flex: 1;
+        overflow-y: auto;
+        padding-right: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px; /* Tăng gap lên 12px để tạo khoảng cách giữa các ô */
+      }
+
+      .test-item {
+        background: rgba(0, 40, 80, 0.4);
+        border: 1px solid rgba(0, 168, 255, 0.2);
+        border-radius: 10px;
+        padding: 15px;
+        cursor: pointer;
+        transition: all 0.25s;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 0; /* Xóa margin bottom nếu có */
+      }
+
+      /* Container cho tests trong Mimikara */
+      .tests-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 12px; /* Tạo khoảng cách giữa các test items */
+        margin-top: 15px;
+      }
+
+      /* Đảm bảo test items trong tests-container cũng có khoảng cách */
+      .tests-container .test-item {
+        margin-bottom: 0;
+        width: 100%;
+      }
+
+      /* Giữ nguyên style cho unit tabs */
+      .unit-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 20px;
+        padding: 10px;
+        background: rgba(0, 30, 60, 0.5);
+        border-radius: 12px;
+        border: 1px solid rgba(0, 150, 255, 0.2);
+      }
+
+      .unit-tab {
+        padding: 8px 16px;
+        background: rgba(0, 40, 80, 0.6);
+        border: 1px solid rgba(0, 150, 255, 0.3);
+        border-radius: 8px;
+        color: #88d3ff;
+        font-family: "Orbitron", sans-serif;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.25s;
+      }
+
+      .unit-tab:hover {
+        background: rgba(0, 80, 120, 0.6);
+        border-color: #00a8ff;
+        transform: translateY(-2px);
+      }
+
+      .unit-tab.active {
+        background: linear-gradient(135deg, #0066cc, #00a8ff);
+        border-color: #00ffcc;
+        color: white;
+        box-shadow: 0 0 15px rgba(0, 168, 255, 0.5);
+      }
     </style>
   </head>
 
@@ -1740,7 +1814,7 @@
         <main class="main-content">
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
             </h2>
 
             <div class="target-info">
