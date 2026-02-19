@@ -2136,8 +2136,8 @@
       }
 
       .task-item:hover {
-        background: rgba(0, 60, 100, 0.5);
-        border-color: #ff9900;
+        background: rgba(0, 80, 160, 0.5); /* Đổi từ cam sang xanh */
+        border-color: #00a8ff;
         transform: translateX(5px);
       }
 
@@ -2151,7 +2151,7 @@
         width: 22px;
         height: 22px;
         border-radius: 6px;
-        border: 2px solid #ff9900;
+        border: 2px solid #00a8ff;
         background: transparent;
         display: flex;
         align-items: center;
@@ -2241,11 +2241,11 @@
 
       .progress-fill {
         height: 100%;
-        background: linear-gradient(to right, #ff9900, #ffcc00);
+        background: linear-gradient(to right, #0066cc, #00a8ff, #00ffcc);
         border-radius: 4px;
         width: 0%;
         transition: width 0.4s ease;
-        box-shadow: 0 0 10px rgba(255, 153, 0, 0.5);
+        box-shadow: 0 0 10px rgba(0, 168, 255, 0.5);
       }
 
       .progress-text {
@@ -2359,6 +2359,38 @@
           transform: scale(1);
         }
       }
+      /* Nút xóa task */
+      .task-delete {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: rgba(255, 50, 50, 0.2);
+        border: 1px solid rgba(255, 50, 50, 0.3);
+        color: #ff6666;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        cursor: pointer;
+        opacity: 0;
+        transition: all 0.3s;
+        margin-left: 5px;
+      }
+
+      .task-item:hover .task-delete {
+        opacity: 1;
+      }
+
+      .task-delete:hover {
+        background: rgba(255, 50, 50, 0.4);
+        border-color: #ff3333;
+        color: #ff3333;
+        transform: scale(1.1);
+      }
+
+      .task-delete i {
+        pointer-events: none;
+      }
     </style>
   </head>
 
@@ -2447,7 +2479,7 @@
         <main class="main-content">
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
             </h2>
 
             <div class="target-info">
@@ -2503,7 +2535,6 @@
                     <div class="column-title">
                       <i class="fas fa-clipboard-list"></i> NHIỆM VỤ HIỆN TẠI
                     </div>
-                    <div class="column-subtitle" id="currentDate"></div>
                   </div>
 
                   <div class="task-list" id="currentTaskList">
@@ -2555,7 +2586,6 @@
                     <div class="column-title">
                       <i class="fas fa-step-forward"></i> NHIỆM VỤ TIẾP THEO
                     </div>
-                    <div class="column-subtitle" id="nextDate"></div>
                   </div>
 
                   <div class="task-list" id="nextTaskList">
@@ -2565,17 +2595,26 @@
                       <div class="task-content">
                         <div class="task-name">Học 25 từ kanji</div>
                       </div>
+                      <div class="task-delete" title="Xóa nhiệm vụ">
+                        <i class="fas fa-times"></i>
+                      </div>
                     </div>
                     <div class="task-item next-task">
                       <div class="task-bullet">•</div>
                       <div class="task-content">
                         <div class="task-name">Ôn tập 40 từ vựng</div>
                       </div>
+                      <div class="task-delete" title="Xóa nhiệm vụ">
+                        <i class="fas fa-times"></i>
+                      </div>
                     </div>
                     <div class="task-item next-task">
                       <div class="task-bullet">•</div>
                       <div class="task-content">
                         <div class="task-name">Làm 2 bài test ngữ pháp</div>
+                      </div>
+                      <div class="task-delete" title="Xóa nhiệm vụ">
+                        <i class="fas fa-times"></i>
                       </div>
                     </div>
                   </div>
@@ -4768,24 +4807,6 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
         const month = (date.getMonth() + 1).toString().padStart(2, "0");
         return `${day}/${month}`;
       }
-
-      // Cập nhật ngày hiện tại và ngày mai
-      function updateDates() {
-        const today = new Date();
-        const tomorrow = new Date(today);
-        tomorrow.setDate(tomorrow.getDate() + 1);
-
-        const currentDateEl = document.getElementById("currentDate");
-        const nextDateEl = document.getElementById("nextDate");
-
-        if (currentDateEl) {
-          currentDateEl.textContent = `(HÔM NAY - ${formatDate(today)})`;
-        }
-        if (nextDateEl) {
-          nextDateEl.textContent = `(NGÀY MAI - ${formatDate(tomorrow)})`;
-        }
-      }
-
       // Cập nhật streak từ localStorage
       function updateStreak() {
         const streakEl = document.getElementById("streakDays");
@@ -4825,14 +4846,17 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
         }
       }
 
-      // Xử lý click vào task checkbox
+      // Cập nhật hàm setupTaskInteractions để không xung đột với nút xóa
       function setupTaskInteractions() {
         const taskItems = document.querySelectorAll(
           ".current-tasks .task-item",
         );
 
         taskItems.forEach((item) => {
-          item.addEventListener("click", function () {
+          // Chỉ xử lý click khi không click vào nút xóa
+          item.addEventListener("click", function (e) {
+            if (e.target.closest(".task-delete")) return; // Bỏ qua nếu click vào nút xóa
+
             const checkbox = this.querySelector(".task-checkbox i");
             const isCompleted = this.classList.contains("completed");
 
@@ -4867,8 +4891,33 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
         if (progressFill) progressFill.style.width = percent + "%";
         if (progressText) progressText.textContent = `${done}/${total}`;
       }
+      // Xử lý xóa task
+      function setupDeleteButtons() {
+        const deleteButtons = document.querySelectorAll(".task-delete");
 
-      // Xử lý thêm task mới
+        deleteButtons.forEach((btn) => {
+          btn.addEventListener("click", function (e) {
+            e.stopPropagation(); // Không trigger click của task item
+
+            const taskItem = this.closest(".task-item");
+            const isNextTask = taskItem.closest(".next-tasks") !== null;
+
+            // Animation xóa
+            taskItem.style.transform = "scale(0.8)";
+            taskItem.style.opacity = "0";
+
+            setTimeout(() => {
+              taskItem.remove();
+
+              // Cập nhật progress nếu là task hiện tại
+              if (!isNextTask) {
+                updateProgress();
+              }
+            }, 300);
+          });
+        });
+      }
+      // Cập nhật hàm setupAddTask để thêm nút xóa cho task mới
       function setupAddTask() {
         const addBtn = document.getElementById("addTaskPlaceholder");
 
@@ -4885,9 +4934,26 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
                 <div class="task-content">
                   <div class="task-name">${taskName}</div>
                 </div>
+                <div class="task-delete" title="Xóa nhiệm vụ">
+                  <i class="fas fa-times"></i>
+                </div>
               `;
 
               nextTaskList.appendChild(taskItem);
+
+              // Gán lại sự kiện xóa cho task mới
+              const newDeleteBtn = taskItem.querySelector(".task-delete");
+              newDeleteBtn.addEventListener("click", function (e) {
+                e.stopPropagation();
+                const taskItem = this.closest(".task-item");
+
+                taskItem.style.transform = "scale(0.8)";
+                taskItem.style.opacity = "0";
+
+                setTimeout(() => {
+                  taskItem.remove();
+                }, 300);
+              });
             }
           });
         }
@@ -4906,12 +4972,12 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
         }
       }
 
-      // Khởi tạo tất cả
+      // Cập nhật hàm initStreakDashboard để gọi setupDeleteButtons
       function initStreakDashboard() {
-        updateDates();
         updateStreak();
         updateActivationFooter();
         setupTaskInteractions();
+        setupDeleteButtons(); // THÊM DÒNG NÀY
         setupAddTask();
         setupHistoryButton();
         updateProgress();
