@@ -1972,7 +1972,7 @@
         <main class="main-content">
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
             </h2>
 
             <div class="target-info">
@@ -2544,6 +2544,59 @@
           border: "rgba(255, 150, 0, 0.3)",
           color: "#ffaa00",
         };
+      }
+      // ===== WORD COUNT HELPERS (ceil(questions/2)) =====
+      function wordsFromQuestions(n) {
+        const q = Number(n || 0);
+        if (!Number.isFinite(q) || q <= 0) return 0;
+        return Math.ceil(q / 2);
+      }
+
+      function flattenTestsFromTestInfo(testInfo) {
+        // Trả về mảng test objects có dạng {url, questions, ...}
+        if (!testInfo) return [];
+        if (Array.isArray(testInfo.tests)) return testInfo.tests;
+
+        if (Array.isArray(testInfo.units)) {
+          const all = [];
+          testInfo.units.forEach((u) => {
+            if (u && Array.isArray(u.tests)) all.push(...u.tests);
+          });
+          return all;
+        }
+        return [];
+      }
+
+      function calcABFromTests(tests, progressMap) {
+        // b: tổng words toàn bộ tests
+        // a: tổng words của tests đã hoàn thành (perfectCount>=3)
+        let a = 0;
+        let b = 0;
+
+        (tests || []).forEach((t) => {
+          const w = wordsFromQuestions(t.questions);
+          b += w;
+
+          const p = progressMap && t.url ? progressMap[t.url] || {} : {};
+          const perfectCount = Number(p?.perfectCount || 0);
+          if (perfectCount >= 3) a += w;
+        });
+
+        return { a, b };
+      }
+      async function getProgressMapForItemTitle(itemTitle) {
+        const testInfo = testData[itemTitle];
+        const tests = flattenTestsFromTestInfo(testInfo);
+        const testIds = tests.map((t) => t.url).filter(Boolean);
+
+        const deviceId = localStorage.getItem(LS_DEVICE_ID) || "";
+        const license = localStorage.getItem(LS_LICENSE) || "";
+
+        // chưa kích hoạt => không có progress
+        if (!license || testIds.length === 0) return {};
+
+        const r = await getCachedProgress(deviceId, license, testIds);
+        return r.data || {};
       }
 
       async function requestReset(deviceId, oldLicense, note) {
@@ -3639,7 +3692,7 @@
         modal.setAttribute("aria-hidden", "true");
       }
 
-      function renderModuleToModal(moduleId) {
+      async function renderModuleToModal(moduleId) {
         const data = moduleContents[moduleId];
         if (!data) return;
 
@@ -3652,33 +3705,82 @@
         if (frameIcon) frameIcon.className = data.icon;
         if (statusText) statusText.textContent = `Đang xem: ${data.title}`;
 
+        // Render khung trước cho mượt
         frameContent.innerHTML = "";
+
+        // Tạo list item trước (stats tạm)
+        const itemEls = [];
         data.items.forEach((item) => {
           const itemEl = document.createElement("div");
           itemEl.className = "content-item";
+
+          // NOTE: gắn data-title để sau update stats
+          itemEl.setAttribute("data-item-title", item.title);
+
           itemEl.innerHTML = `
-            <div class="item-title">
-              <i class="fas fa-circle"></i> ${item.title}
-            </div>
-            <div class="item-desc">${item.desc}</div>
-            <div class="item-stats">${item.stats}</div>
-            <div class="item-progress">
-              <div class="item-progress-fill" style="width: ${item.progress}%"></div>
-            </div>
-          `;
+      <div class="item-title">
+        <i class="fas fa-circle"></i> ${item.title}
+      </div>
+      <div class="item-desc">${item.desc}</div>
+      <div class="item-stats">Đã học: .../... </div>
+      <div class="item-progress">
+        <div class="item-progress-fill" style="width: ${item.progress}%"></div>
+      </div>
+    `;
           frameContent.appendChild(itemEl);
+          itemEls.push(itemEl);
         });
+
+        // ====== AUTO CALC: chỉ làm cho module vocab (đúng yêu cầu bạn) ======
+        if (moduleId !== "vocab") return;
+
+        // Nếu chưa kích hoạt license: vẫn tính b (tổng), a=0
+        const license = localStorage.getItem(LS_LICENSE) || "";
+        const hasLicense = !!license;
+
+        // Làm từng item (không show loading toàn màn hình để đỡ khó chịu)
+        // Nhưng vẫn tận dụng cache progress để không gọi API nhiều lần
+        for (const el of itemEls) {
+          const itemTitle = el.getAttribute("data-item-title") || "";
+          const statsEl = el.querySelector(".item-stats");
+          if (!statsEl) continue;
+
+          const testInfo = testData[itemTitle];
+          const tests = flattenTestsFromTestInfo(testInfo);
+
+          // Nếu item chưa có testData -> giữ nguyên / báo cập nhật
+          if (!testInfo || !tests.length) {
+            statsEl.textContent = "Đã học: 0/0";
+            continue;
+          }
+
+          // Tính b luôn (không cần progress)
+          const { a: a0, b } = calcABFromTests(tests, {}); // a0 = 0
+          if (!hasLicense) {
+            statsEl.textContent = `Đã học: 0/${b}`;
+            continue;
+          }
+
+          // Có license -> lấy progressMap và tính a/b chuẩn
+          try {
+            const progressMap = await getProgressMapForItemTitle(itemTitle);
+            const { a, b: b2 } = calcABFromTests(tests, progressMap);
+            statsEl.textContent = `Đã học: ${a}/${b2}`;
+          } catch {
+            // Nếu lỗi server => vẫn hiển thị b
+            statsEl.textContent = `Đã học: 0/${b}`;
+          }
+        }
       }
 
-      function lockAndOpen(moduleId) {
+      async function lockAndOpen(moduleId) {
         lockedModule = moduleId;
 
         clearAllCardStates();
         const card = getModuleCard(moduleId);
         if (card) card.classList.add("locked");
-
-        renderModuleToModal(moduleId);
         openModal();
+        await renderModuleToModal(moduleId);
       }
 
       function unlockAndClose() {
@@ -3690,10 +3792,11 @@
       function setupModuleInteractions() {
         document.querySelectorAll(".module-card").forEach((card) => {
           const moduleId = card.getAttribute("data-module");
-          card.addEventListener("click", (e) => {
+          card.addEventListener("click", async (e) => {
             e.preventDefault();
-            lockAndOpen(moduleId);
+            await lockAndOpen(moduleId);
           });
+
           card.addEventListener("contextmenu", (e) => e.preventDefault());
         });
 
