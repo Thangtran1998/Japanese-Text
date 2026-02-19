@@ -1967,289 +1967,6 @@
       color: #88d3ff;
       letter-spacing: 1px;
     }
-          /* ===== STREAK DASHBOARD MỚI ===== */
-      .streak-dashboard {
-        background: rgba(0, 30, 60, 0.7);
-        border-radius: 16px;
-        padding: 25px;
-        margin-top: 20px;
-        border: 1px solid rgba(255, 153, 0, 0.3);
-        position: relative;
-        overflow: hidden;
-        backdrop-filter: blur(10px);
-      }
-
-      .streak-dashboard::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(45deg,
-            transparent 30%,
-            rgba(255, 153, 0, 0.1) 50%,
-            transparent 70%);
-        animation: shine 3s infinite;
-        pointer-events: none;
-      }
-
-      .streak-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-        padding-bottom: 15px;
-        border-bottom: 1px solid rgba(255, 153, 0, 0.3);
-      }
-
-      .streak-title {
-        font-family: "Orbitron", sans-serif;
-        font-size: 20px;
-        color: #ff9900;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .streak-badge {
-        font-family: "Orbitron", sans-serif;
-        font-size: 24px;
-        font-weight: 900;
-        color: #ffcc00;
-        text-shadow: 0 0 15px rgba(255, 204, 0, 0.7);
-        background: rgba(0, 0, 0, 0.3);
-        padding: 5px 15px;
-        border-radius: 30px;
-        border: 1px solid rgba(255, 204, 0, 0.3);
-      }
-
-      .dashboard-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 25px;
-      }
-
-      @media (max-width: 768px) {
-        .dashboard-grid {
-          grid-template-columns: 1fr;
-          gap: 20px;
-        }
-      }
-
-      .column-title {
-        font-family: "Orbitron", sans-serif;
-        font-size: 16px;
-        color: #00e5ff;
-        margin-bottom: 15px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-
-      /* Task List Styles */
-      .task-list {
-        min-height: 200px;
-        max-height: 250px;
-        overflow-y: auto;
-        padding-right: 5px;
-        margin-bottom: 15px;
-      }
-
-      .task-list::-webkit-scrollbar {
-        width: 5px;
-      }
-
-      .task-list::-webkit-scrollbar-track {
-        background: rgba(0, 30, 60, 0.3);
-        border-radius: 3px;
-      }
-
-      .task-list::-webkit-scrollbar-thumb {
-        background: linear-gradient(to bottom, #ff9900, #ffcc00);
-        border-radius: 3px;
-      }
-
-      .task-item {
-        background: rgba(0, 40, 80, 0.4);
-        border: 1px solid rgba(255, 153, 0, 0.2);
-        border-radius: 8px;
-        padding: 12px 15px;
-        margin-bottom: 8px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        cursor: pointer;
-        transition: all 0.3s;
-      }
-
-      .task-item:hover {
-        background: rgba(0, 60, 100, 0.5);
-        border-color: #ff9900;
-        transform: translateX(5px);
-      }
-
-      .task-item.completed {
-        background: rgba(0, 80, 40, 0.3);
-        border-color: #00ff99;
-        opacity: 0.8;
-      }
-
-      .task-checkbox {
-        width: 22px;
-        height: 22px;
-        border-radius: 6px;
-        border: 2px solid #ff9900;
-        background: transparent;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #00ff99;
-        font-size: 14px;
-        transition: all 0.3s;
-      }
-
-      .task-item.completed .task-checkbox {
-        background: #00ff99;
-        border-color: #00ff99;
-        color: #0a0e17;
-      }
-
-      .task-content {
-        flex: 1;
-      }
-
-      .task-name {
-        font-size: 15px;
-        color: #e0f7ff;
-        margin-bottom: 4px;
-      }
-
-      .task-item.completed .task-name {
-        text-decoration: line-through;
-        color: #88d3ff;
-      }
-
-      .task-day {
-        font-size: 12px;
-        color: #ff9900;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-      }
-
-      .task-progress {
-        margin-top: 10px;
-      }
-
-      .progress-bar {
-        height: 8px;
-        background: rgba(0, 50, 100, 0.5);
-        border-radius: 4px;
-        overflow: hidden;
-        margin-bottom: 8px;
-      }
-
-      .progress-fill {
-        height: 100%;
-        background: linear-gradient(to right, #ff9900, #ffcc00);
-        border-radius: 4px;
-        width: 0%;
-        transition: width 0.4s ease;
-      }
-
-      .progress-text {
-        display: flex;
-        justify-content: space-between;
-        font-size: 13px;
-        color: #88d3ff;
-      }
-
-      /* Calendar Styles */
-      .week-calendar {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-      }
-
-      .calendar-row {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        background: rgba(0, 30, 60, 0.4);
-        border-radius: 8px;
-        padding: 10px;
-        border: 1px solid rgba(255, 153, 0, 0.2);
-      }
-
-      .day-label {
-        min-width: 35px;
-        font-family: "Orbitron", sans-serif;
-        font-size: 14px;
-        color: #ff9900;
-        text-align: center;
-      }
-
-      .day-bar-container {
-        flex: 1;
-        height: 30px;
-        background: rgba(0, 20, 40, 0.6);
-        border-radius: 15px;
-        overflow: hidden;
-        position: relative;
-      }
-
-      .day-bar {
-        height: 100%;
-        background: linear-gradient(90deg, #ff9900, #ffcc00);
-        border-radius: 15px;
-        width: 0%;
-        transition: width 0.4s ease;
-        box-shadow: 0 0 15px rgba(255, 153, 0, 0.5);
-      }
-
-      .day-value {
-        min-width: 40px;
-        font-size: 12px;
-        color: #88d3ff;
-        text-align: right;
-      }
-
-      .calendar-legend {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 10px;
-        padding: 10px;
-        background: rgba(0, 20, 40, 0.4);
-        border-radius: 8px;
-        font-size: 12px;
-        color: #a0c8e0;
-      }
-
-      .legend-item {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-      }
-
-      .legend-color {
-        width: 12px;
-        height: 12px;
-        border-radius: 3px;
-      }
-
-      .legend-color.today {
-        background: #ffcc00;
-        box-shadow: 0 0 10px #ffcc00;
-      }
-
-      .legend-color.completed {
-        background: #00ff99;
-      }
-
-      .legend-color.partial {
-        background: #ff9900;
-      }
   </style>
 </head>
 
@@ -2334,7 +2051,7 @@
       <main class="main-content">
         <section class="mission-panel">
           <h2 class="panel-title">
-            <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
+            <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
           </h2>
 
           <div class="target-info">
@@ -2372,48 +2089,15 @@
             </div>
           </div>
 
-                    <!-- ===== STREAK DASHBOARD MỚI ===== -->
-          <div class="streak-dashboard">
-            <div class="streak-header">
-              <div class="streak-title">
-                <i class="fas fa-fire"></i> CHUỖI HOẠT ĐỘNG
-              </div>
-              <div class="streak-badge" id="streakDays">0 NGÀY</div>
+          <div class="streak-counter">
+            <div class="streak-title">
+              <i class="fas fa-fire"></i> CHUỖI HOẠT ĐỘNG
             </div>
-
-            <div class="dashboard-grid">
-              <!-- Cột 1: Nhiệm vụ hôm nay -->
-              <div class="task-column">
-                <div class="column-title">
-                  <i class="fas fa-clipboard-list"></i> NHIỆM VỤ HÔM NAY
-                </div>
-                <div class="task-list" id="taskList">
-                  <!-- Nhiệm vụ sẽ được render bằng JS -->
-                </div>
-                <div class="task-progress">
-                  <div class="progress-bar">
-                    <div class="progress-fill" id="taskProgressFill" style="width: 0%"></div>
-                  </div>
-                  <div class="progress-text">
-                    <span>Hoàn thành</span>
-                    <span id="taskProgressText">0/0</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Cột 2: Lịch 7 ngày -->
-              <div class="calendar-column">
-                <div class="column-title">
-                  <i class="fas fa-calendar-alt"></i> 7 NGÀY GẦN NHẤT
-                </div>
-                <div class="week-calendar" id="weekCalendar">
-                  <!-- Calendar sẽ được render bằng JS -->
-                </div>
-              </div>
-            </div>
+            <div class="streak-days">5 NGÀY</div>
+            <div class="streak-text">liên tiếp hoàn thành nhiệm vụ!</div>
           </div>
 
-
+          
         </section>
 
         <section class="mission-panel">
@@ -2494,9 +2178,9 @@
             </div>
           </div>
 
-            <button class="start-button" id="systemStartBtn">
+          <a href="#" class="start-button">
             <i class="fas fa-play-circle"></i> KHỞI ĐỘNG HỆ THỐNG HỌC TẬP
-          </button>
+          </a>
         </section>
       </main>
 
@@ -3733,203 +3417,6 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
       },
     };
     //Kết thúc test data
-      // ==================== NHIỆM VỤ HÀNG NGÀY ====================
-      const DAILY_TASKS = [
-        { id: 1, name: "Học 20 từ vựng mới", defaultCompleted: false },
-        { id: 2, name: "Ôn tập 30 từ cũ", defaultCompleted: false },
-        { id: 3, name: "Làm 1 bài test Mimikara", defaultCompleted: false },
-        { id: 4, name: "Luyện nghe 15 phút", defaultCompleted: false },
-        { id: 5, name: "Đọc 1 bài báo", defaultCompleted: false },
-      ];
-
-      // Dữ liệu mẫu cho 7 ngày gần nhất
-      const WEEK_DATA = {
-        labels: ["T2", "T3", "T4", "T5", "T6", "T7", "CN"],
-        values: [85, 60, 92, 78, 45, 100, 70], // % hoàn thành
-        dates: [] // sẽ được tính tự động
-      };
-          // ==================== SYSTEM ACTIVATION ====================
-      let systemActivated = false;
-      let activationDate = null;
-
-      // ==================== TASK MANAGEMENT ====================
-      let userTasks = [];
-      let taskStats = {
-        completed: 0,
-        total: 0,
-        dailyProgress: {}
-      };
-          // Khởi tạo nhiệm vụ cho ngày hiện tại
-      function initDailyTasks() {
-        const today = new Date().toDateString();
-        const savedTasks = localStorage.getItem('dailyTasks');
-        const savedDate = localStorage.getItem('tasksDate');
-        
-        // Nếu đã có tasks cho hôm nay thì dùng lại
-        if (savedTasks && savedDate === today) {
-          userTasks = JSON.parse(savedTasks);
-        } else {
-          // Tạo tasks mới cho hôm nay
-          userTasks = DAILY_TASKS.map(task => ({
-            ...task,
-            completed: task.defaultCompleted,
-            day: 1 // Ngày thứ 1 kể từ khi kích hoạt
-          }));
-          localStorage.setItem('dailyTasks', JSON.stringify(userTasks));
-          localStorage.setItem('tasksDate', today);
-        }
-        
-        updateTaskStats();
-        renderTasks();
-      }
-
-      // Cập nhật thống kê nhiệm vụ
-      function updateTaskStats() {
-        taskStats.completed = userTasks.filter(t => t.completed).length;
-        taskStats.total = userTasks.length;
-        
-        // Cập nhật progress bar
-        const percent = taskStats.total > 0 
-          ? Math.round((taskStats.completed / taskStats.total) * 100) 
-          : 0;
-        
-        const progressFill = document.getElementById('taskProgressFill');
-        const progressText = document.getElementById('taskProgressText');
-        
-        if (progressFill) progressFill.style.width = percent + '%';
-        if (progressText) progressText.textContent = `${taskStats.completed}/${taskStats.total}`;
-        
-        // Lưu vào localStorage
-        localStorage.setItem('taskStats', JSON.stringify(taskStats));
-      }
-
-      // Render danh sách nhiệm vụ
-      function renderTasks() {
-        const taskList = document.getElementById('taskList');
-        if (!taskList) return;
-        
-        taskList.innerHTML = '';
-        
-        userTasks.forEach(task => {
-          const taskItem = document.createElement('div');
-          taskItem.className = `task-item ${task.completed ? 'completed' : ''}`;
-          taskItem.setAttribute('data-task-id', task.id);
-          
-          taskItem.innerHTML = `
-            <div class="task-checkbox">
-              <i class="fas fa-${task.completed ? 'check' : 'square'}"></i>
-            </div>
-            <div class="task-content">
-              <div class="task-name">${task.name}</div>
-              <div class="task-day">
-                <i class="fas fa-calendar-day"></i> Ngày ${task.day}
-              </div>
-            </div>
-          `;
-          
-          taskItem.addEventListener('click', () => toggleTask(task.id));
-          taskList.appendChild(taskItem);
-        });
-      }
-
-      // Toggle trạng thái nhiệm vụ
-      function toggleTask(taskId) {
-        const task = userTasks.find(t => t.id === taskId);
-        if (task) {
-          task.completed = !task.completed;
-          
-          // Animation
-          const taskElement = document.querySelector(`[data-task-id="${taskId}"]`);
-          if (taskElement) {
-            taskElement.style.transform = 'scale(0.98)';
-            setTimeout(() => taskElement.style.transform = '', 150);
-          }
-          
-          localStorage.setItem('dailyTasks', JSON.stringify(userTasks));
-          updateTaskStats();
-          renderTasks(); // Re-render để cập nhật icon
-          updateWeekCalendar(); // Cập nhật calendar
-        }
-      }
-
-      // Render lịch 7 ngày
-      function renderWeekCalendar() {
-        const calendar = document.getElementById('weekCalendar');
-        if (!calendar) return;
-        
-        // Tính toán dates
-        const today = new Date();
-        const weekDates = [];
-        for (let i = 6; i >= 0; i--) {
-          const date = new Date(today);
-          date.setDate(today.getDate() - i);
-          weekDates.push(date);
-        }
-        
-        // Lấy hoặc tạo dữ liệu cho 7 ngày
-        let weekData = JSON.parse(localStorage.getItem('weekData'));
-        if (!weekData) {
-          weekData = WEEK_DATA.values;
-          localStorage.setItem('weekData', JSON.stringify(weekData));
-        }
-        
-        calendar.innerHTML = '';
-        
-        WEEK_DATA.labels.forEach((label, index) => {
-          const date = weekDates[index];
-          const isToday = index === 6; // Ngày cuối cùng là hôm nay
-          const dayValue = weekData[index] || 0;
-          
-          const row = document.createElement('div');
-          row.className = 'calendar-row';
-          
-          row.innerHTML = `
-            <div class="day-label">${label}</div>
-            <div class="day-bar-container">
-              <div class="day-bar" style="width: ${dayValue}%"></div>
-            </div>
-            <div class="day-value">${Math.round(dayValue)}%</div>
-          `;
-          
-          calendar.appendChild(row);
-        });
-        
-        // Thêm legend
-        const legend = document.createElement('div');
-        legend.className = 'calendar-legend';
-        legend.innerHTML = `
-          <div class="legend-item">
-            <div class="legend-color today"></div>
-            <span>Hôm nay</span>
-          </div>
-          <div class="legend-item">
-            <div class="legend-color completed"></div>
-            <span>Hoàn thành >70%</span>
-          </div>
-          <div class="legend-item">
-            <div class="legend-color partial"></div>
-            <span>Đang tiến triển</span>
-          </div>
-        `;
-        calendar.appendChild(legend);
-      }
-
-      // Cập nhật calendar dựa trên tasks
-      function updateWeekCalendar() {
-        const today = new Date().getDay(); // 0 = Chủ nhật
-        const weekData = JSON.parse(localStorage.getItem('weekData')) || WEEK_DATA.values;
-        
-        // Tính % hoàn thành hôm nay
-        const todayPercent = taskStats.total > 0 
-          ? Math.round((taskStats.completed / taskStats.total) * 100) 
-          : 0;
-        
-        // Cập nhật ngày hôm nay (index 6)
-        weekData[6] = todayPercent;
-        
-        localStorage.setItem('weekData', JSON.stringify(weekData));
-        renderWeekCalendar();
-      }
 
     // Hàm mở test modal
     async function openTestModal(itemTitle) {
@@ -4574,8 +4061,7 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
         streakDays.textContent = `${count} NGÀY`;
         if (count === targetCount) clearInterval(countInterval);
       }, 200);
-      initDailyTasks();
-      renderWeekCalendar();
+
       setupModuleInteractions();
       setupTestModalInteractions();
       updateMainModulesProgress();
@@ -4586,92 +4072,7 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
 
       console.log("App UI initialized");
     }
-          // ==================== HỆ THỐNG KÍCH HOẠT ====================
-      function initSystemActivation() {
-        const startBtn = document.getElementById('systemStartBtn');
-        if (!startBtn) return;
-        
-        // Kiểm tra trạng thái đã kích hoạt chưa
-        const activated = localStorage.getItem('systemActivated') === 'true';
-        const actDate = localStorage.getItem('activationDate');
-        
-        if (activated && actDate) {
-          // Đã kích hoạt rồi
-          systemActivated = true;
-          activationDate = new Date(actDate);
-          
-          // Format ngày tháng
-          const day = activationDate.getDate().toString().padStart(2, '0');
-          const month = (activationDate.getMonth() + 1).toString().padStart(2, '0');
-          const year = activationDate.getFullYear();
-          
-          startBtn.innerHTML = `<i class="fas fa-check-circle"></i> HỆ THỐNG LUYỆN THI N1 ĐÃ ĐƯỢC KÍCH HOẠT NGÀY ${day}/${month}/${year}`;
-          startBtn.disabled = true;
-          startBtn.style.opacity = '0.8';
-          startBtn.style.cursor = 'not-allowed';
-          startBtn.style.pointerEvents = 'none';
-          
-          // Cập nhật streak days từ ngày kích hoạt
-          updateStreakFromActivation();
-        } else {
-          // Chưa kích hoạt
-          startBtn.addEventListener('click', activateSystem);
-        }
-      }
 
-      function activateSystem(e) {
-        e.preventDefault();
-        
-        const startBtn = document.getElementById('systemStartBtn');
-        const now = new Date();
-        
-        // Lưu vào localStorage
-        localStorage.setItem('systemActivated', 'true');
-        localStorage.setItem('activationDate', now.toISOString());
-        
-        systemActivated = true;
-        activationDate = now;
-        
-        // Format ngày tháng
-        const day = now.getDate().toString().padStart(2, '0');
-        const month = (now.getMonth() + 1).toString().padStart(2, '0');
-        const year = now.getFullYear();
-        
-        // Hiệu ứng loading
-        startBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ĐANG KÍCH HOẠT...';
-        startBtn.disabled = true;
-        
-        setTimeout(() => {
-          startBtn.innerHTML = `<i class="fas fa-check-circle"></i> HỆ THỐNG LUYỆN THI N1 ĐÃ ĐƯỢC KÍCH HOẠT NGÀY ${day}/${month}/${year}`;
-          startBtn.style.opacity = '0.8';
-          startBtn.style.cursor = 'not-allowed';
-          startBtn.style.pointerEvents = 'none';
-          
-          // Cập nhật streak
-          updateStreakFromActivation();
-          
-          // Hiệu ứng
-          startBtn.style.transform = 'scale(1.02)';
-          setTimeout(() => startBtn.style.transform = '', 200);
-        }, 1500);
-      }
-
-      function updateStreakFromActivation() {
-        if (!activationDate) return;
-        
-        const today = new Date();
-        const diffTime = Math.abs(today - activationDate);
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        
-        const streakElement = document.getElementById('streakDays');
-        if (streakElement) {
-          streakElement.textContent = `${diffDays} NGÀY`;
-          
-          // Animation
-          streakElement.style.transform = 'scale(1.1)';
-          setTimeout(() => streakElement.style.transform = '', 300);
-        }
-      }
     /* =========================================================
       Boot
     ========================================================= */
@@ -4696,7 +4097,6 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
         showGate(false);
         runAppUI();
         startBackgroundRecheck(deviceId);
-        initSystemActivation(); 
       } else {
         // Nếu chưa kích hoạt: Hiện gate
         showGate(true);
