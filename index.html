@@ -1726,6 +1726,63 @@
         color: white;
         box-shadow: 0 0 15px rgba(0, 168, 255, 0.5);
       }
+            /* ===== SKELETON LOADING ===== */
+      .skeleton-container {
+        width: 100%;
+        animation: skeleton-fade 1.5s ease-in-out infinite;
+      }
+
+      .skeleton-item {
+        background: linear-gradient(90deg, 
+          rgba(0, 40, 80, 0.3) 25%, 
+          rgba(0, 80, 120, 0.5) 50%, 
+          rgba(0, 40, 80, 0.3) 75%);
+        background-size: 200% 100%;
+        animation: skeleton-shimmer 1.5s infinite;
+        border-radius: 10px;
+        height: 90px;
+        margin-bottom: 12px;
+        border: 1px solid rgba(0, 150, 255, 0.2);
+      }
+
+      .skeleton-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background: rgba(0, 100, 200, 0.3);
+        float: left;
+        margin: 15px;
+      }
+
+      .skeleton-line {
+        height: 16px;
+        background: rgba(0, 100, 200, 0.2);
+        margin: 15px 15px 15px 70px;
+        border-radius: 4px;
+      }
+
+      .skeleton-line.short {
+        width: 60%;
+      }
+
+      @keyframes skeleton-shimmer {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+      }
+
+      @keyframes skeleton-fade {
+        0%, 100% { opacity: 0.7; }
+        50% { opacity: 1; }
+      }
+
+      .loading-text {
+        text-align: center;
+        padding: 30px;
+        color: var(--secondary-glow);
+        font-family: 'Orbitron', sans-serif;
+        font-size: 14px;
+        animation: pulse 1.5s ease-in-out infinite;
+      }
     </style>
   </head>
 
@@ -1814,7 +1871,7 @@
         <main class="main-content">
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
             </h2>
 
             <div class="target-info">
@@ -2042,6 +2099,21 @@
         
         console.log("✅ Đã cập nhật cache");
         return data;
+      }
+            // Tạo skeleton loading HTML
+      function createSkeletonLoading() {
+        return `
+          <div class="skeleton-container">
+            ${Array(5).fill().map(() => `
+              <div class="skeleton-item">
+                <div class="skeleton-icon"></div>
+                <div class="skeleton-line"></div>
+                <div class="skeleton-line short"></div>
+              </div>
+            `).join('')}
+            <div class="loading-text">ĐANG TẢI BÀI KIỂM TRA...</div>
+          </div>
+        `;
       }
       const API_URL = "https://n1-license-server.onrender.com/api";
       const LS_DEVICE_ID = "n1_device_id";
@@ -2957,7 +3029,7 @@
           // Hàm hiển thị tests của unit được chọn
           const showUnitTests = async (unitIndex) => {
             const unit = testInfo.units[unitIndex];
-            testsContainer.innerHTML = "";
+            testsContainer.innerHTML = createSkeletonLoading();
 
             // Lấy progress từ server
             const deviceId = localStorage.getItem(LS_DEVICE_ID) || "";
@@ -2966,6 +3038,7 @@
             const progressMap = await getCachedProgress(deviceId, license, testIds);
             
             if (token !== __openTestModalToken) return;
+            testsContainer.innerHTML = "";
 
                         // Tạo DocumentFragment để tối ưu hiệu năng
             const fragment = document.createDocumentFragment();
