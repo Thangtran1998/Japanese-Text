@@ -2099,17 +2099,24 @@
         padding-left: 26px;
       }
 
-      /* Task List Styles */
       .task-list {
         min-height: 180px;
         max-height: 220px;
         overflow-y: auto;
         padding-right: 5px;
         margin-bottom: 15px;
+        display: flex;
+        flex-direction: column;
       }
 
-      .task-list::-webkit-scrollbar {
-        width: 5px;
+      /* Đảm bảo các item có margin bottom đều nhau */
+      .task-item,
+      .task-placeholder {
+        margin-bottom: 8px;
+      }
+      /* Item cuối cùng (placeholder) cũng có margin bottom */
+      .task-list > :last-child {
+        margin-bottom: 0; /* Không margin ở item cuối vì đã có padding của container */
       }
 
       .task-list::-webkit-scrollbar-track {
@@ -2391,6 +2398,62 @@
       .task-delete i {
         pointer-events: none;
       }
+      /* Placeholder như một task bình thường */
+      .task-placeholder {
+        background: rgba(0, 40, 80, 0.3);
+        border: 1px dashed rgba(0, 168, 255, 0.5);
+        border-radius: 8px;
+        padding: 10px 12px;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        cursor: pointer;
+        transition: all 0.3s;
+        color: #88d3ff;
+        font-style: italic;
+        min-height: 46px; /* Cùng chiều cao với task item */
+      }
+
+      .task-placeholder:hover {
+        background: rgba(0, 60, 100, 0.5);
+        border-color: #00a8ff;
+        color: #00e5ff;
+        transform: translateX(5px);
+      }
+
+      .task-placeholder i {
+        width: 22px;
+        height: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #00a8ff;
+        font-size: 18px;
+      }
+
+      .task-placeholder .placeholder-icon {
+        margin-left: auto;
+        font-size: 12px;
+        opacity: 0.7;
+      }
+
+      /* Animation cho placeholder mới */
+      @keyframes placeholderPulse {
+        0% {
+          border-color: rgba(0, 168, 255, 0.3);
+        }
+        50% {
+          border-color: rgba(0, 255, 204, 0.8);
+        }
+        100% {
+          border-color: rgba(0, 168, 255, 0.3);
+        }
+      }
+
+      .task-placeholder.new {
+        animation: placeholderPulse 1.5s infinite;
+      }
     </style>
   </head>
 
@@ -2479,7 +2542,7 @@
         <main class="main-content">
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
             </h2>
 
             <div class="target-info">
@@ -2617,11 +2680,6 @@
                         <i class="fas fa-times"></i>
                       </div>
                     </div>
-                  </div>
-
-                  <div class="add-task-placeholder" id="addTaskPlaceholder">
-                    <i class="fas fa-plus-circle"></i>
-                    <em>Thêm nhiệm vụ mới...</em>
                   </div>
                 </div>
               </div>
@@ -4891,7 +4949,7 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
         if (progressFill) progressFill.style.width = percent + "%";
         if (progressText) progressText.textContent = `${done}/${total}`;
       }
-      // Xử lý xóa task
+      // Cập nhật lại hàm setupDeleteButtons
       function setupDeleteButtons() {
         const deleteButtons = document.querySelectorAll(".task-delete");
 
@@ -4900,65 +4958,93 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
             e.stopPropagation(); // Không trigger click của task item
 
             const taskItem = this.closest(".task-item");
-            const isNextTask = taskItem.closest(".next-tasks") !== null;
-
-            // Animation xóa
-            taskItem.style.transform = "scale(0.8)";
-            taskItem.style.opacity = "0";
-
-            setTimeout(() => {
-              taskItem.remove();
-
-              // Cập nhật progress nếu là task hiện tại
-              if (!isNextTask) {
-                updateProgress();
-              }
-            }, 300);
+            deleteTask(taskItem);
           });
         });
       }
-      // Cập nhật hàm setupAddTask để thêm nút xóa cho task mới
+      // Cập nhật lại hàm setupAddTask (đơn giản hơn)
       function setupAddTask() {
-        const addBtn = document.getElementById("addTaskPlaceholder");
+        renderPlaceholder(); // Chỉ cần render placeholder
+      }
+      // Hiển thị placeholder trong danh sách
+      function renderPlaceholder() {
+        const nextTaskList = document.getElementById("nextTaskList");
+        if (!nextTaskList) return;
 
-        if (addBtn) {
-          addBtn.addEventListener("click", function () {
-            const taskName = prompt("Nhập tên nhiệm vụ mới cho ngày mai:");
-            if (taskName && taskName.trim()) {
-              const nextTaskList = document.getElementById("nextTaskList");
+        // Kiểm tra xem đã có placeholder chưa
+        let placeholder = document.getElementById("addTaskPlaceholder");
 
-              const taskItem = document.createElement("div");
-              taskItem.className = "task-item next-task";
-              taskItem.innerHTML = `
-                <div class="task-bullet">•</div>
-                <div class="task-content">
-                  <div class="task-name">${taskName}</div>
-                </div>
-                <div class="task-delete" title="Xóa nhiệm vụ">
-                  <i class="fas fa-times"></i>
-                </div>
-              `;
+        if (!placeholder) {
+          placeholder = document.createElement("div");
+          placeholder.id = "addTaskPlaceholder";
+          placeholder.className = "task-placeholder";
+          placeholder.innerHTML = `
+            <i class="fas fa-plus-circle"></i>
+            <span class="task-name"><em>Thêm nhiệm vụ mới...</em></span>
+            <span class="placeholder-icon"><i class="fas fa-chevron-right"></i></span>
+          `;
 
-              nextTaskList.appendChild(taskItem);
+          // Thêm sự kiện click
+          placeholder.addEventListener("click", addNewTask);
+        }
 
-              // Gán lại sự kiện xóa cho task mới
-              const newDeleteBtn = taskItem.querySelector(".task-delete");
-              newDeleteBtn.addEventListener("click", function (e) {
-                e.stopPropagation();
-                const taskItem = this.closest(".task-item");
+        // Luôn đặt placeholder ở cuối danh sách
+        nextTaskList.appendChild(placeholder);
+      }
+      // Hàm thêm task mới (tách riêng)
+      function addNewTask() {
+        const taskName = prompt("Nhập tên nhiệm vụ mới cho ngày mai:");
+        if (taskName && taskName.trim()) {
+          const nextTaskList = document.getElementById("nextTaskList");
 
-                taskItem.style.transform = "scale(0.8)";
-                taskItem.style.opacity = "0";
+          // Tạo task item mới
+          const taskItem = document.createElement("div");
+          taskItem.className = "task-item next-task";
+          taskItem.innerHTML = `
+            <div class="task-bullet">•</div>
+            <div class="task-content">
+              <div class="task-name">${taskName}</div>
+            </div>
+            <div class="task-delete" title="Xóa nhiệm vụ">
+              <i class="fas fa-times"></i>
+            </div>
+          `;
 
-                setTimeout(() => {
-                  taskItem.remove();
-                }, 300);
-              });
-            }
+          // Thêm task mới TRƯỚC placeholder
+          const placeholder = document.getElementById("addTaskPlaceholder");
+          nextTaskList.insertBefore(taskItem, placeholder);
+
+          // Gán sự kiện xóa cho task mới
+          const newDeleteBtn = taskItem.querySelector(".task-delete");
+          newDeleteBtn.addEventListener("click", function (e) {
+            e.stopPropagation();
+            deleteTask(this.closest(".task-item"));
+          });
+
+          // Gán sự kiện click cho task mới (nếu cần)
+          taskItem.addEventListener("click", function (e) {
+            if (e.target.closest(".task-delete")) return;
+            // Xử lý click vào task nếu cần
           });
         }
       }
+      // Hàm xóa task (tách riêng)
+      function deleteTask(taskItem) {
+        const isNextTask = taskItem.closest(".next-tasks") !== null;
 
+        // Animation xóa
+        taskItem.style.transform = "scale(0.8)";
+        taskItem.style.opacity = "0";
+
+        setTimeout(() => {
+          taskItem.remove();
+
+          // Cập nhật progress nếu là task hiện tại
+          if (!isNextTask) {
+            updateProgress();
+          }
+        }, 300);
+      }
       // Xử lý nút xem lịch sử
       function setupHistoryButton() {
         const historyBtn = document.getElementById("viewHistoryBtn");
@@ -4972,13 +5058,13 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
         }
       }
 
-      // Cập nhật hàm initStreakDashboard để gọi setupDeleteButtons
+      // Cập nhật lại hàm initStreakDashboard
       function initStreakDashboard() {
         updateStreak();
         updateActivationFooter();
         setupTaskInteractions();
-        setupDeleteButtons(); // THÊM DÒNG NÀY
-        setupAddTask();
+        setupDeleteButtons();
+        setupAddTask(); // Sẽ gọi renderPlaceholder()
         setupHistoryButton();
         updateProgress();
       }
