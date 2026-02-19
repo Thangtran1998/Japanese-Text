@@ -1972,7 +1972,7 @@
         <main class="main-content">
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
             </h2>
 
             <div class="target-info">
@@ -3194,43 +3194,40 @@
           testsContainer.className = "tests-container";
           testsContainer.style.width = "100%";
 
-          // Hàm hiển thị tests của unit được chọn
           const showUnitTests = async (unitIndex) => {
             const unit = testInfo.units[unitIndex];
 
-            // 1) HIỂN THỊ SKELETON NGAY
-            showCyberLoading("ĐANG TẢI DỮ LIỆU");
-            testsContainer.innerHTML = createSkeletonLoading();
-
-            // 2) ÉP TRÌNH DUYỆT RENDER RA MÀN HÌNH 1 NHỊP
-            await new Promise(requestAnimationFrame);
-
-            // 3) LẤY PROGRESS
+            // Lấy key để check cache
             const deviceId = localStorage.getItem(LS_DEVICE_ID) || "";
             const license = localStorage.getItem(LS_LICENSE) || "";
             const testIds = unit.tests.map((t) => t.url);
 
             const cacheOk = isProgressCacheValid(deviceId, license, testIds);
 
-            // ✅ Chỉ hiện loading khi cache MISS
-            if (!cacheOk) showCyberLoading("ĐANG TẢI DỮ LIỆU");
+            // ✅ CHỈ HIỆN LOADING + SKELETON KHI CACHE MISS
+            if (!cacheOk) {
+              showCyberLoading("ĐANG TẢI DỮ LIỆU");
+              testsContainer.innerHTML = createSkeletonLoading();
+              await new Promise(requestAnimationFrame);
+            } else {
+              // Cache HIT: khỏi loading, khỏi skeleton (mượt)
+              testsContainer.innerHTML = "";
+            }
 
-            // Skeleton bạn muốn giữ hay bỏ tùy bạn
-            testsContainer.innerHTML = createSkeletonLoading();
-            await new Promise(requestAnimationFrame);
-
+            // Lấy progress (cache hit sẽ trả gần như tức thì)
             const r = await getCachedProgress(deviceId, license, testIds);
             const progressMap = r.data;
 
-            if (!r.fromCache) hideCyberLoading();
+            // Nếu user bấm đổi unit quá nhanh, token đổi → bỏ render
+            if (token !== __openTestModalToken) {
+              if (!cacheOk) hideCyberLoading();
+              return;
+            }
 
-            if (token !== __openTestModalToken) return;
-
-            // Xóa skeleton
+            // Render danh sách test
             testsContainer.innerHTML = "";
-
-            // Render tests
             const fragment = document.createDocumentFragment();
+
             unit.tests.forEach((test) => {
               const testItem = document.createElement("div");
               testItem.className = "test-item";
@@ -3240,28 +3237,23 @@
               const p = progressMap[test.url] || { perfectCount: 0 };
               const b = badgeFromProgress(p);
 
-              const iconClass = b.icon || "fa-clock";
-              const bgColor = b.bg || "rgba(255, 100, 0, 0.2)";
-              const borderColor = b.border || "rgba(255, 150, 0, 0.3)";
-              const textColor = b.color || "#ffaa00";
-              const badgeText = b.text || "Chưa làm";
-
               testItem.innerHTML = `
-        <div class="test-item-icon">
-          <i class="fas ${iconClass}"></i>
+      <div class="test-item-icon">
+        <i class="fas ${b.icon || "fa-clock"}"></i>
+      </div>
+      <div class="test-item-content">
+        <div class="test-item-title">${test.name}</div>
+        <div class="test-item-meta">
+          <span><i class="fas fa-question-circle"></i> ${test.questions} câu</span>
+          <span><i class="fas fa-hourglass-half"></i> ${test.time}</span>
+          <span><i class="fas fa-signal"></i> ${test.difficulty}</span>
         </div>
-        <div class="test-item-content">
-          <div class="test-item-title">${test.name}</div>
-          <div class="test-item-meta">
-            <span><i class="fas fa-question-circle"></i> ${test.questions} câu</span>
-            <span><i class="fas fa-hourglass-half"></i> ${test.time}</span>
-            <span><i class="fas fa-signal"></i> ${test.difficulty}</span>
-          </div>
-        </div>
-        <div class="test-status-badge" style="background: ${bgColor}; border-color: ${borderColor}; color: ${textColor}">
-          ${badgeText}
-        </div>
-      `;
+      </div>
+      <div class="test-status-badge"
+           style="background:${b.bg}; border-color:${b.border}; color:${b.color}">
+        ${b.text}
+      </div>
+    `;
 
               testItem.addEventListener("click", function (e) {
                 e.preventDefault();
@@ -3287,7 +3279,9 @@
             });
 
             testsContainer.appendChild(fragment);
-            hideCyberLoading();
+
+            // ✅ chỉ hide khi trước đó có show (tức cache MISS)
+            if (!cacheOk) hideCyberLoading();
           };
 
           // Tạo các tab unit
