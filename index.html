@@ -1871,7 +1871,7 @@
         <main class="main-content">
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
             </h2>
 
             <div class="target-info">
@@ -3026,21 +3026,33 @@
           testsContainer.className = "tests-container";
           testsContainer.style.width = "100%";
 
-          // Hàm hiển thị tests của unit được chọn
+                    // Hàm hiển thị tests của unit được chọn
           const showUnitTests = async (unitIndex) => {
             const unit = testInfo.units[unitIndex];
+            
+            // Hiển thị skeleton loading NGAY LẬP TỨC
             testsContainer.innerHTML = createSkeletonLoading();
+            console.log('✅ Skeleton hiển thị lúc:', new Date().toLocaleTimeString());
 
             // Lấy progress từ server
             const deviceId = localStorage.getItem(LS_DEVICE_ID) || "";
             const license = localStorage.getItem(LS_LICENSE) || "";
             const testIds = unit.tests.map(t => t.url);
+            
+            // Gọi API với cache
             const progressMap = await getCachedProgress(deviceId, license, testIds);
             
             if (token !== __openTestModalToken) return;
+
+            // 👇 THÊM DELAY 3 GIÂY ĐỂ THẤY RÕ SKELETON
+            console.log('⏳ Đợi 3 giây để thấy skeleton...');
+            await new Promise(resolve => setTimeout(resolve, 3000));
+            console.log('⏳ Hết delay, bắt đầu render nội dung thật');
+            
+            // Xóa skeleton (CHỈ XÓA 1 LẦN)
             testsContainer.innerHTML = "";
 
-                        // Tạo DocumentFragment để tối ưu hiệu năng
+            // Tạo DocumentFragment để tối ưu hiệu năng
             const fragment = document.createDocumentFragment();
 
             // Render tests của unit
@@ -3093,12 +3105,9 @@
                 console.log(`Mở tab mới: ${url} - ${testName}`);
               });
 
-              // Thêm vào fragment thay vì trực tiếp vào container
+              // Thêm vào fragment
               fragment.appendChild(testItem);
             });
-
-            // Xóa nội dung cũ
-            testsContainer.innerHTML = "";
 
             // Append fragment một lần duy nhất
             testsContainer.appendChild(fragment);
