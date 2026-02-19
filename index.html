@@ -2051,7 +2051,7 @@
       <main class="main-content">
         <section class="mission-panel">
           <h2 class="panel-title">
-            <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
+            <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
           </h2>
 
           <div class="target-info">
@@ -2089,13 +2089,48 @@
             </div>
           </div>
 
-          <div class="streak-counter">
-            <div class="streak-title">
-              <i class="fas fa-fire"></i> CHUỖI HOẠT ĐỘNG
+                    <!-- ===== STREAK DASHBOARD MỚI ===== -->
+          <div class="streak-dashboard">
+            <div class="streak-header">
+              <div class="streak-title">
+                <i class="fas fa-fire"></i> CHUỖI HOẠT ĐỘNG
+              </div>
+              <div class="streak-badge" id="streakDays">0 NGÀY</div>
             </div>
-            <div class="streak-days">5 NGÀY</div>
-            <div class="streak-text">liên tiếp hoàn thành nhiệm vụ!</div>
+
+            <div class="dashboard-grid">
+              <!-- Cột 1: Nhiệm vụ hôm nay -->
+              <div class="task-column">
+                <div class="column-title">
+                  <i class="fas fa-clipboard-list"></i> NHIỆM VỤ HÔM NAY
+                </div>
+                <div class="task-list" id="taskList">
+                  <!-- Nhiệm vụ sẽ được render bằng JS -->
+                </div>
+                <div class="task-progress">
+                  <div class="progress-bar">
+                    <div class="progress-fill" id="taskProgressFill" style="width: 0%"></div>
+                  </div>
+                  <div class="progress-text">
+                    <span>Hoàn thành</span>
+                    <span id="taskProgressText">0/0</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Cột 2: Lịch 7 ngày -->
+              <div class="calendar-column">
+                <div class="column-title">
+                  <i class="fas fa-calendar-alt"></i> 7 NGÀY GẦN NHẤT
+                </div>
+                <div class="week-calendar" id="weekCalendar">
+                  <!-- Calendar sẽ được render bằng JS -->
+                </div>
+              </div>
+            </div>
           </div>
+
+
         </section>
 
         <section class="mission-panel">
