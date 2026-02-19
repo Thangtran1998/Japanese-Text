@@ -1726,43 +1726,37 @@
         color: white;
         box-shadow: 0 0 15px rgba(0, 168, 255, 0.5);
       }
-                 /* ===== SKELETON LOADING ===== */
+            /* ===== SKELETON LOADING ===== */
       .skeleton-container {
         width: 100%;
         animation: skeleton-fade 1.5s ease-in-out infinite;
-        background: rgba(0, 20, 40, 0.9);
-        border-radius: 12px;
-        padding: 15px;
-        border: 1px solid rgba(0, 150, 255, 0.3);
       }
 
       .skeleton-item {
         background: linear-gradient(90deg, 
-          rgba(0, 40, 80, 0.4) 25%, 
-          rgba(0, 80, 120, 0.6) 50%, 
-          rgba(0, 40, 80, 0.4) 75%);
+          rgba(0, 40, 80, 0.3) 25%, 
+          rgba(0, 80, 120, 0.5) 50%, 
+          rgba(0, 40, 80, 0.3) 75%);
         background-size: 200% 100%;
         animation: skeleton-shimmer 1.5s infinite;
         border-radius: 10px;
         height: 90px;
         margin-bottom: 12px;
-        border: 1px solid rgba(0, 150, 255, 0.3);
-        box-shadow: 0 0 15px rgba(0, 150, 255, 0.1);
+        border: 1px solid rgba(0, 150, 255, 0.2);
       }
 
       .skeleton-icon {
         width: 40px;
         height: 40px;
         border-radius: 8px;
-        background: rgba(0, 100, 200, 0.4);
+        background: rgba(0, 100, 200, 0.3);
         float: left;
         margin: 15px;
-        border: 1px solid rgba(0, 200, 255, 0.3);
       }
 
       .skeleton-line {
         height: 16px;
-        background: rgba(0, 100, 200, 0.3);
+        background: rgba(0, 100, 200, 0.2);
         margin: 15px 15px 15px 70px;
         border-radius: 4px;
       }
@@ -1777,30 +1771,18 @@
       }
 
       @keyframes skeleton-fade {
-        0%, 100% { opacity: 0.8; }
+        0%, 100% { opacity: 0.7; }
         50% { opacity: 1; }
       }
 
       .loading-text {
         text-align: center;
         padding: 30px;
-        color: #00ffcc;  /* Màu cố định thay vì dùng biến */
+        color: var(--secondary-glow);
         font-family: 'Orbitron', sans-serif;
         font-size: 14px;
         animation: pulse 1.5s ease-in-out infinite;
-        text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
-        letter-spacing: 1px;
       }
-
-      @keyframes pulse {
-        0%, 100% { opacity: 0.6; transform: scale(0.98); }
-        50% { opacity: 1; transform: scale(1); }
-      }
-      .skeleton-item {
-  border: 3px solid #ff00ff !important;
-  background-color: #ff0000 !important;
-  opacity: 1 !important;
-}
     </style>
   </head>
 
@@ -1889,7 +1871,7 @@
         <main class="main-content">
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
             </h2>
 
             <div class="target-info">
@@ -3032,189 +3014,133 @@
         testList.innerHTML = "";
 
         // Kiểm tra nếu có units (cho Mimikara)
-        if (testInfo.units) {
-          // Tạo container cho tabs
-          const tabsContainer = document.createElement("div");
-          tabsContainer.className = "unit-tabs";
-          tabsContainer.style.marginBottom = "0";
-          tabsContainer.style.padding = "10px";
-          
-          // Tạo container cho tests
-          const testsContainer = document.createElement("div");
-          testsContainer.className = "tests-container";
-          testsContainer.style.width = "100%";
+if (testInfo.units) {
+  // Tạo container cho tabs
+  const tabsContainer = document.createElement("div");
+  tabsContainer.className = "unit-tabs";
+  tabsContainer.style.marginBottom = "0";
+  tabsContainer.style.padding = "10px";
 
-                    // Hàm hiển thị tests của unit được chọn
-          const showUnitTests = async (unitIndex) => {
-            const unit = testInfo.units[unitIndex];
-            
-            // Hiển thị skeleton loading NGAY LẬP TỨC
-            testsContainer.innerHTML = createSkeletonLoading();
-            console.log('✅ Skeleton hiển thị lúc:', new Date().toLocaleTimeString());
+  // Tạo container cho tests
+  const testsContainer = document.createElement("div");
+  testsContainer.className = "tests-container";
+  testsContainer.style.width = "100%";
 
-            // Lấy progress từ server
-            const deviceId = localStorage.getItem(LS_DEVICE_ID) || "";
-            const license = localStorage.getItem(LS_LICENSE) || "";
-            const testIds = unit.tests.map(t => t.url);
-            
-            // Gọi API với cache
-            const progressMap = await getCachedProgress(deviceId, license, testIds);
-            
-            if (token !== __openTestModalToken) return;
+  // Hàm hiển thị tests của unit được chọn
+  const showUnitTests = async (unitIndex) => {
+    const unit = testInfo.units[unitIndex];
 
-            // 👇 THÊM DELAY 3 GIÂY ĐỂ THẤY RÕ SKELETON
-            console.log('⏳ Đợi 3 giây để thấy skeleton...');
-            await new Promise(resolve => setTimeout(resolve, 3000));
-            console.log('⏳ Hết delay, bắt đầu render nội dung thật');
-            
-            // Xóa skeleton (CHỈ XÓA 1 LẦN)
-            testsContainer.innerHTML = "";
+    // 1) HIỂN THỊ SKELETON NGAY
+    testsContainer.innerHTML = createSkeletonLoading();
 
-            // Tạo DocumentFragment để tối ưu hiệu năng
-            const fragment = document.createDocumentFragment();
+    // 2) ÉP TRÌNH DUYỆT RENDER RA MÀN HÌNH 1 NHỊP
+    await new Promise(requestAnimationFrame);
 
-            // Render tests của unit
-            unit.tests.forEach(test => {
-              const testItem = document.createElement("div");
-              testItem.className = "test-item";
-              testItem.setAttribute("data-test-url", test.url);
-              testItem.setAttribute("data-test-name", test.name);
-              
-              const p = progressMap[test.url] || { perfectCount: 0 };
-              const b = badgeFromProgress(p);
+    // 3) LẤY PROGRESS
+    const deviceId = localStorage.getItem(LS_DEVICE_ID) || "";
+    const license = localStorage.getItem(LS_LICENSE) || "";
+    const testIds = unit.tests.map(t => t.url);
 
-              // Kiểm tra và gán giá trị mặc định (tránh lỗi undefined)
-              const iconClass = b.icon || 'fa-clock';
-              const bgColor = b.bg || 'rgba(255, 100, 0, 0.2)';
-              const borderColor = b.border || 'rgba(255, 150, 0, 0.3)';
-              const textColor = b.color || '#ffaa00';
-              const badgeText = b.text || 'Chưa làm';
+    const progressMap = await getCachedProgress(deviceId, license, testIds);
 
-              testItem.innerHTML = `
-                <div class="test-item-icon">
-                  <i class="fas ${iconClass}"></i>
-                </div>
-                <div class="test-item-content">
-                  <div class="test-item-title">${test.name}</div>
-                  <div class="test-item-meta">
-                    <span><i class="fas fa-question-circle"></i> ${test.questions} câu</span>
-                    <span><i class="fas fa-hourglass-half"></i> ${test.time}</span>
-                    <span><i class="fas fa-signal"></i> ${test.difficulty}</span>
-                  </div>
-                </div>
-                <div class="test-status-badge" style="background: ${bgColor}; border-color: ${borderColor}; color: ${textColor}">
-                  ${badgeText}
-                </div>
-              `;
+    if (token !== __openTestModalToken) return;
 
-              testItem.addEventListener("click", function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                e.stopImmediatePropagation();
+    // Xóa skeleton
+    testsContainer.innerHTML = "";
 
-                const url = this.getAttribute("data-test-url");
-                const testName = this.getAttribute("data-test-name");
+    // Render tests
+    const fragment = document.createDocumentFragment();
+    unit.tests.forEach(test => {
+      const testItem = document.createElement("div");
+      testItem.className = "test-item";
+      testItem.setAttribute("data-test-url", test.url);
+      testItem.setAttribute("data-test-name", test.name);
 
-                this.style.transform = "scale(0.98)";
-                setTimeout(() => this.style.transform = "", 150);
+      const p = progressMap[test.url] || { perfectCount: 0 };
+      const b = badgeFromProgress(p);
 
-                const newTab = window.open(url, "_blank", "noopener,noreferrer");
-                if (!newTab) return;
-                console.log(`Mở tab mới: ${url} - ${testName}`);
-              });
+      const iconClass = b.icon || "fa-clock";
+      const bgColor = b.bg || "rgba(255, 100, 0, 0.2)";
+      const borderColor = b.border || "rgba(255, 150, 0, 0.3)";
+      const textColor = b.color || "#ffaa00";
+      const badgeText = b.text || "Chưa làm";
 
-              // Thêm vào fragment
-              fragment.appendChild(testItem);
-            });
+      testItem.innerHTML = `
+        <div class="test-item-icon">
+          <i class="fas ${iconClass}"></i>
+        </div>
+        <div class="test-item-content">
+          <div class="test-item-title">${test.name}</div>
+          <div class="test-item-meta">
+            <span><i class="fas fa-question-circle"></i> ${test.questions} câu</span>
+            <span><i class="fas fa-hourglass-half"></i> ${test.time}</span>
+            <span><i class="fas fa-signal"></i> ${test.difficulty}</span>
+          </div>
+        </div>
+        <div class="test-status-badge" style="background: ${bgColor}; border-color: ${borderColor}; color: ${textColor}">
+          ${badgeText}
+        </div>
+      `;
 
-            // Append fragment một lần duy nhất
-            testsContainer.appendChild(fragment);
-          };
+      testItem.addEventListener("click", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
 
-          // Tạo các tab unit
-          testInfo.units.forEach((unit, index) => {
-            const tab = document.createElement("button");
-            tab.className = "unit-tab" + (index === 0 ? " active" : "");
-            tab.textContent = unit.name;
-            
-            tab.addEventListener("click", async (e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              
-              // Cập nhật active state
-              tabsContainer.querySelectorAll(".unit-tab").forEach(t => t.classList.remove("active"));
-              tab.classList.add("active");
-              
-              // Hiển thị tests của unit được chọn
-              await showUnitTests(index);
-            });
-            
-            tabsContainer.appendChild(tab);
-          });
+        const url = this.getAttribute("data-test-url");
+        const testName = this.getAttribute("data-test-name");
 
-          testList.appendChild(tabsContainer);
-          testList.appendChild(testsContainer);
-          
-          // Hiển thị Unit 1 mặc định
-          await showUnitTests(0);
-        } else {
-          // Xử lý cho các module không có units (giữ nguyên code cũ)
-          const deviceId = localStorage.getItem(LS_DEVICE_ID) || "";
-          const license = localStorage.getItem(LS_LICENSE) || "";
-          const testIds = testInfo.tests.map((t) => t.url);
-          const progressMap = await getProgressMap(deviceId, license, testIds);
-          
-          if (token !== __openTestModalToken) return;
+        this.style.transform = "scale(0.98)";
+        setTimeout(() => (this.style.transform = ""), 150);
 
-          testInfo.tests.forEach((test) => {
-            const testItem = document.createElement("div");
-            testItem.className = "test-item";
-            testItem.setAttribute("data-test-url", test.url);
-            testItem.setAttribute("data-test-name", test.name);
-            
-            const p = progressMap[test.url] || { perfectCount: 0 };
-            const b = badgeFromProgress(p);
+        const newTab = window.open(url, "_blank", "noopener,noreferrer");
+        if (!newTab) return;
+        console.log(`Mở tab mới: ${url} - ${testName}`);
+      });
 
-            testItem.innerHTML = `
-              <div class="test-item-icon">
-                <i class="fas ${b.icon}"></i>
-              </div>
-              <div class="test-item-content">
-                <div class="test-item-title">${test.name}</div>
-                <div class="test-item-meta">
-                  <span><i class="fas fa-question-circle"></i> ${test.questions} câu</span>
-                  <span><i class="fas fa-hourglass-half"></i> ${test.time}</span>
-                  <span><i class="fas fa-signal"></i> ${test.difficulty}</span>
-                </div>
-              </div>
-              <div class="test-status-badge" style="background: ${b.bg}; border-color: ${b.border}; color: ${b.color}">
-                ${b.text}
-              </div>
-            `;
+      fragment.appendChild(testItem);
+    });
 
-            testItem.addEventListener("click", function (e) {
-              e.preventDefault();
-              e.stopPropagation();
-              e.stopImmediatePropagation();
+    testsContainer.appendChild(fragment);
+  };
 
-              const url = this.getAttribute("data-test-url");
-              const testName = this.getAttribute("data-test-name");
+  // Tạo các tab unit
+  testInfo.units.forEach((unit, index) => {
+    const tab = document.createElement("button");
+    tab.className = "unit-tab" + (index === 0 ? " active" : "");
+    tab.textContent = unit.name;
 
-              this.style.transform = "scale(0.98)";
-              setTimeout(() => this.style.transform = "", 150);
+    tab.addEventListener("click", async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
 
-              const newTab = window.open(url, "_blank", "noopener,noreferrer");
-              if (!newTab) return;
-              console.log(`Mở tab mới: ${url} - ${testName}`);
-            });
+      tabsContainer
+        .querySelectorAll(".unit-tab")
+        .forEach((t) => t.classList.remove("active"));
+      tab.classList.add("active");
 
-            testList.appendChild(testItem);
-          });
-        }
+      await showUnitTests(index);
+    });
 
-        // Hiển thị modal
-        testModal.classList.add("show");
-        testBackdrop.classList.add("show");
+    tabsContainer.appendChild(tab);
+  });
+
+  testList.appendChild(tabsContainer);
+  testList.appendChild(testsContainer);
+
+  // ✅ HIỆN MODAL NGAY (TRƯỚC KHI LOAD)
+  testModal.classList.add("show");
+  testBackdrop.classList.add("show");
+
+  // ✅ ÉP RENDER MODAL + SKELETON 1 NHỊP
+  await new Promise(requestAnimationFrame);
+
+  // Hiển thị Unit 1 mặc định
+  await showUnitTests(0);
+
+  return; // ✅ chặn không chạy xuống dưới (tránh show lần 2)
+}
+
       }
 
       // Hàm đóng test modal
