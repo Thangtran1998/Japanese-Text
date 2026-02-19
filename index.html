@@ -1864,7 +1864,7 @@
         height: 100%;
         width: 0%;
         background: linear-gradient(to right, #0066cc, #00ffcc);
-        animation: cyberBarMove 1.5s infinite linear;
+        transition: width 120ms linear; /* chạy mượt theo % */
       }
 
       @keyframes cyberBarMove {
@@ -1972,7 +1972,7 @@
         <main class="main-content">
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
             </h2>
 
             <div class="target-info">
@@ -2150,61 +2150,126 @@
       <div class="test-list" id="testList"></div>
     </div>
     <script>
+      let __loadingTimer = null;
+      let __loadingPct = 0;
+
       function showCyberLoading(text = "ĐANG TẢI DỮ LIỆU") {
         const loading = document.getElementById("cyberLoading");
+
+        // Nếu đang mở rồi thì chỉ đổi text, không reset % (tránh giật/quay lại 0)
+        if (loading.classList.contains("show")) {
+          const textEl = document.getElementById("cyberLoadingText");
+          if (textEl) textEl.textContent = text;
+          return;
+        }
+
         const textEl = document.getElementById("cyberLoadingText");
+        const pctEl = document.getElementById("cyberLoadingPercent");
+        const bar = document.querySelector(".cyber-loading-bar-fill");
+
         textEl.textContent = text;
+
+        __loadingPct = 0;
+        if (pctEl) pctEl.textContent = "0%";
+        if (bar) bar.style.width = "0%";
+
         loading.classList.add("show");
+
+        if (__loadingTimer) clearInterval(__loadingTimer);
+        __loadingTimer = setInterval(() => {
+          const step = __loadingPct < 50 ? 3 : __loadingPct < 80 ? 2 : 1;
+          __loadingPct = Math.min(90, __loadingPct + step);
+          if (pctEl) pctEl.textContent = `${__loadingPct}%`;
+          if (bar) bar.style.width = `${__loadingPct}%`;
+        }, 120);
       }
 
       function hideCyberLoading() {
         const loading = document.getElementById("cyberLoading");
-        loading.classList.remove("show");
+        const pctEl = document.getElementById("cyberLoadingPercent");
+        const bar = document.querySelector(".cyber-loading-bar-fill");
+
+        // kết thúc thật: lên 100%
+        if (__loadingTimer) clearInterval(__loadingTimer);
+        __loadingTimer = null;
+
+        __loadingPct = 100;
+        if (pctEl) pctEl.textContent = "100%";
+        if (bar) bar.style.width = "100%";
+
+        // giữ 1 nhịp cho người dùng thấy full rồi tắt
+        setTimeout(() => {
+          loading.classList.remove("show");
+        }, 180);
       }
 
       /* =========================================================
         CONFIG + LocalStorage Keys
       ========================================================= */
-      // ==================== PROGRESS CACHE ====================
+      // ==================== PROGRESS CACHE (MULTI-KEY) ====================
       const progressCache = {
-        data: null, // Dữ liệu cache
-        timestamp: 0, // Thời điểm cache
-        TTL: 5 * 60 * 1000, // Thời gian sống: 5 phút (300000ms)
-        testIds: null, // Lưu testIds để kiểm tra
-        deviceId: null, // Lưu deviceId
-        license: null, // Lưu license
+        entries: new Map(), // key -> { data, timestamp }
+        TTL: 5 * 60 * 1000, // 5 phút
       };
+
+      function makeProgressCacheKey(deviceId, license, testIds) {
+        // testIds phải ổn định thứ tự
+        const ids = Array.isArray(testIds) ? testIds.slice() : [];
+        ids.sort(); // đảm bảo Unit đổi thứ tự vẫn ra cùng key nếu cùng tập test
+        return `${deviceId}::${license}::${ids.join("|")}`;
+      }
+
       function isProgressCacheValid(deviceId, license, testIds) {
+        if (
+          !deviceId ||
+          !license ||
+          !Array.isArray(testIds) ||
+          testIds.length === 0
+        )
+          return false;
+
+        const key = makeProgressCacheKey(deviceId, license, testIds);
+        const entry = progressCache.entries.get(key);
+        if (!entry) return false;
+
         const now = Date.now();
-        return (
-          progressCache.data &&
-          progressCache.timestamp &&
-          now - progressCache.timestamp < progressCache.TTL &&
-          progressCache.deviceId === deviceId &&
-          progressCache.license === license &&
-          JSON.stringify(progressCache.testIds) === JSON.stringify(testIds)
-        );
+        return now - entry.timestamp < progressCache.TTL;
       }
 
       async function getCachedProgress(deviceId, license, testIds) {
-        const now = Date.now();
-
-        const ok = isProgressCacheValid(deviceId, license, testIds);
-        if (ok) {
-          console.log("✅ Cache HIT progress");
-          return { data: progressCache.data, fromCache: true };
+        if (
+          !deviceId ||
+          !license ||
+          !Array.isArray(testIds) ||
+          testIds.length === 0
+        ) {
+          return { data: {}, fromCache: true };
         }
 
-        console.log("📡 Cache MISS → gọi API progress...");
+        const key = makeProgressCacheKey(deviceId, license, testIds);
+
+        // HIT
+        const entry = progressCache.entries.get(key);
+        if (entry) {
+          const now = Date.now();
+          if (now - entry.timestamp < progressCache.TTL) {
+            console.log("✅ Cache HIT progress:", key);
+            return { data: entry.data || {}, fromCache: true };
+          }
+          // quá TTL -> xóa entry cũ
+          progressCache.entries.delete(key);
+        }
+
+        // MISS -> gọi API
+        console.log("📡 Cache MISS → gọi API progress:", key);
         const data = await getProgressMap(deviceId, license, testIds);
 
-        progressCache.data = data;
-        progressCache.timestamp = now;
-        progressCache.deviceId = deviceId;
-        progressCache.license = license;
-        progressCache.testIds = testIds;
+        progressCache.entries.set(key, {
+          data: data || {},
+          timestamp: Date.now(),
+        });
 
-        return { data, fromCache: false };
+        return { data: data || {}, fromCache: false };
       }
 
       // Tạo skeleton loading HTML
@@ -3197,34 +3262,41 @@
           const showUnitTests = async (unitIndex) => {
             const unit = testInfo.units[unitIndex];
 
-            // Lấy key để check cache
+            // ==== 0) Chuẩn bị dữ liệu key cache ====
             const deviceId = localStorage.getItem(LS_DEVICE_ID) || "";
             const license = localStorage.getItem(LS_LICENSE) || "";
             const testIds = unit.tests.map((t) => t.url);
 
+            // Nếu chưa có license thì khỏi load progress
+            if (!license) {
+              testsContainer.innerHTML = `<div class="loading-text">Bạn cần kích hoạt license để xem tiến độ.</div>`;
+              return;
+            }
+
+            // ==== 1) Check cache trước ====
             const cacheOk = isProgressCacheValid(deviceId, license, testIds);
 
-            // ✅ CHỈ HIỆN LOADING + SKELETON KHI CACHE MISS
+            // ==== 2) MISS -> show loading + skeleton ====
             if (!cacheOk) {
               showCyberLoading("ĐANG TẢI DỮ LIỆU");
               testsContainer.innerHTML = createSkeletonLoading();
               await new Promise(requestAnimationFrame);
             } else {
-              // Cache HIT: khỏi loading, khỏi skeleton (mượt)
+              // HIT -> không loading, không skeleton
               testsContainer.innerHTML = "";
             }
 
-            // Lấy progress (cache hit sẽ trả gần như tức thì)
+            // ==== 3) Lấy progress (HIT nhanh / MISS gọi API) ====
             const r = await getCachedProgress(deviceId, license, testIds);
-            const progressMap = r.data;
+            const progressMap = r.data || {};
 
-            // Nếu user bấm đổi unit quá nhanh, token đổi → bỏ render
-            if (token !== __openTestModalToken) {
-              if (!cacheOk) hideCyberLoading();
-              return;
-            }
+            // Nếu user bấm qua unit khác trong lúc chờ -> bỏ render
+            if (token !== __openTestModalToken) return;
 
-            // Render danh sách test
+            // ==== 4) MISS -> hide loading khi xong ====
+            if (!cacheOk) hideCyberLoading();
+
+            // ==== 5) Render danh sách tests ====
             testsContainer.innerHTML = "";
             const fragment = document.createDocumentFragment();
 
@@ -3237,9 +3309,15 @@
               const p = progressMap[test.url] || { perfectCount: 0 };
               const b = badgeFromProgress(p);
 
+              const iconClass = b.icon || "fa-clock";
+              const bgColor = b.bg || "rgba(255, 100, 0, 0.2)";
+              const borderColor = b.border || "rgba(255, 150, 0, 0.3)";
+              const textColor = b.color || "#ffaa00";
+              const badgeText = b.text || "Chưa làm";
+
               testItem.innerHTML = `
       <div class="test-item-icon">
-        <i class="fas ${b.icon || "fa-clock"}"></i>
+        <i class="fas ${iconClass}"></i>
       </div>
       <div class="test-item-content">
         <div class="test-item-title">${test.name}</div>
@@ -3250,8 +3328,8 @@
         </div>
       </div>
       <div class="test-status-badge"
-           style="background:${b.bg}; border-color:${b.border}; color:${b.color}">
-        ${b.text}
+        style="background:${bgColor}; border-color:${borderColor}; color:${textColor}">
+        ${badgeText}
       </div>
     `;
 
@@ -3261,27 +3339,18 @@
                 e.stopImmediatePropagation();
 
                 const url = this.getAttribute("data-test-url");
-                const testName = this.getAttribute("data-test-name");
-
-                this.style.transform = "scale(0.98)";
-                setTimeout(() => (this.style.transform = ""), 150);
-
                 const newTab = window.open(
                   url,
                   "_blank",
                   "noopener,noreferrer",
                 );
                 if (!newTab) return;
-                console.log(`Mở tab mới: ${url} - ${testName}`);
               });
 
               fragment.appendChild(testItem);
             });
 
             testsContainer.appendChild(fragment);
-
-            // ✅ chỉ hide khi trước đó có show (tức cache MISS)
-            if (!cacheOk) hideCyberLoading();
           };
 
           // Tạo các tab unit
@@ -3819,6 +3888,7 @@
       <div class="cyber-loading-box">
         <div class="cyber-loading-title">
           <span id="cyberLoadingText">ĐANG TẢI DỮ LIỆU</span>
+          <span id="cyberLoadingPercent" style="margin-left: 10px">0%</span>
         </div>
 
         <div class="cyber-loading-bar">
