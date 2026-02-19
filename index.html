@@ -690,6 +690,7 @@
         width: 0%;
         transition: width 700ms ease-out;
         box-shadow: 0 0 10px rgba(0, 255, 204, 0.25);
+        transition: width 0.4s ease;
       }
 
       .start-button {
@@ -1972,7 +1973,7 @@
         <main class="main-content">
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
             </h2>
 
             <div class="target-info">
@@ -3724,8 +3725,9 @@
       <div class="item-desc">${item.desc}</div>
       <div class="item-stats">Đã học: .../... </div>
       <div class="item-progress">
-        <div class="item-progress-fill" style="width: ${item.progress}%"></div>
-      </div>
+  <div class="item-progress-fill" style="width: 0%"></div>
+</div>
+
     `;
           frameContent.appendChild(itemEl);
           itemEls.push(itemEl);
@@ -3758,6 +3760,8 @@
           const { a: a0, b } = calcABFromTests(tests, {}); // a0 = 0
           if (!hasLicense) {
             statsEl.textContent = `Đã học: 0/${b}`;
+            const progressFill = el.querySelector(".item-progress-fill");
+            if (progressFill) progressFill.style.width = "0%";
             continue;
           }
 
@@ -3766,6 +3770,11 @@
             const progressMap = await getProgressMapForItemTitle(itemTitle);
             const { a, b: b2 } = calcABFromTests(tests, progressMap);
             statsEl.textContent = `Đã học: ${a}/${b2}`;
+            const progressFill = el.querySelector(".item-progress-fill");
+            if (progressFill) {
+              const percent = b2 > 0 ? Math.floor((a / b2) * 100) : 0;
+              progressFill.style.width = percent + "%";
+            }
           } catch {
             // Nếu lỗi server => vẫn hiển thị b
             statsEl.textContent = `Đã học: 0/${b}`;
