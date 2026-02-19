@@ -1972,7 +1972,7 @@
         <main class="main-content">
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
             </h2>
 
             <div class="target-info">
@@ -2915,10 +2915,10 @@
         "Từ vựng Mimikara Oboeru": {
           title: "Mimikara Oboeru N1",
           units: [
-{
+            {
               name: "Unit 1",
               tests: [
-{
+                {
                   id: 1001,
                   name: "Từ vựng Mimikara Unit 1 (1-20)",
                   questions: 39,
@@ -2926,42 +2926,42 @@
                   difficulty: "Khó",
                   url: "Mimikara-1-1.html",
                 },
-                
-              {
-              id: 1002,
-              name: "Từ vựng Mimikara Unit 1 (21-40)",
-              questions: 40,
-              time: "40 phút",
-              difficulty: "Khó",
-              url: "Mimikara-1-2.html",
-            },
-{
-              id: 1003,
-              name: "Từ vựng Mimikara Unit 1 (41-60)",
-              questions: 36,
-              time: "36 phút",
-              difficulty: "Khó",
-              url: "Mimikara-1-3.html",
-            },
-{
-              id: 1004,
-              name: "Từ vựng Mimikara Unit 1 (61-80)",
-              questions: 40,
-              time: "40 phút",
-              difficulty: "Khó",
-              url: "Mimikara-1-4.html",
-            },
-{
-              id: 1005,
-              name: "Từ vựng Mimikara Unit 1 (81-100)",
-              questions: 40,
-              time: "40 phút",
-              difficulty: "Khó",
-              url: "Mimikara-1-5.html",
-            }
+
+                {
+                  id: 1002,
+                  name: "Từ vựng Mimikara Unit 1 (21-40)",
+                  questions: 40,
+                  time: "40 phút",
+                  difficulty: "Khó",
+                  url: "Mimikara-1-2.html",
+                },
+                {
+                  id: 1003,
+                  name: "Từ vựng Mimikara Unit 1 (41-60)",
+                  questions: 36,
+                  time: "36 phút",
+                  difficulty: "Khó",
+                  url: "Mimikara-1-3.html",
+                },
+                {
+                  id: 1004,
+                  name: "Từ vựng Mimikara Unit 1 (61-80)",
+                  questions: 40,
+                  time: "40 phút",
+                  difficulty: "Khó",
+                  url: "Mimikara-1-4.html",
+                },
+                {
+                  id: 1005,
+                  name: "Từ vựng Mimikara Unit 1 (81-100)",
+                  questions: 40,
+                  time: "40 phút",
+                  difficulty: "Khó",
+                  url: "Mimikara-1-5.html",
+                },
               ],
             },
-            ],
+          ],
         },
         // Bài test cho "Từ vựng ThaoLeJP"
         "Từ vựng ThaoLeJP": {
@@ -3349,6 +3349,125 @@
 
           return; // ✅ chặn không chạy xuống dưới (tránh show lần 2)
         }
+        // ==========================
+        // ELSE: testInfo.tests (ThaoLeJP, Đồng nghĩa/Trái nghĩa, Từ vựng khó, ...)
+        // ==========================
+        if (testInfo.tests && Array.isArray(testInfo.tests)) {
+          const deviceId = localStorage.getItem(LS_DEVICE_ID) || "";
+          const license = localStorage.getItem(LS_LICENSE) || "";
+          const testIds = testInfo.tests.map((t) => t.url);
+
+          // Hiện modal ngay
+          testModal.classList.add("show");
+          testBackdrop.classList.add("show");
+          await new Promise(requestAnimationFrame);
+
+          // Nếu chưa có license thì vẫn cho xem list, nhưng không có tiến độ
+          if (!license) {
+            testList.innerHTML = "";
+            testInfo.tests.forEach((test) => {
+              const testItem = document.createElement("div");
+              testItem.className = "test-item";
+              testItem.setAttribute("data-test-url", test.url);
+              testItem.setAttribute("data-test-name", test.name);
+
+              testItem.innerHTML = `
+        <div class="test-item-icon"><i class="fas fa-clock"></i></div>
+        <div class="test-item-content">
+          <div class="test-item-title">${test.name}</div>
+          <div class="test-item-meta">
+            <span><i class="fas fa-question-circle"></i> ${test.questions} câu</span>
+            <span><i class="fas fa-hourglass-half"></i> ${test.time}</span>
+            <span><i class="fas fa-signal"></i> ${test.difficulty}</span>
+          </div>
+        </div>
+        <div class="test-status-badge"
+          style="background:rgba(255,100,0,0.2); border-color:rgba(255,150,0,0.3); color:#ffaa00">
+          Chưa kích hoạt
+        </div>
+      `;
+
+              testItem.addEventListener("click", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                const url = this.getAttribute("data-test-url");
+                window.open(url, "_blank", "noopener,noreferrer");
+              });
+
+              testList.appendChild(testItem);
+            });
+            return;
+          }
+
+          // Cache check
+          const cacheOk = isProgressCacheValid(deviceId, license, testIds);
+
+          if (!cacheOk) {
+            showCyberLoading("ĐANG TẢI DỮ LIỆU");
+            testList.innerHTML = createSkeletonLoading();
+            await new Promise(requestAnimationFrame);
+          } else {
+            testList.innerHTML = "";
+          }
+
+          const r = await getCachedProgress(deviceId, license, testIds);
+          const progressMap = r.data || {};
+
+          if (token !== __openTestModalToken) return;
+
+          if (!cacheOk) hideCyberLoading();
+
+          testList.innerHTML = "";
+          const fragment = document.createDocumentFragment();
+
+          testInfo.tests.forEach((test) => {
+            const testItem = document.createElement("div");
+            testItem.className = "test-item";
+            testItem.setAttribute("data-test-url", test.url);
+            testItem.setAttribute("data-test-name", test.name);
+
+            const p = progressMap[test.url] || { perfectCount: 0 };
+            const b = badgeFromProgress(p);
+
+            const iconClass = b.icon || "fa-clock";
+            const bgColor = b.bg || "rgba(255, 100, 0, 0.2)";
+            const borderColor = b.border || "rgba(255, 150, 0, 0.3)";
+            const textColor = b.color || "#ffaa00";
+            const badgeText = b.text || "Chưa làm";
+
+            testItem.innerHTML = `
+      <div class="test-item-icon">
+        <i class="fas ${iconClass}"></i>
+      </div>
+      <div class="test-item-content">
+        <div class="test-item-title">${test.name}</div>
+        <div class="test-item-meta">
+          <span><i class="fas fa-question-circle"></i> ${test.questions} câu</span>
+          <span><i class="fas fa-hourglass-half"></i> ${test.time}</span>
+          <span><i class="fas fa-signal"></i> ${test.difficulty}</span>
+        </div>
+      </div>
+      <div class="test-status-badge"
+        style="background:${bgColor}; border-color:${borderColor}; color:${textColor}">
+        ${badgeText}
+      </div>
+    `;
+
+            testItem.addEventListener("click", function (e) {
+              e.preventDefault();
+              e.stopPropagation();
+              e.stopImmediatePropagation();
+              const url = this.getAttribute("data-test-url");
+              window.open(url, "_blank", "noopener,noreferrer");
+            });
+
+            fragment.appendChild(testItem);
+          });
+
+          testList.appendChild(fragment);
+          return;
+        }
       }
 
       // Hàm đóng test modal
@@ -3378,10 +3497,7 @@
             if (!itemTitleEl) return;
 
             // Bỏ qua ký tự icon, lấy text
-            let itemTitle =
-              itemTitleEl.childNodes[
-                itemTitleEl.childNodes.length - 1
-              ].textContent.trim();
+            let itemTitle = itemTitleEl.textContent.replace("●", "").trim();
             if (!itemTitle) {
               itemTitle = itemTitleEl.innerText.replace(/[●•◦]/g, "").trim();
             }
