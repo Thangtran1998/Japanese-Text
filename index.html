@@ -1967,6 +1967,289 @@
       color: #88d3ff;
       letter-spacing: 1px;
     }
+          /* ===== STREAK DASHBOARD MỚI ===== */
+      .streak-dashboard {
+        background: rgba(0, 30, 60, 0.7);
+        border-radius: 16px;
+        padding: 25px;
+        margin-top: 20px;
+        border: 1px solid rgba(255, 153, 0, 0.3);
+        position: relative;
+        overflow: hidden;
+        backdrop-filter: blur(10px);
+      }
+
+      .streak-dashboard::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg,
+            transparent 30%,
+            rgba(255, 153, 0, 0.1) 50%,
+            transparent 70%);
+        animation: shine 3s infinite;
+        pointer-events: none;
+      }
+
+      .streak-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(255, 153, 0, 0.3);
+      }
+
+      .streak-title {
+        font-family: "Orbitron", sans-serif;
+        font-size: 20px;
+        color: #ff9900;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .streak-badge {
+        font-family: "Orbitron", sans-serif;
+        font-size: 24px;
+        font-weight: 900;
+        color: #ffcc00;
+        text-shadow: 0 0 15px rgba(255, 204, 0, 0.7);
+        background: rgba(0, 0, 0, 0.3);
+        padding: 5px 15px;
+        border-radius: 30px;
+        border: 1px solid rgba(255, 204, 0, 0.3);
+      }
+
+      .dashboard-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+      }
+
+      @media (max-width: 768px) {
+        .dashboard-grid {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+      }
+
+      .column-title {
+        font-family: "Orbitron", sans-serif;
+        font-size: 16px;
+        color: #00e5ff;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      /* Task List Styles */
+      .task-list {
+        min-height: 200px;
+        max-height: 250px;
+        overflow-y: auto;
+        padding-right: 5px;
+        margin-bottom: 15px;
+      }
+
+      .task-list::-webkit-scrollbar {
+        width: 5px;
+      }
+
+      .task-list::-webkit-scrollbar-track {
+        background: rgba(0, 30, 60, 0.3);
+        border-radius: 3px;
+      }
+
+      .task-list::-webkit-scrollbar-thumb {
+        background: linear-gradient(to bottom, #ff9900, #ffcc00);
+        border-radius: 3px;
+      }
+
+      .task-item {
+        background: rgba(0, 40, 80, 0.4);
+        border: 1px solid rgba(255, 153, 0, 0.2);
+        border-radius: 8px;
+        padding: 12px 15px;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .task-item:hover {
+        background: rgba(0, 60, 100, 0.5);
+        border-color: #ff9900;
+        transform: translateX(5px);
+      }
+
+      .task-item.completed {
+        background: rgba(0, 80, 40, 0.3);
+        border-color: #00ff99;
+        opacity: 0.8;
+      }
+
+      .task-checkbox {
+        width: 22px;
+        height: 22px;
+        border-radius: 6px;
+        border: 2px solid #ff9900;
+        background: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #00ff99;
+        font-size: 14px;
+        transition: all 0.3s;
+      }
+
+      .task-item.completed .task-checkbox {
+        background: #00ff99;
+        border-color: #00ff99;
+        color: #0a0e17;
+      }
+
+      .task-content {
+        flex: 1;
+      }
+
+      .task-name {
+        font-size: 15px;
+        color: #e0f7ff;
+        margin-bottom: 4px;
+      }
+
+      .task-item.completed .task-name {
+        text-decoration: line-through;
+        color: #88d3ff;
+      }
+
+      .task-day {
+        font-size: 12px;
+        color: #ff9900;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .task-progress {
+        margin-top: 10px;
+      }
+
+      .progress-bar {
+        height: 8px;
+        background: rgba(0, 50, 100, 0.5);
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 8px;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(to right, #ff9900, #ffcc00);
+        border-radius: 4px;
+        width: 0%;
+        transition: width 0.4s ease;
+      }
+
+      .progress-text {
+        display: flex;
+        justify-content: space-between;
+        font-size: 13px;
+        color: #88d3ff;
+      }
+
+      /* Calendar Styles */
+      .week-calendar {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .calendar-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(0, 30, 60, 0.4);
+        border-radius: 8px;
+        padding: 10px;
+        border: 1px solid rgba(255, 153, 0, 0.2);
+      }
+
+      .day-label {
+        min-width: 35px;
+        font-family: "Orbitron", sans-serif;
+        font-size: 14px;
+        color: #ff9900;
+        text-align: center;
+      }
+
+      .day-bar-container {
+        flex: 1;
+        height: 30px;
+        background: rgba(0, 20, 40, 0.6);
+        border-radius: 15px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .day-bar {
+        height: 100%;
+        background: linear-gradient(90deg, #ff9900, #ffcc00);
+        border-radius: 15px;
+        width: 0%;
+        transition: width 0.4s ease;
+        box-shadow: 0 0 15px rgba(255, 153, 0, 0.5);
+      }
+
+      .day-value {
+        min-width: 40px;
+        font-size: 12px;
+        color: #88d3ff;
+        text-align: right;
+      }
+
+      .calendar-legend {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+        padding: 10px;
+        background: rgba(0, 20, 40, 0.4);
+        border-radius: 8px;
+        font-size: 12px;
+        color: #a0c8e0;
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .legend-color {
+        width: 12px;
+        height: 12px;
+        border-radius: 3px;
+      }
+
+      .legend-color.today {
+        background: #ffcc00;
+        box-shadow: 0 0 10px #ffcc00;
+      }
+
+      .legend-color.completed {
+        background: #00ff99;
+      }
+
+      .legend-color.partial {
+        background: #ff9900;
+      }
   </style>
 </head>
 
@@ -2051,7 +2334,7 @@
       <main class="main-content">
         <section class="mission-panel">
           <h2 class="panel-title">
-            <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
+            <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
           </h2>
 
           <div class="target-info">
