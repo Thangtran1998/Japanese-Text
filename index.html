@@ -1814,7 +1814,7 @@
         <main class="main-content">
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
             </h2>
 
             <div class="target-info">
@@ -2967,6 +2967,9 @@
             
             if (token !== __openTestModalToken) return;
 
+                        // Tạo DocumentFragment để tối ưu hiệu năng
+            const fragment = document.createDocumentFragment();
+
             // Render tests của unit
             unit.tests.forEach(test => {
               const testItem = document.createElement("div");
@@ -2977,9 +2980,16 @@
               const p = progressMap[test.url] || { perfectCount: 0 };
               const b = badgeFromProgress(p);
 
+              // Kiểm tra và gán giá trị mặc định (tránh lỗi undefined)
+              const iconClass = b.icon || 'fa-clock';
+              const bgColor = b.bg || 'rgba(255, 100, 0, 0.2)';
+              const borderColor = b.border || 'rgba(255, 150, 0, 0.3)';
+              const textColor = b.color || '#ffaa00';
+              const badgeText = b.text || 'Chưa làm';
+
               testItem.innerHTML = `
                 <div class="test-item-icon">
-                  <i class="fas ${b.icon}"></i>
+                  <i class="fas ${iconClass}"></i>
                 </div>
                 <div class="test-item-content">
                   <div class="test-item-title">${test.name}</div>
@@ -2989,8 +2999,8 @@
                     <span><i class="fas fa-signal"></i> ${test.difficulty}</span>
                   </div>
                 </div>
-                <div class="test-status-badge" style="background: ${b.bg}; border-color: ${b.border}; color: ${b.color}">
-                  ${b.text}
+                <div class="test-status-badge" style="background: ${bgColor}; border-color: ${borderColor}; color: ${textColor}">
+                  ${badgeText}
                 </div>
               `;
 
@@ -3010,8 +3020,15 @@
                 console.log(`Mở tab mới: ${url} - ${testName}`);
               });
 
-              testsContainer.appendChild(testItem);
+              // Thêm vào fragment thay vì trực tiếp vào container
+              fragment.appendChild(testItem);
             });
+
+            // Xóa nội dung cũ
+            testsContainer.innerHTML = "";
+
+            // Append fragment một lần duy nhất
+            testsContainer.appendChild(fragment);
           };
 
           // Tạo các tab unit
