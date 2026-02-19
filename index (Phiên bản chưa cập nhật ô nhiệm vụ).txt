@@ -1,0 +1,4257 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>N1 CyberSphere - JLPT N1 2026/07</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@300;400;600&display=swap"
+    rel="stylesheet" />
+  <style>
+    /* =========================================================
+        [CSS-INDEX]
+        1) RESET + BODY THEME
+        2) BACKGROUND EFFECTS
+        3) LAYOUT WRAPPER (.container)
+        4) HEADER / BRANDING
+        5) PANELS / CARDS
+        6) STREAK COUNTER
+        7) MODULES GRID
+        8) FOOTER
+        9) RESPONSIVE
+        10) LICENSE GATE
+        11) EXAM WARNING STATE
+        12) STATUS WARNING STATE
+        13) MODULE MODAL DISPLAY (NEW)
+      ========================================================= */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Exo 2", sans-serif;
+      background-color: #0a0e17;
+      color: #e0f7ff;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image:
+        radial-gradient(circle at 20% 30%,
+          rgba(16, 64, 120, 0.15) 0%,
+          transparent 20%),
+        radial-gradient(circle at 80% 70%,
+          rgba(0, 150, 200, 0.1) 0%,
+          transparent 20%),
+        linear-gradient(to bottom, #0a0e17, #0c1220);
+    }
+
+    .cyber-grid {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image:
+        linear-gradient(rgba(0, 150, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 150, 255, 0.05) 1px, transparent 1px);
+      background-size: 40px 40px;
+      z-index: -1;
+      opacity: 0.4;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(0, 150, 255, 0.3);
+      margin-bottom: 40px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #00a8ff, #0066cc);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      transform: rotate(45deg);
+      box-shadow: 0 0 20px rgba(0, 168, 255, 0.5);
+    }
+
+    .logo-icon i {
+      transform: rotate(-45deg);
+    }
+
+    .logo-text {
+      font-family: "Orbitron", sans-serif;
+      font-weight: 900;
+      font-size: 28px;
+      background: linear-gradient(to right, #00a8ff, #00ffcc);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 1px;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      background: rgba(0, 40, 80, 0.4);
+      padding: 12px 20px;
+      border-radius: 10px;
+      border: 1px solid rgba(0, 150, 255, 0.3);
+      backdrop-filter: blur(10px);
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #ff9900, #ff6600);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #000;
+    }
+
+    .user-name {
+      font-weight: 600;
+      font-size: 18px;
+    }
+
+    .user-greeting {
+      color: #88d3ff;
+      font-size: 14px;
+    }
+
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .mission-panel {
+      background: rgba(0, 20, 40, 0.6);
+      border-radius: 15px;
+      padding: 30px;
+      border: 1px solid rgba(0, 150, 255, 0.3);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    .mission-panel::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(to right, #00a8ff, #00ffcc);
+    }
+
+    .panel-title {
+      font-family: "Orbitron", sans-serif;
+      font-size: 24px;
+      margin-bottom: 25px;
+      color: #00e5ff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .panel-title i {
+      color: #ff9900;
+    }
+
+    .target-info {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .target-card {
+      flex: 1;
+      min-width: 250px;
+      background: rgba(0, 30, 60, 0.5);
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid rgba(0, 150, 255, 0.2);
+      position: relative;
+      transition:
+        transform 0.3s,
+        box-shadow 0.3s;
+    }
+
+    .target-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 100, 255, 0.3);
+    }
+
+    .target-card::after {
+      display: none;
+    }
+
+    .card-title {
+      font-size: 16px;
+      color: #88d3ff;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-value {
+      font-family: "Orbitron", sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: #00ffcc;
+      text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+    }
+
+    .card-value.special {
+      color: #ff9900;
+      text-shadow: 0 0 10px rgba(255, 153, 0, 0.5);
+    }
+
+    .card-subtitle {
+      font-size: 14px;
+      color: #a0c8e0;
+      margin-top: 5px;
+    }
+
+    .streak-counter {
+      background: rgba(0, 30, 60, 0.7);
+      border-radius: 12px;
+      padding: 25px;
+      margin-top: 20px;
+      border: 1px solid rgba(255, 153, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .streak-counter::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg,
+          transparent 30%,
+          rgba(255, 153, 0, 0.1) 50%,
+          transparent 70%);
+      animation: shine 3s infinite;
+    }
+
+    @keyframes shine {
+      0% {
+        transform: translateX(-100%);
+      }
+
+      100% {
+        transform: translateX(100%);
+      }
+    }
+
+    .streak-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 20px;
+      color: #ff9900;
+      margin-bottom: 15px;
+    }
+
+    .streak-days {
+      font-family: "Orbitron", sans-serif;
+      font-size: 42px;
+      font-weight: 900;
+      color: #ffcc00;
+      text-shadow: 0 0 15px rgba(255, 204, 0, 0.7);
+      margin-bottom: 5px;
+    }
+
+    .streak-text {
+      font-size: 18px;
+      color: #ffdd99;
+    }
+
+    /* ===== MODULES GRID (full width luôn, vì frame không còn chiếm chỗ) ===== */
+    .modules-wrapper {
+      margin-top: 20px;
+    }
+
+    .modules-section {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 25px;
+    }
+
+    .module-card {
+      background: rgba(0, 20, 40, 0.7);
+      border-radius: 12px;
+      padding: 25px;
+      border: 1px solid rgba(0, 150, 255, 0.3);
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .module-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 25px rgba(0, 100, 255, 0.4);
+      border-color: #00a8ff;
+    }
+
+    .module-card.locked {
+      border-color: #00a8ff !important;
+      background: rgba(0, 168, 255, 0.15) !important;
+      box-shadow:
+        0 0 20px rgba(0, 168, 255, 0.5),
+        0 15px 25px rgba(0, 100, 255, 0.4) !important;
+      transform: translateY(-8px);
+      position: relative;
+      z-index: 5;
+    }
+
+    .module-card.locked::after {
+      content: "🔒";
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 20px;
+      color: #00a8ff;
+      text-shadow: 0 0 10px rgba(0, 168, 255, 0.7);
+      animation: lockPulse 1.5s infinite alternate;
+    }
+
+    @keyframes lockPulse {
+      0% {
+        opacity: 0.7;
+        transform: scale(0.9);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1.1);
+      }
+    }
+
+    .module-card.locked .module-icon {
+      color: #00a8ff !important;
+      background: rgba(0, 168, 255, 0.2) !important;
+      border-color: #00a8ff !important;
+    }
+
+    .module-card.locked .module-title {
+      color: #00a8ff !important;
+      text-shadow: 0 0 10px rgba(0, 168, 255, 0.5) !important;
+    }
+
+    .module-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(to right, #0066cc, #00a8ff);
+    }
+
+    .module-card.locked::before {
+      background: linear-gradient(to right, #0066cc, #00a8ff) !important;
+    }
+
+    .module-icon {
+      width: 60px;
+      height: 60px;
+      background: rgba(0, 100, 200, 0.2);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      color: #00a8ff;
+      margin-bottom: 20px;
+      border: 1px solid rgba(0, 150, 255, 0.3);
+    }
+
+    .module-title {
+      font-family: "Orbitron", sans-serif;
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #00e5ff;
+    }
+
+    .module-desc {
+      color: #a0c8e0;
+      font-size: 15px;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: rgba(0, 50, 100, 0.5);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 15px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(to right, #0066cc, #00ffcc);
+      border-radius: 4px;
+      width: 0%;
+      transition: width 1.5s ease-out;
+    }
+
+    .progress-text {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      color: #88d3ff;
+    }
+
+    /* ===== MODULE MODAL DISPLAY (NEW) ===== */
+    .module-display-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 8, 18, 0.78);
+      backdrop-filter: blur(8px);
+      z-index: 9998;
+      display: none;
+      opacity: 0;
+      transition: opacity 220ms ease;
+    }
+
+    .module-display-backdrop.show {
+      display: block;
+      opacity: 1;
+    }
+
+    .module-display-frame {
+      width: min(920px, calc(100vw - 40px));
+      height: min(620px, calc(100vh - 120px));
+      background: rgba(0, 20, 40, 0.92);
+      border: 3px solid #00a8ff;
+      border-radius: 15px;
+      padding: 26px;
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) scale(0.92);
+      opacity: 0;
+      z-index: 9999;
+      display: none;
+      backdrop-filter: blur(15px);
+      overflow: hidden;
+      box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.8),
+        0 0 30px rgba(0, 168, 255, 0.7),
+        inset 0 0 30px rgba(0, 150, 255, 0.1);
+    }
+
+    .module-display-frame.show {
+      display: flex;
+      flex-direction: column;
+      animation: modalIn 320ms cubic-bezier(0.2, 1.05, 0.35, 1) forwards;
+    }
+
+    @keyframes modalIn {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -48%) scale(0.9);
+        filter: blur(2px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        filter: blur(0);
+      }
+    }
+
+    .module-display-frame::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(to right, #0066cc, #00a8ff);
+      z-index: 2;
+    }
+
+    .module-display-frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 15px;
+      border: 2px solid rgba(0, 168, 255, 0.25);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .frame-status {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 0, 255, 0.3);
+      z-index: 3;
+    }
+
+    .status-indicator {
+      font-size: 14px;
+      color: #88d3ff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-indicator.locked {
+      color: #00a8ff;
+      text-shadow: 0 0 10px rgba(0, 168, 255, 0.5);
+    }
+
+    .close-lock-btn {
+      background: rgba(0, 168, 255, 0.2);
+      border: 1px solid rgba(0, 168, 255, 0.5);
+      color: #00a8ff;
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+
+    .close-lock-btn:hover {
+      background: rgba(0, 168, 255, 0.38);
+      box-shadow: 0 0 10px rgba(0, 168, 255, 0.45);
+      transform: translateY(-1px);
+    }
+
+    .frame-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(0, 150, 255, 0.3);
+      z-index: 3;
+    }
+
+    .frame-icon {
+      width: 50px;
+      height: 50px;
+      background: rgba(0, 100, 200, 0.3);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: #00ffcc;
+      border: 1px solid rgba(0, 255, 204, 0.3);
+    }
+
+    .frame-title {
+      font-family: "Orbitron", sans-serif;
+      font-size: 22px;
+      color: #00ffcc;
+      text-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+    }
+
+    .frame-content {
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 10px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      z-index: 3;
+    }
+
+    .frame-content::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .frame-content::-webkit-scrollbar-track {
+      background: rgba(0, 30, 60, 0.3);
+      border-radius: 4px;
+    }
+
+    .frame-content::-webkit-scrollbar-thumb {
+      background: linear-gradient(to bottom, #00a8ff, #00ffcc);
+      border-radius: 4px;
+    }
+
+    .content-item {
+      background: rgba(0, 30, 60, 0.45);
+      border-radius: 10px;
+      padding: 16px;
+      border: 1px solid rgba(0, 150, 255, 0.25);
+      transition: all 0.25s;
+      min-height: 165px;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .content-item:hover {
+      background: rgba(0, 40, 80, 0.6);
+      border-color: #00a8ff;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 100, 255, 0.18);
+    }
+
+    .item-title {
+      font-family: "Orbitron", sans-serif;
+      font-size: 16px;
+      color: #00e5ff;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .item-title i {
+      color: #00ffcc;
+      font-size: 10px;
+    }
+
+    .item-desc {
+      color: #a0c8e0;
+      font-size: 14px;
+      line-height: 1.55;
+      margin-bottom: 12px;
+      flex: 1;
+    }
+
+    .item-stats {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 6px;
+      font-size: 12px;
+      color: #88d3ff;
+      background: rgba(0, 40, 80, 0.25);
+      padding: 8px 10px;
+      border-radius: 8px;
+    }
+
+    .item-progress {
+      height: 5px;
+      background: rgba(0, 50, 100, 0.5);
+      border-radius: 3px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+
+    .item-progress-fill {
+      height: 100%;
+      background: linear-gradient(to right, #00a8ff, #00ffcc);
+      border-radius: 3px;
+      width: 0%;
+      transition: width 700ms ease-out;
+      box-shadow: 0 0 10px rgba(0, 255, 204, 0.25);
+      transition: width 0.4s ease;
+    }
+
+    .start-button {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(to right, #0066cc, #00a8ff);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-family: "Orbitron", sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: center;
+      text-decoration: none;
+      margin-top: 20px;
+      letter-spacing: 1px;
+    }
+
+    .start-button:hover {
+      background: linear-gradient(to right, #00a8ff, #00ffcc);
+      box-shadow: 0 0 20px rgba(0, 168, 255, 0.7);
+      transform: scale(1.02);
+    }
+
+    .floating-elements {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .floating-element {
+      position: absolute;
+      background: rgba(0, 150, 255, 0.1);
+      border: 1px solid rgba(0, 150, 255, 0.3);
+      border-radius: 10px;
+      animation: float 20s infinite linear;
+    }
+
+    .floating-element:nth-child(1) {
+      width: 80px;
+      height: 80px;
+      top: 10%;
+      left: 5%;
+      animation-delay: 0s;
+    }
+
+    .floating-element:nth-child(2) {
+      width: 60px;
+      height: 60px;
+      top: 20%;
+      right: 10%;
+      animation-delay: -5s;
+    }
+
+    .floating-element:nth-child(3) {
+      width: 100px;
+      height: 100px;
+      bottom: 15%;
+      left: 10%;
+      animation-delay: -10s;
+    }
+
+    .floating-element:nth-child(4) {
+      width: 70px;
+      height: 70px;
+      bottom: 25%;
+      right: 5%;
+      animation-delay: -15s;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translate(0, 0) rotate(0deg);
+      }
+
+      25% {
+        transform: translate(20px, 30px) rotate(90deg);
+      }
+
+      50% {
+        transform: translate(0, 60px) rotate(180deg);
+      }
+
+      75% {
+        transform: translate(-20px, 30px) rotate(270deg);
+      }
+
+      100% {
+        transform: translate(0, 0) rotate(360deg);
+      }
+    }
+
+    .cyber-line {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .cyber-line::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right,
+          transparent,
+          #00ffcc,
+          transparent);
+      animation: scan 4s linear infinite;
+    }
+
+    @keyframes scan {
+      0% {
+        top: 0%;
+      }
+
+      100% {
+        top: 100%;
+      }
+    }
+
+    .glow-effect {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle,
+          rgba(0, 150, 255, 0.1),
+          transparent 70%);
+      filter: blur(20px);
+      z-index: -1;
+    }
+
+    .glow-1 {
+      top: 10%;
+      right: 10%;
+    }
+
+    .glow-2 {
+      bottom: 10%;
+      left: 10%;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 0;
+      margin-top: 50px;
+      border-top: 1px solid rgba(0, 150, 255, 0.2);
+      color: #88d3ff;
+      font-size: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .modules-section {
+        grid-template-columns: 1fr;
+      }
+
+      .frame-content {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .target-info {
+        flex-direction: column;
+      }
+
+      .target-card {
+        min-width: 100%;
+      }
+
+      .logo-text {
+        font-size: 22px;
+      }
+
+      .user-info {
+        padding: 8px 15px;
+      }
+    }
+
+    /* ===== LICENSE GATE ===== */
+    .license-gate {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 8, 18, 0.88);
+      backdrop-filter: blur(10px);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .license-panel {
+      width: min(720px, 100%);
+      background: rgba(0, 20, 40, 0.75);
+      border: 1px solid rgba(0, 150, 255, 0.35);
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .license-panel::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(to right, #00a8ff, #00ffcc);
+    }
+
+    .license-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .license-input {
+      width: 100%;
+      padding: 14px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(0, 150, 255, 0.35);
+      background: rgba(0, 10, 25, 0.75);
+      color: #e0f7ff;
+      outline: none;
+      font-size: 15px;
+    }
+
+    .license-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .license-btn {
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 0;
+      cursor: pointer;
+      font-family: "Orbitron", sans-serif;
+      letter-spacing: 0.5px;
+    }
+
+    .license-btn.primary {
+      background: linear-gradient(to right, #0066cc, #00a8ff);
+      color: #fff;
+    }
+
+    .license-btn.primary:hover {
+      background: linear-gradient(to right, #00a8ff, #00ffcc);
+      box-shadow: 0 0 20px rgba(0, 168, 255, 0.5);
+    }
+
+    .license-btn.ghost {
+      background: rgba(0, 40, 80, 0.35);
+      color: #88d3ff;
+      border: 1px solid rgba(0, 150, 255, 0.25);
+    }
+
+    .license-small {
+      color: #a0c8e0;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .license-kv {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 10px;
+      padding: 12px;
+      border: 1px solid rgba(0, 150, 255, 0.2);
+      border-radius: 12px;
+      background: rgba(0, 30, 60, 0.35);
+    }
+
+    .license-kv code {
+      word-break: break-all;
+      color: #00ffcc;
+    }
+
+    .license-status {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #88d3ff;
+    }
+
+    .license-status.error {
+      color: #ff8a8a;
+    }
+
+    .license-status.ok {
+      color: #00ffcc;
+    }
+
+    /* ====== EXAM WARNING (giữ nguyên logic class) ====== */
+    .target-card:nth-child(2) {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .target-card:nth-child(2)::before,
+    .target-card:nth-child(2)::after {
+      display: none !important;
+    }
+
+    .target-card:nth-child(2).warning-yellow::before,
+    .target-card:nth-child(2).warning-yellow::after,
+    .target-card:nth-child(2).warning-red::before,
+    .target-card:nth-child(2).warning-red::after,
+    .target-card:nth-child(2).warning-expired::before,
+    .target-card:nth-child(2).warning-expired::after {
+      display: block !important;
+    }
+
+    .target-card:nth-child(2).warning-yellow .sparkle,
+    .target-card:nth-child(2).warning-red .sparkle,
+    .target-card:nth-child(2).warning-expired .sparkle {
+      display: block !important;
+    }
+
+    .target-card:nth-child(2).warning-yellow .sparkle,
+    .target-card:nth-child(2).warning-red .sparkle,
+    .target-card:nth-child(2).warning-expired .sparkle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      filter: blur(1px);
+      animation: sparkleMove 4s linear infinite;
+      opacity: 0.7;
+    }
+
+    .target-card:nth-child(2) .sparkle:nth-child(1) {
+      top: 20%;
+      left: 15%;
+      animation-delay: 0s;
+    }
+
+    .target-card:nth-child(2) .sparkle:nth-child(2) {
+      top: 60%;
+      right: 20%;
+      animation-delay: 1s;
+    }
+
+    .target-card:nth-child(2) .sparkle:nth-child(3) {
+      bottom: 30%;
+      left: 30%;
+      animation-delay: 2s;
+    }
+
+    @keyframes sparkleMove {
+
+      0%,
+      100% {
+        opacity: 0;
+        transform: translate(0, 0);
+      }
+
+      10%,
+      90% {
+        opacity: 0.7;
+      }
+
+      50% {
+        opacity: 0.4;
+        transform: translate(5px, -5px);
+      }
+    }
+
+    .target-card:nth-child(2).warning-yellow {
+      background: rgba(60, 40, 0, 0.7) !important;
+      border: 1px solid rgba(255, 200, 0, 0.6) !important;
+      animation: cyberPulse 2s infinite alternate !important;
+    }
+
+    @keyframes cyberPulse {
+      0% {
+        box-shadow:
+          0 0 10px rgba(255, 200, 0, 0.3),
+          0 0 20px rgba(255, 150, 0, 0.2),
+          inset 0 0 15px rgba(255, 200, 0, 0.1);
+        background: rgba(60, 40, 0, 0.7);
+      }
+
+      100% {
+        box-shadow:
+          0 0 20px rgba(255, 200, 0, 0.6),
+          0 0 40px rgba(255, 150, 0, 0.4),
+          0 0 60px rgba(255, 100, 0, 0.2),
+          inset 0 0 25px rgba(255, 200, 0, 0.2);
+        background: rgba(80, 60, 0, 0.8);
+      }
+    }
+
+    .target-card:nth-child(2).warning-yellow::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #ffcc00, transparent);
+      animation: borderScan 3s linear infinite;
+    }
+
+    @keyframes borderScan {
+      0% {
+        left: -100%;
+        opacity: 0;
+      }
+
+      50% {
+        opacity: 1;
+      }
+
+      100% {
+        left: 100%;
+        opacity: 0;
+      }
+    }
+
+    .target-card:nth-child(2).warning-yellow .sparkle {
+      background: #ffcc00 !important;
+    }
+
+    .target-card:nth-child(2).warning-yellow::after {
+      content: "";
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffcc00, transparent 70%);
+      animation: particleGlow 1.5s ease-in-out infinite alternate;
+      filter: blur(1px);
+    }
+
+    @keyframes particleGlow {
+      0% {
+        transform: scale(0.8);
+        opacity: 0.5;
+        box-shadow: 0 0 10px #ffcc00;
+      }
+
+      100% {
+        transform: scale(1.2);
+        opacity: 1;
+        box-shadow:
+          0 0 20px #ffcc00,
+          0 0 30px #ff9900;
+      }
+    }
+
+    .target-card:nth-child(2).warning-yellow .card-title {
+      color: #ffdd99 !important;
+    }
+
+    .target-card:nth-child(2).warning-yellow .card-value.special {
+      color: #ffcc00 !important;
+      text-shadow: 0 0 15px rgba(255, 204, 0, 0.8) !important;
+      animation: textGlow 1.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes textGlow {
+      0% {
+        text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+      }
+
+      100% {
+        text-shadow:
+          0 0 20px rgba(255, 204, 0, 0.8),
+          0 0 30px rgba(255, 153, 0, 0.6);
+      }
+    }
+
+    .target-card:nth-child(2).warning-yellow .card-subtitle {
+      color: #ffcc99 !important;
+    }
+
+    .target-card:nth-child(2).warning-red {
+      background: rgba(60, 0, 0, 0.7) !important;
+      border: 1px solid rgba(255, 50, 50, 0.8) !important;
+      animation: redPulse 1.5s infinite alternate !important;
+    }
+
+    @keyframes redPulse {
+      0% {
+        box-shadow:
+          0 0 15px rgba(255, 50, 50, 0.4),
+          0 0 30px rgba(255, 0, 0, 0.3),
+          inset 0 0 20px rgba(255, 50, 50, 0.2);
+        background: rgba(60, 0, 0, 0.7);
+      }
+
+      100% {
+        box-shadow:
+          0 0 25px rgba(255, 50, 50, 0.7),
+          0 0 50px rgba(255, 0, 0, 0.5),
+          0 0 75px rgba(200, 0, 0, 0.3),
+          inset 0 0 35px rgba(255, 50, 50, 0.3);
+        background: rgba(80, 0, 0, 0.9);
+      }
+    }
+
+    .target-card:nth-child(2).warning-red::before {
+      animation: redBorderScan 2s linear infinite !important;
+      background: linear-gradient(90deg,
+          transparent,
+          #ff3333,
+          transparent) !important;
+    }
+
+    @keyframes redBorderScan {
+      0% {
+        left: -100%;
+        opacity: 0;
+      }
+
+      50% {
+        opacity: 1;
+      }
+
+      100% {
+        left: 100%;
+        opacity: 0;
+      }
+    }
+
+    .target-card:nth-child(2).warning-red .sparkle {
+      background: #ff3333 !important;
+    }
+
+    .target-card:nth-child(2).warning-red::after {
+      background: radial-gradient(circle,
+          #ff3333,
+          transparent 70%) !important;
+      animation: redParticleGlow 1s ease-in-out infinite alternate !important;
+    }
+
+    @keyframes redParticleGlow {
+      0% {
+        transform: scale(0.8);
+        opacity: 0.6;
+        box-shadow: 0 0 15px #ff3333;
+      }
+
+      100% {
+        transform: scale(1.3);
+        opacity: 1;
+        box-shadow:
+          0 0 25px #ff3333,
+          0 0 40px #ff0000;
+      }
+    }
+
+    .target-card:nth-child(2).warning-red .card-title {
+      color: #ff9999 !important;
+    }
+
+    .target-card:nth-child(2).warning-red .card-value.special {
+      color: #ff6666 !important;
+      text-shadow: 0 0 20px rgba(255, 50, 50, 0.9) !important;
+      animation: redTextGlow 1s ease-in-out infinite alternate !important;
+    }
+
+    @keyframes redTextGlow {
+      0% {
+        text-shadow: 0 0 15px rgba(255, 50, 50, 0.6);
+      }
+
+      100% {
+        text-shadow:
+          0 0 25px rgba(255, 50, 50, 0.9),
+          0 0 40px rgba(255, 0, 0, 0.7);
+      }
+    }
+
+    .target-card:nth-child(2).warning-red .card-subtitle {
+      color: #ffaaaa !important;
+    }
+
+    .target-card:nth-child(2).warning-expired {
+      background: rgba(30, 30, 30, 0.7) !important;
+      border: 1px solid rgba(100, 100, 100, 0.5) !important;
+      animation: expiredPulse 3s infinite alternate !important;
+    }
+
+    @keyframes expiredPulse {
+      0% {
+        box-shadow:
+          0 0 5px rgba(100, 100, 100, 0.3),
+          inset 0 0 10px rgba(100, 100, 100, 0.1);
+        background: rgba(30, 30, 30, 0.7);
+      }
+
+      100% {
+        box-shadow:
+          0 0 10px rgba(100, 100, 100, 0.5),
+          inset 0 0 15px rgba(100, 100, 100, 0.2);
+        background: rgba(40, 40, 40, 0.8);
+      }
+    }
+
+    /* ====== STATUS WARNING STATE (giữ nguyên) ====== */
+    .target-card:nth-child(3) {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .target-card:nth-child(3)::before,
+    .target-card:nth-child(3)::after {
+      display: none !important;
+    }
+
+    .target-card:nth-child(3) .sparkle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      filter: blur(1px);
+      animation: sparkleMove 4s linear infinite;
+      opacity: 0.7;
+      display: none;
+    }
+
+    .target-card:nth-child(3) .sparkle:nth-child(1) {
+      top: 20%;
+      left: 15%;
+      animation-delay: 0s;
+    }
+
+    .target-card:nth-child(3) .sparkle:nth-child(2) {
+      top: 60%;
+      right: 20%;
+      animation-delay: 1s;
+    }
+
+    .target-card:nth-child(3) .sparkle:nth-child(3) {
+      bottom: 30%;
+      left: 30%;
+      animation-delay: 2s;
+    }
+
+    .target-card:nth-child(3).warning-yellow::before,
+    .target-card:nth-child(3).warning-yellow::after,
+    .target-card:nth-child(3).warning-red::before,
+    .target-card:nth-child(3).warning-red::after,
+    .target-card:nth-child(3).warning-expired::before,
+    .target-card:nth-child(3).warning-expired::after {
+      display: block !important;
+    }
+
+    .target-card:nth-child(3).warning-yellow .sparkle,
+    .target-card:nth-child(3).warning-red .sparkle,
+    .target-card:nth-child(3).warning-expired .sparkle {
+      display: block !important;
+    }
+
+    .target-card:nth-child(3).warning-yellow {
+      background: rgba(60, 40, 0, 0.7) !important;
+      border: 1px solid rgba(255, 200, 0, 0.6) !important;
+      animation: cyberPulse 2s infinite alternate !important;
+    }
+
+    .target-card:nth-child(3).warning-yellow::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #ffcc00, transparent);
+      animation: borderScan 3s linear infinite;
+    }
+
+    .target-card:nth-child(3).warning-yellow .sparkle {
+      background: #ffcc00 !important;
+    }
+
+    .target-card:nth-child(3).warning-yellow::after {
+      content: "";
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffcc00, transparent 70%);
+      animation: particleGlow 1.5s ease-in-out infinite alternate;
+      filter: blur(1px);
+    }
+
+    .target-card:nth-child(3).warning-yellow .card-title {
+      color: #ffdd99 !important;
+    }
+
+    .target-card:nth-child(3).warning-yellow .card-value {
+      color: #ffcc00 !important;
+      text-shadow: 0 0 15px rgba(255, 204, 0, 0.8) !important;
+      animation: textGlow 1.5s ease-in-out infinite alternate !important;
+    }
+
+    .target-card:nth-child(3).warning-yellow .card-subtitle {
+      color: #ffcc99 !important;
+    }
+
+    .target-card:nth-child(3).warning-red {
+      background: rgba(60, 0, 0, 0.7) !important;
+      border: 1px solid rgba(255, 50, 50, 0.8) !important;
+      animation: redPulse 1.5s infinite alternate !important;
+    }
+
+    .target-card:nth-child(3).warning-red::before {
+      animation: redBorderScan 2s linear infinite !important;
+      background: linear-gradient(90deg,
+          transparent,
+          #ff3333,
+          transparent) !important;
+    }
+
+    .target-card:nth-child(3).warning-red .sparkle {
+      background: #ff3333 !important;
+    }
+
+    .target-card:nth-child(3).warning-red::after {
+      background: radial-gradient(circle,
+          #ff3333,
+          transparent 70%) !important;
+      animation: redParticleGlow 1s ease-in-out infinite alternate !important;
+    }
+
+    .target-card:nth-child(3).warning-red .card-title {
+      color: #ff9999 !important;
+    }
+
+    .target-card:nth-child(3).warning-red .card-value {
+      color: #ff6666 !important;
+      text-shadow: 0 0 20px rgba(255, 50, 50, 0.9) !important;
+      animation: redTextGlow 1s ease-in-out infinite alternate !important;
+    }
+
+    .target-card:nth-child(3).warning-red .card-subtitle {
+      color: #ffaaaa !important;
+    }
+
+    .target-card:nth-child(3).warning-expired {
+      background: rgba(30, 30, 30, 0.7) !important;
+      border: 1px solid rgba(100, 100, 100, 0.5) !important;
+      animation: expiredPulse 3s infinite alternate !important;
+    }
+
+    .target-card:nth-child(3).warning-expired::before {
+      animation: expiredBorderScan 4s linear infinite !important;
+      background: linear-gradient(90deg,
+          transparent,
+          #888888,
+          transparent) !important;
+    }
+
+    .target-card:nth-child(3).warning-expired .sparkle {
+      background: #888888 !important;
+    }
+
+    .target-card:nth-child(3).warning-expired::after {
+      background: radial-gradient(circle,
+          #888888,
+          transparent 70%) !important;
+      animation: expiredParticleGlow 2s ease-in-out infinite alternate !important;
+    }
+
+    @keyframes expiredParticleGlow {
+      0% {
+        transform: scale(0.7);
+        opacity: 0.3;
+        box-shadow: 0 0 5px #888888;
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 0.5;
+        box-shadow: 0 0 10px #888888;
+      }
+    }
+
+    .target-card:nth-child(3).warning-expired .card-title {
+      color: #aaaaaa !important;
+    }
+
+    .target-card:nth-child(3).warning-expired .card-value {
+      color: #888888 !important;
+      text-shadow: 0 0 10px rgba(136, 136, 136, 0.5) !important;
+      animation: none !important;
+    }
+
+    .target-card:nth-child(3).warning-expired .card-subtitle {
+      color: #999999 !important;
+    }
+
+    /* ===== TEST MODAL (BÀI KIỂM TRA) ===== */
+    .test-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 8, 18, 0.85);
+      backdrop-filter: blur(12px);
+      z-index: 10000;
+      display: none;
+      opacity: 0;
+      transition: opacity 220ms ease;
+    }
+
+    .test-modal-backdrop.show {
+      display: block;
+      opacity: 1;
+    }
+
+    .test-modal-frame {
+      width: min(700px, calc(100vw - 60px));
+      height: min(600px, calc(100vh - 140px));
+      background: rgba(8, 20, 40, 0.95);
+      border: 2px solid #00a8ff;
+      border-radius: 15px;
+      padding: 20px;
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) scale(0.92);
+      opacity: 0;
+      z-index: 10001;
+      display: none;
+      backdrop-filter: blur(15px);
+      overflow: hidden;
+      box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.9),
+        0 0 30px rgba(0, 168, 255, 0.5);
+      flex-direction: column;
+    }
+
+    .test-modal-frame.show {
+      display: flex;
+      animation: testModalIn 300ms cubic-bezier(0.2, 1.05, 0.35, 1) forwards;
+    }
+
+    @keyframes testModalIn {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -48%) scale(0.9);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+
+    .test-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 15px;
+      border-bottom: 1px solid rgba(0, 168, 255, 0.3);
+      margin-bottom: 15px;
+    }
+
+    .test-modal-title {
+      font-family: "Orbitron", sans-serif;
+      font-size: 18px;
+      color: #00e5ff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .test-modal-close {
+      background: rgba(255, 50, 50, 0.2);
+      border: 1px solid rgba(255, 50, 50, 0.5);
+      color: #ff6666;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.25s;
+      font-size: 13px;
+    }
+
+    .test-modal-close:hover {
+      background: rgba(255, 50, 50, 0.4);
+      box-shadow: 0 0 10px rgba(255, 50, 50, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .test-list {
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .test-list::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .test-list::-webkit-scrollbar-track {
+      background: rgba(0, 30, 60, 0.3);
+      border-radius: 3px;
+    }
+
+    .test-list::-webkit-scrollbar-thumb {
+      background: linear-gradient(to bottom, #00a8ff, #00ffcc);
+      border-radius: 3px;
+    }
+
+    .test-item {
+      background: rgba(0, 40, 80, 0.4);
+      border: 1px solid rgba(0, 168, 255, 0.2);
+      border-radius: 10px;
+      padding: 15px;
+      cursor: pointer;
+      transition: all 0.25s;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .test-item:hover {
+      background: rgba(0, 80, 120, 0.5);
+      border-color: #00a8ff;
+      transform: translateX(5px);
+      box-shadow: 0 5px 15px rgba(0, 100, 255, 0.3);
+    }
+
+    .test-item-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(0, 150, 200, 0.2);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #00ffcc;
+      font-size: 18px;
+    }
+
+    .test-item-content {
+      flex: 1;
+    }
+
+    .test-item-title {
+      font-weight: 600;
+      color: #e0f7ff;
+      margin-bottom: 5px;
+      font-size: 15px;
+    }
+
+    .test-item-meta {
+      display: flex;
+      gap: 15px;
+      font-size: 12px;
+      color: #88d3ff;
+    }
+
+    .test-item-meta i {
+      margin-right: 4px;
+      color: #ff9900;
+    }
+
+    .test-status-badge {
+      background: rgba(0, 200, 100, 0.2);
+      border: 1px solid rgba(0, 255, 100, 0.3);
+      color: #00ff99;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+    }
+
+    /* Khóa scroll ngoài khi mở popup */
+    body.modal-open {
+      overflow: hidden;
+    }
+
+    /* (Tuỳ chọn) mượt hơn trên mobile */
+    body.modal-open {
+      touch-action: none;
+    }
+
+    /* Unit tabs cho Mimikara */
+    .unit-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+      padding: 10px;
+      background: rgba(0, 30, 60, 0.5);
+      border-radius: 12px;
+      border: 1px solid rgba(0, 150, 255, 0.2);
+    }
+
+    .unit-tab {
+      padding: 8px 16px;
+      background: rgba(0, 40, 80, 0.6);
+      border: 1px solid rgba(0, 150, 255, 0.3);
+      border-radius: 8px;
+      color: #88d3ff;
+      font-family: "Orbitron", sans-serif;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+
+    .unit-tab:hover {
+      background: rgba(0, 80, 120, 0.6);
+      border-color: #00a8ff;
+      transform: translateY(-2px);
+    }
+
+    .unit-tab.active {
+      background: linear-gradient(135deg, #0066cc, #00a8ff);
+      border-color: #00ffcc;
+      color: white;
+      box-shadow: 0 0 15px rgba(0, 168, 255, 0.5);
+    }
+
+    /* Điều chỉnh khoảng cách cho test items */
+    .test-list {
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      /* Tăng gap lên 12px để tạo khoảng cách giữa các ô */
+    }
+
+    .test-item {
+      background: rgba(0, 40, 80, 0.4);
+      border: 1px solid rgba(0, 168, 255, 0.2);
+      border-radius: 10px;
+      padding: 15px;
+      cursor: pointer;
+      transition: all 0.25s;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 0;
+      /* Xóa margin bottom nếu có */
+    }
+
+    /* Container cho tests trong Mimikara */
+    .tests-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      /* Tạo khoảng cách giữa các test items */
+      margin-top: 15px;
+    }
+
+    /* Đảm bảo test items trong tests-container cũng có khoảng cách */
+    .tests-container .test-item {
+      margin-bottom: 0;
+      width: 100%;
+    }
+
+    /* Giữ nguyên style cho unit tabs */
+    .unit-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+      padding: 10px;
+      background: rgba(0, 30, 60, 0.5);
+      border-radius: 12px;
+      border: 1px solid rgba(0, 150, 255, 0.2);
+    }
+
+    .unit-tab {
+      padding: 8px 16px;
+      background: rgba(0, 40, 80, 0.6);
+      border: 1px solid rgba(0, 150, 255, 0.3);
+      border-radius: 8px;
+      color: #88d3ff;
+      font-family: "Orbitron", sans-serif;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+
+    .unit-tab:hover {
+      background: rgba(0, 80, 120, 0.6);
+      border-color: #00a8ff;
+      transform: translateY(-2px);
+    }
+
+    .unit-tab.active {
+      background: linear-gradient(135deg, #0066cc, #00a8ff);
+      border-color: #00ffcc;
+      color: white;
+      box-shadow: 0 0 15px rgba(0, 168, 255, 0.5);
+    }
+
+    /* ===== SKELETON LOADING ===== */
+    .skeleton-container {
+      width: 100%;
+      animation: skeleton-fade 1.5s ease-in-out infinite;
+    }
+
+    .skeleton-item {
+      background: linear-gradient(90deg,
+          rgba(0, 40, 80, 0.3) 25%,
+          rgba(0, 80, 120, 0.5) 50%,
+          rgba(0, 40, 80, 0.3) 75%);
+      background-size: 200% 100%;
+      animation: skeleton-shimmer 1.5s infinite;
+      border-radius: 10px;
+      height: 90px;
+      margin-bottom: 12px;
+      border: 1px solid rgba(0, 150, 255, 0.2);
+    }
+
+    .skeleton-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: rgba(0, 100, 200, 0.3);
+      float: left;
+      margin: 15px;
+    }
+
+    .skeleton-line {
+      height: 16px;
+      background: rgba(0, 100, 200, 0.2);
+      margin: 15px 15px 15px 70px;
+      border-radius: 4px;
+    }
+
+    .skeleton-line.short {
+      width: 60%;
+    }
+
+    @keyframes skeleton-shimmer {
+      0% {
+        background-position: 200% 0;
+      }
+
+      100% {
+        background-position: -200% 0;
+      }
+    }
+
+    @keyframes skeleton-fade {
+
+      0%,
+      100% {
+        opacity: 0.7;
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
+
+    .loading-text {
+      text-align: center;
+      padding: 30px;
+      color: var(--secondary-glow);
+      font-family: "Orbitron", sans-serif;
+      font-size: 14px;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    /* ================= CYBER LOADING ================= */
+
+    .cyber-loading {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 8, 18, 0.85);
+      backdrop-filter: blur(12px);
+      z-index: 20000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cyber-loading.show {
+      display: flex;
+    }
+
+    .cyber-loading-box {
+      width: 420px;
+      padding: 30px;
+      border: 2px solid #00a8ff;
+      border-radius: 14px;
+      background: rgba(0, 20, 40, 0.95);
+      text-align: center;
+      box-shadow:
+        0 0 25px rgba(0, 168, 255, 0.7),
+        0 0 60px rgba(0, 100, 255, 0.4);
+      animation: cyberGlow 2s infinite alternate;
+    }
+
+    @keyframes cyberGlow {
+      0% {
+        box-shadow: 0 0 20px rgba(0, 168, 255, 0.6);
+      }
+
+      100% {
+        box-shadow: 0 0 50px rgba(0, 255, 204, 0.8);
+      }
+    }
+
+    .cyber-loading-title {
+      font-family: "Orbitron", sans-serif;
+      font-size: 20px;
+      letter-spacing: 2px;
+      color: #00ffcc;
+      margin-bottom: 20px;
+      text-shadow: 0 0 15px rgba(0, 255, 204, 0.8);
+      animation: cyberTextPulse 1.5s infinite alternate;
+    }
+
+    @keyframes cyberTextPulse {
+      0% {
+        opacity: 0.6;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .cyber-loading-bar {
+      height: 8px;
+      background: rgba(0, 50, 100, 0.4);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 15px;
+    }
+
+    .cyber-loading-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(to right, #0066cc, #00ffcc);
+      transition: width 120ms linear;
+      /* chạy mượt theo % */
+    }
+
+    @keyframes cyberBarMove {
+      0% {
+        width: 0%;
+      }
+
+      50% {
+        width: 100%;
+      }
+
+      100% {
+        width: 0%;
+      }
+    }
+
+    .cyber-loading-sub {
+      font-size: 12px;
+      color: #88d3ff;
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="cyber-grid"></div>
+  <div class="cyber-line"></div>
+  <div class="floating-elements">
+    <div class="floating-element"></div>
+    <div class="floating-element"></div>
+    <div class="floating-element"></div>
+    <div class="floating-element"></div>
+  </div>
+  <div class="glow-effect glow-1"></div>
+  <div class="glow-effect glow-2"></div>
+
+  <!-- LICENSE GATE -->
+  <div class="license-gate" id="licenseGate">
+    <div class="license-panel">
+      <h2 class="panel-title">
+        <i class="fas fa-shield-halved"></i> KÍCH HOẠT BẢN QUYỀN
+      </h2>
+
+      <div class="license-small">
+        Web của bạn đang bật chế độ <b>Khóa thiết bị</b>: 1 máy / 1
+        license.<br />
+        Nhập license để mở hệ thống.
+      </div>
+
+      <div class="license-row">
+        <input class="license-input" id="licenseInput" placeholder="Nhập license (VD: N1.21000101.xxxx...)" />
+
+        <div class="license-actions">
+          <button class="license-btn primary" id="btnActivate">
+            <i class="fas fa-key"></i> KÍCH HOẠT
+          </button>
+          <button class="license-btn ghost" id="btnCopyDevice">
+            <i class="fas fa-copy"></i> COPY THIẾT BỊ HIỆN TẠI
+          </button>
+          <button class="license-btn ghost" id="btnRequestReset">
+            <i class="fas fa-rotate"></i> YÊU CẦU CẤP LẠI LICENSE
+          </button>
+        </div>
+
+        <div class="license-status" id="licenseStatus">
+          Trạng thái: Chưa kích hoạt
+        </div>
+
+        <div class="license-kv">
+          <div>Thiết bị hiện tại</div>
+          <div><code id="deviceIdText">...</code></div>
+
+          <div>Thông tin</div>
+          <div><code id="deviceInfoText">...</code></div>
+        </div>
+
+        <div class="license-small">
+          <b>Gợi ý:</b> Nếu bạn đổi máy / đổi trình duyệt / xóa dữ liệu trình
+          duyệt → deviceID thay đổi → cần cấp lại license.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="appRoot">
+    <div class="container">
+      <header>
+        <div class="logo">
+          <div class="logo-icon">
+            <i class="fas fa-satellite"></i>
+          </div>
+          <div class="logo-text">N1 CYBERSPHERE</div>
+        </div>
+        <div class="user-info">
+          <div class="user-avatar">T</div>
+          <div>
+            <div class="user-greeting">Xin chào</div>
+            <div class="user-name" id="userNameText">---</div>
+          </div>
+        </div>
+      </header>
+
+      <main class="main-content">
+        <section class="mission-panel">
+          <h2 class="panel-title">
+            <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
+          </h2>
+
+          <div class="target-info">
+            <div class="target-card">
+              <div class="card-title">
+                <i class="fas fa-flag"></i> Mục tiêu
+              </div>
+              <div class="card-value">JLPT N1</div>
+              <div class="card-subtitle">Cấp độ cao nhất</div>
+            </div>
+
+            <div class="target-card">
+              <div class="card-title">
+                <i class="fas fa-calendar-alt"></i> Thời hạn
+              </div>
+              <div class="card-value special" id="examMonthYear">07/2026</div>
+              <div class="card-subtitle" id="examSubtitle">
+                Kỳ thi tháng 7 năm 2026
+              </div>
+              <div class="card-subtitle" id="examCountdown">Còn ...</div>
+              <div class="sparkle"></div>
+              <div class="sparkle"></div>
+              <div class="sparkle"></div>
+            </div>
+
+            <div class="target-card">
+              <div class="card-title">
+                <i class="fas fa-rocket"></i> Trạng thái
+              </div>
+              <div class="card-value" id="statusValue">---</div>
+              <div class="card-subtitle" id="statusSubtitle">---</div>
+              <div class="sparkle"></div>
+              <div class="sparkle"></div>
+              <div class="sparkle"></div>
+            </div>
+          </div>
+
+          <div class="streak-counter">
+            <div class="streak-title">
+              <i class="fas fa-fire"></i> CHUỖI HOẠT ĐỘNG
+            </div>
+            <div class="streak-days">5 NGÀY</div>
+            <div class="streak-text">liên tiếp hoàn thành nhiệm vụ!</div>
+          </div>
+
+          
+        </section>
+
+        <section class="mission-panel">
+          <h2 class="panel-title">
+            <i class="fas fa-cogs"></i> MODULE ĐÀO TẠO
+          </h2>
+
+          <div class="modules-wrapper">
+            <div class="modules-section">
+              <div class="module-card" data-module="vocab">
+                <div class="module-icon">
+                  <i class="fas fa-book"></i>
+                </div>
+                <h3 class="module-title">TỪ VỰNG N1</h3>
+                <p class="module-desc">
+                  Hơn 2000 từ vựng nâng cao với hệ thống ghi nhớ thông minh.
+                </p>
+                <div class="progress-bar">
+                  <div class="progress-fill" id="progress-vocab"></div>
+                </div>
+                <div class="progress-text">
+                  <span>Tiến độ</span>
+                  <span id="percent-vocab">0%</span>
+                </div>
+              </div>
+
+              <div class="module-card" data-module="grammar">
+                <div class="module-icon">
+                  <i class="fas fa-language"></i>
+                </div>
+                <h3 class="module-title">NGỮ PHÁP N1</h3>
+                <p class="module-desc">
+                  Hơn 150 cấu trúc ngữ pháp phức tạp với giải thích chi tiết.
+                </p>
+                <div class="progress-bar">
+                  <div class="progress-fill" id="progress-grammar"></div>
+                </div>
+                <div class="progress-text">
+                  <span>Tiến độ</span>
+                  <span id="percent-grammar">0%</span>
+                </div>
+              </div>
+
+              <div class="module-card" data-module="listening">
+                <div class="module-icon">
+                  <i class="fas fa-headphones"></i>
+                </div>
+                <h3 class="module-title">NGHE HIỂU</h3>
+                <p class="module-desc">
+                  Luyện nghe với các tình huống thực tế và tốc độ bản ngữ.
+                </p>
+                <div class="progress-bar">
+                  <div class="progress-fill" id="progress-listening"></div>
+                </div>
+                <div class="progress-text">
+                  <span>Tiến độ</span>
+                  <span id="percent-listening">0%</span>
+                </div>
+              </div>
+
+              <div class="module-card" data-module="reading">
+                <div class="module-icon">
+                  <i class="fas fa-file-alt"></i>
+                </div>
+                <h3 class="module-title">ĐỌC HIỂU</h3>
+                <p class="module-desc">
+                  Phân tích văn bản học thuật, báo chí và tài liệu chuyên
+                  ngành.
+                </p>
+                <div class="progress-bar">
+                  <div class="progress-fill" id="progress-reading"></div>
+                </div>
+                <div class="progress-text">
+                  <span>Tiến độ</span>
+                  <span id="percent-reading">0%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <a href="#" class="start-button">
+            <i class="fas fa-play-circle"></i> KHỞI ĐỘNG HỆ THỐNG HỌC TẬP
+          </a>
+        </section>
+      </main>
+
+      <footer>
+        <p>© 2025 N1 CYBERSPHERE - Hệ thống đào tạo JLPT N1 công nghệ cao</p>
+        <p>Phiên bản 2.0 | Chế độ: Dark Mode | Kết nối: Stable</p>
+      </footer>
+    </div>
+  </div>
+
+  <!-- BACKDROP + MODAL (Ẩn mặc định, chỉ hiện khi chọn module) -->
+  <div class="module-display-backdrop" id="moduleBackdrop"></div>
+
+  <div class="module-display-frame" id="moduleDisplay" aria-hidden="true">
+    <div class="frame-status">
+      <div class="status-indicator locked" id="frameStatus">
+        <span class="status-icon">🔒</span>
+        <span class="status-text">Đã chọn module</span>
+      </div>
+
+      <!-- Đổi “Bỏ khóa” => “Đóng” -->
+      <button class="close-lock-btn" id="closeModalBtn">
+        <i class="fas fa-xmark"></i> Đóng
+      </button>
+    </div>
+
+    <div class="frame-header">
+      <div class="frame-icon">
+        <i class="fas fa-book"></i>
+      </div>
+      <div class="frame-title" id="frameTitle">---</div>
+    </div>
+
+    <div class="frame-content" id="frameContent"></div>
+  </div>
+  <!-- TEST MODAL (BÀI KIỂM TRA) -->
+  <div class="test-modal-backdrop" id="testModalBackdrop"></div>
+  <div class="test-modal-frame" id="testModal">
+    <div class="test-modal-header">
+      <div class="test-modal-title">
+        <i class="fas fa-file-signature"></i>
+        <span id="testModalTitle">Bài kiểm tra</span>
+      </div>
+      <button class="test-modal-close" id="closeTestModalBtn">
+        <i class="fas fa-times"></i> Đóng
+      </button>
+    </div>
+    <div class="test-list" id="testList"></div>
+  </div>
+  <script>
+    let __loadingTimer = null;
+    let __loadingPct = 0;
+
+    function showCyberLoading(text = "ĐANG TẢI DỮ LIỆU") {
+      const loading = document.getElementById("cyberLoading");
+
+      // Nếu đang mở rồi thì chỉ đổi text, không reset % (tránh giật/quay lại 0)
+      if (loading.classList.contains("show")) {
+        const textEl = document.getElementById("cyberLoadingText");
+        if (textEl) textEl.textContent = text;
+        return;
+      }
+
+      const textEl = document.getElementById("cyberLoadingText");
+      const pctEl = document.getElementById("cyberLoadingPercent");
+      const bar = document.querySelector(".cyber-loading-bar-fill");
+
+      textEl.textContent = text;
+
+      __loadingPct = 0;
+      if (pctEl) pctEl.textContent = "0%";
+      if (bar) bar.style.width = "0%";
+
+      loading.classList.add("show");
+
+      if (__loadingTimer) clearInterval(__loadingTimer);
+      __loadingTimer = setInterval(() => {
+        const step = __loadingPct < 50 ? 3 : __loadingPct < 80 ? 2 : 1;
+        __loadingPct = Math.min(90, __loadingPct + step);
+        if (pctEl) pctEl.textContent = `${__loadingPct}%`;
+        if (bar) bar.style.width = `${__loadingPct}%`;
+      }, 120);
+    }
+
+    function hideCyberLoading() {
+      const loading = document.getElementById("cyberLoading");
+      const pctEl = document.getElementById("cyberLoadingPercent");
+      const bar = document.querySelector(".cyber-loading-bar-fill");
+
+      // kết thúc thật: lên 100%
+      if (__loadingTimer) clearInterval(__loadingTimer);
+      __loadingTimer = null;
+
+      __loadingPct = 100;
+      if (pctEl) pctEl.textContent = "100%";
+      if (bar) bar.style.width = "100%";
+
+      // giữ 1 nhịp cho người dùng thấy full rồi tắt
+      setTimeout(() => {
+        loading.classList.remove("show");
+      }, 180);
+    }
+
+    /* =========================================================
+      CONFIG + LocalStorage Keys
+    ========================================================= */
+    // ==================== PROGRESS CACHE (MULTI-KEY) ====================
+    const progressCache = {
+      entries: new Map(), // key -> { data, timestamp }
+      TTL: 5 * 60 * 1000, // 5 phút
+    };
+
+    function makeProgressCacheKey(deviceId, license, testIds) {
+      // testIds phải ổn định thứ tự
+      const ids = Array.isArray(testIds) ? testIds.slice() : [];
+      ids.sort(); // đảm bảo Unit đổi thứ tự vẫn ra cùng key nếu cùng tập test
+      return `${deviceId}::${license}::${ids.join("|")}`;
+    }
+
+    function isProgressCacheValid(deviceId, license, testIds) {
+      if (
+        !deviceId ||
+        !license ||
+        !Array.isArray(testIds) ||
+        testIds.length === 0
+      )
+        return false;
+
+      const key = makeProgressCacheKey(deviceId, license, testIds);
+      const entry = progressCache.entries.get(key);
+      if (!entry) return false;
+
+      const now = Date.now();
+      return now - entry.timestamp < progressCache.TTL;
+    }
+
+    async function getCachedProgress(deviceId, license, testIds) {
+      if (
+        !deviceId ||
+        !license ||
+        !Array.isArray(testIds) ||
+        testIds.length === 0
+      ) {
+        return { data: {}, fromCache: true };
+      }
+
+      const key = makeProgressCacheKey(deviceId, license, testIds);
+
+      // HIT
+      const entry = progressCache.entries.get(key);
+      if (entry) {
+        const now = Date.now();
+        if (now - entry.timestamp < progressCache.TTL) {
+          console.log("✅ Cache HIT progress:", key);
+          return { data: entry.data || {}, fromCache: true };
+        }
+        // quá TTL -> xóa entry cũ
+        progressCache.entries.delete(key);
+      }
+
+      // MISS -> gọi API
+      console.log("📡 Cache MISS → gọi API progress:", key);
+      const data = await getProgressMap(deviceId, license, testIds);
+
+      progressCache.entries.set(key, {
+        data: data || {},
+        timestamp: Date.now(),
+      });
+
+      return { data: data || {}, fromCache: false };
+    }
+
+    // Tạo skeleton loading HTML
+    function createSkeletonLoading() {
+      return `
+          <div class="skeleton-container">
+            ${Array(5)
+          .fill()
+          .map(
+            () => `
+              <div class="skeleton-item">
+                <div class="skeleton-icon"></div>
+                <div class="skeleton-line"></div>
+                <div class="skeleton-line short"></div>
+              </div>
+            `,
+          )
+          .join("")}
+            <div class="loading-text">ĐANG TẢI BÀI KIỂM TRA...</div>
+          </div>
+        `;
+    }
+    const API_URL = "https://n1-license-server.onrender.com/api";
+    const LS_DEVICE_ID = "n1_device_id";
+    const LS_ACTIVATED = "n1_activated_once";
+    const LS_LICENSE = "n1_license";
+    const LS_USER_NAME = "n1_user_name";
+    const LS_EXAM_DATE = "n1_exam_date";
+    const LS_USER_ID = "n1_user_id";
+
+    function uuidv4() {
+      return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+        const r = (Math.random() * 16) | 0;
+        const v = c === "x" ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+      });
+    }
+
+    function getOrCreateDeviceId() {
+      let id = localStorage.getItem(LS_DEVICE_ID);
+      if (!id) {
+        id = uuidv4();
+        localStorage.setItem(LS_DEVICE_ID, id);
+      }
+      return id;
+    }
+
+    function getDeviceInfo() {
+      const ua = navigator.userAgent || "";
+      const lang = navigator.language || "";
+      const platform = navigator.platform || "";
+      return `${platform} | ${lang} | ${ua.slice(0, 80)}...`;
+    }
+
+    function setStatus(text, type = "") {
+      const el = document.getElementById("licenseStatus");
+      el.textContent = text;
+      el.classList.remove("error", "ok");
+      if (type) el.classList.add(type);
+    }
+
+    function setUserName(name) {
+      const el = document.getElementById("userNameText");
+      if (!el) return;
+      const safeName = (name || "").trim();
+      if (!safeName) return;
+      el.textContent = safeName + " 🎉";
+      localStorage.setItem(LS_USER_NAME, safeName);
+    }
+
+    /* =========================================================
+      Exam date countdown (giữ nguyên)
+    ========================================================= */
+    const DEFAULT_EXAM_DATE = "20260701";
+
+    function parseYYYYMMDD(s) {
+      const m = /^(\d{4})(\d{2})(\d{2})$/.exec(String(s || "").trim());
+      if (!m) return null;
+      const y = Number(m[1]),
+        mo = Number(m[2]) - 1,
+        d = Number(m[3]);
+      const dt = new Date(y, mo, d);
+      if (
+        dt.getFullYear() !== y ||
+        dt.getMonth() !== mo ||
+        dt.getDate() !== d
+      )
+        return null;
+      return dt;
+    }
+
+    function formatMonthYear(dt) {
+      const mm = String(dt.getMonth() + 1).padStart(2, "0");
+      const yyyy = dt.getFullYear();
+      return `${mm}/${yyyy}`;
+    }
+
+    function formatDDMMYYYY(dt) {
+      const dd = String(dt.getDate()).padStart(2, "0");
+      const mm = String(dt.getMonth() + 1).padStart(2, "0");
+      const yyyy = dt.getFullYear();
+      return `${dd}/${mm}/${yyyy}`;
+    }
+
+    function diffMonthsDays(fromDate, toDate) {
+      if (toDate <= fromDate) return { months: 0, days: 0 };
+
+      let months =
+        (toDate.getFullYear() - fromDate.getFullYear()) * 12 +
+        (toDate.getMonth() - fromDate.getMonth());
+
+      const candidate = new Date(
+        fromDate.getFullYear(),
+        fromDate.getMonth() + months,
+        fromDate.getDate(),
+      );
+      if (candidate > toDate) months -= 1;
+
+      const anchor = new Date(
+        fromDate.getFullYear(),
+        fromDate.getMonth() + months,
+        fromDate.getDate(),
+      );
+      const msPerDay = 24 * 60 * 60 * 1000;
+      const days = Math.max(0, Math.round((toDate - anchor) / msPerDay));
+
+      return { months, days };
+    }
+
+    function updateWarningColor(cardElement, daysRemaining) {
+      cardElement.classList.remove(
+        "warning-yellow",
+        "warning-red",
+        "warning-expired",
+      );
+      if (daysRemaining <= 0) cardElement.classList.add("warning-expired");
+      else if (daysRemaining < 30) cardElement.classList.add("warning-red");
+      else if (daysRemaining <= 60)
+        cardElement.classList.add("warning-yellow");
+    }
+
+    function updateExamUI(examDateStr) {
+      const examMonthYearEl = document.getElementById("examMonthYear");
+      const examSubtitleEl = document.getElementById("examSubtitle");
+      const examCountdownEl = document.getElementById("examCountdown");
+      const targetCardEl = document.querySelector(
+        ".target-card:nth-child(2)",
+      );
+      if (
+        !examMonthYearEl ||
+        !examSubtitleEl ||
+        !examCountdownEl ||
+        !targetCardEl
+      )
+        return;
+
+      const raw =
+        examDateStr && String(examDateStr).trim()
+          ? String(examDateStr).trim()
+          : localStorage.getItem(LS_EXAM_DATE) || DEFAULT_EXAM_DATE;
+
+      const examDt = parseYYYYMMDD(raw);
+      if (!examDt) return;
+
+      examMonthYearEl.textContent = formatMonthYear(examDt);
+
+      if (!examDateStr && !localStorage.getItem(LS_EXAM_DATE)) {
+        examSubtitleEl.textContent = "Kỳ thi tháng 7 năm 2026";
+      } else {
+        const dd = String(examDt.getDate()).padStart(2, "0");
+        const mm = String(examDt.getMonth() + 1).padStart(2, "0");
+        const yyyy = examDt.getFullYear();
+        examSubtitleEl.textContent = `Ngày thi chính thức : ${dd}/${mm}/${yyyy}`;
+      }
+
+      const now = new Date();
+      const today = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate(),
+      );
+      const { months, days } = diffMonthsDays(today, examDt);
+      const totalDays = Math.max(
+        0,
+        Math.round((examDt - today) / (1000 * 60 * 60 * 24)),
+      );
+
+      let countdownText = "";
+      if (totalDays <= 0) countdownText = "Kỳ thi JLPT đã diễn ra";
+      else if (months === 0) countdownText = `Còn ${days} ngày`;
+      else if (months === 1) countdownText = `Còn 1 tháng ${days} ngày`;
+      else countdownText = `Còn ${months} tháng ${days} ngày`;
+
+      examCountdownEl.textContent = countdownText;
+      updateWarningColor(targetCardEl, totalDays);
+    }
+
+    /* =========================================================
+      API
+    ========================================================= */
+    async function verifyLicense(deviceId, license) {
+      const res = await fetch(`${API_URL}/verify`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ deviceId, license }),
+      });
+      if (!res.ok) {
+        const t = await res.text();
+        throw new Error(t || "Verify failed");
+      }
+      return res.json();
+    }
+
+    async function getProgressMap(deviceId, license, testIds) {
+      if (
+        !deviceId ||
+        !license ||
+        !Array.isArray(testIds) ||
+        testIds.length === 0
+      )
+        return {};
+
+      try {
+        const res = await fetch(`${API_URL}/progress/get`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ deviceId, license, testIds }),
+        });
+
+        if (!res.ok) return {};
+        const r = await res.json();
+        if (!r || !r.ok || !r.data) return {};
+        return r.data || {};
+      } catch {
+        return {};
+      }
+    }
+
+    function badgeFromProgress(p) {
+      const perfectCount = Number(p?.perfectCount || 0);
+      if (perfectCount >= 3) {
+        return {
+          text: "Đã hoàn thành",
+          icon: "fa-check-circle",
+          bg: "rgba(0, 200, 100, 0.2)",
+          border: "rgba(0, 255, 100, 0.3)",
+          color: "#00ff99",
+        };
+      }
+      if (perfectCount === 2) {
+        return {
+          text: "Tiến độ 67% (2/3)",
+          icon: "fa-chart-line",
+          bg: "rgba(0, 168, 255, 0.18)",
+          border: "rgba(0, 168, 255, 0.35)",
+          color: "#66d9ff",
+        };
+      }
+      if (perfectCount === 1) {
+        return {
+          text: "Tiến độ 33% (1/3)",
+          icon: "fa-chart-line",
+          bg: "rgba(0, 168, 255, 0.12)",
+          border: "rgba(0, 168, 255, 0.28)",
+          color: "#66d9ff",
+        };
+      }
+      return {
+        text: "Chưa làm",
+        icon: "fa-clock",
+        bg: "rgba(255, 100, 0, 0.2)",
+        border: "rgba(255, 150, 0, 0.3)",
+        color: "#ffaa00",
+      };
+    }
+    // ===== WORD COUNT HELPERS (ceil(questions/2)) =====
+    function wordsFromQuestions(n) {
+      const q = Number(n || 0);
+      if (!Number.isFinite(q) || q <= 0) return 0;
+      return Math.ceil(q / 2);
+    }
+
+    function flattenTestsFromTestInfo(testInfo) {
+      // Trả về mảng test objects có dạng {url, questions, ...}
+      if (!testInfo) return [];
+      if (Array.isArray(testInfo.tests)) return testInfo.tests;
+
+      if (Array.isArray(testInfo.units)) {
+        const all = [];
+        testInfo.units.forEach((u) => {
+          if (u && Array.isArray(u.tests)) all.push(...u.tests);
+        });
+        return all;
+      }
+      return [];
+    }
+
+    function calcABFromTests(tests, progressMap) {
+      // b: tổng words toàn bộ tests
+      // a: tổng words của tests đã hoàn thành (perfectCount>=3)
+      let a = 0;
+      let b = 0;
+
+      (tests || []).forEach((t) => {
+        const w = wordsFromQuestions(t.questions);
+        b += w;
+
+        const p = progressMap && t.url ? progressMap[t.url] || {} : {};
+        const perfectCount = Number(p?.perfectCount || 0);
+        if (perfectCount >= 3) a += w;
+      });
+
+      return { a, b };
+    }
+    function ceilDiv2(n) {
+      const x = Number(n || 0);
+      return Math.ceil(x / 2);
+    }
+
+    function flattenTestsFromTestInfo(testInfo) {
+      if (!testInfo) return [];
+      if (Array.isArray(testInfo.tests)) return testInfo.tests;
+      if (Array.isArray(testInfo.units)) {
+        const out = [];
+        testInfo.units.forEach((u) => {
+          if (u && Array.isArray(u.tests)) out.push(...u.tests);
+        });
+        return out;
+      }
+      return [];
+    }
+
+    /**
+     * Tính a/b cho 1 module chính dựa trên moduleContents[moduleId].items
+     * - chỉ lấy item nào có key trong testData
+     * - a = sum words của test hoàn thành (perfectCount>=3)
+     * - b = sum words của tất cả test
+     */
+    function calcABForMainModule(moduleId, progressMap) {
+      const mod = moduleContents[moduleId];
+      if (!mod || !Array.isArray(mod.items)) return { a: 0, b: 0 };
+
+      let a = 0;
+      let b = 0;
+
+      mod.items.forEach((item) => {
+        const title = item?.title;
+        const testInfo = testData[title];
+        if (!testInfo) return; // item chưa có testData thì bỏ qua
+
+        const tests = flattenTestsFromTestInfo(testInfo);
+        tests.forEach((t) => {
+          const words = ceilDiv2(t.questions);
+          b += words;
+
+          const p = progressMap?.[t.url] || { perfectCount: 0 };
+          const done = Number(p.perfectCount || 0) >= 3;
+          if (done) a += words;
+        });
+      });
+
+      return { a, b };
+    }
+
+    function collectAllTestUrlsForMainModule(moduleId) {
+      const mod = moduleContents[moduleId];
+      if (!mod || !Array.isArray(mod.items)) return [];
+
+      const urls = [];
+      mod.items.forEach((item) => {
+        const testInfo = testData[item?.title];
+        const tests = flattenTestsFromTestInfo(testInfo);
+        tests.forEach((t) => {
+          if (t?.url) urls.push(t.url);
+        });
+      });
+
+      // unique
+      return Array.from(new Set(urls));
+    }
+    async function updateMainModulesProgress() {
+      const deviceId = localStorage.getItem(LS_DEVICE_ID) || "";
+      const license = localStorage.getItem(LS_LICENSE) || "";
+
+      // Nếu chưa có license -> cứ để 0%
+      if (!license) return;
+
+      // gom toàn bộ test url của 4 module để gọi API 1 lần (nhanh hơn)
+      const allUrls = [
+        ...collectAllTestUrlsForMainModule("vocab"),
+        ...collectAllTestUrlsForMainModule("grammar"),
+        ...collectAllTestUrlsForMainModule("listening"),
+        ...collectAllTestUrlsForMainModule("reading"),
+      ];
+      const testIds = Array.from(new Set(allUrls));
+
+      if (testIds.length === 0) return;
+
+      // dùng cache bạn đã có
+      const r = await getCachedProgress(deviceId, license, testIds);
+      const progressMap = r.data || {};
+
+      ["vocab", "grammar", "listening", "reading"].forEach((m) => {
+        const { a, b } = calcABForMainModule(m, progressMap);
+        const percent = b > 0 ? Math.floor((a / b) * 100) : 0;
+
+        const fill = document.getElementById(`progress-${m}`);
+        const pct = document.getElementById(`percent-${m}`);
+
+        if (fill) fill.style.width = percent + "%";
+        if (pct) pct.textContent = percent + "%";
+      });
+    }
+
+    async function getProgressMapForItemTitle(itemTitle) {
+      const testInfo = testData[itemTitle];
+      const tests = flattenTestsFromTestInfo(testInfo);
+      const testIds = tests.map((t) => t.url).filter(Boolean);
+
+      const deviceId = localStorage.getItem(LS_DEVICE_ID) || "";
+      const license = localStorage.getItem(LS_LICENSE) || "";
+
+      // chưa kích hoạt => không có progress
+      if (!license || testIds.length === 0) return {};
+
+      const r = await getCachedProgress(deviceId, license, testIds);
+      return r.data || {};
+    }
+
+    async function requestReset(deviceId, oldLicense, note) {
+      const res = await fetch(`${API_URL}/request-reset`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ deviceId, oldLicense, note }),
+      });
+      if (!res.ok) {
+        const t = await res.text();
+        throw new Error(t || "Request reset failed");
+      }
+      return res.json();
+    }
+
+    function startBackgroundRecheck(deviceId) {
+      const INTERVAL_MS = 90 * 1000;
+      if (window.__recheckTimer) return;
+
+      async function tick() {
+        const license = localStorage.getItem(LS_LICENSE);
+        const activatedOnce = localStorage.getItem(LS_ACTIVATED) === "1";
+        if (!license || !activatedOnce) return;
+
+        try {
+          const r = await verifyLicense(deviceId, license);
+          if (r && r.ok) {
+            setStatus(`Kích hoạt OK (hạn: ${r.expiry})`, "ok");
+            updateStatusUI(r.expiry);
+            return;
+          }
+          throw new Error("Verify failed");
+        } catch (e) {
+          const msg = String(e?.message || "");
+          const hardBlock =
+            msg.includes("Device revoked") ||
+            msg.includes("User revoked") ||
+            msg.includes("Expired") ||
+            msg.includes("Invalid") ||
+            msg.includes("License not found") ||
+            msg.includes("already bound");
+
+          if (hardBlock) {
+            localStorage.removeItem(LS_LICENSE);
+            localStorage.removeItem(LS_ACTIVATED);
+            setStatus(
+              "Quyền truy cập đã bị thu hồi hoặc license không còn hợp lệ.",
+              "error",
+            );
+            showGate(true);
+            return;
+          }
+          setStatus(
+            "Server kiểm tra đang offline. Hệ thống giữ trạng thái kích hoạt.",
+            "error",
+          );
+        }
+      }
+
+      tick();
+      window.__recheckTimer = setInterval(tick, INTERVAL_MS);
+    }
+
+    /* =========================================================
+      Status expiry (giữ nguyên)
+    ========================================================= */
+    function updateStatusUI(expiryStr) {
+      const statusValueEl = document.getElementById("statusValue");
+      const statusSubtitleEl = document.getElementById("statusSubtitle");
+      const targetCardEl = document.querySelector(
+        ".target-card:nth-child(3)",
+      );
+      if (!statusValueEl || !statusSubtitleEl || !targetCardEl) return;
+
+      const expiryDt = parseYYYYMMDD(expiryStr);
+      if (!expiryDt) {
+        statusValueEl.textContent = "ACTIVE";
+        statusSubtitleEl.textContent = "Trạng thái bản quyền: Đã kích hoạt";
+        targetCardEl.classList.remove(
+          "warning-yellow",
+          "warning-red",
+          "warning-expired",
+        );
+        return;
+      }
+
+      localStorage.setItem("n1_expiry_date", expiryStr);
+
+      const now = new Date();
+      const today = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate(),
+      );
+      const expDate = new Date(
+        expiryDt.getFullYear(),
+        expiryDt.getMonth(),
+        expiryDt.getDate(),
+      );
+
+      const msPerDay = 24 * 60 * 60 * 1000;
+      const remainingDays = Math.ceil((expDate - today) / msPerDay);
+
+      targetCardEl.classList.remove(
+        "warning-yellow",
+        "warning-red",
+        "warning-expired",
+      );
+
+      if (remainingDays <= 0) {
+        statusValueEl.textContent = "EXPIRED";
+        statusSubtitleEl.textContent = `Quyền truy cập đã hết hạn từ: ${formatDDMMYYYY(expDate)}`;
+        targetCardEl.classList.add("warning-expired");
+
+        localStorage.removeItem(LS_LICENSE);
+        localStorage.removeItem(LS_ACTIVATED);
+        showGate(true);
+        setStatus(
+          "License đã hết hạn. Vui lòng gia hạn để tiếp tục sử dụng.",
+          "error",
+        );
+        return;
+      }
+
+      statusValueEl.textContent = "ACTIVE";
+
+      if (remainingDays < 30) {
+        targetCardEl.classList.add("warning-red");
+        statusSubtitleEl.innerHTML = `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(expDate)}<br>Còn ${remainingDays} ngày`;
+      } else if (remainingDays <= 60) {
+        targetCardEl.classList.add("warning-yellow");
+        statusSubtitleEl.innerHTML = `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(expDate)}<br>Còn ${remainingDays} ngày`;
+      } else {
+        statusSubtitleEl.innerHTML = `Quyền truy cập hợp lệ đến: ${formatDDMMYYYY(expDate)}<br>Còn ${remainingDays} ngày`;
+      }
+
+      if (window.__expiryCountdownTimer)
+        clearInterval(window.__expiryCountdownTimer);
+      startExpiryCountdown(expiryStr);
+    }
+
+    function startExpiryCountdown(expiryStr) {
+      const expiryDt = parseYYYYMMDD(expiryStr);
+      if (!expiryDt) return;
+
+      if (window.__expiryCountdownTimer)
+        clearInterval(window.__expiryCountdownTimer);
+
+      window.__expiryCountdownTimer = setInterval(() => {
+        const now = new Date();
+        const today = new Date(
+          now.getFullYear(),
+          now.getMonth(),
+          now.getDate(),
+        );
+        const expDate = new Date(
+          expiryDt.getFullYear(),
+          expiryDt.getMonth(),
+          expiryDt.getDate(),
+        );
+        const msPerDay = 24 * 60 * 60 * 1000;
+        const remainingDays = Math.ceil((expDate - today) / msPerDay);
+
+        if (remainingDays <= 0) {
+          clearInterval(window.__expiryCountdownTimer);
+          localStorage.removeItem(LS_LICENSE);
+          localStorage.removeItem(LS_ACTIVATED);
+
+          showGate(true);
+          setStatus(
+            "License đã hết hạn. Vui lòng gia hạn để tiếp tục sử dụng.",
+            "error",
+          );
+
+          const statusValueEl = document.getElementById("statusValue");
+          const statusSubtitleEl = document.getElementById("statusSubtitle");
+          const targetCardEl = document.querySelector(
+            ".target-card:nth-child(3)",
+          );
+
+          if (statusValueEl) statusValueEl.textContent = "EXPIRED";
+          if (statusSubtitleEl)
+            statusSubtitleEl.textContent = `Quyền truy cập đã hết hạn từ: ${formatDDMMYYYY(expDate)}`;
+          if (targetCardEl) {
+            targetCardEl.classList.remove(
+              "warning-yellow",
+              "warning-red",
+              "warning-expired",
+            );
+            targetCardEl.classList.add("warning-expired");
+          }
+        }
+      }, 60000);
+    }
+
+    /* =========================================================
+      Gate
+    ========================================================= */
+    function showGate(show = true) {
+      const gate = document.getElementById("licenseGate");
+      const app = document.getElementById("appRoot");
+      gate.style.display = show ? "flex" : "none";
+      app.style.display = show ? "none" : "block";
+    }
+
+    function fillDeviceUI(deviceId) {
+      document.getElementById("deviceIdText").textContent = deviceId;
+      document.getElementById("deviceInfoText").textContent = getDeviceInfo();
+    }
+
+    async function copyText(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        return true;
+      } catch {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        ta.remove();
+        return true;
+      }
+    }
+
+    /* =========================================================
+      MODULE MODAL LOGIC (NEW)
+      - Mặc định: ẩn modal
+      - Click module: mở modal ở giữa + lock module
+      - Click module khác: đổi lock sang module khác (modal vẫn mở)
+      - Đóng: nút "Đóng" / ESC / click backdrop
+    ========================================================= */
+    let lockedModule = null;
+
+    const moduleContents = {
+      vocab: {
+        title: "TỪ VỰNG N1",
+        icon: "fas fa-book",
+        items: [
+          {
+            title: "Từ vựng Mimikara Oboeru",
+            desc: "14 Unit, 1170 từ vựng thông dụng nhất",
+            progress: 65,
+            stats: "Đã học: 650/1170 từ",
+          },
+          {
+            title: "Từ vựng ThaoLeJP",
+            desc: "Hơn 2000 từ vựng tổng hợp và các loại từ đặc biệt",
+            progress: 42,
+            stats: "Đã học: 126/2000 từ",
+          },
+          {
+            title: "Từ đồng nghĩa/Trái nghĩa",
+            desc: "500 cặp từ đồng nghĩa và trái nghĩa N1",
+            progress: 28,
+            stats: "Đã học: 140/500 cặp từ",
+          },
+          {
+            title: "Từ vựng khó",
+            desc: "Tổng hợp các từ vựng cực khó từng xuất hiện trong đề thi JLPT",
+            progress: 75,
+            stats: "Đã học: 600/800 từ",
+          },
+        ],
+      },
+      grammar: {
+        title: "NGỮ PHÁP N1",
+        icon: "fas fa-language",
+        items: [
+          {
+            title: "Ngữ pháp Văn viết",
+            desc: "100 cấu trúc ngữ pháp dùng trong văn bản học thuật",
+            progress: 42,
+            stats: "Đã học: 42/100 cấu trúc",
+          },
+          {
+            title: "Ngữ pháp Hội thoại",
+            desc: "50 mẫu câu đàm thoại nâng cao trong công việc",
+            progress: 60,
+            stats: "Đã học: 30/50 mẫu câu",
+          },
+          {
+            title: "Liên từ - Trợ từ N1",
+            desc: "70 liên từ và trợ từ phức tạp",
+            progress: 35,
+            stats: "Đã học: 25/70 từ",
+          },
+          {
+            title: "Mẫu câu So sánh",
+            desc: "30 mẫu câu so sánh nâng cao",
+            progress: 80,
+            stats: "Đã học: 24/30 mẫu câu",
+          },
+        ],
+      },
+      listening: {
+        title: "NGHE HIỂU",
+        icon: "fas fa-headphones",
+        items: [
+          {
+            title: "Nghe tin tức",
+            desc: "50 bài nghe tin tức NHK với tốc độ thực",
+            progress: 28,
+            stats: "Đã học: 14/50 bài",
+          },
+          {
+            title: "Hội thoại Công sở",
+            desc: "30 tình huống giao tiếp trong môi trường công ty",
+            progress: 45,
+            stats: "Đã học: 14/30 tình huống",
+          },
+          {
+            title: "Bài giảng Đại học",
+            desc: "20 bài giảng học thuật các chuyên ngành",
+            progress: 20,
+            stats: "Đã học: 4/20 bài",
+          },
+          {
+            title: "Phỏng vấn chuyên gia",
+            desc: "15 cuộc phỏng vấn với chuyên gia các lĩnh vực",
+            progress: 15,
+            stats: "Đã học: 2/15 bài",
+          },
+        ],
+      },
+      reading: {
+        title: "ĐỌC HIỂU",
+        icon: "fas fa-file-alt",
+        items: [
+          {
+            title: "Văn bản Học thuật",
+            desc: "25 bài đọc về khoa học, nghiên cứu chuyên sâu",
+            progress: 35,
+            stats: "Đã học: 9/25 bài",
+          },
+          {
+            title: "Báo chí - Tạp chí",
+            desc: "30 bài báo kinh tế, chính trị, xã hội",
+            progress: 40,
+            stats: "Đã học: 12/30 bài",
+          },
+          {
+            title: "Tiểu thuyết - Văn học",
+            desc: "15 trích đoạn tiểu thuyết đương đại",
+            progress: 25,
+            stats: "Đã học: 4/15 bài",
+          },
+          {
+            title: "Tài liệu Kỹ thuật",
+            desc: "20 tài liệu kỹ thuật, hướng dẫn sử dụng",
+            progress: 30,
+            stats: "Đã học: 6/20 bài",
+          },
+        ],
+      },
+    };
+    /* =========================================================
+TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
+- Click vào content-item trong modal từ vựng -> mở test modal
+- Hiển thị danh sách bài test tương ứng
+- Click test item -> chuyển hướng đến trang html khác
+========================================================= */
+    let __testModalSetupDone = false;
+    let __openTestModalToken = 0;
+    // Dữ liệu bài kiểm tra cho từng mục trong module từ vựng
+    //Bắt đầu test data
+    const testData = {
+      // Bài test cho "Từ vựng Mimikara Oboeru"
+      "Từ vựng Mimikara Oboeru": {
+        title: "Mimikara Oboeru N1",
+        units: [
+          {
+            name: "Unit 1",
+            tests: [
+              {
+                id: 1001,
+                name: "Từ vựng Mimikara Unit 1 (1-20)",
+                questions: 39,
+                time: "39 phút",
+                difficulty: "Khó",
+                url: "Mimikara-1-1.html",
+              },
+
+              {
+                id: 1002,
+                name: "Từ vựng Mimikara Unit 1 (21-40)",
+                questions: 40,
+                time: "40 phút",
+                difficulty: "Khó",
+                url: "Mimikara-1-2.html",
+              },
+              {
+                id: 1003,
+                name: "Từ vựng Mimikara Unit 1 (41-60)",
+                questions: 36,
+                time: "36 phút",
+                difficulty: "Khó",
+                url: "Mimikara-1-3.html",
+              },
+              {
+                id: 1004,
+                name: "Từ vựng Mimikara Unit 1 (61-80)",
+                questions: 40,
+                time: "40 phút",
+                difficulty: "Khó",
+                url: "Mimikara-1-4.html",
+              },
+              {
+                id: 1005,
+                name: "Từ vựng Mimikara Unit 1 (81-100)",
+                questions: 40,
+                time: "40 phút",
+                difficulty: "Khó",
+                url: "Mimikara-1-5.html",
+              },
+            ],
+          },
+        ],
+      },
+      // Bài test cho "Từ vựng ThaoLeJP"
+      "Từ vựng ThaoLeJP": {
+        title: "Từ vựng ThaoLeJP N1",
+        tests: [
+          {
+            id: 1,
+            name: "Test Từ Vựng Ngày 1",
+            questions: 40,
+            time: "40 phút",
+            difficulty: "Khó",
+            url: "vocab-1.html",
+          },
+          {
+            id: 2,
+            name: "Test Từ Vựng Ngày 2",
+            questions: 40,
+            time: "40 phút",
+            difficulty: "Khó",
+            url: "vocab-2.html",
+          },
+          {
+            id: 3,
+            name: "Test Từ Vựng Ngày 3",
+            questions: 40,
+            time: "40 phút",
+            difficulty: "Khó",
+            url: "vocab-3.html",
+          },
+          {
+            id: 4,
+            name: "Test Từ Vựng Ngày 4",
+            questions: 40,
+            time: "40 phút",
+            difficulty: "Khó",
+            url: "vocab-4.html",
+          },
+          {
+            id: 5,
+            name: "Test Từ Vựng Ngày 5",
+            questions: 40,
+            time: "40 phút",
+            difficulty: "Khó",
+            url: "vocab-5.html",
+          },
+          {
+            id: 6,
+            name: "Test Từ Vựng Ngày 6",
+            questions: 40,
+            time: "40 phút",
+            difficulty: "Khó",
+            url: "vocab-6.html",
+          },
+          {
+            id: 7,
+            name: "Test Từ Vựng Ngày 7",
+            questions: 38,
+            time: "38 phút",
+            difficulty: "Khó",
+            url: "vocab-7.html",
+          },
+          {
+            id: 8,
+            name: "Test Từ Vựng Ngày 8",
+            questions: 40,
+            time: "40 phút",
+            difficulty: "Khó",
+            url: "vocab-8.html",
+          },
+          {
+            id: 9,
+            name: "Test Từ Vựng Ngày 9",
+            questions: 40,
+            time: "40 phút",
+            difficulty: "Khó",
+            url: "vocab-9.html",
+          },
+          {
+            id: 10,
+            name: "Test Từ Vựng Ngày 10",
+            questions: 40,
+            time: "40 phút",
+            difficulty: "Khó",
+            url: "vocab-10.html",
+          },
+          {
+            id: 11,
+            name: "Test Từ Vựng Ngày 11",
+            questions: 40,
+            time: "40 phút",
+            difficulty: "Khó",
+            url: "vocab-11.html",
+          },
+          {
+            id: 12,
+            name: "Test Từ Vựng Ngày 12",
+            questions: 40,
+            time: "40 phút",
+            difficulty: "Khó",
+            url: "vocab-12.html",
+          },
+          {
+            id: 13,
+            name: "Test Từ Vựng Ngày 13",
+            questions: 40,
+            time: "40 phút",
+            difficulty: "Khó",
+            url: "vocab-13.html",
+          },
+          {
+            id: 14,
+            name: "Test Từ Vựng Ngày 14",
+            questions: 40,
+            time: "40 phút",
+            difficulty: "Khó",
+            url: "vocab-14.html",
+          },
+          {
+            id: 15,
+            name: "Test Từ Vựng Ngày 15",
+            questions: 40,
+            time: "40 phút",
+            difficulty: "Khó",
+            url: "vocab-15.html",
+          },
+        ],
+      },
+      // Bài test cho "Từ đồng nghĩa/Trái nghĩa"
+      "Từ đồng nghĩa/Trái nghĩa": {
+        title: "Từ đồng nghĩa - Trái nghĩa N1",
+        tests: [
+          {
+            id: 1,
+            name: "Bài test Đồng nghĩa phần 1",
+            questions: 20,
+            time: "15 phút",
+            difficulty: "Trung bình",
+            url: "test-synonym1.html",
+          },
+          {
+            id: 2,
+            name: "Bài test Đồng nghĩa phần 2",
+            questions: 20,
+            time: "15 phút",
+            difficulty: "Khó",
+            url: "test-synonym2.html",
+          },
+          {
+            id: 3,
+            name: "Bài test Trái nghĩa phần 1",
+            questions: 20,
+            time: "15 phút",
+            difficulty: "Trung bình",
+            url: "test-antonym1.html",
+          },
+          {
+            id: 4,
+            name: "Bài test Trái nghĩa phần 2",
+            questions: 20,
+            time: "15 phút",
+            difficulty: "Khó",
+            url: "test-antonym2.html",
+          },
+          {
+            id: 5,
+            name: "Bài test tổng hợp Đồng nghĩa - Trái nghĩa",
+            questions: 40,
+            time: "30 phút",
+            difficulty: "Khó",
+            url: "test-synonym-antonym.html",
+          },
+        ],
+      },
+      // Bài test cho "Từ vựng khó"
+      "Từ vựng khó": {
+        title: "Từ vựng khó N1",
+        tests: [
+          {
+            id: 1,
+            name: "Bài test Từ vựng khó đề thi 2010-2015",
+            questions: 30,
+            time: "25 phút",
+            difficulty: "Khó",
+            url: "test-hard-2010-2015.html",
+          },
+          {
+            id: 2,
+            name: "Bài test Từ vựng khó đề thi 2016-2020",
+            questions: 30,
+            time: "25 phút",
+            difficulty: "Khó",
+            url: "test-hard-2016-2020.html",
+          },
+          {
+            id: 3,
+            name: "Bài test Từ vựng khó đề thi 2021-2025",
+            questions: 30,
+            time: "25 phút",
+            difficulty: "Khó",
+            url: "test-hard-2021-2025.html",
+          },
+          {
+            id: 4,
+            name: "Bài test Từ vựng Kanji khó",
+            questions: 25,
+            time: "20 phút",
+            difficulty: "Khó",
+            url: "test-hard-kanji.html",
+          },
+          {
+            id: 5,
+            name: "Bài test Từ vựng Onomatopoeia",
+            questions: 20,
+            time: "15 phút",
+            difficulty: "Khó",
+            url: "test-onomatopoeia.html",
+          },
+        ],
+      },
+    };
+    //Kết thúc test data
+
+    // Hàm mở test modal
+    async function openTestModal(itemTitle) {
+      const token = ++__openTestModalToken;
+      const testModal = document.getElementById("testModal");
+      const testBackdrop = document.getElementById("testModalBackdrop");
+      const testList = document.getElementById("testList");
+      const testModalTitle = document.getElementById("testModalTitle");
+
+      // Lấy dữ liệu test tương ứng
+      const testInfo = testData[itemTitle];
+
+      if (!testInfo) {
+        console.log("Không có dữ liệu test cho:", itemTitle);
+        return;
+      }
+
+      // Cập nhật tiêu đề
+      testModalTitle.textContent = testInfo.title;
+
+      // Xóa nội dung cũ
+      testList.innerHTML = "";
+
+      // Kiểm tra nếu có units (cho Mimikara)
+      if (testInfo.units) {
+        // Tạo container cho tabs
+        const tabsContainer = document.createElement("div");
+        tabsContainer.className = "unit-tabs";
+        tabsContainer.style.marginBottom = "0";
+        tabsContainer.style.padding = "10px";
+
+        // Tạo container cho tests
+        const testsContainer = document.createElement("div");
+        testsContainer.className = "tests-container";
+        testsContainer.style.width = "100%";
+
+        const showUnitTests = async (unitIndex) => {
+          const unit = testInfo.units[unitIndex];
+
+          // ==== 0) Chuẩn bị dữ liệu key cache ====
+          const deviceId = localStorage.getItem(LS_DEVICE_ID) || "";
+          const license = localStorage.getItem(LS_LICENSE) || "";
+          const testIds = unit.tests.map((t) => t.url);
+
+          // Nếu chưa có license thì khỏi load progress
+          if (!license) {
+            testsContainer.innerHTML = `<div class="loading-text">Bạn cần kích hoạt license để xem tiến độ.</div>`;
+            return;
+          }
+
+          // ==== 1) Check cache trước ====
+          const cacheOk = isProgressCacheValid(deviceId, license, testIds);
+
+          // ==== 2) MISS -> show loading + skeleton ====
+          if (!cacheOk) {
+            showCyberLoading("ĐANG TẢI DỮ LIỆU");
+            testsContainer.innerHTML = createSkeletonLoading();
+            await new Promise(requestAnimationFrame);
+          } else {
+            // HIT -> không loading, không skeleton
+            testsContainer.innerHTML = "";
+          }
+
+          // ==== 3) Lấy progress (HIT nhanh / MISS gọi API) ====
+          const r = await getCachedProgress(deviceId, license, testIds);
+          const progressMap = r.data || {};
+
+          // Nếu user bấm qua unit khác trong lúc chờ -> bỏ render
+          if (token !== __openTestModalToken) return;
+
+          // ==== 4) MISS -> hide loading khi xong ====
+          if (!cacheOk) hideCyberLoading();
+
+          // ==== 5) Render danh sách tests ====
+          testsContainer.innerHTML = "";
+          const fragment = document.createDocumentFragment();
+
+          unit.tests.forEach((test) => {
+            const testItem = document.createElement("div");
+            testItem.className = "test-item";
+            testItem.setAttribute("data-test-url", test.url);
+            testItem.setAttribute("data-test-name", test.name);
+
+            const p = progressMap[test.url] || { perfectCount: 0 };
+            const b = badgeFromProgress(p);
+
+            const iconClass = b.icon || "fa-clock";
+            const bgColor = b.bg || "rgba(255, 100, 0, 0.2)";
+            const borderColor = b.border || "rgba(255, 150, 0, 0.3)";
+            const textColor = b.color || "#ffaa00";
+            const badgeText = b.text || "Chưa làm";
+
+            testItem.innerHTML = `
+      <div class="test-item-icon">
+        <i class="fas ${iconClass}"></i>
+      </div>
+      <div class="test-item-content">
+        <div class="test-item-title">${test.name}</div>
+        <div class="test-item-meta">
+          <span><i class="fas fa-question-circle"></i> ${test.questions} câu</span>
+          <span><i class="fas fa-hourglass-half"></i> ${test.time}</span>
+          <span><i class="fas fa-signal"></i> ${test.difficulty}</span>
+        </div>
+      </div>
+      <div class="test-status-badge"
+        style="background:${bgColor}; border-color:${borderColor}; color:${textColor}">
+        ${badgeText}
+      </div>
+    `;
+
+            testItem.addEventListener("click", function (e) {
+              e.preventDefault();
+              e.stopPropagation();
+              e.stopImmediatePropagation();
+
+              const url = this.getAttribute("data-test-url");
+              const newTab = window.open(
+                url,
+                "_blank",
+                "noopener,noreferrer",
+              );
+              if (!newTab) return;
+            });
+
+            fragment.appendChild(testItem);
+          });
+
+          testsContainer.appendChild(fragment);
+        };
+
+        // Tạo các tab unit
+        testInfo.units.forEach((unit, index) => {
+          const tab = document.createElement("button");
+          tab.className = "unit-tab" + (index === 0 ? " active" : "");
+          tab.textContent = unit.name;
+
+          tab.addEventListener("click", async (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            tabsContainer
+              .querySelectorAll(".unit-tab")
+              .forEach((t) => t.classList.remove("active"));
+            tab.classList.add("active");
+
+            await showUnitTests(index);
+          });
+
+          tabsContainer.appendChild(tab);
+        });
+
+        testList.appendChild(tabsContainer);
+        testList.appendChild(testsContainer);
+
+        // ✅ HIỆN MODAL NGAY (TRƯỚC KHI LOAD)
+        testModal.classList.add("show");
+        testBackdrop.classList.add("show");
+
+        // ✅ ÉP RENDER MODAL + SKELETON 1 NHỊP
+        await new Promise(requestAnimationFrame);
+
+        // Hiển thị Unit 1 mặc định
+        await showUnitTests(0);
+
+        return; // ✅ chặn không chạy xuống dưới (tránh show lần 2)
+      }
+      // ==========================
+      // ELSE: testInfo.tests (ThaoLeJP, Đồng nghĩa/Trái nghĩa, Từ vựng khó, ...)
+      // ==========================
+      if (testInfo.tests && Array.isArray(testInfo.tests)) {
+        const deviceId = localStorage.getItem(LS_DEVICE_ID) || "";
+        const license = localStorage.getItem(LS_LICENSE) || "";
+        const testIds = testInfo.tests.map((t) => t.url);
+
+        // Hiện modal ngay
+        testModal.classList.add("show");
+        testBackdrop.classList.add("show");
+        await new Promise(requestAnimationFrame);
+
+        // Nếu chưa có license thì vẫn cho xem list, nhưng không có tiến độ
+        if (!license) {
+          testList.innerHTML = "";
+          testInfo.tests.forEach((test) => {
+            const testItem = document.createElement("div");
+            testItem.className = "test-item";
+            testItem.setAttribute("data-test-url", test.url);
+            testItem.setAttribute("data-test-name", test.name);
+
+            testItem.innerHTML = `
+        <div class="test-item-icon"><i class="fas fa-clock"></i></div>
+        <div class="test-item-content">
+          <div class="test-item-title">${test.name}</div>
+          <div class="test-item-meta">
+            <span><i class="fas fa-question-circle"></i> ${test.questions} câu</span>
+            <span><i class="fas fa-hourglass-half"></i> ${test.time}</span>
+            <span><i class="fas fa-signal"></i> ${test.difficulty}</span>
+          </div>
+        </div>
+        <div class="test-status-badge"
+          style="background:rgba(255,100,0,0.2); border-color:rgba(255,150,0,0.3); color:#ffaa00">
+          Chưa kích hoạt
+        </div>
+      `;
+
+            testItem.addEventListener("click", function (e) {
+              e.preventDefault();
+              e.stopPropagation();
+              e.stopImmediatePropagation();
+              const url = this.getAttribute("data-test-url");
+              window.open(url, "_blank", "noopener,noreferrer");
+            });
+
+            testList.appendChild(testItem);
+          });
+          return;
+        }
+
+        // Cache check
+        const cacheOk = isProgressCacheValid(deviceId, license, testIds);
+
+        if (!cacheOk) {
+          showCyberLoading("ĐANG TẢI DỮ LIỆU");
+          testList.innerHTML = createSkeletonLoading();
+          await new Promise(requestAnimationFrame);
+        } else {
+          testList.innerHTML = "";
+        }
+
+        const r = await getCachedProgress(deviceId, license, testIds);
+        const progressMap = r.data || {};
+
+        if (token !== __openTestModalToken) return;
+
+        if (!cacheOk) hideCyberLoading();
+
+        testList.innerHTML = "";
+        const fragment = document.createDocumentFragment();
+
+        testInfo.tests.forEach((test) => {
+          const testItem = document.createElement("div");
+          testItem.className = "test-item";
+          testItem.setAttribute("data-test-url", test.url);
+          testItem.setAttribute("data-test-name", test.name);
+
+          const p = progressMap[test.url] || { perfectCount: 0 };
+          const b = badgeFromProgress(p);
+
+          const iconClass = b.icon || "fa-clock";
+          const bgColor = b.bg || "rgba(255, 100, 0, 0.2)";
+          const borderColor = b.border || "rgba(255, 150, 0, 0.3)";
+          const textColor = b.color || "#ffaa00";
+          const badgeText = b.text || "Chưa làm";
+
+          testItem.innerHTML = `
+      <div class="test-item-icon">
+        <i class="fas ${iconClass}"></i>
+      </div>
+      <div class="test-item-content">
+        <div class="test-item-title">${test.name}</div>
+        <div class="test-item-meta">
+          <span><i class="fas fa-question-circle"></i> ${test.questions} câu</span>
+          <span><i class="fas fa-hourglass-half"></i> ${test.time}</span>
+          <span><i class="fas fa-signal"></i> ${test.difficulty}</span>
+        </div>
+      </div>
+      <div class="test-status-badge"
+        style="background:${bgColor}; border-color:${borderColor}; color:${textColor}">
+        ${badgeText}
+      </div>
+    `;
+
+          testItem.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            const url = this.getAttribute("data-test-url");
+            window.open(url, "_blank", "noopener,noreferrer");
+          });
+
+          fragment.appendChild(testItem);
+        });
+
+        testList.appendChild(fragment);
+        return;
+      }
+    }
+
+    // Hàm đóng test modal
+    function closeTestModal() {
+      const testModal = document.getElementById("testModal");
+      const testBackdrop = document.getElementById("testModalBackdrop");
+      testModal.classList.remove("show");
+      testBackdrop.classList.remove("show");
+      // ✅ Cập nhật lại % tiến độ module chính sau khi đóng popup bài test
+      updateMainModulesProgress();
+    }
+
+    // Thêm sự kiện click cho các content-item trong modal từ vựng
+    function setupTestModalInteractions() {
+      if (__testModalSetupDone) return;
+      __testModalSetupDone = true;
+
+      // Lắng nghe sự kiện click trên frameContent (nơi chứa các content-item)
+      const frameContent = document.getElementById("frameContent");
+
+      if (frameContent) {
+        frameContent.addEventListener("click", function (e) {
+          // Tìm content-item được click
+          const contentItem = e.target.closest(".content-item");
+          if (!contentItem) return;
+
+          // Lấy tiêu đề của content-item
+          const itemTitleEl = contentItem.querySelector(".item-title");
+          if (!itemTitleEl) return;
+
+          // Bỏ qua ký tự icon, lấy text
+          let itemTitle = itemTitleEl.textContent.replace("●", "").trim();
+          if (!itemTitle) {
+            itemTitle = itemTitleEl.innerText.replace(/[●•◦]/g, "").trim();
+          }
+
+          console.log("Click vào content-item:", itemTitle);
+
+          // Kiểm tra xem có dữ liệu test cho item này không
+          if (testData[itemTitle]) {
+            openTestModal(itemTitle);
+          } else {
+            // Thử tìm kiếm gần đúng
+            const matchedKey = Object.keys(testData).find(
+              (key) => itemTitle.includes(key) || key.includes(itemTitle),
+            );
+
+            if (matchedKey) {
+              openTestModal(matchedKey);
+            } else {
+              console.log("Không tìm thấy dữ liệu test cho:", itemTitle);
+              // Alert thông báo demo
+              alert(`Bài kiểm tra cho "${itemTitle}" đang được cập nhật!`);
+            }
+          }
+        });
+      }
+
+      // Đóng test modal bằng nút X
+      const closeBtn = document.getElementById("closeTestModalBtn");
+      if (closeBtn) {
+        closeBtn.addEventListener("click", closeTestModal);
+      }
+
+      // Đóng test modal bằng click backdrop
+      const testBackdrop = document.getElementById("testModalBackdrop");
+      if (testBackdrop) {
+        testBackdrop.addEventListener("click", closeTestModal);
+      }
+
+      // Đóng bằng ESC
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          const testModal = document.getElementById("testModal");
+          if (testModal.classList.contains("show")) {
+            closeTestModal();
+          }
+        }
+      });
+    }
+    // Thêm dữ liệu test mẫu cho các module khác (tùy chọn)
+    testData["Ngữ pháp Văn viết"] = {
+      title: "Ngữ pháp Văn viết N1",
+      tests: [
+        {
+          id: 1,
+          name: "Bài test Cấu trúc câu phức",
+          questions: 15,
+          time: "20 phút",
+          difficulty: "Khó",
+          url: "test-writing-grammar1.html",
+        },
+        {
+          id: 2,
+          name: "Bài test Kính ngữ trong văn viết",
+          questions: 20,
+          time: "25 phút",
+          difficulty: "Khó",
+          url: "test-writing-grammar2.html",
+        },
+      ],
+    };
+
+    testData["Nghe tin tức"] = {
+      title: "Nghe tin tức NHK",
+      tests: [
+        {
+          id: 1,
+          name: "Bài test Nghe tin tức số 1",
+          questions: 10,
+          time: "15 phút",
+          difficulty: "Trung bình",
+          url: "test-news1.html",
+        },
+        {
+          id: 2,
+          name: "Bài test Nghe tin tức số 2",
+          questions: 10,
+          time: "15 phút",
+          difficulty: "Trung bình",
+          url: "test-news2.html",
+        },
+      ],
+    };
+
+    testData["Văn bản Học thuật"] = {
+      title: "Đọc hiểu học thuật",
+      tests: [
+        {
+          id: 1,
+          name: "Bài đọc Khoa học xã hội",
+          questions: 8,
+          time: "20 phút",
+          difficulty: "Khó",
+          url: "test-academic1.html",
+        },
+        {
+          id: 2,
+          name: "Bài đọc Khoa học tự nhiên",
+          questions: 8,
+          time: "20 phút",
+          difficulty: "Khó",
+          url: "test-academic2.html",
+        },
+      ],
+    };
+
+    function getModuleCard(moduleId) {
+      return document.querySelector(`[data-module="${moduleId}"]`);
+    }
+
+    function clearAllCardStates() {
+      document
+        .querySelectorAll(".module-card")
+        .forEach((c) => c.classList.remove("locked"));
+    }
+
+    function openModal() {
+      const modal = document.getElementById("moduleDisplay");
+      const backdrop = document.getElementById("moduleBackdrop");
+      modal.classList.add("show");
+      backdrop.classList.add("show");
+      modal.setAttribute("aria-hidden", "false");
+    }
+
+    function closeModal() {
+      const modal = document.getElementById("moduleDisplay");
+      const backdrop = document.getElementById("moduleBackdrop");
+      modal.classList.remove("show");
+      backdrop.classList.remove("show");
+      modal.setAttribute("aria-hidden", "true");
+    }
+
+    async function renderModuleToModal(moduleId) {
+      const data = moduleContents[moduleId];
+      if (!data) return;
+
+      const frameTitle = document.getElementById("frameTitle");
+      const frameContent = document.getElementById("frameContent");
+      const frameIcon = document.querySelector(".frame-icon i");
+      const statusText = document.querySelector("#frameStatus .status-text");
+
+      frameTitle.textContent = data.title;
+      if (frameIcon) frameIcon.className = data.icon;
+      if (statusText) statusText.textContent = `Đang xem: ${data.title}`;
+
+      // Render khung trước cho mượt
+      frameContent.innerHTML = "";
+
+      // Tạo list item trước (stats tạm)
+      const itemEls = [];
+      data.items.forEach((item) => {
+        const itemEl = document.createElement("div");
+        itemEl.className = "content-item";
+
+        // NOTE: gắn data-title để sau update stats
+        itemEl.setAttribute("data-item-title", item.title);
+
+        itemEl.innerHTML = `
+      <div class="item-title">
+        <i class="fas fa-circle"></i> ${item.title}
+      </div>
+      <div class="item-desc">${item.desc}</div>
+      <div class="item-stats">Đã học: .../... </div>
+      <div class="item-progress">
+  <div class="item-progress-fill" style="width: 0%"></div>
+</div>
+
+    `;
+        frameContent.appendChild(itemEl);
+        itemEls.push(itemEl);
+      });
+
+      // ====== AUTO CALC: chỉ làm cho module vocab (đúng yêu cầu bạn) ======
+      if (moduleId !== "vocab") return;
+
+      // Nếu chưa kích hoạt license: vẫn tính b (tổng), a=0
+      const license = localStorage.getItem(LS_LICENSE) || "";
+      const hasLicense = !!license;
+
+      // Làm từng item (không show loading toàn màn hình để đỡ khó chịu)
+      // Nhưng vẫn tận dụng cache progress để không gọi API nhiều lần
+      for (const el of itemEls) {
+        const itemTitle = el.getAttribute("data-item-title") || "";
+        const statsEl = el.querySelector(".item-stats");
+        if (!statsEl) continue;
+
+        const testInfo = testData[itemTitle];
+        const tests = flattenTestsFromTestInfo(testInfo);
+
+        // Nếu item chưa có testData -> giữ nguyên / báo cập nhật
+        if (!testInfo || !tests.length) {
+          statsEl.textContent = "Đã học: 0/0";
+          continue;
+        }
+
+        // Tính b luôn (không cần progress)
+        const { a: a0, b } = calcABFromTests(tests, {}); // a0 = 0
+        if (!hasLicense) {
+          statsEl.textContent = `Đã học: 0/${b}`;
+          const progressFill = el.querySelector(".item-progress-fill");
+          if (progressFill) progressFill.style.width = "0%";
+          continue;
+        }
+
+        // Có license -> lấy progressMap và tính a/b chuẩn
+        try {
+          const progressMap = await getProgressMapForItemTitle(itemTitle);
+          const { a, b: b2 } = calcABFromTests(tests, progressMap);
+          statsEl.textContent = `Đã học: ${a}/${b2}`;
+          const progressFill = el.querySelector(".item-progress-fill");
+          if (progressFill) {
+            const percent = b2 > 0 ? Math.floor((a / b2) * 100) : 0;
+            progressFill.style.width = percent + "%";
+          }
+        } catch {
+          // Nếu lỗi server => vẫn hiển thị b
+          statsEl.textContent = `Đã học: 0/${b}`;
+        }
+      }
+    }
+
+    async function lockAndOpen(moduleId) {
+      lockedModule = moduleId;
+
+      clearAllCardStates();
+      const card = getModuleCard(moduleId);
+      if (card) card.classList.add("locked");
+      openModal();
+      await renderModuleToModal(moduleId);
+    }
+
+    function unlockAndClose() {
+      lockedModule = null;
+      clearAllCardStates();
+      closeModal();
+    }
+
+    function setupModuleInteractions() {
+      document.querySelectorAll(".module-card").forEach((card) => {
+        const moduleId = card.getAttribute("data-module");
+        card.addEventListener("click", async (e) => {
+          e.preventDefault();
+          await lockAndOpen(moduleId);
+        });
+
+        card.addEventListener("contextmenu", (e) => e.preventDefault());
+      });
+
+      // Đóng bằng nút
+      document
+        .getElementById("closeModalBtn")
+        .addEventListener("click", unlockAndClose);
+
+      // Đóng bằng click backdrop
+      document
+        .getElementById("moduleBackdrop")
+        .addEventListener("click", unlockAndClose);
+
+      // ESC đóng
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && lockedModule) unlockAndClose();
+      });
+    }
+
+    /* =========================================================
+      App UI
+    ========================================================= */
+    function runAppUI() {
+      // Progress bars
+      ["vocab", "grammar", "listening", "reading"].forEach((m) => {
+        const fill = document.getElementById(`progress-${m}`);
+        const pct = document.getElementById(`percent-${m}`);
+        if (fill) fill.style.width = "0%";
+        if (pct) pct.textContent = "0%";
+      });
+
+      // Start button ripple
+      const startButton = document.querySelector(".start-button");
+      startButton.addEventListener("click", function (e) {
+        e.preventDefault();
+        const ripple = document.createElement("div");
+        ripple.style.position = "fixed";
+        ripple.style.borderRadius = "50%";
+        ripple.style.backgroundColor = "rgba(0, 168, 255, 0.6)";
+        ripple.style.width = "10px";
+        ripple.style.height = "10px";
+        ripple.style.left = `${e.clientX}px`;
+        ripple.style.top = `${e.clientY}px`;
+        ripple.style.transform = "translate(-50%, -50%)";
+        ripple.style.zIndex = "1000";
+        ripple.style.pointerEvents = "none";
+        document.body.appendChild(ripple);
+
+        const animation = ripple.animate(
+          [
+            { width: "10px", height: "10px", opacity: 1 },
+            { width: "200px", height: "200px", opacity: 0 },
+          ],
+          { duration: 800, easing: "ease-out" },
+        );
+        animation.onfinish = () => ripple.remove();
+
+        setTimeout(() => {
+          alert(
+            "Hệ thống học tập N1 đang khởi động...\nChuẩn bị cho nhiệm vụ ngày hôm nay!",
+          );
+        }, 300);
+      });
+
+      // Streak counter
+      const streakDays = document.querySelector(".streak-days");
+      let count = 0;
+      const targetCount = 5;
+      const countInterval = setInterval(() => {
+        count++;
+        streakDays.textContent = `${count} NGÀY`;
+        if (count === targetCount) clearInterval(countInterval);
+      }, 200);
+
+      setupModuleInteractions();
+      setupTestModalInteractions();
+      updateMainModulesProgress();
+
+      // Expiry check khi mở app
+      const savedExpiry = localStorage.getItem("n1_expiry_date");
+      if (savedExpiry) updateStatusUI(savedExpiry);
+
+      console.log("App UI initialized");
+    }
+
+    /* =========================================================
+      Boot
+    ========================================================= */
+    (async function boot() {
+      const deviceId = getOrCreateDeviceId();
+      fillDeviceUI(deviceId);
+
+      const savedLicense = localStorage.getItem(LS_LICENSE) || "";
+      const licenseInput = document.getElementById("licenseInput");
+      if (savedLicense) licenseInput.value = savedLicense;
+
+      const savedName = localStorage.getItem(LS_USER_NAME);
+      if (savedName) setUserName(savedName);
+
+      updateExamUI("");
+      setInterval(() => updateExamUI(""), 60 * 1000);
+
+      // [QUAN TRỌNG] Kiểm tra trạng thái kích hoạt NGAY LẬP TỨC
+      const activatedOnce = localStorage.getItem(LS_ACTIVATED) === "1";
+      if (activatedOnce && savedLicense) {
+        // Nếu đã kích hoạt: Ẩn gate và HIỂN THỊ APP ngay lập tức
+        showGate(false);
+        runAppUI();
+        startBackgroundRecheck(deviceId);
+      } else {
+        // Nếu chưa kích hoạt: Hiện gate
+        showGate(true);
+      }
+
+      // Hàm xử lý khi kích hoạt thành công
+      async function handleVerifiedOK(r, licenseUsed) {
+        localStorage.setItem(LS_LICENSE, licenseUsed);
+        localStorage.setItem(LS_ACTIVATED, "1");
+
+        setStatus(`Kích hoạt OK (hạn: ${r.expiry})`, "ok");
+        updateStatusUI(r.expiry);
+        localStorage.setItem("n1_expiry_date", r.expiry);
+
+        if (r.userName) setUserName(r.userName);
+        if (r.examDate) localStorage.setItem(LS_EXAM_DATE, r.examDate);
+        updateExamUI(r.examDate);
+
+        if (r.userId) localStorage.setItem(LS_USER_ID, r.userId);
+
+        showGate(false);
+        runAppUI();
+        startBackgroundRecheck(deviceId);
+      }
+
+      // Nếu đã có license lưu sẵn -> verify NGAY LẬP TỨC (kiểm tra lại với server)
+      if (savedLicense) {
+        setStatus("Đang kiểm tra license...", "");
+        try {
+          const r = await verifyLicense(deviceId, savedLicense);
+          if (r && r.ok) {
+            // Cập nhật lại thông tin từ server
+            localStorage.setItem(LS_ACTIVATED, "1");
+            setStatus(`Kích hoạt OK (hạn: ${r.expiry})`, "ok");
+            updateStatusUI(r.expiry);
+            localStorage.setItem("n1_expiry_date", r.expiry);
+
+            if (r.userName) setUserName(r.userName);
+            if (r.examDate) localStorage.setItem(LS_EXAM_DATE, r.examDate);
+            updateExamUI(r.examDate);
+            return;
+          }
+          throw new Error("Verify failed");
+        } catch (e) {
+          const msg = String(e?.message || "");
+          const hardBlock =
+            msg.includes("Device revoked") ||
+            msg.includes("User revoked") ||
+            msg.includes("Expired") ||
+            msg.includes("Invalid") ||
+            msg.includes("License not found") ||
+            msg.includes("already bound");
+
+          if (hardBlock) {
+            localStorage.removeItem(LS_LICENSE);
+            localStorage.removeItem(LS_ACTIVATED);
+            setStatus(
+              "License đã bị thu hồi/không hợp lệ. Vui lòng nhập license mới.",
+              "error",
+            );
+            showGate(true); // Hiện gate nếu license không còn hợp lệ
+          } else {
+            setStatus(
+              "Không kiểm tra được license (server lỗi / mất mạng).",
+              "error",
+            );
+            // Giữ nguyên trạng thái (nếu đã ẩn gate thì vẫn ẩn, nếu chưa thì vẫn hiện)
+          }
+        }
+      }
+      // Nút copy deviceId
+      document
+        .getElementById("btnCopyDevice")
+        .addEventListener("click", async () => {
+          await copyText(deviceId);
+          setStatus(
+            "Đã copy deviceID. Gửi deviceID này để cấp license.",
+            "ok",
+          );
+        });
+
+      // Nút kích hoạt
+      document
+        .getElementById("btnActivate")
+        .addEventListener("click", async () => {
+          const license = licenseInput.value.trim();
+          if (!license) return setStatus("Bạn chưa nhập license", "error");
+
+          setStatus("Đang kích hoạt...", "");
+          try {
+            const r = await verifyLicense(deviceId, license);
+            if (r && r.ok) {
+              await handleVerifiedOK(r, license);
+            } else {
+              setStatus("License không hợp lệ hoặc đã hết hạn", "error");
+            }
+          } catch (e) {
+            const msg = String(e?.message || "unknown");
+            if (msg.includes("User revoked"))
+              setStatus(
+                "Tài khoản đã bị khóa (User revoked). Liên hệ admin.",
+                "error",
+              );
+            else if (msg.includes("Device revoked"))
+              setStatus(
+                "Thiết bị đã bị khóa (Device revoked). Liên hệ admin.",
+                "error",
+              );
+            else if (msg.includes("Expired"))
+              setStatus("License đã hết hạn", "error");
+            else if (msg.includes("Invalid"))
+              setStatus("License không hợp lệ", "error");
+            else if (msg.includes("License not found"))
+              setStatus("License không tồn tại trên server", "error");
+            else if (msg.includes("already bound"))
+              setStatus("License đã được dùng trên thiết bị khác", "error");
+            else setStatus("Kích hoạt thất bại: " + msg, "error");
+          }
+        });
+      // Nút yêu cầu cấp lại
+      document
+        .getElementById("btnRequestReset")
+        .addEventListener("click", async () => {
+          const oldLicense =
+            licenseInput.value.trim() ||
+            localStorage.getItem(LS_LICENSE) ||
+            "";
+          const note =
+            prompt(
+              "Nhập lý do cấp lại (vd: đổi máy / cài lại Windows / xóa trình duyệt):",
+            ) || "";
+          const requestCode = `RESET|deviceId=${deviceId}|oldLicense=${oldLicense}|note=${note}`;
+          await copyText(requestCode);
+          setStatus(
+            "Đã copy mã yêu cầu cấp lại. Dán mã này gửi cho ban quản trị.",
+            "ok",
+          );
+          try {
+            await requestReset(deviceId, oldLicense, note);
+          } catch { }
+        });
+    })();
+  </script>
+  <!-- CYBER LOADING OVERLAY -->
+  <div class="cyber-loading" id="cyberLoading">
+    <div class="cyber-loading-box">
+      <div class="cyber-loading-title">
+        <span id="cyberLoadingText">ĐANG TẢI DỮ LIỆU</span>
+        <span id="cyberLoadingPercent" style="margin-left: 10px">0%</span>
+      </div>
+      <div class="cyber-loading-bar">
+        <div class="cyber-loading-bar-fill"></div>
+      </div>
+      <div class="cyber-loading-sub">SYSTEM PROCESSING...</div>
+    </div>
+  </div>
+</body>
+</html>
