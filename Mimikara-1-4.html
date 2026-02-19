@@ -2157,20 +2157,20 @@
         const license = localStorage.getItem(LS_LICENSE) || "";
         if (!deviceId || !license) return;
 
-        const testId = getTestId();
-        const attemptId = makeAttemptId();
+        const moduleId = getTestId();
+        //const attemptId = makeAttemptId();
 
         try {
           const res = await fetch(`${API_URL}/progress/mark-perfect`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ deviceId, license, testId, attemptId }),
+            body: JSON.stringify({ deviceId, license, moduleId}),
           });
           if (!res.ok) return;
 
           const data = await res.json();
           if (data && data.ok) {
-            console.log("[PROGRESS] saved", { testId, ...data });
+            console.log("[PROGRESS] saved", { moduleId, ...data });
           }
         } catch (e) {
           console.log("progress api offline", e);
