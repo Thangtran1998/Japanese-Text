@@ -1783,6 +1783,83 @@
         font-size: 14px;
         animation: pulse 1.5s ease-in-out infinite;
       }
+      /* ================= CYBER LOADING ================= */
+
+.cyber-loading {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 8, 18, 0.85);
+  backdrop-filter: blur(12px);
+  z-index: 20000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.cyber-loading.show {
+  display: flex;
+}
+
+.cyber-loading-box {
+  width: 420px;
+  padding: 30px;
+  border: 2px solid #00a8ff;
+  border-radius: 14px;
+  background: rgba(0, 20, 40, 0.95);
+  text-align: center;
+  box-shadow:
+    0 0 25px rgba(0, 168, 255, 0.7),
+    0 0 60px rgba(0, 100, 255, 0.4);
+  animation: cyberGlow 2s infinite alternate;
+}
+
+@keyframes cyberGlow {
+  0% { box-shadow: 0 0 20px rgba(0,168,255,0.6); }
+  100% { box-shadow: 0 0 50px rgba(0,255,204,0.8); }
+}
+
+.cyber-loading-title {
+  font-family: "Orbitron", sans-serif;
+  font-size: 20px;
+  letter-spacing: 2px;
+  color: #00ffcc;
+  margin-bottom: 20px;
+  text-shadow: 0 0 15px rgba(0,255,204,0.8);
+  animation: cyberTextPulse 1.5s infinite alternate;
+}
+
+@keyframes cyberTextPulse {
+  0% { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+
+.cyber-loading-bar {
+  height: 8px;
+  background: rgba(0,50,100,0.4);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+.cyber-loading-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(to right, #0066cc, #00ffcc);
+  animation: cyberBarMove 1.5s infinite linear;
+}
+
+@keyframes cyberBarMove {
+  0% { width: 0%; }
+  50% { width: 100%; }
+  100% { width: 0%; }
+}
+
+.cyber-loading-sub {
+  font-size: 12px;
+  color: #88d3ff;
+  letter-spacing: 1px;
+}
+
     </style>
   </head>
 
@@ -1871,7 +1948,7 @@
         <main class="main-content">
           <section class="mission-panel">
             <h2 class="panel-title">
-              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
+              <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
             </h2>
 
             <div class="target-info">
@@ -2049,6 +2126,18 @@
       <div class="test-list" id="testList"></div>
     </div>
     <script>
+      function showCyberLoading(text = "ĐANG TẢI DỮ LIỆU") {
+  const loading = document.getElementById("cyberLoading");
+  const textEl = document.getElementById("cyberLoadingText");
+  textEl.textContent = text;
+  loading.classList.add("show");
+}
+
+function hideCyberLoading() {
+  const loading = document.getElementById("cyberLoading");
+  loading.classList.remove("show");
+}
+
       /* =========================================================
         CONFIG + LocalStorage Keys
       ========================================================= */
@@ -3031,6 +3120,7 @@ if (testInfo.units) {
     const unit = testInfo.units[unitIndex];
 
     // 1) HIỂN THỊ SKELETON NGAY
+    showCyberLoading("ĐANG TẢI UNIT...");
     testsContainer.innerHTML = createSkeletonLoading();
 
     // 2) ÉP TRÌNH DUYỆT RENDER RA MÀN HÌNH 1 NHỊP
@@ -3102,6 +3192,7 @@ if (testInfo.units) {
     });
 
     testsContainer.appendChild(fragment);
+    hideCyberLoading();
   };
 
   // Tạo các tab unit
@@ -3635,5 +3726,22 @@ if (testInfo.units) {
           });
       })();
     </script>
+    <!-- CYBER LOADING OVERLAY -->
+<div class="cyber-loading" id="cyberLoading">
+  <div class="cyber-loading-box">
+    <div class="cyber-loading-title">
+      <span id="cyberLoadingText">ĐANG TẢI DỮ LIỆU</span>
+    </div>
+
+    <div class="cyber-loading-bar">
+      <div class="cyber-loading-bar-fill"></div>
+    </div>
+
+    <div class="cyber-loading-sub">
+      SYSTEM PROCESSING...
+    </div>
+  </div>
+</div>
+
   </body>
 </html>
