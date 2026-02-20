@@ -2161,7 +2161,7 @@
 
     .task-list {
       min-height: 180px;
-      max-height: 220px;
+      max-height: 320px;
       overflow-y: auto;
       padding-right: 5px;
       margin-bottom: 15px;
@@ -5716,7 +5716,7 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
     }
     // Hàm thêm task mới (tách riêng)
     function addNewTask() {
-      const taskName = prompt("Nhập tên nhiệm vụ mới cho ngày mai:");
+      const taskName = prompt("Nhập nhiệm vụ tiếp theo của bạn:");
       if (taskName && taskName.trim()) {
         const nextTaskList = document.getElementById("nextTaskList");
 
