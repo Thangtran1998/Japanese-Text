@@ -2982,24 +2982,21 @@
 
     /* ===== CĂN CHỈNH CHIỀU RỘNG TASK GIỮA 2 CỘT ===== */
 
-    /* 1. KHÓA CHIỀU DÀI CÁC Ô TASK - Đảm bảo các ô task có cùng kích thước */
+    /* 1. GIỮ NGUYÊN KÍCH THƯỚC BAN ĐẦU, CHỈ ĐẢM BẢO 2 CỘT BẰNG NHAU */
+    .dashboard-grid {
+      grid-template-columns: 1fr 1fr !important;
+      /* 2 cột bằng nhau */
+      gap: 25px;
+    }
+
+    /* 2. KHÔNG ĐẶT min-width, max-width - GIỮ KÍCH THƯỚC TỰ NHIÊN BAN ĐẦU */
     .current-tasks .task-item,
     .next-tasks .task-item {
       width: 100%;
       /* Chiếm toàn bộ chiều rộng cột */
-      min-width: 200px;
-      /* Chiều rộng tối thiểu */
-      max-width: 300px;
-      /* Chiều rộng tối đa */
       box-sizing: border-box;
-      /* Tính kích thước bao gồm padding và border */
-    }
-
-    /* 2. CHIỀU RỘNG CÁC Ô TASK BẰNG NHAU - Container 2 cột phải bằng nhau */
-    .dashboard-grid {
-      grid-template-columns: 1fr 1fr;
-      /* 2 cột bằng nhau */
-      gap: 25px;
+      /* Tính kích thước bao gồm padding */
+      /* KHÔNG đặt min-width, max-width - giữ kích thước tự nhiên */
     }
 
     /* 3. PHẦN NỘI DUNG TEXT - Chiếm không gian linh hoạt */
@@ -3049,13 +3046,13 @@
       opacity: 1;
     }
 
-    /* 6. ĐẢM BẢO KHOẢNG CÁCH GIỮA CÁC PHẦN TỬ ĐỒNG NHẤT */
+    /* 6. GIỮ NGUYÊN KHOẢNG CÁCH BAN ĐẦU */
     .current-tasks .task-item,
     .next-tasks .task-item {
       gap: 12px;
-      /* Khoảng cách giữa checkbox/bullet, text, nút xóa */
+      /* Giữ khoảng cách ban đầu */
       padding: 10px 12px;
-      /* Padding đồng nhất */
+      /* Giữ padding ban đầu */
     }
   </style>
 </head>
@@ -3141,7 +3138,7 @@
       <main class="main-content">
         <section class="mission-panel">
           <h2 class="panel-title">
-            <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
+            <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
           </h2>
 
           <div class="target-info">
