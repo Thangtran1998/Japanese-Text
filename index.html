@@ -2979,6 +2979,15 @@
     #tcCard2:hover .tc-ring-fill--green {
       filter: drop-shadow(0 0 9px rgba(0, 255, 176, 1));
     }
+
+    /* Đảm bảo phần nội dung chiếm hết không gian còn lại */
+    .current-tasks .task-content,
+    .next-tasks .task-content {
+      flex: 1;
+      /* Chiếm toàn bộ không gian còn lại */
+      min-width: 0;
+      /* Cho phép co nhỏ hơn nội dung */
+    }
   </style>
 </head>
 
@@ -3063,7 +3072,7 @@
       <main class="main-content">
         <section class="mission-panel">
           <h2 class="panel-title">
-            <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
+            <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
           </h2>
 
           <div class="target-info">
