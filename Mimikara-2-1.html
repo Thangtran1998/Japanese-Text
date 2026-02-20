@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>N1 Bài test ngày 18 - Cyberpunk Quiz</title>
+    <title>Từ vựng Mimikara Unit 2 (1-20) - Cyberpunk Quiz</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -1707,7 +1707,7 @@
 
     <!-- Main Title - SỬA: thêm placeholder cho tên bài test và tổng số câu -->
     <h1 style="margin-bottom: 30px">
-      📚 CYBERPUNK QUIZ - N1 BÀI TEST NGÀY 18 (30 câu)
+      📚 CYBERPUNK QUIZ - TỪ VỰNG MIMIKARA UNIT 2 (1-20) (19 câu)
     </h1>
 
     <!-- Timer Panel -->
@@ -1900,7 +1900,176 @@
     <!-- MAIN CONTENT -->
     <div id="mainContentWrapper" class="main-content-wrapper">
       <div class="main-quiz-container">
-<!-- Không có audio chính -->
+<!-- AUDIO PLAYER TỔNG - GIỮ NGUYÊN TRẠNG THÁI BAN ĐẦU -->
+<div style="margin-bottom: 20px; padding: 15px; background: rgba(0,20,40,0.5); border-radius: 10px; border: 1px solid rgba(0,150,255,0.3);"
+     data-excel-audio="Mimikara-2-1.mp3"
+     data-excel-exists="true">
+  <!-- Dòng 1: Dropdown chọn file và các nút điều khiển chính -->
+  <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap;">
+    <span style="color: var(--secondary-glow); font-weight: bold">AUDIO:</span>
+    
+    <!-- Dropdown chọn file audio -->
+    <select id="mainAudioSelect" 
+      style="
+        background: rgba(0, 10, 25, 0.9);
+        color: var(--text-primary);
+        border: 1px solid rgba(0, 150, 255, 0.6);
+        border-radius: 5px;
+        padding: 8px 15px;
+        min-width: 300px;
+        cursor: pointer;
+        outline: none;
+        font-family: monospace;
+      "
+      onchange="changeAudioFile(this.value)">
+      <option value="Mimikara-1-1.mp3" >Mimikara-1-1.mp3</option>
+<option value="Mimikara-1-2.mp3" >Mimikara-1-2.mp3</option>
+<option value="Mimikara-1-3.mp3" >Mimikara-1-3.mp3</option>
+<option value="Mimikara-1-4.mp3" >Mimikara-1-4.mp3</option>
+<option value="Mimikara-1-5.mp3" >Mimikara-1-5.mp3</option>
+<option value="Mimikara-2-1.mp3" selected>Mimikara-2-1.mp3</option>
+<option value="N1_Try Test 1.3.mp3" >N1_Try Test 1.3.mp3</option>
+<option value="N1_Try Test 10.3.mp3" >N1_Try Test 10.3.mp3</option>
+<option value="N1_Try Test 2.3.mp3" >N1_Try Test 2.3.mp3</option>
+<option value="N1_Try Test 3.3.mp3" >N1_Try Test 3.3.mp3</option>
+<option value="N1_Try Test 3.3_2.mp3" >N1_Try Test 3.3_2.mp3</option>
+<option value="N1_Try Test 3.3_3.mp3" >N1_Try Test 3.3_3.mp3</option>
+<option value="N1_Try Test 3.3_4.mp3" >N1_Try Test 3.3_4.mp3</option>
+<option value="N1_Try Test 4.3_1.mp3" >N1_Try Test 4.3_1.mp3</option>
+<option value="N1_Try Test 4.3_2.mp3" >N1_Try Test 4.3_2.mp3</option>
+<option value="N1_Try Test 4.3_3.mp3" >N1_Try Test 4.3_3.mp3</option>
+<option value="N1_Try Test 5.4.mp3" >N1_Try Test 5.4.mp3</option>
+<option value="N1_Try Test 5.4_2.mp3" >N1_Try Test 5.4_2.mp3</option>
+<option value="N1_Try Test 5.4_3.mp3" >N1_Try Test 5.4_3.mp3</option>
+<option value="N1_Try Test 5.4_4.mp3" >N1_Try Test 5.4_4.mp3</option>
+<option value="N1_Try Test 5.4_5.mp3" >N1_Try Test 5.4_5.mp3</option>
+<option value="N1_Try Test 6.3.mp3" >N1_Try Test 6.3.mp3</option>
+<option value="N1_Try Test 7.3.mp3" >N1_Try Test 7.3.mp3</option>
+<option value="N1_Try Test 7.3_2.mp3" >N1_Try Test 7.3_2.mp3</option>
+<option value="N1_Try Test 7.3_3.mp3" >N1_Try Test 7.3_3.mp3</option>
+<option value="N1_Try Test 7.3_4.mp3" >N1_Try Test 7.3_4.mp3</option>
+<option value="N1_Try Test 8.3.mp3" >N1_Try Test 8.3.mp3</option>
+<option value="N1_Try Test 8.3_2.mp3" >N1_Try Test 8.3_2.mp3</option>
+<option value="N1_Try Test 8.3_3.mp3" >N1_Try Test 8.3_3.mp3</option>
+<option value="N1_Try Test 9.3.mp3" >N1_Try Test 9.3.mp3</option>
+
+    </select>
+
+    <!-- Nút Play/Pause -->
+    <button
+      id="mainPlayPauseBtn"
+      onclick="toggleMainAudio()"
+      style="
+        background: linear-gradient(135deg, #00cc66, #00ff88);
+        border: none;
+        border-radius: 5px;
+        color: #0a0e17;
+        padding: 8px 15px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      "
+    >
+      <i class="fas fa-play"></i> Phát
+    </button>
+
+    <!-- Speed Control -->
+    <div style="
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        background: rgba(0, 0, 0, 0.3);
+        padding: 5px 10px;
+        border-radius: 5px;
+      ">
+      <i class="fas fa-tachometer-alt" style="color: var(--secondary-glow)"></i>
+      <select id="mainSpeedSelect" 
+        style="
+          background: rgba(0, 10, 25, 0.9);
+          color: var(--text-primary);
+          border: 1px solid rgba(0, 150, 255, 0.4);
+          border-radius: 5px;
+          padding: 5px;
+          cursor: pointer;
+          outline: none;
+        "
+        onchange="changePlaybackSpeed(this.value)">
+        <option value="0.5">0.5x</option>
+        <option value="0.75">0.75x</option>
+        <option value="1" selected>1x</option>
+        <option value="1.25">1.25x</option>
+        <option value="1.5">1.5x</option>
+        <option value="2">2x</option>
+      </select>
+    </div>
+
+    <!-- Volume control with mute button -->
+    <div style="
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        background: rgba(0, 0, 0, 0.3);
+        padding: 5px 10px;
+        border-radius: 5px;
+      ">
+      <i class="fas fa-volume-up" 
+         id="mainVolumeIcon" 
+         style="color: var(--secondary-glow); cursor: pointer; font-size: 18px;" 
+         onclick="toggleMute(event)"
+         onmouseover="this.style.opacity='0.8'"
+         onmouseout="this.style.opacity='1'"
+         title="Nhấn để tắt/bật âm thanh">
+      </i>
+      <input
+        type="range"
+        id="mainVolumeSlider"
+        min="0"
+        max="1"
+        step="0.1"
+        value="1"
+        style="width: 80px; cursor: pointer;"
+      />
+    </div>
+
+    <!-- Hiển thị thời gian đếm ngược -->
+    <span
+      id="mainAudioTime"
+      style="
+        color: var(--secondary-glow);
+        font-family: 'Orbitron', sans-serif;
+        min-width: 60px;
+      "
+      >00:00</span
+    >
+  </div>
+
+  <!-- Dòng 2: Thanh tua (seek bar) -->
+  <div style="display: flex; align-items: center; gap: 10px; padding: 0 5px;">
+    <span style="color: var(--secondary-glow); font-size: 12px; min-width: 40px;" id="mainCurrentTime">00:00</span>
+    <input
+      type="range"
+      id="mainSeekBar"
+      min="0"
+      max="100"
+      value="0"
+      step="0.1"
+      style="
+        flex: 1;
+        height: 6px;
+        background: linear-gradient(90deg, var(--primary-glow), var(--secondary-glow));
+        border-radius: 3px;
+        cursor: pointer;
+        -webkit-appearance: none;
+      "
+      oninput="seekAudio(this.value)"
+    />
+    <span style="color: var(--secondary-glow); font-size: 12px; min-width: 40px;" id="mainDuration">00:00</span>
+  </div>
+</div>
+
+<!-- Audio element - SỬ DỤNG JAVASCRIPT ĐỂ TẢI FILE -->
+<audio id="mainAudio" preload="auto" style="display: none;"></audio>
         <!-- H2 - SỬA: thêm placeholder cho tên bài test -->
         <h2
           style="
@@ -1910,7 +2079,7 @@
           "
         >
           <i class="fas fa-file-alt" style="color: var(--secondary-glow)"></i>
-          N1 BÀI TEST NGÀY 18
+          TỪ VỰNG MIMIKARA UNIT 2 (1-20)
         </h2>
         <form id="quizForm"></form>
       </div>
@@ -2014,245 +2183,155 @@
       const quizData = [
   {
     number: 1,
-    question: '地元チームの優勝パレード<span style="color:red">(___)</span>、駅前の通りは見物客でごった返している。',
-    options: ['とあって', 'にもかかわらず', 'に至るまで', 'のあげく'],
+    question: '擦る',
+    options: ['こする', 'かきまわす', 'ねじれる', 'ねじる'],
     answer: '1',
-    detail: '',
+    detail: '🔴 擦る（する）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 擦（さつ）＝ cọ xát, ma sát<br>- Nghĩa đen: Dùng lực tác động qua lại hoặc một chiều trên bề mặt.<br>- Nghĩa Hán Việt: Sát<br>- Ý nghĩa: Hành động cọ xát, chà xát một vật lên bề mặt khác.<br>  → Thường dùng để diễn tả việc làm sạch, mài mòn, hoặc tạo ma sát.<br><br>💬 Ví dụ:<br>1. 消しゴムで字を擦る。<br>　→ Chà chữ bằng cục tẩy.<br><br>2. マッチを擦って火をつける。<br>　→ Quẹt diêm để nhóm lửa.<br><br>3. 肩が痛いので、少し擦ってください。<br>　→ Vì vai tôi đau, hãy xoa một chút đi.<br><br>🧠 Cách nhớ:<br>- Liên tưởng đến âm thanh "sột soạt" khi chà xát, gần với cách đọc "su-ru".<br>- Kanji 擦 có bộ Thủ (手) chỉ tay, và phần "sát" nghĩa là cọ xát.<br><br>➕（合）Các từ kết hợp: 擦り付ける Chà, cọ, miết mạnh cái gì đó vào một bề mặt<br><br>↔️（類）Các từ trái nghĩa: 撫でる Xoa, vuốt ve (Có tình cảm)<br>                          摩る Xoa, sờ (Để giảm đau, làm dịu)',
     isReading: false
   },
   {
     number: 2,
-    question: '今年は雨が少なく、例年<span style="color:red">(___)</span>暑さが厳しい。',
-    options: ['を皮切りに', 'に至るまで', 'ならでは', 'にもまして'],
-    answer: '4',
-    detail: '',
+    question: '摩る',
+    options: ['さする', 'かきまわす', 'いじる', 'つむ'],
+    answer: '1',
+    detail: '🔴 摩る（さする）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 摩（さ）＝ ma sát, cọ xát<br>- Nghĩa đen: Dùng tay hoặc vật thể di chuyển qua lại trên bề mặt với một lực nhất định.<br>- Nghĩa Hán Việt: Ma<br>- Ý nghĩa: Hành động dùng lực tay chà xát, xoa lên bề mặt một vật.<br>  → Thường để làm sạch, làm ấm, hoặc gây ma sát.<br><br>💬 Ví dụ:<br>1. 肩を摩ることで凝りをほぐす。<br>　→ Xoa bóp vai để giảm mỏi cơ.<br><br>2. 手を擦り合わせて温める。<br>　→ Chà hai tay vào nhau để làm ấm.<br><br>3. 汚れを布で擦り落とす。<br>　→ Chà vết bẩn cho sạch bằng vải.<br><br>🧠 Cách nhớ:<br>- Liên tưởng đến âm Hán Việt 「Ma」, nghĩa là cọ xát, ma sát.<br>- Hình ảnh dùng tay 「さ」すりながら何かを「する」.<br><br>↔️（類）Các từ liên quan: 撫でる Xoa, vuốt ve (Có tình cảm)<br>                          擦る Chà, cọ mạnh (Có lực gây ma sát)',
     isReading: false
   },
   {
     number: 3,
-    question: 'そのドラマは3年間<span style="color:red">(___)</span>放送された。',
-    options: ['からして', 'を皮切りに', 'に至って', 'にわたって'],
-    answer: '4',
-    detail: '',
+    question: '撫でる',
+    options: ['ねじる', 'なでる', 'つかむ', 'こする'],
+    answer: '2',
+    detail: '🔴 撫でる（なでる）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 撫（な）＝ vuốt ve, xoa dịu<br>  • でる（でる）＝ (phần okurigana, biểu thị động từ)<br>- Nghĩa đen: Dùng tay di chuyển nhẹ nhàng trên bề mặt.<br>- Nghĩa Hán Việt: Phủ<br>- Ý nghĩa: Vuốt ve, xoa nhẹ một cách trìu mến hoặc để an ủi.<br>  → Thể hiện hành động chạm nhẹ nhàng, yêu thương, thường với lòng bàn tay.<br><br>💬 Ví dụ:<br>1. 猫の頭を優しく撫でる。<br>　→ Vuốt ve đầu mèo một cách dịu dàng.<br><br>2. 子供の泣いている背中を撫でてあげた。<br>　→ Tôi đã xoa lưng để an ủi đứa trẻ đang khóc.<br><br>3. 彼はひげを撫でながら考え事をしていた。<br>　→ Anh ấy vuốt chòm râu trong khi suy nghĩ.<br><br>🧠 Cách nhớ:<br>- Liên tưởng đến âm Hán Việt 「Phủ」như trong "phủ dụ" (vỗ về an ủi).<br>- Hình ảnh bàn tay (て) nhẹ nhàng "nãi" (な) xuống "để" (で) vuốt ve.<br><br>✨（連）Các từ kết nối: 胸を撫で下ろす Thở phào nhẹ nhõm, nhẹ cả lòng khi lo lắng được giải tỏa<br><br>↔️（類）Các từ liên quan: 摩る Xoa, sờ (Để giảm đau, làm dịu)<br>                          擦る Chà, cọ mạnh (Có lực gây ma sát)',
     isReading: false
   },
   {
     number: 4,
-    question: '最近の100円ショップは、お菓子やジュースはもちろん、家具や工具<span style="color:red">(___)</span>生活に必要なものは、ほとんどそろっている。',
-    options: ['に至るまで', 'とあって', 'にもまして', 'ならではの'],
-    answer: '1',
-    detail: '',
+    question: '弄る',
+    options: ['つむ', 'かきまわす', 'こする', 'いじる'],
+    answer: '4',
+    detail: '🔴 弄る（いじる）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 弄（ろう）＝ nghịch, đùa, chơi<br>- Nghĩa đen: Dùng tay nghịch ngợm, sửa chữa, điều chỉnh một thứ gì đó.<br>- Nghĩa Hán Việt: Lộng (nghịch, đùa)<br>- Ý nghĩa: Hành động chạm, sờ, nghịch, sửa chữa hoặc điều chỉnh một thứ gì đó, thường với sự tò mò hoặc không chuyên nghiệp.<br>  → Thường mang sắc thái tiêu cực, chỉ việc can thiệp không cần thiết hoặc làm hỏng.<br><br>💬 Ví dụ:<br>1. 機械を弄るのはやめなさい。<br>　→ Đừng có nghịch cái máy nữa.<br><br>2. 彼はいつも髪を弄る癖がある。<br>　→ Anh ấy có thói quen lúc nào cũng nghịch tóc.<br><br>3. パソコンの設定を弄って、動かなくなった。<br>　→ Tôi nghịch cài đặt máy tính và nó không hoạt động nữa.<br><br>🧠 Cách nhớ:<br>- Liên tưởng đến hình ảnh một người dùng tay (扌) để chơi đùa, nghịch ngợm với một thứ gì đó.<br>- Âm Hán Việt "lộng" như trong "lộng hành", "trò lộng" - đều liên quan đến việc làm, chơi.<br><br>📎（対）Các từ trái nghĩa: 触る（さわる） Sờ, chạm',
     isReading: false
   },
   {
     number: 5,
-    question: '石田さんのお宅、玄関の造り<span style="color:red">(___)</span>普通の家とは全然違うね。',
-    options: ['に至って', 'ならでは', 'とあって', 'からして'],
+    question: 'かき回す',
+    options: ['いじる', 'ねじる', 'こする', 'かきまわす'],
     answer: '4',
-    detail: '',
+    detail: '🔴 かき回す（かきまわす）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 掻き（かき）＝ cào, gãi, khuấy<br>  • 回す（まわす）＝ xoay, vận chuyển<br>- Nghĩa đen: Dùng tay hoặc vật dụng để khuấy, đảo, làm xáo trộn thứ gì đó.<br>- Nghĩa Hán Việt: Hồi hồi<br>- Ý nghĩa: Hành động khuấy, trộn, đảo lộn thứ gì đó. Thường dùng với nghĩa đen là khuấy trộn đồ vật, hoặc nghĩa bóng là làm rối loạn, can thiệp vào tình hình, công việc của người khác một cách không cần thiết.<br>  → Mang sắc thái tiêu cực khi nói về việc can thiệp gây rối.<br><br>💬 Ví dụ:<br>1. スープをかき回す。<br>　→ Khuấy súp.<br><br>2. 彼はいつも他人の仕事をかき回す。<br>　→ Anh ta lúc nào cũng làm rối công việc của người khác.<br><br>3. 引き出しの中をかき回して鍵を見つけた。<br>　→ Tôi lục tung ngăn kéo và tìm thấy chìa khóa.<br><br>🧠 Cách nhớ:<br>- Ghép từ 掻く (cào, gãi, khuấy) và 回す (xoay, vận chuyển) → hành động dùng tay "cào xoay" để khuấy đảo.<br>- Hình ảnh dùng thìa "khuấy" (かき) và "xoay tròn" (回す) trong nồi súp.<br><br>✨（連）Các từ kết nối: 引っかき回す Khuấy đảo, bới tung lên (Nghĩa đen : Đồ vật + Nghĩa bóng : Tình hình)<br><br>↔️（対）Các từ trái nghĩa: かきむしろ Gãi, cào mạnh (Thường dùng khi ngứa, đau, giận dữ hoặc tâm trạng căng thẳng)<br>                          かき集める Gom lại, thu thập bằng tay hoặc nỗ lực<br>                          かき混ぜる Khuấy, trộn lẫn vào nhau<br>                          かき乱す Làm hỗn loạn, đảo lộn, bừa bộn (từ này mang nghĩa nhấn mạnh hơn về sự rối loạn)',
     isReading: false
   },
   {
     number: 6,
-    question: '合格したのに、手続きを忘れていた。事ここ<span style="color:red">(___)</span>、もうどうすることもできない。',
-    options: ['に至っても', 'に至るまで', 'に至る', 'に至っては'],
-    answer: '4',
-    detail: '',
+    question: '摘む',
+    options: ['つむ', 'さする', 'ねじる', 'いじる'],
+    answer: '1',
+    detail: '🔴 摘む（つむ）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 摘（てき）＝ ngắt, hái, bứt<br>- Nghĩa đen: Dùng tay để ngắt, hái, bứt một phần của cây cỏ (như hoa, lá, quả).<br>- Nghĩa Hán Việt: Trích (ngắt, hái, chọn lấy)<br>- Ý nghĩa: Hành động dùng ngón tay để ngắt, hái những thứ nhỏ, mềm như nụ hoa, lá non, chồi cây.<br>  → Thường dùng cho hoa, lá, chồi non, ít dùng cho quả to.<br><br>💬 Ví dụ:<br>1. 庭のバラの花を摘む。<br>　→ Ngắt hoa hồng trong vườn.<br><br>2. お茶の新芽を摘む。<br>　→ Hái búp non của cây chè.<br><br>3. 雑草を摘みながら歩く。<br>　→ Vừa đi vừa ngắt cỏ dại.<br><br>🧠 Cách nhớ:<br>- Liên tưởng đến hình ảnh dùng ngón tay 「つまむ」(nhón) để 「つむ」(ngắt) những thứ nhỏ.<br>- Chữ Kanji 摘 có bộ Thủ (手) chỉ tay và chữ 啇 (đọc là てき) gợi âm, nghĩa là dùng tay để chọn lấy, tách ra.<br><br>➕（合）Các từ kết hợp: 摘み取る Ngắt bỏ',
     isReading: false
   },
   {
     number: 7,
-    question: '満開の桜の下、花見客のにぎわいは、日本の春<span style="color:red">(___)</span>の光景と言えよう。',
-    options: ['だらけ', 'だけあって', 'ならでは', '向け'],
-    answer: '3',
-    detail: '',
+    question: '掴む',
+    options: ['つかむ', 'ねじれる', 'かきまわす', 'いじる'],
+    answer: '1',
+    detail: '🔴 掴む（つかむ）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 掴（つか）＝ túm, nắm lấy<br>- Nghĩa đen: Dùng tay nắm chặt lấy vật gì đó.<br>- Nghĩa Hán Việt: Quắc<br>- Ý nghĩa: Nắm, túm lấy vật thể bằng tay. Dùng để chỉ việc hiểu rõ, nắm bắt được cơ hội, vấn đề, hoặc ý nghĩa.<br>  → Hành động nắm bắt cụ thể hoặc trừu tượng.<br><br>💬 Ví dụ:<br>1. 彼は私の腕をしっかり掴んだ。<br>　→ Anh ấy nắm chặt lấy cánh tay tôi.<br><br>2. チャンスを掴むことが大切だ。<br>　→ Việc nắm bắt cơ hội là quan trọng.<br><br>3. 話の要点を掴む。<br>　→ Nắm bắt được điểm chính của câu chuyện.<br><br>🧠 Cách nhớ:<br>- Chữ Kanji 掴 có bộ thủ 手 (tay) chỉ hành động dùng tay, phần bên phải 國 (quốc) gợi ý về việc nắm giữ, kiểm soát một phạm vi.<br>- Liên tưởng âm đọc つかむ (tsukamu) với hình ảnh "túm" lấy một thứ gì đó.<br><br>✨（連）Các từ kết nối: こつを掴む Nắm được bí quyết, mẹo<br><br>↔️（対）Các từ trái nghĩa: 捉える Nắm bắt, chộp lấy, bắt giữ, hoặc hiểu rõ vấn đề, cơ hội, ý nghĩa (Nắm toàn bộ, bao quát, rõ ràng hơn 掴む)<br>                        掴む Nắm, túm một phần, hiểu sơ bộ (phần chính)',
     isReading: false
   },
   {
     number: 8,
-    question: '石油は燃料としてはもちろん__ __ ★ __さまざまな形で使われている。',
-    options: ['衣類や化粧品', '我々の', '生活に', 'に至るまで'],
-    answer: '3',
-    detail: '',
+    question: '捻じれる',
+    options: ['こする', 'ねじる', 'つかむ', 'ねじれる'],
+    answer: '4',
+    detail: '🔴 捻じれる（ねじれる）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 捻（ねじ）＝ vặn, xoắn<br>  • れる（れる）＝ thể khả năng/thể bị động<br>- Nghĩa đen: Có thể bị xoắn, bị vặn; trở nên xoắn lại.<br>- Nghĩa Hán Việt: Niễm (xoắn, vặn)<br>- Ý nghĩa: Chỉ trạng thái vật lý bị xoắn, vặn lại. Cũng dùng để chỉ sự rối rắm, không thông suốt trong logic, ngôn ngữ hoặc tính cách con người.<br>  → Diễn tả sự không thẳng thắn, bị biến dạng so với trạng thái tự nhiên hoặc chuẩn mực.<br><br>💬 Ví dụ:<br>1. 針金が捻じれてしまった。<br>　→ Sợi dây thép bị xoắn mất rồi.<br><br>2. 話が捻じれて、何が言いたいのか分からなくなった。<br>　→ Câu chuyện bị rối tung lên, không hiểu muốn nói gì nữa.<br><br>3. あの人は考え方が少し捻じれている。<br>　→ Người đó có cách suy nghĩ hơi lệch lạc/khó hiểu.<br><br>🧠 Cách nhớ:<br>- Liên tưởng đến động từ 「ねじる」(vặn, xoắn) + 「れる」 (thể khả năng/bị động) → 「ねじれる」 (có thể bị xoắn, bị vặn).<br>- Hình ảnh một sợi dây thừng bị 「ねじれる」 (xoắn lại).<br><br>✨（連）Các từ kết nối: ネクタイが捻じれる Cà vạt bị xoắn<br>                        主語(しゅご)と述語(じゅつご)が捻じれる Chủ ngữ, vị ngữ rối vào nhau<br>                        捻じれるがある・無い Có/không có sự xoắn, rối<br>                        性格・根性が捻じれている Hành động hay suy nghĩ khó hiểu, không theo chuẩn mực thông thường<br><br>↔️（対）Các từ trái nghĩa: ひねくれる Trở nên ngoan cố, bướng bỉnh, xấu tính, không theo chuẩn mực, hoặc có thái độ trái ngược với người khác<br>                          歪む (ゆがむ) Bị méo, cong',
     isReading: false
   },
   {
     number: 9,
-    question: '話題の__ __ ★ __での公演が予定されている。',
-    options: ['日本全国', 'ミュージカルは', '東京', 'を皮切りとして'],
-    answer: '3',
-    detail: '',
+    question: '捻じる',
+    options: ['いじる', 'ねじる', 'ねじれる', 'なでる'],
+    answer: '2',
+    detail: '🔴 捻じる（ねじる）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 捻（ねん）＝ vặn, xoắn<br>- Nghĩa đen: Dùng lực để xoắn, vặn một vật thể.<br>- Nghĩa Hán Việt: Niễn<br>- Ý nghĩa: Hành động dùng sức để xoắn, vặn một vật thể, thường là để làm biến dạng, siết chặt hoặc thay đổi hướng.<br>  → Thể hiện động tác cần một lực nhất định để thực hiện.<br><br>💬 Ví dụ:<br>1. 針金を捻じる<br>　→ Vặn sợi dây thép<br><br>2. タオルを捻じって絞る<br>　→ Vặn khăn để vắt nước<br><br>3. 事実を捻じ曲げる<br>　→ Xoắn vặn, bóp méo sự thật<br><br>🧠 Cách nhớ:<br>- Liên tưởng đến chữ 捻 (Niễn) có bộ Thủ (tay) và chữ Niệm (ý nghĩ), nghĩa là dùng tay để vặn xoắn theo một ý đồ.<br>- Âm đọc ねじる nghe giống tiếng kêu ken két khi vặn xoắn một vật gì đó.<br><br>✨（連）Các từ kết nối: 体を捻じる Xoay người, vặn người<br>                        足首を捻じる Xoay, vặn cổ chân<br><br>➕（合）Các từ kết hợp: 捻じりあげる Xoắn lên, vặn lên<br><br>⚠️ Chú ý: So với ひねる thì 捻じる cần sức lực hơn. Ngoài ra 捻じる được sử dụng nhiều trong các trường hợp xoay ngược hướng ở hai đầu hoặc xoay về một hướng cố định',
     isReading: false
   },
   {
     number: 10,
-    question: 'オリンピックの代表____ ____ ★ ____練習に励んでいる。',
-    options: ['に決まった', 'にもまして', '以前', '田中選手は'],
+    question: 'Chà, cọ mạnh',
+    options: ['かき回す', '擦る', 'つまむ', '捻じる'],
     answer: '2',
-    detail: '',
+    detail: '🔴 擦る（する）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 擦（さつ）＝ cọ xát, ma sát<br>- Nghĩa đen: Dùng lực tác động qua lại hoặc một chiều trên bề mặt.<br>- Nghĩa Hán Việt: Sát<br>- Ý nghĩa: Hành động cọ xát, chà xát một vật lên bề mặt khác.<br>  → Thường dùng để diễn tả việc làm sạch, mài mòn, hoặc tạo ma sát.<br><br>💬 Ví dụ:<br>1. 消しゴムで字を擦る。<br>　→ Chà chữ bằng cục tẩy.<br><br>2. マッチを擦って火をつける。<br>　→ Quẹt diêm để nhóm lửa.<br><br>3. 肩が痛いので、少し擦ってください。<br>　→ Vì vai tôi đau, hãy xoa một chút đi.<br><br>🧠 Cách nhớ:<br>- Liên tưởng đến âm thanh "sột soạt" khi chà xát, gần với cách đọc "su-ru".<br>- Kanji 擦 có bộ Thủ (手) chỉ tay, và phần "sát" nghĩa là cọ xát.<br><br>➕（合）Các từ kết hợp: 擦り付ける Chà, cọ, miết mạnh cái gì đó vào một bề mặt<br><br>↔️（類）Các từ trái nghĩa: 撫でる Xoa, vuốt ve (Có tình cảm)<br>                          摩る Xoa, sờ (Để giảm đau, làm dịu)',
     isReading: false
   },
   {
     number: 11,
-    question: '日本語を自然な発音で、<span style="color:red;font-style:italic">滑らかに</span>話せるように練習する。',
-    options: ['すべらかに', 'なめらかに', 'なまらかに', 'かつらかに'],
-    answer: '2',
-    detail: '',
+    question: 'Xoa nhẹ, vuốt (Xoa để làm dịu)',
+    options: ['擦る', 'かき回す', 'つまむ', '摩る'],
+    answer: '4',
+    detail: '🔴 摩る（さする）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 摩（さ）＝ ma sát, cọ xát<br>- Nghĩa đen: Dùng tay hoặc vật thể di chuyển qua lại trên bề mặt với một lực nhất định.<br>- Nghĩa Hán Việt: Ma<br>- Ý nghĩa: Hành động dùng lực tay chà xát, xoa lên bề mặt một vật.<br>  → Thường để làm sạch, làm ấm, hoặc gây ma sát.<br><br>💬 Ví dụ:<br>1. 肩を摩ることで凝りをほぐす。<br>　→ Xoa bóp vai để giảm mỏi cơ.<br><br>2. 手を擦り合わせて温める。<br>　→ Chà hai tay vào nhau để làm ấm.<br><br>3. 汚れを布で擦り落とす。<br>　→ Chà vết bẩn cho sạch bằng vải.<br><br>🧠 Cách nhớ:<br>- Liên tưởng đến âm Hán Việt 「Ma」, nghĩa là cọ xát, ma sát.<br>- Hình ảnh dùng tay 「さ」すりながら何かを「する」.<br><br>↔️（類）Các từ liên quan: 撫でる Xoa, vuốt ve (Có tình cảm)<br>                          擦る Chà, cọ mạnh (Có lực gây ma sát)',
     isReading: false
   },
   {
     number: 12,
-    question: '子供達は毎日違う童話を<span style="color:red;font-style:italic">朗読</span>している。',
-    options: ['ろうどく', 'しょうどく', 'りょうどく', 'そどく'],
-    answer: '1',
-    detail: '',
+    question: 'Xoa, vuốt ve (Nhấn mạnh mặt tình cảm)',
+    options: ['摘む', '捻じれる', '擦る', '撫でる'],
+    answer: '4',
+    detail: '🔴 撫でる（なでる）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 撫（な）＝ vuốt ve, xoa dịu<br>  • でる（でる）＝ (phần okurigana, biểu thị động từ)<br>- Nghĩa đen: Dùng tay di chuyển nhẹ nhàng trên bề mặt.<br>- Nghĩa Hán Việt: Phủ<br>- Ý nghĩa: Vuốt ve, xoa nhẹ một cách trìu mến hoặc để an ủi.<br>  → Thể hiện hành động chạm nhẹ nhàng, yêu thương, thường với lòng bàn tay.<br><br>💬 Ví dụ:<br>1. 猫の頭を優しく撫でる。<br>　→ Vuốt ve đầu mèo một cách dịu dàng.<br><br>2. 子供の泣いている背中を撫でてあげた。<br>　→ Tôi đã xoa lưng để an ủi đứa trẻ đang khóc.<br><br>3. 彼はひげを撫でながら考え事をしていた。<br>　→ Anh ấy vuốt chòm râu trong khi suy nghĩ.<br><br>🧠 Cách nhớ:<br>- Liên tưởng đến âm Hán Việt 「Phủ」như trong "phủ dụ" (vỗ về an ủi).<br>- Hình ảnh bàn tay (て) nhẹ nhàng "nãi" (な) xuống "để" (で) vuốt ve.<br><br>✨（連）Các từ kết nối: 胸を撫で下ろす Thở phào nhẹ nhõm, nhẹ cả lòng khi lo lắng được giải tỏa<br><br>↔️（類）Các từ liên quan: 摩る Xoa, sờ (Để giảm đau, làm dịu)<br>                          擦る Chà, cọ mạnh (Có lực gây ma sát)',
     isReading: false
   },
   {
     number: 13,
-    question: '<span style="color:red;font-style:italic">壮大な</span>歴史を描いたスケールの大きい映画が公開される。',
-    options: ['そうおうな', 'そうだいな', 'しょうだいな', 'そうたいな'],
-    answer: '2',
-    detail: '',
+    question: 'Nghịch, mày mò, táy máy (Thường dùng với nghĩa tiêu cực)',
+    options: ['摘む', '捻じれる', '弄る', '掴む'],
+    answer: '3',
+    detail: '🔴 弄る（いじる）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 弄（ろう）＝ nghịch, đùa, chơi<br>- Nghĩa đen: Dùng tay nghịch ngợm, sửa chữa, điều chỉnh một thứ gì đó.<br>- Nghĩa Hán Việt: Lộng (nghịch, đùa)<br>- Ý nghĩa: Hành động chạm, sờ, nghịch, sửa chữa hoặc điều chỉnh một thứ gì đó, thường với sự tò mò hoặc không chuyên nghiệp.<br>  → Thường mang sắc thái tiêu cực, chỉ việc can thiệp không cần thiết hoặc làm hỏng.<br><br>💬 Ví dụ:<br>1. 機械を弄るのはやめなさい。<br>　→ Đừng có nghịch cái máy nữa.<br><br>2. 彼はいつも髪を弄る癖がある。<br>　→ Anh ấy có thói quen lúc nào cũng nghịch tóc.<br><br>3. パソコンの設定を弄って、動かなくなった。<br>　→ Tôi nghịch cài đặt máy tính và nó không hoạt động nữa.<br><br>🧠 Cách nhớ:<br>- Liên tưởng đến hình ảnh một người dùng tay (扌) để chơi đùa, nghịch ngợm với một thứ gì đó.<br>- Âm Hán Việt "lộng" như trong "lộng hành", "trò lộng" - đều liên quan đến việc làm, chơi.<br><br>📎（対）Các từ trái nghĩa: 触る（さわる） Sờ, chạm',
     isReading: false
   },
   {
     number: 14,
-    question: 'ここは空気がきれいなので、夜空に星が<span style="color:red;font-style:italic">瞬いて</span>いるのがよく見える。',
-    options: ['かがやいて', 'しばたいて', 'またたいて', 'みがいて'],
-    answer: '3',
-    detail: '',
+    question: 'Khuấy, đảo tung, phá hỏng',
+    options: ['掴む', 'かき回す', '摩る', '弄る'],
+    answer: '2',
+    detail: '🔴 かき回す（かきまわす）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 掻き（かき）＝ cào, gãi, khuấy<br>  • 回す（まわす）＝ xoay, vận chuyển<br>- Nghĩa đen: Dùng tay hoặc vật dụng để khuấy, đảo, làm xáo trộn thứ gì đó.<br>- Nghĩa Hán Việt: Hồi hồi<br>- Ý nghĩa: Hành động khuấy, trộn, đảo lộn thứ gì đó. Thường dùng với nghĩa đen là khuấy trộn đồ vật, hoặc nghĩa bóng là làm rối loạn, can thiệp vào tình hình, công việc của người khác một cách không cần thiết.<br>  → Mang sắc thái tiêu cực khi nói về việc can thiệp gây rối.<br><br>💬 Ví dụ:<br>1. スープをかき回す。<br>　→ Khuấy súp.<br><br>2. 彼はいつも他人の仕事をかき回す。<br>　→ Anh ta lúc nào cũng làm rối công việc của người khác.<br><br>3. 引き出しの中をかき回して鍵を見つけた。<br>　→ Tôi lục tung ngăn kéo và tìm thấy chìa khóa.<br><br>🧠 Cách nhớ:<br>- Ghép từ 掻く (cào, gãi, khuấy) và 回す (xoay, vận chuyển) → hành động dùng tay "cào xoay" để khuấy đảo.<br>- Hình ảnh dùng thìa "khuấy" (かき) và "xoay tròn" (回す) trong nồi súp.<br><br>✨（連）Các từ kết nối: 引っかき回す Khuấy đảo, bới tung lên (Nghĩa đen : Đồ vật + Nghĩa bóng : Tình hình)<br><br>↔️（対）Các từ trái nghĩa: かきむしろ Gãi, cào mạnh (Thường dùng khi ngứa, đau, giận dữ hoặc tâm trạng căng thẳng)<br>                          かき集める Gom lại, thu thập bằng tay hoặc nỗ lực<br>                          かき混ぜる Khuấy, trộn lẫn vào nhau<br>                          かき乱す Làm hỗn loạn, đảo lộn, bừa bộn (từ này mang nghĩa nhấn mạnh hơn về sự rối loạn)',
     isReading: false
   },
   {
     number: 15,
-    question: '彼女は<span style="color:red;font-style:italic">裕福</span>な家庭に育ち、家事をしたことがない。',
-    options: ['よくふく', 'ようふく', 'ゆうふく', 'ゆくふく'],
+    question: 'Hái, ngắt khỏi cây',
+    options: ['捻じれる', 'つまむ', '摘む', '撫でる'],
     answer: '3',
-    detail: '',
+    detail: '🔴 摘む（つむ）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 摘（てき）＝ ngắt, hái, bứt<br>- Nghĩa đen: Dùng tay để ngắt, hái, bứt một phần của cây cỏ (như hoa, lá, quả).<br>- Nghĩa Hán Việt: Trích (ngắt, hái, chọn lấy)<br>- Ý nghĩa: Hành động dùng ngón tay để ngắt, hái những thứ nhỏ, mềm như nụ hoa, lá non, chồi cây.<br>  → Thường dùng cho hoa, lá, chồi non, ít dùng cho quả to.<br><br>💬 Ví dụ:<br>1. 庭のバラの花を摘む。<br>　→ Ngắt hoa hồng trong vườn.<br><br>2. お茶の新芽を摘む。<br>　→ Hái búp non của cây chè.<br><br>3. 雑草を摘みながら歩く。<br>　→ Vừa đi vừa ngắt cỏ dại.<br><br>🧠 Cách nhớ:<br>- Liên tưởng đến hình ảnh dùng ngón tay 「つまむ」(nhón) để 「つむ」(ngắt) những thứ nhỏ.<br>- Chữ Kanji 摘 có bộ Thủ (手) chỉ tay và chữ 啇 (đọc là てき) gợi âm, nghĩa là dùng tay để chọn lấy, tách ra.<br><br>➕（合）Các từ kết hợp: 摘み取る Ngắt bỏ',
     isReading: false
   },
   {
     number: 16,
-    question: '学生時代の友達とは<span style="color:red;font-style:italic">疎遠</span>で、何をしているか不明だ。',
-    options: ['そうえん', 'しょえん', 'そえん', 'しょうえん'],
-    answer: '3',
+    question: 'Nhón, kẹp, bốc nhẹ',
+    options: ['つまむ', '掴む', '弄る', '摘む'],
+    answer: '1',
     detail: '',
     isReading: false
   },
   {
     number: 17,
-    question: '博物館を見学した後、<span style="color:red;font-style:italic">適宜</span>解散してください。',
-    options: ['てきせい', 'てっせい', 'てきてん', 'てきぎ'],
-    answer: '4',
-    detail: '',
+    question: 'Bắt (Bắt người, bắt cơ hội)',
+    options: ['摘む', '掴む', '摩る', 'つまむ'],
+    answer: '2',
+    detail: '🔴 掴む（つかむ）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 掴（つか）＝ túm, nắm lấy<br>- Nghĩa đen: Dùng tay nắm chặt lấy vật gì đó.<br>- Nghĩa Hán Việt: Quắc<br>- Ý nghĩa: Nắm, túm lấy vật thể bằng tay. Dùng để chỉ việc hiểu rõ, nắm bắt được cơ hội, vấn đề, hoặc ý nghĩa.<br>  → Hành động nắm bắt cụ thể hoặc trừu tượng.<br><br>💬 Ví dụ:<br>1. 彼は私の腕をしっかり掴んだ。<br>　→ Anh ấy nắm chặt lấy cánh tay tôi.<br><br>2. チャンスを掴むことが大切だ。<br>　→ Việc nắm bắt cơ hội là quan trọng.<br><br>3. 話の要点を掴む。<br>　→ Nắm bắt được điểm chính của câu chuyện.<br><br>🧠 Cách nhớ:<br>- Chữ Kanji 掴 có bộ thủ 手 (tay) chỉ hành động dùng tay, phần bên phải 國 (quốc) gợi ý về việc nắm giữ, kiểm soát một phạm vi.<br>- Liên tưởng âm đọc つかむ (tsukamu) với hình ảnh "túm" lấy một thứ gì đó.<br><br>✨（連）Các từ kết nối: こつを掴む Nắm được bí quyết, mẹo<br><br>↔️（対）Các từ trái nghĩa: 捉える Nắm bắt, chộp lấy, bắt giữ, hoặc hiểu rõ vấn đề, cơ hội, ý nghĩa (Nắm toàn bộ, bao quát, rõ ràng hơn 掴む)<br>                        掴む Nắm, túm một phần, hiểu sơ bộ (phần chính)',
     isReading: false
   },
   {
     number: 18,
-    question: '毎日規則正しい生活をしているせいか、<span style="color:red;font-style:italic">いたって</span>体の調子がいい。',
-    options: ['到って', '板って', '致って', '至って'],
-    answer: '4',
-    detail: '',
+    question: 'Bị xoắn, vặn',
+    options: ['捻じれる', '撫でる', '摘む', '掴む'],
+    answer: '1',
+    detail: '🔴 捻じれる（ねじれる）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 捻（ねじ）＝ vặn, xoắn<br>  • れる（れる）＝ thể khả năng/thể bị động<br>- Nghĩa đen: Có thể bị xoắn, bị vặn; trở nên xoắn lại.<br>- Nghĩa Hán Việt: Niễm (xoắn, vặn)<br>- Ý nghĩa: Chỉ trạng thái vật lý bị xoắn, vặn lại. Cũng dùng để chỉ sự rối rắm, không thông suốt trong logic, ngôn ngữ hoặc tính cách con người.<br>  → Diễn tả sự không thẳng thắn, bị biến dạng so với trạng thái tự nhiên hoặc chuẩn mực.<br><br>💬 Ví dụ:<br>1. 針金が捻じれてしまった。<br>　→ Sợi dây thép bị xoắn mất rồi.<br><br>2. 話が捻じれて、何が言いたいのか分からなくなった。<br>　→ Câu chuyện bị rối tung lên, không hiểu muốn nói gì nữa.<br><br>3. あの人は考え方が少し捻じれている。<br>　→ Người đó có cách suy nghĩ hơi lệch lạc/khó hiểu.<br><br>🧠 Cách nhớ:<br>- Liên tưởng đến động từ 「ねじる」(vặn, xoắn) + 「れる」 (thể khả năng/bị động) → 「ねじれる」 (có thể bị xoắn, bị vặn).<br>- Hình ảnh một sợi dây thừng bị 「ねじれる」 (xoắn lại).<br><br>✨（連）Các từ kết nối: ネクタイが捻じれる Cà vạt bị xoắn<br>                        主語(しゅご)と述語(じゅつご)が捻じれる Chủ ngữ, vị ngữ rối vào nhau<br>                        捻じれるがある・無い Có/không có sự xoắn, rối<br>                        性格・根性が捻じれている Hành động hay suy nghĩ khó hiểu, không theo chuẩn mực thông thường<br><br>↔️（対）Các từ trái nghĩa: ひねくれる Trở nên ngoan cố, bướng bỉnh, xấu tính, không theo chuẩn mực, hoặc có thái độ trái ngược với người khác<br>                          歪む (ゆがむ) Bị méo, cong',
     isReading: false
   },
   {
     number: 19,
-    question: '彼の会社は円高で急成長を<span style="color:red;font-style:italic">とげ</span>、大企業の仲間入りを果たした。',
-    options: ['遂げ', '継げ', '達げ', '成げ'],
-    answer: '1',
-    detail: '',
-    isReading: false
-  },
-  {
-    number: 20,
-    question: '<span style="color:red;font-style:italic">穏やかな</span>春の海を車窓からのんびり眺める。',
-    options: ['おろそかな', 'おだやかな', 'おごそかな', 'あざやかな'],
-    answer: '2',
-    detail: '',
-    isReading: false
-  },
-  {
-    number: 21,
-    question: '<span style="color:red;font-style:italic">愚かな</span>政策を批判するために、デモ隊が組織された。',
-    options: ['かすかな', 'のどかな', 'おろかな', 'はるかな'],
+    question: 'Xoắn, vặn',
+    options: ['擦る', '掴む', '捻じる', 'かき回す'],
     answer: '3',
-    detail: '',
+    detail: '🔴 捻じる（ねじる）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 捻（ねん）＝ vặn, xoắn<br>- Nghĩa đen: Dùng lực để xoắn, vặn một vật thể.<br>- Nghĩa Hán Việt: Niễn<br>- Ý nghĩa: Hành động dùng sức để xoắn, vặn một vật thể, thường là để làm biến dạng, siết chặt hoặc thay đổi hướng.<br>  → Thể hiện động tác cần một lực nhất định để thực hiện.<br><br>💬 Ví dụ:<br>1. 針金を捻じる<br>　→ Vặn sợi dây thép<br><br>2. タオルを捻じって絞る<br>　→ Vặn khăn để vắt nước<br><br>3. 事実を捻じ曲げる<br>　→ Xoắn vặn, bóp méo sự thật<br><br>🧠 Cách nhớ:<br>- Liên tưởng đến chữ 捻 (Niễn) có bộ Thủ (tay) và chữ Niệm (ý nghĩ), nghĩa là dùng tay để vặn xoắn theo một ý đồ.<br>- Âm đọc ねじる nghe giống tiếng kêu ken két khi vặn xoắn một vật gì đó.<br><br>✨（連）Các từ kết nối: 体を捻じる Xoay người, vặn người<br>                        足首を捻じる Xoay, vặn cổ chân<br><br>➕（合）Các từ kết hợp: 捻じりあげる Xoắn lên, vặn lên<br><br>⚠️ Chú ý: So với ひねる thì 捻じる cần sức lực hơn. Ngoài ra 捻じる được sử dụng nhiều trong các trường hợp xoay ngược hướng ở hai đầu hoặc xoay về một hướng cố định',
     isReading: false
-  },
-  {
-    number: 22,
-    question: 'あの人はけちでお金に<span style="color:red;font-style:italic">卑しい</span>と言われている。',
-    options: ['いやしい', 'あさましい', 'うっとうしい', 'おびただしい'],
-    answer: '1',
-    detail: '',
-    isReading: false
-  },
-  {
-    number: 23,
-    question: '下田選手は各地を訪れ、<span style="color:red;font-style:italic">熱烈な</span>歓迎を受けた。',
-    options: ['ねつれいな', 'ねつれつな', 'ねっれいな', 'ねっれつな'],
-    answer: '2',
-    detail: '',
-    isReading: false
-  },
-  {
-    number: 24,
-    question: '宇宙開発には<span style="color:red;font-style:italic">膨大な</span>費用が必要なため、削減が検討された。',
-    options: ['ふくだいな', 'おおまかな', 'ぼうだいな', 'ほうだいな'],
-    answer: '3',
-    detail: '',
-    isReading: false
-  },
-  {
-    number: 25,
-    question: 'あの大学では文化祭に歌手を招くのが<span style="color:red;font-style:italic">恒例</span>になっている。',
-    options: ['こうれい', 'これい', 'だんれい', 'たんれい'],
-    answer: '1',
-    detail: '',
-    isReading: false
-  },
-  {
-    question: '問題2 読解<br>今回のゲームショーは業界最大級のイベント<span style="color:red;font-style:italic">( 1 )</span>、海外からも多くのゲーム愛好者が参加する。9月20日からのこのショー<span style="color:red;font-style:italic">( 2 )</span>、各ゲーム会社は12月まで続く年末商戦に突入する。<br>初日のビジネスデーには、関係者がつめかける。翌日からの一般公開日も会場内はにぎやかだ。奇抜な衣装のコスプレイヤーから、孫の手を引くお年寄り<span style="color:red;font-style:italic">( 3 )</span>、さまざまな人が訪れる。<br>ゲーム大国日本<span style="color:red;font-style:italic">( 4 )</span>のこのイベントは、会場の設備やサービスにも趣向が凝らされていて、飽きることがない。',
-    isReading: true,
-    subQuestions: [
-      {
-        number: 26,
-        subQuestion: '問1(1)',
-        options: ['とあって', 'とともに', 'につれて', 'にしたがい'],
-        answer: '1'
-      },
-      {
-        number: 27,
-        subQuestion: '問2(2)',
-        options: ['に限り', 'を皮切りに', 'にしたがって', 'だけに'],
-        answer: '2'
-      },
-      {
-        number: 28,
-        subQuestion: '問3(3)',
-        options: ['に至るまで', 'のために', 'にもまして', 'さえ'],
-        answer: '1'
-      },
-      {
-        number: 29,
-        subQuestion: '問4(4)',
-        options: ['とあって', 'ばかりか', 'に至った', 'ならでは'],
-        answer: '4'
-      }
-    ]
-  },
-  {
-    question: '問題3 読解<br>ある学者が次のような実験をした。3歳の子どもたちに次のような人形劇を見せるのである。はじめに男の子がボールで遊んでいる。遊びにあきたその子どもは、ボールを箱の中に入れて、部屋を出て行く。そこへ女の子が来て、さっきの男の子が箱に入れたボールを出して遊ぶ。そのあと、箱のとなりの、かごの中にボールを入れて部屋を出て行く。さて、そこへはじめの男の子が戻ってくる。というものだ。そこで、3歳の子どもたちに「男の子はボールをとろうとしてどこを探すでしょうか?」という質問をすると、ほとんどの子どもは「かごの中」と答えるのだそうだ。4歳以上になると、ほとんどの子どもが「箱の中」と答えるという。',
-    isReading: true,
-    subQuestions: [
-      {
-        number: 30,
-        subQuestion: '問1 この実験の結果からわかることはどれか。',
-        options: ['“3”歳の子どもは、男の子の考えていることがわかる。', '“3”歳の子どもは、女の子がしたことをよく見ていない。', '“4”歳の子どもは、男の子の考えていることがわかる。', '“4”歳の子どもは、ボールは箱の中に入っていると思っている。'],
-        answer: '3'
-      }
-    ]
   }
 ]; 
 

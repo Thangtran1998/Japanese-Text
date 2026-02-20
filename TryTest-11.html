@@ -1969,6 +1969,47 @@
       const readingTimers = {};
       const savedRanges = {};
 
+
+      // ==================== PROGRESS CONFIG (đồng bộ theo User ID) ====================
+      const API_URL = "https://n1-license-server.onrender.com/api";
+      const LS_DEVICE_ID = "n1_device_id";
+      const LS_LICENSE = "n1_license";
+
+      function getTestId() {
+        const p = new URL(location.href).pathname;
+        return p.split("/").pop() || "unknown.html";
+      }
+
+      function makeAttemptId() {
+        return `${Date.now()}_${Math.random().toString(16).slice(2)}`;
+      }
+
+      async function tryMarkPerfect() {
+        const deviceId = localStorage.getItem(LS_DEVICE_ID) || "";
+        const license = localStorage.getItem(LS_LICENSE) || "";
+        if (!deviceId || !license) return;
+
+        const moduleId = getTestId();
+        //const attemptId = makeAttemptId();
+
+        try {
+          const res = await fetch(`${API_URL}/progress/mark-perfect`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ deviceId, license, moduleId}),
+          });
+          if (!res.ok) return;
+
+          const data = await res.json();
+          if (data && data.ok) {
+            console.log("[PROGRESS] saved", { moduleId, ...data });
+          }
+        } catch (e) {
+          console.log("progress api offline", e);
+        }
+      }
+
+
       // ==================== QUIZ DATA ====================
       const quizData = [
   {
@@ -2615,6 +2656,7 @@
         // ===== THÊM ĐOẠN NÀY ĐỂ KÍCH HOẠT PHÁO HOA KHI ĐẠT 100% =====
         if (percentage === 100) {
           launchFireworks();
+          tryMarkPerfect();
           // Phát âm thanh nếu muốn (cần sự tương tác của user trước đó)
           // playVictorySound();
 

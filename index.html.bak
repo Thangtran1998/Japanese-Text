@@ -283,6 +283,7 @@
         0% {
           transform: translateX(-100%);
         }
+
         100% {
           transform: translateX(100%);
         }
@@ -367,6 +368,7 @@
           opacity: 0.7;
           transform: scale(0.9);
         }
+
         100% {
           opacity: 1;
           transform: scale(1.1);
@@ -500,6 +502,7 @@
           transform: translate(-50%, -48%) scale(0.9);
           filter: blur(2px);
         }
+
         100% {
           opacity: 1;
           transform: translate(-50%, -50%) scale(1);
@@ -690,6 +693,7 @@
         width: 0%;
         transition: width 700ms ease-out;
         box-shadow: 0 0 10px rgba(0, 255, 204, 0.25);
+        transition: width 0.4s ease;
       }
 
       .start-button {
@@ -771,15 +775,19 @@
         0% {
           transform: translate(0, 0) rotate(0deg);
         }
+
         25% {
           transform: translate(20px, 30px) rotate(90deg);
         }
+
         50% {
           transform: translate(0, 60px) rotate(180deg);
         }
+
         75% {
           transform: translate(-20px, 30px) rotate(270deg);
         }
+
         100% {
           transform: translate(0, 0) rotate(360deg);
         }
@@ -815,6 +823,7 @@
         0% {
           top: 0%;
         }
+
         100% {
           top: 100%;
         }
@@ -857,6 +866,7 @@
         .modules-section {
           grid-template-columns: 1fr;
         }
+
         .frame-content {
           grid-template-columns: 1fr;
         }
@@ -866,12 +876,15 @@
         .target-info {
           flex-direction: column;
         }
+
         .target-card {
           min-width: 100%;
         }
+
         .logo-text {
           font-size: 22px;
         }
+
         .user-info {
           padding: 8px 15px;
         }
@@ -948,6 +961,7 @@
         background: linear-gradient(to right, #0066cc, #00a8ff);
         color: #fff;
       }
+
       .license-btn.primary:hover {
         background: linear-gradient(to right, #00a8ff, #00ffcc);
         box-shadow: 0 0 20px rgba(0, 168, 255, 0.5);
@@ -985,9 +999,11 @@
         font-size: 14px;
         color: #88d3ff;
       }
+
       .license-status.error {
         color: #ff8a8a;
       }
+
       .license-status.ok {
         color: #00ffcc;
       }
@@ -997,10 +1013,12 @@
         position: relative;
         overflow: hidden;
       }
+
       .target-card:nth-child(2)::before,
       .target-card:nth-child(2)::after {
         display: none !important;
       }
+
       .target-card:nth-child(2).warning-yellow::before,
       .target-card:nth-child(2).warning-yellow::after,
       .target-card:nth-child(2).warning-red::before,
@@ -1009,11 +1027,13 @@
       .target-card:nth-child(2).warning-expired::after {
         display: block !important;
       }
+
       .target-card:nth-child(2).warning-yellow .sparkle,
       .target-card:nth-child(2).warning-red .sparkle,
       .target-card:nth-child(2).warning-expired .sparkle {
         display: block !important;
       }
+
       .target-card:nth-child(2).warning-yellow .sparkle,
       .target-card:nth-child(2).warning-red .sparkle,
       .target-card:nth-child(2).warning-expired .sparkle {
@@ -1025,41 +1045,49 @@
         animation: sparkleMove 4s linear infinite;
         opacity: 0.7;
       }
+
       .target-card:nth-child(2) .sparkle:nth-child(1) {
         top: 20%;
         left: 15%;
         animation-delay: 0s;
       }
+
       .target-card:nth-child(2) .sparkle:nth-child(2) {
         top: 60%;
         right: 20%;
         animation-delay: 1s;
       }
+
       .target-card:nth-child(2) .sparkle:nth-child(3) {
         bottom: 30%;
         left: 30%;
         animation-delay: 2s;
       }
+
       @keyframes sparkleMove {
         0%,
         100% {
           opacity: 0;
           transform: translate(0, 0);
         }
+
         10%,
         90% {
           opacity: 0.7;
         }
+
         50% {
           opacity: 0.4;
           transform: translate(5px, -5px);
         }
       }
+
       .target-card:nth-child(2).warning-yellow {
         background: rgba(60, 40, 0, 0.7) !important;
         border: 1px solid rgba(255, 200, 0, 0.6) !important;
         animation: cyberPulse 2s infinite alternate !important;
       }
+
       @keyframes cyberPulse {
         0% {
           box-shadow:
@@ -1068,6 +1096,7 @@
             inset 0 0 15px rgba(255, 200, 0, 0.1);
           background: rgba(60, 40, 0, 0.7);
         }
+
         100% {
           box-shadow:
             0 0 20px rgba(255, 200, 0, 0.6),
@@ -1077,6 +1106,7 @@
           background: rgba(80, 60, 0, 0.8);
         }
       }
+
       .target-card:nth-child(2).warning-yellow::before {
         content: "";
         position: absolute;
@@ -1087,22 +1117,27 @@
         background: linear-gradient(90deg, transparent, #ffcc00, transparent);
         animation: borderScan 3s linear infinite;
       }
+
       @keyframes borderScan {
         0% {
           left: -100%;
           opacity: 0;
         }
+
         50% {
           opacity: 1;
         }
+
         100% {
           left: 100%;
           opacity: 0;
         }
       }
+
       .target-card:nth-child(2).warning-yellow .sparkle {
         background: #ffcc00 !important;
       }
+
       .target-card:nth-child(2).warning-yellow::after {
         content: "";
         position: absolute;
@@ -1115,12 +1150,14 @@
         animation: particleGlow 1.5s ease-in-out infinite alternate;
         filter: blur(1px);
       }
+
       @keyframes particleGlow {
         0% {
           transform: scale(0.8);
           opacity: 0.5;
           box-shadow: 0 0 10px #ffcc00;
         }
+
         100% {
           transform: scale(1.2);
           opacity: 1;
@@ -1129,32 +1166,39 @@
             0 0 30px #ff9900;
         }
       }
+
       .target-card:nth-child(2).warning-yellow .card-title {
         color: #ffdd99 !important;
       }
+
       .target-card:nth-child(2).warning-yellow .card-value.special {
         color: #ffcc00 !important;
         text-shadow: 0 0 15px rgba(255, 204, 0, 0.8) !important;
         animation: textGlow 1.5s ease-in-out infinite alternate;
       }
+
       @keyframes textGlow {
         0% {
           text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
         }
+
         100% {
           text-shadow:
             0 0 20px rgba(255, 204, 0, 0.8),
             0 0 30px rgba(255, 153, 0, 0.6);
         }
       }
+
       .target-card:nth-child(2).warning-yellow .card-subtitle {
         color: #ffcc99 !important;
       }
+
       .target-card:nth-child(2).warning-red {
         background: rgba(60, 0, 0, 0.7) !important;
         border: 1px solid rgba(255, 50, 50, 0.8) !important;
         animation: redPulse 1.5s infinite alternate !important;
       }
+
       @keyframes redPulse {
         0% {
           box-shadow:
@@ -1163,6 +1207,7 @@
             inset 0 0 20px rgba(255, 50, 50, 0.2);
           background: rgba(60, 0, 0, 0.7);
         }
+
         100% {
           box-shadow:
             0 0 25px rgba(255, 50, 50, 0.7),
@@ -1172,6 +1217,7 @@
           background: rgba(80, 0, 0, 0.9);
         }
       }
+
       .target-card:nth-child(2).warning-red::before {
         animation: redBorderScan 2s linear infinite !important;
         background: linear-gradient(
@@ -1181,22 +1227,27 @@
           transparent
         ) !important;
       }
+
       @keyframes redBorderScan {
         0% {
           left: -100%;
           opacity: 0;
         }
+
         50% {
           opacity: 1;
         }
+
         100% {
           left: 100%;
           opacity: 0;
         }
       }
+
       .target-card:nth-child(2).warning-red .sparkle {
         background: #ff3333 !important;
       }
+
       .target-card:nth-child(2).warning-red::after {
         background: radial-gradient(
           circle,
@@ -1205,12 +1256,14 @@
         ) !important;
         animation: redParticleGlow 1s ease-in-out infinite alternate !important;
       }
+
       @keyframes redParticleGlow {
         0% {
           transform: scale(0.8);
           opacity: 0.6;
           box-shadow: 0 0 15px #ff3333;
         }
+
         100% {
           transform: scale(1.3);
           opacity: 1;
@@ -1219,32 +1272,39 @@
             0 0 40px #ff0000;
         }
       }
+
       .target-card:nth-child(2).warning-red .card-title {
         color: #ff9999 !important;
       }
+
       .target-card:nth-child(2).warning-red .card-value.special {
         color: #ff6666 !important;
         text-shadow: 0 0 20px rgba(255, 50, 50, 0.9) !important;
         animation: redTextGlow 1s ease-in-out infinite alternate !important;
       }
+
       @keyframes redTextGlow {
         0% {
           text-shadow: 0 0 15px rgba(255, 50, 50, 0.6);
         }
+
         100% {
           text-shadow:
             0 0 25px rgba(255, 50, 50, 0.9),
             0 0 40px rgba(255, 0, 0, 0.7);
         }
       }
+
       .target-card:nth-child(2).warning-red .card-subtitle {
         color: #ffaaaa !important;
       }
+
       .target-card:nth-child(2).warning-expired {
         background: rgba(30, 30, 30, 0.7) !important;
         border: 1px solid rgba(100, 100, 100, 0.5) !important;
         animation: expiredPulse 3s infinite alternate !important;
       }
+
       @keyframes expiredPulse {
         0% {
           box-shadow:
@@ -1252,6 +1312,7 @@
             inset 0 0 10px rgba(100, 100, 100, 0.1);
           background: rgba(30, 30, 30, 0.7);
         }
+
         100% {
           box-shadow:
             0 0 10px rgba(100, 100, 100, 0.5),
@@ -1265,10 +1326,12 @@
         position: relative;
         overflow: hidden;
       }
+
       .target-card:nth-child(3)::before,
       .target-card:nth-child(3)::after {
         display: none !important;
       }
+
       .target-card:nth-child(3) .sparkle {
         position: absolute;
         width: 4px;
@@ -1279,21 +1342,25 @@
         opacity: 0.7;
         display: none;
       }
+
       .target-card:nth-child(3) .sparkle:nth-child(1) {
         top: 20%;
         left: 15%;
         animation-delay: 0s;
       }
+
       .target-card:nth-child(3) .sparkle:nth-child(2) {
         top: 60%;
         right: 20%;
         animation-delay: 1s;
       }
+
       .target-card:nth-child(3) .sparkle:nth-child(3) {
         bottom: 30%;
         left: 30%;
         animation-delay: 2s;
       }
+
       .target-card:nth-child(3).warning-yellow::before,
       .target-card:nth-child(3).warning-yellow::after,
       .target-card:nth-child(3).warning-red::before,
@@ -1302,16 +1369,19 @@
       .target-card:nth-child(3).warning-expired::after {
         display: block !important;
       }
+
       .target-card:nth-child(3).warning-yellow .sparkle,
       .target-card:nth-child(3).warning-red .sparkle,
       .target-card:nth-child(3).warning-expired .sparkle {
         display: block !important;
       }
+
       .target-card:nth-child(3).warning-yellow {
         background: rgba(60, 40, 0, 0.7) !important;
         border: 1px solid rgba(255, 200, 0, 0.6) !important;
         animation: cyberPulse 2s infinite alternate !important;
       }
+
       .target-card:nth-child(3).warning-yellow::before {
         content: "";
         position: absolute;
@@ -1322,9 +1392,11 @@
         background: linear-gradient(90deg, transparent, #ffcc00, transparent);
         animation: borderScan 3s linear infinite;
       }
+
       .target-card:nth-child(3).warning-yellow .sparkle {
         background: #ffcc00 !important;
       }
+
       .target-card:nth-child(3).warning-yellow::after {
         content: "";
         position: absolute;
@@ -1337,22 +1409,27 @@
         animation: particleGlow 1.5s ease-in-out infinite alternate;
         filter: blur(1px);
       }
+
       .target-card:nth-child(3).warning-yellow .card-title {
         color: #ffdd99 !important;
       }
+
       .target-card:nth-child(3).warning-yellow .card-value {
         color: #ffcc00 !important;
         text-shadow: 0 0 15px rgba(255, 204, 0, 0.8) !important;
         animation: textGlow 1.5s ease-in-out infinite alternate !important;
       }
+
       .target-card:nth-child(3).warning-yellow .card-subtitle {
         color: #ffcc99 !important;
       }
+
       .target-card:nth-child(3).warning-red {
         background: rgba(60, 0, 0, 0.7) !important;
         border: 1px solid rgba(255, 50, 50, 0.8) !important;
         animation: redPulse 1.5s infinite alternate !important;
       }
+
       .target-card:nth-child(3).warning-red::before {
         animation: redBorderScan 2s linear infinite !important;
         background: linear-gradient(
@@ -1362,9 +1439,11 @@
           transparent
         ) !important;
       }
+
       .target-card:nth-child(3).warning-red .sparkle {
         background: #ff3333 !important;
       }
+
       .target-card:nth-child(3).warning-red::after {
         background: radial-gradient(
           circle,
@@ -1373,22 +1452,27 @@
         ) !important;
         animation: redParticleGlow 1s ease-in-out infinite alternate !important;
       }
+
       .target-card:nth-child(3).warning-red .card-title {
         color: #ff9999 !important;
       }
+
       .target-card:nth-child(3).warning-red .card-value {
         color: #ff6666 !important;
         text-shadow: 0 0 20px rgba(255, 50, 50, 0.9) !important;
         animation: redTextGlow 1s ease-in-out infinite alternate !important;
       }
+
       .target-card:nth-child(3).warning-red .card-subtitle {
         color: #ffaaaa !important;
       }
+
       .target-card:nth-child(3).warning-expired {
         background: rgba(30, 30, 30, 0.7) !important;
         border: 1px solid rgba(100, 100, 100, 0.5) !important;
         animation: expiredPulse 3s infinite alternate !important;
       }
+
       .target-card:nth-child(3).warning-expired::before {
         animation: expiredBorderScan 4s linear infinite !important;
         background: linear-gradient(
@@ -1398,9 +1482,11 @@
           transparent
         ) !important;
       }
+
       .target-card:nth-child(3).warning-expired .sparkle {
         background: #888888 !important;
       }
+
       .target-card:nth-child(3).warning-expired::after {
         background: radial-gradient(
           circle,
@@ -1409,29 +1495,35 @@
         ) !important;
         animation: expiredParticleGlow 2s ease-in-out infinite alternate !important;
       }
+
       @keyframes expiredParticleGlow {
         0% {
           transform: scale(0.7);
           opacity: 0.3;
           box-shadow: 0 0 5px #888888;
         }
+
         100% {
           transform: scale(1);
           opacity: 0.5;
           box-shadow: 0 0 10px #888888;
         }
       }
+
       .target-card:nth-child(3).warning-expired .card-title {
         color: #aaaaaa !important;
       }
+
       .target-card:nth-child(3).warning-expired .card-value {
         color: #888888 !important;
         text-shadow: 0 0 10px rgba(136, 136, 136, 0.5) !important;
         animation: none !important;
       }
+
       .target-card:nth-child(3).warning-expired .card-subtitle {
         color: #999999 !important;
       }
+
       /* ===== TEST MODAL (BÀI KIỂM TRA) ===== */
       .test-modal-backdrop {
         position: fixed;
@@ -1481,6 +1573,7 @@
           opacity: 0;
           transform: translate(-50%, -48%) scale(0.9);
         }
+
         100% {
           opacity: 1;
           transform: translate(-50%, -50%) scale(1);
@@ -1607,6 +1700,7 @@
         border-radius: 12px;
         font-size: 11px;
       }
+
       /* Khóa scroll ngoài khi mở popup */
       body.modal-open {
         overflow: hidden;
@@ -1616,6 +1710,7 @@
       body.modal-open {
         touch-action: none;
       }
+
       /* Unit tabs cho Mimikara */
       .unit-tabs {
         display: flex;
@@ -1652,6 +1747,7 @@
         color: white;
         box-shadow: 0 0 15px rgba(0, 168, 255, 0.5);
       }
+
       /* Điều chỉnh khoảng cách cho test items */
       .test-list {
         flex: 1;
@@ -1659,7 +1755,8 @@
         padding-right: 8px;
         display: flex;
         flex-direction: column;
-        gap: 12px; /* Tăng gap lên 12px để tạo khoảng cách giữa các ô */
+        gap: 12px;
+        /* Tăng gap lên 12px để tạo khoảng cách giữa các ô */
       }
 
       .test-item {
@@ -1672,7 +1769,8 @@
         display: flex;
         align-items: center;
         gap: 12px;
-        margin-bottom: 0; /* Xóa margin bottom nếu có */
+        margin-bottom: 0;
+        /* Xóa margin bottom nếu có */
       }
 
       /* Container cho tests trong Mimikara */
@@ -1680,7 +1778,8 @@
         width: 100%;
         display: flex;
         flex-direction: column;
-        gap: 12px; /* Tạo khoảng cách giữa các test items */
+        gap: 12px;
+        /* Tạo khoảng cách giữa các test items */
         margin-top: 15px;
       }
 
@@ -1726,6 +1825,7 @@
         color: white;
         box-shadow: 0 0 15px rgba(0, 168, 255, 0.5);
       }
+
       /* ===== SKELETON LOADING ===== */
       .skeleton-container {
         width: 100%;
@@ -1771,6 +1871,7 @@
         0% {
           background-position: 200% 0;
         }
+
         100% {
           background-position: -200% 0;
         }
@@ -1781,6 +1882,7 @@
         100% {
           opacity: 0.7;
         }
+
         50% {
           opacity: 1;
         }
@@ -1794,6 +1896,7 @@
         font-size: 14px;
         animation: pulse 1.5s ease-in-out infinite;
       }
+
       /* ================= CYBER LOADING ================= */
 
       .cyber-loading {
@@ -1828,6 +1931,7 @@
         0% {
           box-shadow: 0 0 20px rgba(0, 168, 255, 0.6);
         }
+
         100% {
           box-shadow: 0 0 50px rgba(0, 255, 204, 0.8);
         }
@@ -1847,6 +1951,7 @@
         0% {
           opacity: 0.6;
         }
+
         100% {
           opacity: 1;
         }
@@ -1864,16 +1969,19 @@
         height: 100%;
         width: 0%;
         background: linear-gradient(to right, #0066cc, #00ffcc);
-        transition: width 120ms linear; /* chạy mượt theo % */
+        transition: width 120ms linear;
+        /* chạy mượt theo % */
       }
 
       @keyframes cyberBarMove {
         0% {
           width: 0%;
         }
+
         50% {
           width: 100%;
         }
+
         100% {
           width: 0%;
         }
@@ -1883,6 +1991,486 @@
         font-size: 12px;
         color: #88d3ff;
         letter-spacing: 1px;
+      }
+      /* ===== STREAK DASHBOARD MỚI ===== */
+      .streak-dashboard {
+        background: rgba(0, 30, 60, 0.7);
+        border-radius: 16px;
+        padding: 25px;
+        margin-top: 20px;
+        border: 1px solid rgba(255, 153, 0, 0.3);
+        position: relative;
+        overflow: hidden;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      }
+
+      .streak-dashboard::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          45deg,
+          transparent 30%,
+          rgba(255, 153, 0, 0.1) 50%,
+          transparent 70%
+        );
+        animation: shine 3s infinite;
+        pointer-events: none;
+      }
+
+      .streak-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(255, 153, 0, 0.3);
+      }
+
+      .streak-title {
+        font-family: "Orbitron", sans-serif;
+        font-size: 20px;
+        color: #ff9900;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .streak-badge {
+        font-family: "Orbitron", sans-serif;
+        font-size: 24px;
+        font-weight: 900;
+        color: #ffcc00;
+        text-shadow: 0 0 15px rgba(255, 204, 0, 0.7);
+        background: rgba(0, 0, 0, 0.3);
+        padding: 5px 15px;
+        border-radius: 30px;
+        border: 1px solid rgba(255, 204, 0, 0.3);
+        animation: glowPulse 2s infinite;
+      }
+
+      @keyframes glowPulse {
+        0% {
+          box-shadow: 0 0 10px rgba(255, 204, 0, 0.3);
+        }
+        50% {
+          box-shadow: 0 0 20px rgba(255, 204, 0, 0.7);
+        }
+        100% {
+          box-shadow: 0 0 10px rgba(255, 204, 0, 0.3);
+        }
+      }
+
+      .dashboard-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+        margin-bottom: 20px;
+      }
+
+      @media (max-width: 768px) {
+        .dashboard-grid {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+      }
+
+      .column-header {
+        margin-bottom: 15px;
+      }
+
+      .column-title {
+        font-family: "Orbitron", sans-serif;
+        font-size: 16px;
+        color: #00e5ff;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 5px;
+      }
+
+      .column-subtitle {
+        font-size: 12px;
+        color: #88d3ff;
+        padding-left: 26px;
+      }
+
+      .task-list {
+        min-height: 180px;
+        max-height: 220px;
+        overflow-y: auto;
+        padding-right: 5px;
+        margin-bottom: 15px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Đảm bảo các item có margin bottom đều nhau */
+      .task-item,
+      .task-placeholder {
+        margin-bottom: 8px;
+      }
+      /* Item cuối cùng (placeholder) cũng có margin bottom */
+      .task-list > :last-child {
+        margin-bottom: 0; /* Không margin ở item cuối vì đã có padding của container */
+      }
+
+            /* ===== CUSTOM SCROLLBAR GIỐNG THAOLEJP ===== */
+      .task-list::-webkit-scrollbar {
+        width: 10px;  /* Tăng từ 5px lên 10px */
+      }
+
+      .task-list::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.25);  /* Màu tối hơn */
+        border-radius: 10px;  /* Bo tròn hơn */
+        margin: 2px 0;  /* Khoảng cách trên dưới */
+      }
+
+      .task-list::-webkit-scrollbar-thumb {
+        background: rgba(0, 255, 204, 0.35);  /* Màu xanh cyan trong suốt */
+        border-radius: 10px;  /* Bo tròn hoàn toàn */
+        border: 2px solid rgba(0, 18, 36, 0.98);  /* Viền tối tạo hiệu ứng nổi */
+        background-clip: padding-box;  /* Giữ border trong suốt */
+      }
+
+      /* Hover vào scrollbar */
+      .task-list::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 255, 204, 0.6);  /* Sáng hơn khi hover */
+      }
+
+      /* Thanh cuộn ngang (nếu có) */
+      .task-list::-webkit-scrollbar-corner {
+        background: transparent;
+      }
+
+      .task-item {
+        background: rgba(0, 40, 80, 0.4);
+        border: 1px solid rgba(255, 153, 0, 0.2);
+        border-radius: 8px;
+        padding: 10px 12px;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .task-item:hover {
+        background: rgba(0, 80, 160, 0.5); /* Đổi từ cam sang xanh */
+        border-color: #00a8ff;
+        transform: translateX(5px);
+      }
+
+      .task-item.completed {
+        background: rgba(0, 80, 40, 0.3);
+        border-color: #00ff99;
+        opacity: 0.9;
+      }
+
+      .task-checkbox {
+        width: 22px;
+        height: 22px;
+        border-radius: 6px;
+        border: 2px solid #00a8ff;
+        background: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #00ff99;
+        font-size: 14px;
+        transition: all 0.3s;
+      }
+
+      .task-item.completed .task-checkbox {
+        background: #00ff99;
+        border-color: #00ff99;
+        color: #0a0e17;
+      }
+
+      .task-bullet {
+        width: 22px;
+        height: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ff9900;
+        font-size: 20px;
+        font-weight: bold;
+      }
+
+      .task-content {
+        flex: 1;
+      }
+
+      .task-name {
+        font-size: 14px;
+        color: #e0f7ff;
+      }
+
+      .task-item.completed .task-name {
+        text-decoration: line-through;
+        color: #88d3ff;
+      }
+
+      .next-task .task-name {
+        color: #a0c8e0;
+      }
+
+      /* Add task placeholder */
+      .add-task-placeholder {
+        padding: 10px 12px;
+        color: #88d3ff;
+        font-style: italic;
+        cursor: pointer;
+        border: 1px dashed rgba(255, 153, 0, 0.3);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: all 0.3s;
+      }
+
+      .add-task-placeholder:hover {
+        background: rgba(0, 60, 100, 0.3);
+        border-color: #ff9900;
+        color: #00e5ff;
+      }
+
+      .add-task-placeholder i {
+        font-size: 18px;
+        color: #ff9900;
+      }
+
+      .add-task-placeholder em {
+        font-style: italic;
+        font-size: 14px;
+      }
+
+      /* Task Progress */
+      .task-progress {
+        margin-top: 10px;
+      }
+
+      .progress-bar {
+        height: 8px;
+        background: rgba(0, 50, 100, 0.5);
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 8px;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(to right, #0066cc, #00a8ff, #00ffcc);
+        border-radius: 4px;
+        width: 0%;
+        transition: width 0.4s ease;
+        box-shadow: 0 0 10px rgba(0, 168, 255, 0.5);
+      }
+
+      .progress-text {
+        display: flex;
+        justify-content: space-between;
+        font-size: 13px;
+        color: #88d3ff;
+      }
+
+      /* Stats row */
+      .stats-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        background: rgba(0, 20, 40, 0.5);
+        border-radius: 12px;
+        margin-bottom: 15px;
+        border: 1px solid rgba(255, 153, 0, 0.2);
+      }
+
+      .stats-summary {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        font-size: 14px;
+        color: #a0c8e0;
+        flex-wrap: wrap;
+      }
+
+      .stats-summary i {
+        color: #ff9900;
+        font-size: 16px;
+      }
+
+      .stats-summary strong {
+        color: #00ffcc;
+        font-size: 16px;
+      }
+
+      .divider {
+        color: #ff9900;
+        opacity: 0.5;
+      }
+
+      .history-btn {
+        background: linear-gradient(135deg, #0066cc, #00a8ff);
+        border: none;
+        border-radius: 8px;
+        padding: 8px 16px;
+        color: white;
+        font-family: "Orbitron", sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .history-btn:hover {
+        background: linear-gradient(135deg, #00a8ff, #00ffcc);
+        box-shadow: 0 0 20px rgba(0, 168, 255, 0.5);
+        transform: translateY(-2px);
+      }
+
+      .history-btn i:last-child {
+        font-size: 12px;
+      }
+
+      /* Activation footer */
+      .activation-footer {
+        background: linear-gradient(
+          135deg,
+          rgba(0, 102, 204, 0.2),
+          rgba(0, 168, 255, 0.2)
+        );
+        border: 1px solid rgba(0, 168, 255, 0.3);
+        border-radius: 30px;
+        padding: 12px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        color: #88d3ff;
+        font-size: 14px;
+        font-weight: 500;
+        backdrop-filter: blur(5px);
+      }
+
+      .activation-footer i {
+        color: #ffcc00;
+        font-size: 16px;
+        animation: boltPulse 1.5s infinite;
+      }
+
+      @keyframes boltPulse {
+        0% {
+          opacity: 0.7;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.1);
+          color: #ffaa00;
+        }
+        100% {
+          opacity: 0.7;
+          transform: scale(1);
+        }
+      }
+      /* Nút xóa task */
+      .task-delete {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: rgba(255, 50, 50, 0.2);
+        border: 1px solid rgba(255, 50, 50, 0.3);
+        color: #ff6666;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        cursor: pointer;
+        opacity: 0;
+        transition: all 0.3s;
+        margin-left: 5px;
+      }
+
+      .task-item:hover .task-delete {
+        opacity: 1;
+      }
+
+      .task-delete:hover {
+        background: rgba(255, 50, 50, 0.4);
+        border-color: #ff3333;
+        color: #ff3333;
+        transform: scale(1.1);
+      }
+
+      .task-delete i {
+        pointer-events: none;
+      }
+      /* Placeholder như một task bình thường */
+      .task-placeholder {
+        background: rgba(0, 40, 80, 0.3);
+        border: 1px dashed rgba(0, 168, 255, 0.5);
+        border-radius: 8px;
+        padding: 10px 12px;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        cursor: pointer;
+        transition: all 0.3s;
+        color: #88d3ff;
+        font-style: italic;
+        min-height: 46px; /* Cùng chiều cao với task item */
+      }
+
+      .task-placeholder:hover {
+        background: rgba(0, 60, 100, 0.5);
+        border-color: #00a8ff;
+        color: #00e5ff;
+        transform: translateX(5px);
+      }
+
+      .task-placeholder i {
+        width: 22px;
+        height: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #00a8ff;
+        font-size: 18px;
+      }
+
+      .task-placeholder .placeholder-icon {
+        margin-left: auto;
+        font-size: 12px;
+        opacity: 0.7;
+      }
+
+      /* Animation cho placeholder mới */
+      @keyframes placeholderPulse {
+        0% {
+          border-color: rgba(0, 168, 255, 0.3);
+        }
+        50% {
+          border-color: rgba(0, 255, 204, 0.8);
+        }
+        100% {
+          border-color: rgba(0, 168, 255, 0.3);
+        }
+      }
+
+      .task-placeholder.new {
+        animation: placeholderPulse 1.5s infinite;
       }
     </style>
   </head>
@@ -2010,12 +2598,141 @@
               </div>
             </div>
 
-            <div class="streak-counter">
-              <div class="streak-title">
-                <i class="fas fa-fire"></i> CHUỖI HOẠT ĐỘNG
+            <!-- ===== STREAK DASHBOARD MỚI ===== -->
+            <div class="streak-dashboard">
+              <!-- Header -->
+              <div class="streak-header">
+                <div class="streak-title">
+                  <i class="fas fa-fire"></i> CHUỖI HOẠT ĐỘNG
+                </div>
+                <div class="streak-badge" id="streakDays">12 NGÀY</div>
               </div>
-              <div class="streak-days">5 NGÀY</div>
-              <div class="streak-text">liên tiếp hoàn thành nhiệm vụ!</div>
+
+              <!-- 2 Cột chính -->
+              <div class="dashboard-grid">
+                <!-- Cột trái: Nhiệm vụ hiện tại -->
+                <div class="task-column current-tasks">
+                  <div class="column-header">
+                    <div class="column-title">
+                      <i class="fas fa-clipboard-list"></i> NHIỆM VỤ HIỆN TẠI
+                    </div>
+                  </div>
+
+                  <div class="task-list" id="currentTaskList">
+                    <!-- Tasks sẽ được render bằng JS -->
+                    <div class="task-item">
+                      <div class="task-checkbox">
+                        <i class="far fa-square"></i>
+                      </div>
+                      <div class="task-content">
+                        <div class="task-name">Học 20 từ vựng mới</div>
+                      </div>
+                    </div>
+                    <div class="task-item">
+                      <div class="task-checkbox">
+                        <i class="far fa-square"></i>
+                      </div>
+                      <div class="task-content">
+                        <div class="task-name">Ôn tập 30 từ cũ</div>
+                      </div>
+                    </div>
+                    <div class="task-item">
+                      <div class="task-checkbox">
+                        <i class="far fa-square"></i>
+                      </div>
+                      <div class="task-content">
+                        <div class="task-name">Làm bài test Mimikara</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="task-progress">
+                    <div class="progress-bar">
+                      <div
+                        class="progress-fill"
+                        id="currentProgressFill"
+                        style="width: 33%"
+                      ></div>
+                    </div>
+                    <div class="progress-text">
+                      <span>Hoàn thành</span>
+                      <span id="currentProgressText">1/3</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Cột phải: Nhiệm vụ tiếp theo -->
+                <div class="task-column next-tasks">
+                  <div class="column-header">
+                    <div class="column-title">
+                      <i class="fas fa-step-forward"></i> NHIỆM VỤ TIẾP THEO
+                    </div>
+                  </div>
+
+                  <div class="task-list" id="nextTaskList">
+                    <!-- Tasks sẽ được render bằng JS -->
+                    <div class="task-item next-task">
+                      <div class="task-bullet">•</div>
+                      <div class="task-content">
+                        <div class="task-name">Học 25 từ kanji</div>
+                      </div>
+                      <div class="task-delete" title="Xóa nhiệm vụ">
+                        <i class="fas fa-times"></i>
+                      </div>
+                    </div>
+                    <div class="task-item next-task">
+                      <div class="task-bullet">•</div>
+                      <div class="task-content">
+                        <div class="task-name">Ôn tập 40 từ vựng</div>
+                      </div>
+                      <div class="task-delete" title="Xóa nhiệm vụ">
+                        <i class="fas fa-times"></i>
+                      </div>
+                    </div>
+                    <div class="task-item next-task">
+                      <div class="task-bullet">•</div>
+                      <div class="task-content">
+                        <div class="task-name">Làm 2 bài test ngữ pháp</div>
+                      </div>
+                      <div class="task-delete" title="Xóa nhiệm vụ">
+                        <i class="fas fa-times"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Hàng tổng quan & lịch sử -->
+              <div class="stats-row">
+                <div class="stats-summary">
+                  <i class="fas fa-chart-line"></i>
+                  <span
+                    >Tổng tasks: <strong id="totalTasks">245/350</strong></span
+                  >
+                  <span class="divider">|</span>
+                  <span
+                    >Hoàn thành: <strong id="completionRate">70%</strong></span
+                  >
+                  <span class="divider">|</span>
+                  <span
+                    >Streak dài nhất:
+                    <strong id="longestStreak">15</strong></span
+                  >
+                </div>
+
+                <button class="history-btn" id="viewHistoryBtn">
+                  <i class="fas fa-history"></i> XEM LỊCH SỬ
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+              </div>
+
+              <!-- Footer kích hoạt -->
+              <div class="activation-footer" id="activationFooter">
+                <i class="fas fa-bolt"></i>
+                <span id="activationText"
+                  >HỆ THỐNG LUYỆN THI N1 ĐÃ KÍCH HOẠT 19/02/2026</span
+                >
+              </div>
             </div>
           </section>
 
@@ -2204,8 +2921,8 @@
       }
 
       /* =========================================================
-        CONFIG + LocalStorage Keys
-      ========================================================= */
+      CONFIG + LocalStorage Keys
+    ========================================================= */
       // ==================== PROGRESS CACHE (MULTI-KEY) ====================
       const progressCache = {
         entries: new Map(), // key -> { data, timestamp }
@@ -2341,8 +3058,8 @@
       }
 
       /* =========================================================
-        Exam date countdown (giữ nguyên)
-      ========================================================= */
+      Exam date countdown (giữ nguyên)
+    ========================================================= */
       const DEFAULT_EXAM_DATE = "20260701";
 
       function parseYYYYMMDD(s) {
@@ -2468,8 +3185,8 @@
       }
 
       /* =========================================================
-        API
-      ========================================================= */
+      API
+    ========================================================= */
       async function verifyLicense(deviceId, license) {
         const res = await fetch(`${API_URL}/verify`, {
           method: "POST",
@@ -2545,6 +3262,159 @@
           color: "#ffaa00",
         };
       }
+      // ===== WORD COUNT HELPERS (ceil(questions/2)) =====
+      function wordsFromQuestions(n) {
+        const q = Number(n || 0);
+        if (!Number.isFinite(q) || q <= 0) return 0;
+        return Math.ceil(q / 2);
+      }
+
+      function flattenTestsFromTestInfo(testInfo) {
+        // Trả về mảng test objects có dạng {url, questions, ...}
+        if (!testInfo) return [];
+        if (Array.isArray(testInfo.tests)) return testInfo.tests;
+
+        if (Array.isArray(testInfo.units)) {
+          const all = [];
+          testInfo.units.forEach((u) => {
+            if (u && Array.isArray(u.tests)) all.push(...u.tests);
+          });
+          return all;
+        }
+        return [];
+      }
+
+      function calcABFromTests(tests, progressMap) {
+        // b: tổng words toàn bộ tests
+        // a: tổng words của tests đã hoàn thành (perfectCount>=3)
+        let a = 0;
+        let b = 0;
+
+        (tests || []).forEach((t) => {
+          const w = wordsFromQuestions(t.questions);
+          b += w;
+
+          const p = progressMap && t.url ? progressMap[t.url] || {} : {};
+          const perfectCount = Number(p?.perfectCount || 0);
+          if (perfectCount >= 3) a += w;
+        });
+
+        return { a, b };
+      }
+      function ceilDiv2(n) {
+        const x = Number(n || 0);
+        return Math.ceil(x / 2);
+      }
+
+      function flattenTestsFromTestInfo(testInfo) {
+        if (!testInfo) return [];
+        if (Array.isArray(testInfo.tests)) return testInfo.tests;
+        if (Array.isArray(testInfo.units)) {
+          const out = [];
+          testInfo.units.forEach((u) => {
+            if (u && Array.isArray(u.tests)) out.push(...u.tests);
+          });
+          return out;
+        }
+        return [];
+      }
+
+      /**
+       * Tính a/b cho 1 module chính dựa trên moduleContents[moduleId].items
+       * - chỉ lấy item nào có key trong testData
+       * - a = sum words của test hoàn thành (perfectCount>=3)
+       * - b = sum words của tất cả test
+       */
+      function calcABForMainModule(moduleId, progressMap) {
+        const mod = moduleContents[moduleId];
+        if (!mod || !Array.isArray(mod.items)) return { a: 0, b: 0 };
+
+        let a = 0;
+        let b = 0;
+
+        mod.items.forEach((item) => {
+          const title = item?.title;
+          const testInfo = testData[title];
+          if (!testInfo) return; // item chưa có testData thì bỏ qua
+
+          const tests = flattenTestsFromTestInfo(testInfo);
+          tests.forEach((t) => {
+            const words = ceilDiv2(t.questions);
+            b += words;
+
+            const p = progressMap?.[t.url] || { perfectCount: 0 };
+            const done = Number(p.perfectCount || 0) >= 3;
+            if (done) a += words;
+          });
+        });
+
+        return { a, b };
+      }
+
+      function collectAllTestUrlsForMainModule(moduleId) {
+        const mod = moduleContents[moduleId];
+        if (!mod || !Array.isArray(mod.items)) return [];
+
+        const urls = [];
+        mod.items.forEach((item) => {
+          const testInfo = testData[item?.title];
+          const tests = flattenTestsFromTestInfo(testInfo);
+          tests.forEach((t) => {
+            if (t?.url) urls.push(t.url);
+          });
+        });
+
+        // unique
+        return Array.from(new Set(urls));
+      }
+      async function updateMainModulesProgress() {
+        const deviceId = localStorage.getItem(LS_DEVICE_ID) || "";
+        const license = localStorage.getItem(LS_LICENSE) || "";
+
+        // Nếu chưa có license -> cứ để 0%
+        if (!license) return;
+
+        // gom toàn bộ test url của 4 module để gọi API 1 lần (nhanh hơn)
+        const allUrls = [
+          ...collectAllTestUrlsForMainModule("vocab"),
+          ...collectAllTestUrlsForMainModule("grammar"),
+          ...collectAllTestUrlsForMainModule("listening"),
+          ...collectAllTestUrlsForMainModule("reading"),
+        ];
+        const testIds = Array.from(new Set(allUrls));
+
+        if (testIds.length === 0) return;
+
+        // dùng cache bạn đã có
+        const r = await getCachedProgress(deviceId, license, testIds);
+        const progressMap = r.data || {};
+
+        ["vocab", "grammar", "listening", "reading"].forEach((m) => {
+          const { a, b } = calcABForMainModule(m, progressMap);
+          const percent = b > 0 ? Math.floor((a / b) * 100) : 0;
+
+          const fill = document.getElementById(`progress-${m}`);
+          const pct = document.getElementById(`percent-${m}`);
+
+          if (fill) fill.style.width = percent + "%";
+          if (pct) pct.textContent = percent + "%";
+        });
+      }
+
+      async function getProgressMapForItemTitle(itemTitle) {
+        const testInfo = testData[itemTitle];
+        const tests = flattenTestsFromTestInfo(testInfo);
+        const testIds = tests.map((t) => t.url).filter(Boolean);
+
+        const deviceId = localStorage.getItem(LS_DEVICE_ID) || "";
+        const license = localStorage.getItem(LS_LICENSE) || "";
+
+        // chưa kích hoạt => không có progress
+        if (!license || testIds.length === 0) return {};
+
+        const r = await getCachedProgress(deviceId, license, testIds);
+        return r.data || {};
+      }
 
       async function requestReset(deviceId, oldLicense, note) {
         const res = await fetch(`${API_URL}/request-reset`, {
@@ -2608,8 +3478,8 @@
       }
 
       /* =========================================================
-        Status expiry (giữ nguyên)
-      ========================================================= */
+      Status expiry (giữ nguyên)
+    ========================================================= */
       function updateStatusUI(expiryStr) {
         const statusValueEl = document.getElementById("statusValue");
         const statusSubtitleEl = document.getElementById("statusSubtitle");
@@ -2740,8 +3610,8 @@
       }
 
       /* =========================================================
-        Gate
-      ========================================================= */
+      Gate
+    ========================================================= */
       function showGate(show = true) {
         const gate = document.getElementById("licenseGate");
         const app = document.getElementById("appRoot");
@@ -2770,12 +3640,12 @@
       }
 
       /* =========================================================
-        MODULE MODAL LOGIC (NEW)
-        - Mặc định: ẩn modal
-        - Click module: mở modal ở giữa + lock module
-        - Click module khác: đổi lock sang module khác (modal vẫn mở)
-        - Đóng: nút "Đóng" / ESC / click backdrop
-      ========================================================= */
+      MODULE MODAL LOGIC (NEW)
+      - Mặc định: ẩn modal
+      - Click module: mở modal ở giữa + lock module
+      - Click module khác: đổi lock sang module khác (modal vẫn mở)
+      - Đóng: nút "Đóng" / ESC / click backdrop
+    ========================================================= */
       let lockedModule = null;
 
       const moduleContents = {
@@ -2901,10 +3771,10 @@
         },
       };
       /* =========================================================
-  TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
-  - Click vào content-item trong modal từ vựng -> mở test modal
-  - Hiển thị danh sách bài test tương ứng
-  - Click test item -> chuyển hướng đến trang html khác
+TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
+- Click vào content-item trong modal từ vựng -> mở test modal
+- Hiển thị danh sách bài test tương ứng
+- Click test item -> chuyển hướng đến trang html khác
 ========================================================= */
       let __testModalSetupDone = false;
       let __openTestModalToken = 0;
@@ -2915,10 +3785,10 @@
         "Từ vựng Mimikara Oboeru": {
           title: "Mimikara Oboeru N1",
           units: [
-{
+            {
               name: "Unit 1",
               tests: [
-{
+                {
                   id: 1001,
                   name: "Từ vựng Mimikara Unit 1 (1-20)",
                   questions: 39,
@@ -2926,94 +3796,42 @@
                   difficulty: "Khó",
                   url: "Mimikara-1-1.html",
                 },
-                
-              {
-              id: 1002,
-              name: "Từ vựng Mimikara Unit 1 (21-40)",
-              questions: 40,
-              time: "40 phút",
-              difficulty: "Khó",
-              url: "Mimikara-1-2.html",
-            },
-{
-              id: 1003,
-              name: "Từ vựng Mimikara Unit 1 (41-60)",
-              questions: 36,
-              time: "36 phút",
-              difficulty: "Khó",
-              url: "Mimikara-1-3.html",
-            },
-{
-              id: 1004,
-              name: "Từ vựng Mimikara Unit 1 (61-80)",
-              questions: 40,
-              time: "40 phút",
-              difficulty: "Khó",
-              url: "Mimikara-1-4.html",
-            },
-{
-              id: 1005,
-              name: "Từ vựng Mimikara Unit 1 (81-100)",
-              questions: 40,
-              time: "40 phút",
-              difficulty: "Khó",
-              url: "Mimikara-1-5.html",
-            }
-              ],
-            },
-{
-              name: "Unit 2",
-              tests: [
-{
-                  id: 6,
-                  name: "Từ vựng Mimikara Unit 2 (1-20)",
+
+                {
+                  id: 1002,
+                  name: "Từ vựng Mimikara Unit 1 (21-40)",
                   questions: 40,
                   time: "40 phút",
                   difficulty: "Khó",
-                  url: "Mimikara-2-1.html",
-                }
-              ],
-            },
-{
-              name: "Unit 3",
-              tests: [
-{
-                  id: 11,
-                  name: "Từ vựng Mimikara Unit 3 (1-20)",
+                  url: "Mimikara-1-2.html",
+                },
+                {
+                  id: 1003,
+                  name: "Từ vựng Mimikara Unit 1 (41-60)",
+                  questions: 36,
+                  time: "36 phút",
+                  difficulty: "Khó",
+                  url: "Mimikara-1-3.html",
+                },
+                {
+                  id: 1004,
+                  name: "Từ vựng Mimikara Unit 1 (61-80)",
                   questions: 40,
                   time: "40 phút",
                   difficulty: "Khó",
-                  url: "Mimikara-3-1.html",
-                }
-              ],
-            },
-{
-              name: "Unit 4",
-              tests: [
-{
-                  id: 16,
-                  name: "Từ vựng Mimikara Unit 4 (1-20)",
+                  url: "Mimikara-1-4.html",
+                },
+                {
+                  id: 1005,
+                  name: "Từ vựng Mimikara Unit 1 (81-100)",
                   questions: 40,
                   time: "40 phút",
                   difficulty: "Khó",
-                  url: "Mimikara-4-1.html",
-                }
+                  url: "Mimikara-1-5.html",
+                },
               ],
             },
-{
-              name: "Unit 5",
-              tests: [
-{
-              id: 5001,
-              name: "Từ vựng Mimikara Unit 5 (1-20)",
-              questions: 40,
-              time: "40 phút",
-              difficulty: "Khó",
-              url: "Mimikara-5-1.html",
-            }
-              ],
-            }
-            ],
+          ],
         },
         // Bài test cho "Từ vựng ThaoLeJP"
         "Từ vựng ThaoLeJP": {
@@ -3401,6 +4219,125 @@
 
           return; // ✅ chặn không chạy xuống dưới (tránh show lần 2)
         }
+        // ==========================
+        // ELSE: testInfo.tests (ThaoLeJP, Đồng nghĩa/Trái nghĩa, Từ vựng khó, ...)
+        // ==========================
+        if (testInfo.tests && Array.isArray(testInfo.tests)) {
+          const deviceId = localStorage.getItem(LS_DEVICE_ID) || "";
+          const license = localStorage.getItem(LS_LICENSE) || "";
+          const testIds = testInfo.tests.map((t) => t.url);
+
+          // Hiện modal ngay
+          testModal.classList.add("show");
+          testBackdrop.classList.add("show");
+          await new Promise(requestAnimationFrame);
+
+          // Nếu chưa có license thì vẫn cho xem list, nhưng không có tiến độ
+          if (!license) {
+            testList.innerHTML = "";
+            testInfo.tests.forEach((test) => {
+              const testItem = document.createElement("div");
+              testItem.className = "test-item";
+              testItem.setAttribute("data-test-url", test.url);
+              testItem.setAttribute("data-test-name", test.name);
+
+              testItem.innerHTML = `
+        <div class="test-item-icon"><i class="fas fa-clock"></i></div>
+        <div class="test-item-content">
+          <div class="test-item-title">${test.name}</div>
+          <div class="test-item-meta">
+            <span><i class="fas fa-question-circle"></i> ${test.questions} câu</span>
+            <span><i class="fas fa-hourglass-half"></i> ${test.time}</span>
+            <span><i class="fas fa-signal"></i> ${test.difficulty}</span>
+          </div>
+        </div>
+        <div class="test-status-badge"
+          style="background:rgba(255,100,0,0.2); border-color:rgba(255,150,0,0.3); color:#ffaa00">
+          Chưa kích hoạt
+        </div>
+      `;
+
+              testItem.addEventListener("click", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                const url = this.getAttribute("data-test-url");
+                window.open(url, "_blank", "noopener,noreferrer");
+              });
+
+              testList.appendChild(testItem);
+            });
+            return;
+          }
+
+          // Cache check
+          const cacheOk = isProgressCacheValid(deviceId, license, testIds);
+
+          if (!cacheOk) {
+            showCyberLoading("ĐANG TẢI DỮ LIỆU");
+            testList.innerHTML = createSkeletonLoading();
+            await new Promise(requestAnimationFrame);
+          } else {
+            testList.innerHTML = "";
+          }
+
+          const r = await getCachedProgress(deviceId, license, testIds);
+          const progressMap = r.data || {};
+
+          if (token !== __openTestModalToken) return;
+
+          if (!cacheOk) hideCyberLoading();
+
+          testList.innerHTML = "";
+          const fragment = document.createDocumentFragment();
+
+          testInfo.tests.forEach((test) => {
+            const testItem = document.createElement("div");
+            testItem.className = "test-item";
+            testItem.setAttribute("data-test-url", test.url);
+            testItem.setAttribute("data-test-name", test.name);
+
+            const p = progressMap[test.url] || { perfectCount: 0 };
+            const b = badgeFromProgress(p);
+
+            const iconClass = b.icon || "fa-clock";
+            const bgColor = b.bg || "rgba(255, 100, 0, 0.2)";
+            const borderColor = b.border || "rgba(255, 150, 0, 0.3)";
+            const textColor = b.color || "#ffaa00";
+            const badgeText = b.text || "Chưa làm";
+
+            testItem.innerHTML = `
+      <div class="test-item-icon">
+        <i class="fas ${iconClass}"></i>
+      </div>
+      <div class="test-item-content">
+        <div class="test-item-title">${test.name}</div>
+        <div class="test-item-meta">
+          <span><i class="fas fa-question-circle"></i> ${test.questions} câu</span>
+          <span><i class="fas fa-hourglass-half"></i> ${test.time}</span>
+          <span><i class="fas fa-signal"></i> ${test.difficulty}</span>
+        </div>
+      </div>
+      <div class="test-status-badge"
+        style="background:${bgColor}; border-color:${borderColor}; color:${textColor}">
+        ${badgeText}
+      </div>
+    `;
+
+            testItem.addEventListener("click", function (e) {
+              e.preventDefault();
+              e.stopPropagation();
+              e.stopImmediatePropagation();
+              const url = this.getAttribute("data-test-url");
+              window.open(url, "_blank", "noopener,noreferrer");
+            });
+
+            fragment.appendChild(testItem);
+          });
+
+          testList.appendChild(fragment);
+          return;
+        }
       }
 
       // Hàm đóng test modal
@@ -3409,6 +4346,8 @@
         const testBackdrop = document.getElementById("testModalBackdrop");
         testModal.classList.remove("show");
         testBackdrop.classList.remove("show");
+        // ✅ Cập nhật lại % tiến độ module chính sau khi đóng popup bài test
+        updateMainModulesProgress();
       }
 
       // Thêm sự kiện click cho các content-item trong modal từ vựng
@@ -3430,10 +4369,7 @@
             if (!itemTitleEl) return;
 
             // Bỏ qua ký tự icon, lấy text
-            let itemTitle =
-              itemTitleEl.childNodes[
-                itemTitleEl.childNodes.length - 1
-              ].textContent.trim();
+            let itemTitle = itemTitleEl.textContent.replace("●", "").trim();
             if (!itemTitle) {
               itemTitle = itemTitleEl.innerText.replace(/[●•◦]/g, "").trim();
             }
@@ -3575,7 +4511,7 @@
         modal.setAttribute("aria-hidden", "true");
       }
 
-      function renderModuleToModal(moduleId) {
+      async function renderModuleToModal(moduleId) {
         const data = moduleContents[moduleId];
         if (!data) return;
 
@@ -3588,33 +4524,90 @@
         if (frameIcon) frameIcon.className = data.icon;
         if (statusText) statusText.textContent = `Đang xem: ${data.title}`;
 
+        // Render khung trước cho mượt
         frameContent.innerHTML = "";
+
+        // Tạo list item trước (stats tạm)
+        const itemEls = [];
         data.items.forEach((item) => {
           const itemEl = document.createElement("div");
           itemEl.className = "content-item";
+
+          // NOTE: gắn data-title để sau update stats
+          itemEl.setAttribute("data-item-title", item.title);
+
           itemEl.innerHTML = `
-            <div class="item-title">
-              <i class="fas fa-circle"></i> ${item.title}
-            </div>
-            <div class="item-desc">${item.desc}</div>
-            <div class="item-stats">${item.stats}</div>
-            <div class="item-progress">
-              <div class="item-progress-fill" style="width: ${item.progress}%"></div>
-            </div>
-          `;
+      <div class="item-title">
+        <i class="fas fa-circle"></i> ${item.title}
+      </div>
+      <div class="item-desc">${item.desc}</div>
+      <div class="item-stats">Đã học: .../... </div>
+      <div class="item-progress">
+  <div class="item-progress-fill" style="width: 0%"></div>
+</div>
+
+    `;
           frameContent.appendChild(itemEl);
+          itemEls.push(itemEl);
         });
+
+        // ====== AUTO CALC: chỉ làm cho module vocab (đúng yêu cầu bạn) ======
+        if (moduleId !== "vocab") return;
+
+        // Nếu chưa kích hoạt license: vẫn tính b (tổng), a=0
+        const license = localStorage.getItem(LS_LICENSE) || "";
+        const hasLicense = !!license;
+
+        // Làm từng item (không show loading toàn màn hình để đỡ khó chịu)
+        // Nhưng vẫn tận dụng cache progress để không gọi API nhiều lần
+        for (const el of itemEls) {
+          const itemTitle = el.getAttribute("data-item-title") || "";
+          const statsEl = el.querySelector(".item-stats");
+          if (!statsEl) continue;
+
+          const testInfo = testData[itemTitle];
+          const tests = flattenTestsFromTestInfo(testInfo);
+
+          // Nếu item chưa có testData -> giữ nguyên / báo cập nhật
+          if (!testInfo || !tests.length) {
+            statsEl.textContent = "Đã học: 0/0";
+            continue;
+          }
+
+          // Tính b luôn (không cần progress)
+          const { a: a0, b } = calcABFromTests(tests, {}); // a0 = 0
+          if (!hasLicense) {
+            statsEl.textContent = `Đã học: 0/${b}`;
+            const progressFill = el.querySelector(".item-progress-fill");
+            if (progressFill) progressFill.style.width = "0%";
+            continue;
+          }
+
+          // Có license -> lấy progressMap và tính a/b chuẩn
+          try {
+            const progressMap = await getProgressMapForItemTitle(itemTitle);
+            const { a, b: b2 } = calcABFromTests(tests, progressMap);
+            statsEl.textContent = `Đã học: ${a}/${b2}`;
+            const progressFill = el.querySelector(".item-progress-fill");
+            if (progressFill) {
+              const percent = b2 > 0 ? Math.floor((a / b2) * 100) : 0;
+              progressFill.style.width = percent + "%";
+            }
+          } catch {
+            // Nếu lỗi server => vẫn hiển thị b
+            statsEl.textContent = `Đã học: 0/${b}`;
+          }
+        }
       }
 
-      function lockAndOpen(moduleId) {
+      async function lockAndOpen(moduleId) {
         lockedModule = moduleId;
 
         clearAllCardStates();
         const card = getModuleCard(moduleId);
         if (card) card.classList.add("locked");
-
-        renderModuleToModal(moduleId);
         openModal();
+        await renderModuleToModal(moduleId);
       }
 
       function unlockAndClose() {
@@ -3626,10 +4619,11 @@
       function setupModuleInteractions() {
         document.querySelectorAll(".module-card").forEach((card) => {
           const moduleId = card.getAttribute("data-module");
-          card.addEventListener("click", (e) => {
+          card.addEventListener("click", async (e) => {
             e.preventDefault();
-            lockAndOpen(moduleId);
+            await lockAndOpen(moduleId);
           });
+
           card.addEventListener("contextmenu", (e) => e.preventDefault());
         });
 
@@ -3650,26 +4644,16 @@
       }
 
       /* =========================================================
-        App UI
-      ========================================================= */
+      App UI
+    ========================================================= */
       function runAppUI() {
         // Progress bars
-        const progressData = {
-          vocab: 65,
-          grammar: 42,
-          listening: 28,
-          reading: 35,
-        };
-        for (const [module, value] of Object.entries(progressData)) {
-          const progressFill = document.getElementById(`progress-${module}`);
-          const percentText = document.getElementById(`percent-${module}`);
-          progressFill.style.width = "0%";
-          percentText.textContent = "0%";
-          setTimeout(() => {
-            progressFill.style.width = `${value}%`;
-            percentText.textContent = `${value}%`;
-          }, 300);
-        }
+        ["vocab", "grammar", "listening", "reading"].forEach((m) => {
+          const fill = document.getElementById(`progress-${m}`);
+          const pct = document.getElementById(`percent-${m}`);
+          if (fill) fill.style.width = "0%";
+          if (pct) pct.textContent = "0%";
+        });
 
         // Start button ripple
         const startButton = document.querySelector(".start-button");
@@ -3716,6 +4700,7 @@
 
         setupModuleInteractions();
         setupTestModalInteractions();
+        updateMainModulesProgress();
 
         // Expiry check khi mở app
         const savedExpiry = localStorage.getItem("n1_expiry_date");
@@ -3725,8 +4710,8 @@
       }
 
       /* =========================================================
-        Boot
-      ========================================================= */
+      Boot
+    ========================================================= */
       (async function boot() {
         const deviceId = getOrCreateDeviceId();
         fillDeviceUI(deviceId);
@@ -3818,7 +4803,6 @@
             }
           }
         }
-
         // Nút copy deviceId
         document
           .getElementById("btnCopyDevice")
@@ -3868,7 +4852,6 @@
               else setStatus("Kích hoạt thất bại: " + msg, "error");
             }
           });
-
         // Nút yêu cầu cấp lại
         document
           .getElementById("btnRequestReset")
@@ -3881,19 +4864,231 @@
               prompt(
                 "Nhập lý do cấp lại (vd: đổi máy / cài lại Windows / xóa trình duyệt):",
               ) || "";
-
             const requestCode = `RESET|deviceId=${deviceId}|oldLicense=${oldLicense}|note=${note}`;
             await copyText(requestCode);
             setStatus(
               "Đã copy mã yêu cầu cấp lại. Dán mã này gửi cho ban quản trị.",
               "ok",
             );
-
             try {
               await requestReset(deviceId, oldLicense, note);
             } catch {}
           });
       })();
+      // ==================== STREAK DASHBOARD FUNCTIONS ====================
+
+      // Format ngày tháng
+      function formatDate(date) {
+        const day = date.getDate().toString().padStart(2, "0");
+        const month = (date.getMonth() + 1).toString().padStart(2, "0");
+        return `${day}/${month}`;
+      }
+      // Cập nhật streak từ localStorage
+      function updateStreak() {
+        const streakEl = document.getElementById("streakDays");
+        const activationDate = localStorage.getItem("activationDate");
+
+        if (activationDate) {
+          const start = new Date(activationDate);
+          const today = new Date();
+          const diffTime = Math.abs(today - start);
+          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+          if (streakEl) {
+            streakEl.textContent = `${diffDays} NGÀY`;
+
+            // Animation
+            streakEl.style.transform = "scale(1.1)";
+            setTimeout(() => (streakEl.style.transform = ""), 300);
+          }
+        }
+      }
+
+      // Cập nhật activation footer
+      function updateActivationFooter() {
+        const footer = document.getElementById("activationFooter");
+        const activationDate = localStorage.getItem("activationDate");
+
+        if (activationDate) {
+          const date = new Date(activationDate);
+          const day = date.getDate().toString().padStart(2, "0");
+          const month = (date.getMonth() + 1).toString().padStart(2, "0");
+          const year = date.getFullYear();
+
+          const textEl = document.getElementById("activationText");
+          if (textEl) {
+            textEl.textContent = `HỆ THỐNG LUYỆN THI N1 ĐÃ KÍCH HOẠT ${day}/${month}/${year}`;
+          }
+        }
+      }
+
+      // Cập nhật hàm setupTaskInteractions để không xung đột với nút xóa
+      function setupTaskInteractions() {
+        const taskItems = document.querySelectorAll(
+          ".current-tasks .task-item",
+        );
+
+        taskItems.forEach((item) => {
+          // Chỉ xử lý click khi không click vào nút xóa
+          item.addEventListener("click", function (e) {
+            if (e.target.closest(".task-delete")) return; // Bỏ qua nếu click vào nút xóa
+
+            const checkbox = this.querySelector(".task-checkbox i");
+            const isCompleted = this.classList.contains("completed");
+
+            if (isCompleted) {
+              this.classList.remove("completed");
+              checkbox.className = "far fa-square";
+            } else {
+              this.classList.add("completed");
+              checkbox.className = "fas fa-check";
+            }
+
+            // Cập nhật progress bar
+            updateProgress();
+          });
+        });
+      }
+
+      // Cập nhật progress bar
+      function updateProgress() {
+        const tasks = document.querySelectorAll(".current-tasks .task-item");
+        const completed = document.querySelectorAll(
+          ".current-tasks .task-item.completed",
+        );
+
+        const total = tasks.length;
+        const done = completed.length;
+        const percent = total > 0 ? Math.round((done / total) * 100) : 0;
+
+        const progressFill = document.getElementById("currentProgressFill");
+        const progressText = document.getElementById("currentProgressText");
+
+        if (progressFill) progressFill.style.width = percent + "%";
+        if (progressText) progressText.textContent = `${done}/${total}`;
+      }
+      // Cập nhật lại hàm setupDeleteButtons
+      function setupDeleteButtons() {
+        const deleteButtons = document.querySelectorAll(".task-delete");
+
+        deleteButtons.forEach((btn) => {
+          btn.addEventListener("click", function (e) {
+            e.stopPropagation(); // Không trigger click của task item
+
+            const taskItem = this.closest(".task-item");
+            deleteTask(taskItem);
+          });
+        });
+      }
+      // Cập nhật lại hàm setupAddTask (đơn giản hơn)
+      function setupAddTask() {
+        renderPlaceholder(); // Chỉ cần render placeholder
+      }
+      // Hiển thị placeholder trong danh sách
+      function renderPlaceholder() {
+        const nextTaskList = document.getElementById("nextTaskList");
+        if (!nextTaskList) return;
+
+        // Kiểm tra xem đã có placeholder chưa
+        let placeholder = document.getElementById("addTaskPlaceholder");
+
+        if (!placeholder) {
+          placeholder = document.createElement("div");
+          placeholder.id = "addTaskPlaceholder";
+          placeholder.className = "task-placeholder";
+          placeholder.innerHTML = `
+            <i class="fas fa-plus-circle"></i>
+            <span class="task-name"><em>Thêm nhiệm vụ mới...</em></span>
+            <span class="placeholder-icon"><i class="fas fa-chevron-right"></i></span>
+          `;
+
+          // Thêm sự kiện click
+          placeholder.addEventListener("click", addNewTask);
+        }
+
+        // Luôn đặt placeholder ở cuối danh sách
+        nextTaskList.appendChild(placeholder);
+      }
+      // Hàm thêm task mới (tách riêng)
+      function addNewTask() {
+        const taskName = prompt("Nhập tên nhiệm vụ mới cho ngày mai:");
+        if (taskName && taskName.trim()) {
+          const nextTaskList = document.getElementById("nextTaskList");
+
+          // Tạo task item mới
+          const taskItem = document.createElement("div");
+          taskItem.className = "task-item next-task";
+          taskItem.innerHTML = `
+            <div class="task-bullet">•</div>
+            <div class="task-content">
+              <div class="task-name">${taskName}</div>
+            </div>
+            <div class="task-delete" title="Xóa nhiệm vụ">
+              <i class="fas fa-times"></i>
+            </div>
+          `;
+
+          // Thêm task mới TRƯỚC placeholder
+          const placeholder = document.getElementById("addTaskPlaceholder");
+          nextTaskList.insertBefore(taskItem, placeholder);
+
+          // Gán sự kiện xóa cho task mới
+          const newDeleteBtn = taskItem.querySelector(".task-delete");
+          newDeleteBtn.addEventListener("click", function (e) {
+            e.stopPropagation();
+            deleteTask(this.closest(".task-item"));
+          });
+
+          // Gán sự kiện click cho task mới (nếu cần)
+          taskItem.addEventListener("click", function (e) {
+            if (e.target.closest(".task-delete")) return;
+            // Xử lý click vào task nếu cần
+          });
+        }
+      }
+      // Hàm xóa task (tách riêng)
+      function deleteTask(taskItem) {
+        const isNextTask = taskItem.closest(".next-tasks") !== null;
+
+        // Animation xóa
+        taskItem.style.transform = "scale(0.8)";
+        taskItem.style.opacity = "0";
+
+        setTimeout(() => {
+          taskItem.remove();
+
+          // Cập nhật progress nếu là task hiện tại
+          if (!isNextTask) {
+            updateProgress();
+          }
+        }, 300);
+      }
+      // Xử lý nút xem lịch sử
+      function setupHistoryButton() {
+        const historyBtn = document.getElementById("viewHistoryBtn");
+
+        if (historyBtn) {
+          historyBtn.addEventListener("click", function () {
+            alert(
+              "📜 TÍNH NĂNG LỊCH SỬ ĐANG PHÁT TRIỂN!\n\nSẽ sớm ra mắt trong phiên bản tiếp theo.",
+            );
+          });
+        }
+      }
+
+      // Cập nhật lại hàm initStreakDashboard
+      function initStreakDashboard() {
+        updateStreak();
+        updateActivationFooter();
+        setupTaskInteractions();
+        setupDeleteButtons();
+        setupAddTask(); // Sẽ gọi renderPlaceholder()
+        setupHistoryButton();
+        updateProgress();
+      }
+
+      // Gọi khởi tạo sau khi trang load
+      document.addEventListener("DOMContentLoaded", initStreakDashboard);
     </script>
     <!-- CYBER LOADING OVERLAY -->
     <div class="cyber-loading" id="cyberLoading">
@@ -3902,11 +5097,9 @@
           <span id="cyberLoadingText">ĐANG TẢI DỮ LIỆU</span>
           <span id="cyberLoadingPercent" style="margin-left: 10px">0%</span>
         </div>
-
         <div class="cyber-loading-bar">
           <div class="cyber-loading-bar-fill"></div>
         </div>
-
         <div class="cyber-loading-sub">SYSTEM PROCESSING...</div>
       </div>
     </div>
