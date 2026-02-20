@@ -2849,209 +2849,7 @@
       filter: grayscale(100%) brightness(0.7) !important;
       opacity: 0.8 !important;
     }
-
-    /* =========================================================
-       TC-RING — vòng tròn đếm ngày còn lại
-    ========================================================= */
-    .tc-ring {
-      position: absolute;
-      right: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 72px;
-      height: 72px;
-      z-index: 14;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
-    }
-
-    .tc-ring-svg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      transform: rotate(-90deg); /* start từ trên */
-    }
-
-    /* nền vòng tròn mờ */
-    .tc-ring-bg {
-      fill: none;
-      stroke: rgba(255,255,255,0.06);
-      stroke-width: 5;
-    }
-
-    /* vòng fill xanh — progress */
-    .tc-ring-fill {
-      fill: none;
-      stroke: #00e8ff;
-      stroke-width: 5;
-      stroke-linecap: round;
-      /* chu vi r=32: 2πr ≈ 201.06 */
-      stroke-dasharray: 201.06;
-      stroke-dashoffset: 201.06; /* default = 0% */
-      filter: drop-shadow(0 0 4px rgba(0,230,255,0.7));
-      transition: stroke-dashoffset 1.2s cubic-bezier(.23,1,.32,1);
-    }
-
-    /* glow layer trên fill */
-    .tc-ring-glow {
-      fill: none;
-      stroke: rgba(0,240,255,0.2);
-      stroke-width: 9;
-      stroke-linecap: round;
-      stroke-dasharray: 201.06;
-      stroke-dashoffset: 201.06;
-      transition: stroke-dashoffset 1.2s cubic-bezier(.23,1,.32,1);
-    }
-
-    /* ô 2 Thời hạn: màu vàng */
-    #tcCard1 .tc-ring-fill {
-      stroke: #ffd060;
-      filter: drop-shadow(0 0 4px rgba(255,200,60,0.7));
-    }
-    #tcCard1 .tc-ring-glow {
-      stroke: rgba(255,200,60,0.18);
-    }
-
-    /* ô 3 Trạng thái: màu xanh lá */
-    #tcCard2 .tc-ring-fill {
-      stroke: #00ffb0;
-      filter: drop-shadow(0 0 4px rgba(0,255,176,0.7));
-    }
-    #tcCard2 .tc-ring-glow {
-      stroke: rgba(0,255,176,0.18);
-    }
-
-    /* text số ngày ở giữa */
-    .tc-ring-label {
-      position: relative;
-      z-index: 2;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 15px;
-      font-weight: 700;
-      color: #e0f7ff;
-      text-shadow: 0 0 8px rgba(0,220,255,0.6);
-      line-height: 1;
-      margin-bottom: 2px;
-      text-align: center;
-    }
-
-    #tcCard1 .tc-ring-label { color: #ffd060; text-shadow: 0 0 8px rgba(255,200,60,0.6); }
-    #tcCard2 .tc-ring-label { color: #00ffb0; text-shadow: 0 0 8px rgba(0,255,176,0.6); }
-
-    .tc-ring-sublabel {
-      position: relative;
-      z-index: 2;
-      font-size: 9px;
-      letter-spacing: 1.5px;
-      color: rgba(180,230,255,0.5);
-      text-transform: uppercase;
-      text-align: center;
-      line-height: 1;
-    }
-
-    /* wrapper text ở giữa */
-    .tc-ring > .tc-ring-label,
-    .tc-ring > .tc-ring-sublabel {
-      pointer-events: none;
-    }
-
-    /* center the text block */
-    .tc-ring {
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    /* hover: ring sáng hơn */
-    .target-info .target-card:hover .tc-ring-fill {
-      filter: drop-shadow(0 0 7px rgba(0,230,255,0.95));
-    }
-    #tcCard1:hover .tc-ring-fill { filter: drop-shadow(0 0 7px rgba(255,210,60,0.95)); }
-    #tcCard2:hover .tc-ring-fill { filter: drop-shadow(0 0 7px rgba(0,255,176,0.95)); }
   </style>
-
-  <script>
-  /* =========================================================
-     TC-RING UPDATE — chỉ set stroke-dashoffset và label
-     Không can thiệp vào logic JS của chương trình
-  ========================================================= */
-  (function() {
-    const CIRC = 201.06; // 2π × 32
-
-    function setRing(fillId, glowId, labelId, days, totalDays) {
-      const fill  = document.getElementById(fillId);
-      const glow  = document.getElementById(glowId);
-      const label = document.getElementById(labelId);
-      if (!fill || !glow || !label) return;
-
-      const pct    = totalDays > 0 ? Math.min(1, Math.max(0, days / totalDays)) : 0;
-      const offset = CIRC * (1 - pct); // còn lại bao nhiêu thì fill bấy nhiêu
-      fill.style.strokeDashoffset  = offset;
-      glow.style.strokeDashoffset  = offset;
-
-      // label: chỉ hiện số ngày
-      label.textContent = days > 0 ? days : (days === 0 ? '0' : '—');
-    }
-
-    function tryUpdate() {
-      // --- Ô Thời hạn: lấy totalDays từ examDate ---
-      const LS_EXAM_DATE   = 'n1_exam_date';
-      const DEFAULT_EXAM   = '2026-12-06';
-      const examRaw = localStorage.getItem(LS_EXAM_DATE) || DEFAULT_EXAM;
-      const examDt  = new Date(examRaw);
-      if (!isNaN(examDt)) {
-        const today    = new Date(); today.setHours(0,0,0,0);
-        const totalMax = 365; // base 1 năm cho vòng tròn
-        const daysLeft = Math.max(0, Math.round((examDt - today) / 86400000));
-        setRing('tcRingFill1', 'tcRingGlow1', 'tcRingDays1', daysLeft, totalMax);
-      }
-
-      // --- Ô Trạng thái: lấy từ n1_expiry_date ---
-      const expiryRaw = localStorage.getItem('n1_expiry_date');
-      if (expiryRaw) {
-        const expDt = new Date(expiryRaw);
-        if (!isNaN(expDt)) {
-          const today    = new Date(); today.setHours(0,0,0,0);
-          const totalMax = 365;
-          const daysLeft = Math.max(0, Math.ceil((expDt - today) / 86400000));
-          setRing('tcRingFill2', 'tcRingGlow2', 'tcRingDays2', daysLeft, totalMax);
-        }
-      } else {
-        // Chưa có expiry → ẩn ring hoặc giữ placeholder
-        const label = document.getElementById('tcRingDays2');
-        if (label) label.textContent = '∞';
-        const fill = document.getElementById('tcRingFill2');
-        const glow = document.getElementById('tcRingGlow2');
-        if (fill) fill.style.strokeDashoffset = 0; // full circle
-        if (glow) glow.style.strokeDashoffset = 0;
-      }
-    }
-
-    // Chạy sau khi DOM load xong + delay nhỏ để JS chương trình chạy trước
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', function() { setTimeout(tryUpdate, 400); });
-    } else {
-      setTimeout(tryUpdate, 400);
-    }
-
-    // Lắng nghe khi localStorage thay đổi (kích hoạt license)
-    window.addEventListener('storage', function(e) {
-      if (e.key === 'n1_expiry_date' || e.key === 'n1_exam_date') tryUpdate();
-    });
-
-    // Cũng poll nhẹ để bắt lần đầu set từ JS chương trình
-    let attempts = 0;
-    const poll = setInterval(function() {
-      tryUpdate();
-      if (++attempts >= 10) clearInterval(poll);
-    }, 600);
-
-    // Expose để JS chương trình có thể gọi nếu cần
-    window.tcRingUpdate = tryUpdate;
-  })();
-  </script>
 </head>
 
 <body>
@@ -3135,7 +2933,7 @@
       <main class="main-content">
         <section class="mission-panel">
           <h2 class="panel-title">
-            <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
+            <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
           </h2>
 
           <div class="target-info">
@@ -3206,15 +3004,6 @@
               </div>
               <div class="tc-right">
                 <canvas id="tcCanvas1"></canvas>
-                <div class="tc-ring" id="tcRing1">
-                  <svg class="tc-ring-svg" viewBox="0 0 80 80">
-                    <circle class="tc-ring-bg"    cx="40" cy="40" r="32" />
-                    <circle class="tc-ring-fill"  cx="40" cy="40" r="32" id="tcRingFill1"/>
-                    <circle class="tc-ring-glow"  cx="40" cy="40" r="32" id="tcRingGlow1"/>
-                  </svg>
-                  <div class="tc-ring-label" id="tcRingDays1">—</div>
-                  <div class="tc-ring-sublabel">ngày</div>
-                </div>
                 <div class="tc-fade"></div>
                 <div class="tc-sep">
                   <svg viewBox="0 0 200 130" preserveAspectRatio="none" fill="none">
@@ -3262,15 +3051,6 @@
               </div>
               <div class="tc-right">
                 <canvas id="tcCanvas2"></canvas>
-                <div class="tc-ring" id="tcRing2">
-                  <svg class="tc-ring-svg" viewBox="0 0 80 80">
-                    <circle class="tc-ring-bg"    cx="40" cy="40" r="32" />
-                    <circle class="tc-ring-fill"  cx="40" cy="40" r="32" id="tcRingFill2"/>
-                    <circle class="tc-ring-glow"  cx="40" cy="40" r="32" id="tcRingGlow2"/>
-                  </svg>
-                  <div class="tc-ring-label" id="tcRingDays2">—</div>
-                  <div class="tc-ring-sublabel">ngày</div>
-                </div>
                 <div class="tc-fade"></div>
                 <div class="tc-sep">
                   <svg viewBox="0 0 200 130" preserveAspectRatio="none" fill="none">
