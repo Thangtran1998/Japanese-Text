@@ -2980,13 +2980,82 @@
       filter: drop-shadow(0 0 9px rgba(0, 255, 176, 1));
     }
 
-    /* Đảm bảo phần nội dung chiếm hết không gian còn lại */
+    /* ===== CĂN CHỈNH CHIỀU RỘNG TASK GIỮA 2 CỘT ===== */
+
+    /* 1. KHÓA CHIỀU DÀI CÁC Ô TASK - Đảm bảo các ô task có cùng kích thước */
+    .current-tasks .task-item,
+    .next-tasks .task-item {
+      width: 100%;
+      /* Chiếm toàn bộ chiều rộng cột */
+      min-width: 200px;
+      /* Chiều rộng tối thiểu */
+      max-width: 300px;
+      /* Chiều rộng tối đa */
+      box-sizing: border-box;
+      /* Tính kích thước bao gồm padding và border */
+    }
+
+    /* 2. CHIỀU RỘNG CÁC Ô TASK BẰNG NHAU - Container 2 cột phải bằng nhau */
+    .dashboard-grid {
+      grid-template-columns: 1fr 1fr;
+      /* 2 cột bằng nhau */
+      gap: 25px;
+    }
+
+    /* 3. PHẦN NỘI DUNG TEXT - Chiếm không gian linh hoạt */
     .current-tasks .task-content,
     .next-tasks .task-content {
       flex: 1;
       /* Chiếm toàn bộ không gian còn lại */
       min-width: 0;
       /* Cho phép co nhỏ hơn nội dung */
+      overflow: hidden;
+      /* Ẩn phần tràn */
+    }
+
+    /* 4. XỬ LÝ TEXT DÀI - Cắt với dấu "..." thay vì xuống dòng */
+    .task-name {
+      white-space: nowrap;
+      /* Không xuống dòng */
+      overflow: hidden;
+      /* Ẩn phần text thừa */
+      text-overflow: ellipsis;
+      /* Thêm dấu "..." ở cuối */
+      display: block;
+      /* Hiển thị dạng block */
+    }
+
+    /* 5. GIỮ KÍCH THƯỚC CỐ ĐỊNH CHO CHECKBOX, BULLET, NÚT XÓA */
+    .current-tasks .task-checkbox,
+    .next-tasks .task-bullet {
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+      /* Không bị co lại */
+    }
+
+    .next-tasks .task-delete {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+      /* Không bị co lại */
+      opacity: 0;
+      /* Ẩn mặc định */
+      transition: opacity 0.3s;
+    }
+
+    /* Hiện nút xóa khi hover */
+    .task-item:hover .task-delete {
+      opacity: 1;
+    }
+
+    /* 6. ĐẢM BẢO KHOẢNG CÁCH GIỮA CÁC PHẦN TỬ ĐỒNG NHẤT */
+    .current-tasks .task-item,
+    .next-tasks .task-item {
+      gap: 12px;
+      /* Khoảng cách giữa checkbox/bullet, text, nút xóa */
+      padding: 10px 12px;
+      /* Padding đồng nhất */
     }
   </style>
 </head>
