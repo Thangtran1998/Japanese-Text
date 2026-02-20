@@ -3271,6 +3271,14 @@
 
       function initAudioPlayer() {
         initMainAudio();
+        // ===== THÊM ĐOẠN NÀY ĐỂ ĐẢM BẢO VOLUME 50% =====
+    const volumeSlider = document.getElementById("mainVolumeSlider");
+    if (mainAudio && volumeSlider) {
+        mainAudio.volume = 0.5;
+        volumeSlider.value = 0.5;
+        previousVolume = 0.5; // Cập nhật previousVolume
+        updateVolumeIcon();
+    }
 
         // Load mặc định ngay sau khi init
         loadFromHtmlSelectedOption();
@@ -3372,10 +3380,12 @@
           return;
         }
         console.log("Đã tìm thấy mainAudio");
+        mainAudio.volume = 0.5;  // 0.5 = 50%
 
         // Volume control
         const volumeSlider = document.getElementById("mainVolumeSlider");
         if (volumeSlider) {
+        volumeSlider.value = 0.5;
           volumeSlider.addEventListener("input", function (e) {
             if (mainAudio) {
               const volume = parseFloat(e.target.value);
