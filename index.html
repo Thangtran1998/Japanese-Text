@@ -1297,6 +1297,13 @@
       /* Tắt hiệu ứng nhấp nháy text */
     }
 
+    /* Tắt scan line khi hết hạn */
+    .target-card:nth-child(2).warning-expired .tc-scan {
+      display: none !important;
+      opacity: 0 !important;
+      animation: none !important;
+    }
+
     @keyframes expiredPulse {
       0% {
         box-shadow:
@@ -2852,7 +2859,7 @@
       <main class="main-content">
         <section class="mission-panel">
           <h2 class="panel-title">
-            <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
+            <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
           </h2>
 
           <div class="target-info">
