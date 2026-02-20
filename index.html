@@ -2858,7 +2858,7 @@
       position: absolute;
       right: 10px;
       top: 50%;
-      transform: translateY(-58%); /* dịch lên trên để tránh icon góc phải dưới */
+      transform: translateY(-50%); /* dịch lên trên để tránh icon góc phải dưới */
       width: 96px;
       height: 96px;
       z-index: 13;
@@ -2867,6 +2867,17 @@
       align-items: center;
       justify-content: center;
     }
+    /* Điều chỉnh vị trí ring cho ô Thời hạn (dịch sang trái và xuống dưới) */
+#tcCard1 .tc-ring {
+  right: 25px;  /* Tăng từ 10px lên 25px để dịch sang trái */
+  top: 55%;     /* Dịch xuống dưới 5% */
+}
+
+/* Điều chỉnh vị trí ring cho ô Trạng thái (dịch sang trái và xuống dưới) */
+#tcCard2 .tc-ring {
+  right: 25px;  /* Tăng từ 10px lên 25px để dịch sang trái */
+  top: 55%;     /* Dịch xuống dưới 5% */
+}
 
     .tc-ring-svg {
       position: absolute;
@@ -3026,7 +3037,7 @@
       <main class="main-content">
         <section class="mission-panel">
           <h2 class="panel-title">
-            <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
+            <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
           </h2>
 
           <div class="target-info">
