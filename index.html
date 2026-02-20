@@ -1500,7 +1500,7 @@
       color: #999999 !important;
     }
 
-    /* ===== CHỈNH SỬA Ô MỤC TIÊU (CARD ĐẦU TIÊN) ===== */
+    /* ===== CHỈNH SỬA Ô MỤC TIÊU GIỐNG FILE MẪU ===== */
     .target-card:first-child {
       background: linear-gradient(135deg, #071828 0%, #040f1e 60%, #050d1c 100%);
       border: 1.5px solid rgba(0, 210, 255, .35) !important;
@@ -1514,6 +1514,7 @@
       position: relative;
       overflow: hidden;
       padding: 20px !important;
+      min-height: 170px;
     }
 
     .target-card:first-child:hover {
@@ -1528,7 +1529,7 @@
       transform: translateY(-3px) scale(1.01);
     }
 
-    /* Top cyan border line cho card đầu tiên */
+    /* Top cyan border line */
     .target-card:first-child::before {
       content: '';
       position: absolute;
@@ -1552,7 +1553,7 @@
       opacity: 1;
     }
 
-    /* Corner glow brackets cho card đầu tiên */
+    /* Corner glow brackets */
     .target-card:first-child::after {
       content: '';
       position: absolute;
@@ -1571,7 +1572,7 @@
       opacity: 1;
     }
 
-    /* Chỉnh style cho phần tử bên trong card đầu tiên */
+    /* Card title */
     .target-card:first-child .card-title {
       display: flex;
       align-items: center;
@@ -1590,6 +1591,7 @@
       width: 14px;
     }
 
+    /* Card value (JLPT N1) */
     .target-card:first-child .card-value {
       font-family: 'Orbitron', sans-serif;
       font-size: 30px;
@@ -1611,6 +1613,7 @@
         0 0 80px rgba(0, 180, 255, .2);
     }
 
+    /* Card subtitle (Cấp độ cao nhất) */
     .target-card:first-child .card-subtitle {
       font-size: 11.5px;
       font-weight: 400;
@@ -1619,7 +1622,7 @@
       margin-bottom: 12px;
     }
 
-    /* Active badge cho card đầu tiên */
+    /* Active badge */
     .target-card:first-child .active-badge {
       display: flex;
       align-items: center;
@@ -1653,7 +1656,7 @@
       }
     }
 
-    /* Corner brackets cho card đầu tiên */
+    /* Corner brackets mini */
     .target-card:first-child .corner-mini {
       position: absolute;
       width: 16px;
@@ -1697,7 +1700,7 @@
       border-radius: 0 0 3px 0;
     }
 
-    /* Scan line cho card đầu tiên */
+    /* Scan line mini */
     .target-card:first-child .scan-line-mini {
       position: absolute;
       left: 0;
@@ -1736,7 +1739,7 @@
       }
     }
 
-    /* Particles cho card đầu tiên */
+    /* Particles mini */
     .target-card:first-child .particle-mini {
       position: absolute;
       border-radius: 50%;
@@ -2840,7 +2843,7 @@
       <main class="main-content">
         <section class="mission-panel">
           <h2 class="panel-title">
-            <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
+            <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
           </h2>
 
           <div class="target-info">
