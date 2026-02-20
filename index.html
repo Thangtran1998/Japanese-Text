@@ -2979,81 +2979,72 @@
     #tcCard2:hover .tc-ring-fill--green {
       filter: drop-shadow(0 0 9px rgba(0, 255, 176, 1));
     }
+    /* =========================================================
+   TASK 2 CỘT: đồng bộ width + fixed height + ellipsis
+   DÁN Ở CUỐI <style>
+========================================================= */
 
-    /* ===== CĂN CHỈNH CHIỀU RỘNG TASK GIỮA 2 CỘT ===== */
+/* 0) Chọn 1 chiều cao cố định cho mỗi task.
+   Nếu bạn muốn "giữ như ban đầu", hãy chỉnh số này cho khớp đúng
+   với cảm giác trước khi text dài làm ô cao lên. */
+:root{
+  --task-row-h: 52px; /* <-- chỉnh 48/52/56 tùy UI của bạn */
+}
 
-    /* 1. GIỮ NGUYÊN KÍCH THƯỚC BAN ĐẦU, CHỈ ĐẢM BẢO 2 CỘT BẰNG NHAU */
-    .dashboard-grid {
-      grid-template-columns: 1fr 1fr !important;
-      /* 2 cột bằng nhau */
-      gap: 25px;
-    }
+/* 1) Task list: đổi từ flex sang grid để:
+   - khoảng cách đều
+   - mỗi item auto “đúng 1 hàng” với chiều cao cố định */
+.dashboard-grid .task-list{
+  display: grid;
+  grid-auto-rows: var(--task-row-h);
+  row-gap: 8px;
+  /* giữ các thuộc tính scroll bạn đang có */
+}
 
-    /* 2. KHÔNG ĐẶT min-width, max-width - GIỮ KÍCH THƯỚC TỰ NHIÊN BAN ĐẦU */
-    .current-tasks .task-item,
-    .next-tasks .task-item {
-      width: 100%;
-      /* Chiếm toàn bộ chiều rộng cột */
-      box-sizing: border-box;
-      /* Tính kích thước bao gồm padding */
-      /* KHÔNG đặt min-width, max-width - giữ kích thước tự nhiên */
-    }
+/* 2) Mỗi task: ép chiều cao cố định, full width theo cột */
+.dashboard-grid .task-item,
+.dashboard-grid .task-placeholder{
+  height: var(--task-row-h);
+  width: 100%;
+  min-height: var(--task-row-h);
+  max-height: var(--task-row-h);
 
-    /* 3. PHẦN NỘI DUNG TEXT - Chiếm không gian linh hoạt */
-    .current-tasks .task-content,
-    .next-tasks .task-content {
-      flex: 1;
-      /* Chiếm toàn bộ không gian còn lại */
-      min-width: 0;
-      /* Cho phép co nhỏ hơn nội dung */
-      overflow: hidden;
-      /* Ẩn phần tràn */
-    }
+  display: flex;
+  align-items: center;
 
-    /* 4. XỬ LÝ TEXT DÀI - Cắt với dấu "..." thay vì xuống dòng */
-    .task-name {
-      white-space: nowrap;
-      /* Không xuống dòng */
-      overflow: hidden;
-      /* Ẩn phần text thừa */
-      text-overflow: ellipsis;
-      /* Thêm dấu "..." ở cuối */
-      display: block;
-      /* Hiển thị dạng block */
-    }
+  /* đảm bảo padding không làm “phình” chiều cao */
+  box-sizing: border-box;
+  overflow: hidden; /* bắt buộc để ellipsis hoạt động ổn định */
+}
 
-    /* 5. GIỮ KÍCH THƯỚC CỐ ĐỊNH CHO CHECKBOX, BULLET, NÚT XÓA */
-    .current-tasks .task-checkbox,
-    .next-tasks .task-bullet {
-      width: 22px;
-      height: 22px;
-      flex-shrink: 0;
-      /* Không bị co lại */
-    }
+/* 3) CỰC QUAN TRỌNG: với flex, muốn ellipsis chạy,
+      phần text phải có min-width:0 */
+.dashboard-grid .task-item > *,
+.dashboard-grid .task-placeholder > *{
+  min-width: 0;
+}
 
-    .next-tasks .task-delete {
-      width: 24px;
-      height: 24px;
-      flex-shrink: 0;
-      /* Không bị co lại */
-      opacity: 0;
-      /* Ẩn mặc định */
-      transition: opacity 0.3s;
-    }
+/* 4) Cắt text + "..." (không xuống dòng)
+   Ưu tiên target đúng phần text nếu bạn có class riêng.
+   Nếu chưa có class text, phần dưới vẫn “chặn” phần chữ phổ biến. */
 
-    /* Hiện nút xóa khi hover */
-    .task-item:hover .task-delete {
-      opacity: 1;
-    }
+/* Nếu task text của bạn có class như .task-text / .task-title / .task-name */
+.dashboard-grid .task-item .task-text,
+.dashboard-grid .task-item .task-title,
+.dashboard-grid .task-item .task-name{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-    /* 6. GIỮ NGUYÊN KHOẢNG CÁCH BAN ĐẦU */
-    .current-tasks .task-item,
-    .next-tasks .task-item {
-      gap: 12px;
-      /* Giữ khoảng cách ban đầu */
-      padding: 10px 12px;
-      /* Giữ padding ban đầu */
-    }
+/* Fallback: nếu trong task chỉ có span/p/div chứa chữ */
+.dashboard-grid .task-item span,
+.dashboard-grid .task-item p,
+.dashboard-grid .task-item div{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
   </style>
 </head>
 
@@ -3138,7 +3129,7 @@
       <main class="main-content">
         <section class="mission-panel">
           <h2 class="panel-title">
-            <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
+            <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
           </h2>
 
           <div class="target-info">
