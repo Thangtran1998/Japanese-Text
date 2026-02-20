@@ -1283,25 +1283,94 @@
       color: #ffaaaa !important;
     }
 
+    /* ===== Ô THỜI HẠN KHI HẾT HẠN ===== */
     .target-card:nth-child(2).warning-expired {
       background: rgba(30, 30, 30, 0.7) !important;
       border: 1px solid rgba(100, 100, 100, 0.5) !important;
+      /* animation: expiredPulse 3s infinite alternate !important; */
+      /* ĐÃ TẮT HIỆU ỨNG */
     }
 
-    /* Đổi màu tháng/năm từ vàng sang xám khi hết hạn */
-    .target-card:nth-child(2).warning-expired .card-value.special {
-      color: #888888 !important;
-      /* Màu xám */
-      text-shadow: 0 0 10px rgba(136, 136, 136, 0.5) !important;
-      animation: none !important;
-      /* Tắt hiệu ứng nhấp nháy text */
-    }
-
-    /* Tắt scan line khi hết hạn */
+    /* TẮT HOÀN TOÀN SCAN LINE */
     .target-card:nth-child(2).warning-expired .tc-scan {
       display: none !important;
       opacity: 0 !important;
       animation: none !important;
+    }
+
+    /* TẮT SPARKLES */
+    .target-card:nth-child(2).warning-expired .sparkle {
+      display: none !important;
+    }
+
+    /* CHUYỂN MÀU ĐƯỜNG SPLINE SANG XÁM */
+    .target-card:nth-child(2).warning-expired .tc-sep svg path:nth-child(3) {
+      stroke: #666666 !important;
+      opacity: 0.25 !important;
+    }
+
+    .target-card:nth-child(2).warning-expired .tc-sep svg path:nth-child(2) {
+      stroke: #444444 !important;
+      opacity: 0.15 !important;
+    }
+
+    .target-card:nth-child(2).warning-expired .tc-sep svg path:nth-child(4) {
+      stroke: #888888 !important;
+      opacity: 0.2 !important;
+    }
+
+    /* GIẢM ĐỘ SÁNG ICON */
+    .target-card:nth-child(2).warning-expired .tc-icon {
+      opacity: 0.15 !important;
+      color: #888888 !important;
+    }
+
+    /* ===== QUAN TRỌNG: CHUYỂN TẤT CẢ TEXT SANG MÀU XÁM ===== */
+
+    /* Tiêu đề "Thời hạn" */
+    .target-card:nth-child(2).warning-expired .card-title {
+      color: #aaaaaa !important;
+    }
+
+    .target-card:nth-child(2).warning-expired .card-title i {
+      color: #aaaaaa !important;
+    }
+
+    /* Tháng năm (JLPT N1) - ĐANG MÀU VÀNG, CHUYỂN SANG XÁM */
+    .target-card:nth-child(2).warning-expired .card-value.special {
+      color: #888888 !important;
+      text-shadow: 0 0 10px rgba(136, 136, 136, 0.5) !important;
+      animation: none !important;
+    }
+
+    /* Dòng "Kỳ thi tháng 7 năm 2026" */
+    .target-card:nth-child(2).warning-expired .card-subtitle {
+      color: #999999 !important;
+    }
+
+    /* Dòng "Còn ..." */
+    .target-card:nth-child(2).warning-expired #examCountdown,
+    .target-card:nth-child(2).warning-expired .card-subtitle:last-of-type {
+      color: #999999 !important;
+    }
+
+    /* Tất cả các text khác trong card (nếu có) */
+    .target-card:nth-child(2).warning-expired div,
+    .target-card:nth-child(2).warning-expired span,
+    .target-card:nth-child(2).warning-expired p {
+      color: #999999 !important;
+    }
+
+    /* Đặc biệt cho các phần tử có thể có màu riêng */
+    .target-card:nth-child(2).warning-expired [class*="card-"] {
+      color: #999999 !important;
+    }
+
+    /* Giữ nguyên màu xám cho tất cả, không có ngoại lệ */
+    .target-card:nth-child(2).warning-expired * {
+      color: #999999 !important;
+      border-color: #666666 !important;
+      text-shadow: none !important;
     }
 
     @keyframes expiredPulse {
@@ -2859,7 +2928,7 @@
       <main class="main-content">
         <section class="mission-panel">
           <h2 class="panel-title">
-            <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
+            <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
           </h2>
 
           <div class="target-info">
