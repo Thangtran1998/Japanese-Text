@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -2858,7 +2859,8 @@
       position: absolute;
       right: 10px;
       top: 50%;
-      transform: translateY(-50%); /* dịch lên trên để tránh icon góc phải dưới */
+      transform: translateY(-50%);
+      /* dịch lên trên để tránh icon góc phải dưới */
       width: 96px;
       height: 96px;
       z-index: 13;
@@ -2867,29 +2869,35 @@
       align-items: center;
       justify-content: center;
     }
-    /* Điều chỉnh vị trí ring cho ô Thời hạn (dịch sang trái và xuống dưới) */
-#tcCard1 .tc-ring {
-  right: 25px;  /* Tăng từ 10px lên 25px để dịch sang trái */
-  top: 55%;     /* Dịch xuống dưới 5% */
-}
 
-/* Điều chỉnh vị trí ring cho ô Trạng thái (dịch sang trái và xuống dưới) */
-#tcCard2 .tc-ring {
-  right: 25px;  /* Tăng từ 10px lên 25px để dịch sang trái */
-  top: 55%;     /* Dịch xuống dưới 5% */
-}
+    /* Điều chỉnh vị trí ring cho ô Thời hạn (dịch sang trái và xuống dưới) */
+    #tcCard1 .tc-ring {
+      right: 25px;
+      /* Tăng từ 10px lên 25px để dịch sang trái */
+      top: 55%;
+      /* Dịch xuống dưới 5% */
+    }
+
+    /* Điều chỉnh vị trí ring cho ô Trạng thái (dịch sang trái và xuống dưới) */
+    #tcCard2 .tc-ring {
+      right: 25px;
+      /* Tăng từ 10px lên 25px để dịch sang trái */
+      top: 55%;
+      /* Dịch xuống dưới 5% */
+    }
 
     .tc-ring-svg {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
-      transform: rotate(-90deg); /* bắt đầu từ đỉnh trên */
+      transform: rotate(-90deg);
+      /* bắt đầu từ đỉnh trên */
     }
 
     .tc-ring-track {
       fill: none;
-      stroke: rgba(255,255,255,.06);
+      stroke: rgba(255, 255, 255, .06);
       stroke-width: 5;
     }
 
@@ -2899,16 +2907,17 @@
       stroke-linecap: round;
       stroke-dasharray: 238.76;
       stroke-dashoffset: 238.76;
-      transition: stroke-dashoffset 1.4s cubic-bezier(.23,1,.32,1);
+      transition: stroke-dashoffset 1.4s cubic-bezier(.23, 1, .32, 1);
     }
 
     .tc-ring-fill--yellow {
       stroke: #ffd060;
-      filter: drop-shadow(0 0 5px rgba(255,200,60,.8));
+      filter: drop-shadow(0 0 5px rgba(255, 200, 60, .8));
     }
+
     .tc-ring-fill--green {
       stroke: #00ffb0;
-      filter: drop-shadow(0 0 5px rgba(0,255,176,.8));
+      filter: drop-shadow(0 0 5px rgba(0, 255, 176, .8));
     }
 
     .tc-ring-glow {
@@ -2917,11 +2926,16 @@
       stroke-linecap: round;
       stroke-dasharray: 238.76;
       stroke-dashoffset: 238.76;
-      transition: stroke-dashoffset 1.4s cubic-bezier(.23,1,.32,1);
+      transition: stroke-dashoffset 1.4s cubic-bezier(.23, 1, .32, 1);
     }
 
-    .tc-ring-glow--yellow { stroke: rgba(255,200,60,.15); }
-    .tc-ring-glow--green  { stroke: rgba(0,255,176,.15); }
+    .tc-ring-glow--yellow {
+      stroke: rgba(255, 200, 60, .15);
+    }
+
+    .tc-ring-glow--green {
+      stroke: rgba(0, 255, 176, .15);
+    }
 
     .tc-ring-inner {
       position: relative;
@@ -2939,20 +2953,32 @@
       line-height: 1;
     }
 
-    #tcRingDays1 { color: #ffd060; text-shadow: 0 0 10px rgba(255,200,60,.7); }
-    #tcRingDays2 { color: #00ffb0; text-shadow: 0 0 10px rgba(0,255,176,.7); }
+    #tcRingDays1 {
+      color: #ffd060;
+      text-shadow: 0 0 10px rgba(255, 200, 60, .7);
+    }
+
+    #tcRingDays2 {
+      color: #00ffb0;
+      text-shadow: 0 0 10px rgba(0, 255, 176, .7);
+    }
 
     .tc-ring-label {
       font-size: 8.5px;
       letter-spacing: 1.5px;
-      color: rgba(180,230,255,.4);
+      color: rgba(180, 230, 255, .4);
       text-transform: uppercase;
       line-height: 1;
     }
 
     /* hover: glow sáng hơn */
-    #tcCard1:hover .tc-ring-fill--yellow { filter: drop-shadow(0 0 9px rgba(255,210,60,1)); }
-    #tcCard2:hover .tc-ring-fill--green  { filter: drop-shadow(0 0 9px rgba(0,255,176,1)); }
+    #tcCard1:hover .tc-ring-fill--yellow {
+      filter: drop-shadow(0 0 9px rgba(255, 210, 60, 1));
+    }
+
+    #tcCard2:hover .tc-ring-fill--green {
+      filter: drop-shadow(0 0 9px rgba(0, 255, 176, 1));
+    }
   </style>
 </head>
 
@@ -3136,9 +3162,9 @@
                 </div>
                 <div class="tc-ring" id="tcRing1">
                   <svg class="tc-ring-svg" viewBox="0 0 96 96">
-                    <circle class="tc-ring-track" cx="48" cy="48" r="38"/>
-                    <circle class="tc-ring-fill tc-ring-fill--yellow" cx="48" cy="48" r="38" id="tcRingFill1"/>
-                    <circle class="tc-ring-glow tc-ring-glow--yellow" cx="48" cy="48" r="38" id="tcRingGlow1"/>
+                    <circle class="tc-ring-track" cx="48" cy="48" r="38" />
+                    <circle class="tc-ring-fill tc-ring-fill--yellow" cx="48" cy="48" r="38" id="tcRingFill1" />
+                    <circle class="tc-ring-glow tc-ring-glow--yellow" cx="48" cy="48" r="38" id="tcRingGlow1" />
                   </svg>
                   <div class="tc-ring-inner">
                     <div class="tc-ring-days" id="tcRingDays1">—</div>
@@ -3194,9 +3220,9 @@
                 </div>
                 <div class="tc-ring" id="tcRing2">
                   <svg class="tc-ring-svg" viewBox="0 0 96 96">
-                    <circle class="tc-ring-track" cx="48" cy="48" r="38"/>
-                    <circle class="tc-ring-fill tc-ring-fill--green" cx="48" cy="48" r="38" id="tcRingFill2"/>
-                    <circle class="tc-ring-glow tc-ring-glow--green" cx="48" cy="48" r="38" id="tcRingGlow2"/>
+                    <circle class="tc-ring-track" cx="48" cy="48" r="38" />
+                    <circle class="tc-ring-fill tc-ring-fill--green" cx="48" cy="48" r="38" id="tcRingFill2" />
+                    <circle class="tc-ring-glow tc-ring-glow--green" cx="48" cy="48" r="38" id="tcRingGlow2" />
                   </svg>
                   <div class="tc-ring-inner">
                     <div class="tc-ring-days" id="tcRingDays2">—</div>
@@ -5707,20 +5733,20 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
        TC-RING UPDATE — đọc số ngày từ DOM, không can thiệp logic
        chu vi r=38: 2π×38 ≈ 238.76
     ========================================================= */
-    (function() {
-      const CIRC    = 238.76;
+    (function () {
+      const CIRC = 238.76;
       const MAX_DAY = 365; // base 100% = 365 ngày
 
       function setRing(fillId, glowId, labelId, days) {
-        const fill  = document.getElementById(fillId);
-        const glow  = document.getElementById(glowId);
+        const fill = document.getElementById(fillId);
+        const glow = document.getElementById(glowId);
         const label = document.getElementById(labelId);
         if (!fill || !glow || !label) return;
 
         const d = Math.max(0, days);
         label.textContent = d > 0 ? d : (days === 0 ? '0' : '—');
 
-        const pct    = Math.min(1, d / MAX_DAY);
+        const pct = Math.min(1, d / MAX_DAY);
         const offset = CIRC * (1 - pct);
 
         // reset về 0, rồi animate tới giá trị đúng
@@ -5728,7 +5754,7 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
         glow.style.transition = 'none';
         fill.style.strokeDashoffset = CIRC;
         glow.style.strokeDashoffset = CIRC;
-        requestAnimationFrame(function() {
+        requestAnimationFrame(function () {
           fill.style.transition = 'stroke-dashoffset 1.4s cubic-bezier(.23,1,.32,1)';
           glow.style.transition = 'stroke-dashoffset 1.4s cubic-bezier(.23,1,.32,1)';
           fill.style.strokeDashoffset = offset;
@@ -5767,7 +5793,7 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
 
       // Chạy sau DOMContentLoaded + delay để JS chương trình set xong
       if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function() { setTimeout(updateRings, 500); });
+        document.addEventListener('DOMContentLoaded', function () { setTimeout(updateRings, 500); });
       } else {
         setTimeout(updateRings, 500);
       }
@@ -5776,19 +5802,19 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
       function observe(elId, ringFill, ringGlow, ringLabel) {
         const el = document.getElementById(elId);
         if (!el) return;
-        new MutationObserver(function() {
+        new MutationObserver(function () {
           const d = parseDaysFromText(el.textContent || el.innerText);
           if (d !== null) setRing(ringFill, ringGlow, ringLabel, d);
         }).observe(el, { childList: true, subtree: true, characterData: true });
       }
 
       if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function() {
-          observe('examCountdown',  'tcRingFill1', 'tcRingGlow1', 'tcRingDays1');
+        document.addEventListener('DOMContentLoaded', function () {
+          observe('examCountdown', 'tcRingFill1', 'tcRingGlow1', 'tcRingDays1');
           observe('statusSubtitle', 'tcRingFill2', 'tcRingGlow2', 'tcRingDays2');
         });
       } else {
-        observe('examCountdown',  'tcRingFill1', 'tcRingGlow1', 'tcRingDays1');
+        observe('examCountdown', 'tcRingFill1', 'tcRingGlow1', 'tcRingDays1');
         observe('statusSubtitle', 'tcRingFill2', 'tcRingGlow2', 'tcRingDays2');
       }
     })();
@@ -5920,4 +5946,5 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
     </div>
   </div>
 </body>
+
 </html>
