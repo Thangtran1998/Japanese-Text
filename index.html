@@ -351,7 +351,7 @@
       font-size: 20px;
       color: #00a8ff;
       text-shadow: 0 0 10px rgba(0, 168, 255, 0.7);
-      animation: lockPulse 1.5s infinite alternate;
+      animation: lockPulse 2.5s infinite alternate;
     }
 
     @keyframes lockPulse {
@@ -727,7 +727,8 @@
       background: rgba(0, 150, 255, 0.1);
       border: 1px solid rgba(0, 150, 255, 0.3);
       border-radius: 10px;
-      animation: float 20s infinite linear;
+      animation: float 25s infinite linear;
+      will-change: transform;
     }
 
     .floating-element:nth-child(1) {
@@ -805,16 +806,17 @@
           transparent,
           #00ffcc,
           transparent);
-      animation: scan 4s linear infinite;
+      animation: scan 6s linear infinite;
+      will-change: transform;
     }
 
     @keyframes scan {
       0% {
-        top: 0%;
+        transform: translateY(0vh);
       }
 
       100% {
-        top: 100%;
+        transform: translateY(100vh);
       }
     }
 
@@ -1073,7 +1075,8 @@
     .target-card:nth-child(2).warning-yellow {
       background: rgba(60, 40, 0, 0.7) !important;
       border: 1px solid rgba(255, 200, 0, 0.6) !important;
-      animation: cyberPulse 2s infinite alternate !important;
+      animation: cyberPulse 3s infinite alternate !important;
+      will-change: box-shadow;
     }
 
     @keyframes cyberPulse {
@@ -1082,7 +1085,6 @@
           0 0 10px rgba(255, 200, 0, 0.3),
           0 0 20px rgba(255, 150, 0, 0.2),
           inset 0 0 15px rgba(255, 200, 0, 0.1);
-        background: rgba(60, 40, 0, 0.7);
       }
 
       100% {
@@ -1091,7 +1093,6 @@
           0 0 40px rgba(255, 150, 0, 0.4),
           0 0 60px rgba(255, 100, 0, 0.2),
           inset 0 0 25px rgba(255, 200, 0, 0.2);
-        background: rgba(80, 60, 0, 0.8);
       }
     }
 
@@ -1099,16 +1100,17 @@
       content: "";
       position: absolute;
       top: 0;
-      left: -100%;
+      left: 0;
       width: 100%;
       height: 2px;
       background: linear-gradient(90deg, transparent, #ffcc00, transparent);
-      animation: borderScan 3s linear infinite;
+      animation: borderScan 4s linear infinite;
+      will-change: transform, opacity;
     }
 
     @keyframes borderScan {
       0% {
-        left: -100%;
+        transform: translateX(-100%);
         opacity: 0;
       }
 
@@ -1117,7 +1119,7 @@
       }
 
       100% {
-        left: 100%;
+        transform: translateX(100%);
         opacity: 0;
       }
     }
@@ -1135,7 +1137,7 @@
       height: 20px;
       border-radius: 50%;
       background: radial-gradient(circle, #ffcc00, transparent 70%);
-      animation: particleGlow 1.5s ease-in-out infinite alternate;
+      animation: particleGlow 2.5s ease-in-out infinite alternate;
       filter: blur(1px);
     }
 
@@ -1162,7 +1164,7 @@
     .target-card:nth-child(2).warning-yellow .card-value.special {
       color: #ffcc00 !important;
       text-shadow: 0 0 15px rgba(255, 204, 0, 0.8) !important;
-      animation: textGlow 1.5s ease-in-out infinite alternate;
+      animation: textGlow 2.5s ease-in-out infinite alternate;
     }
 
     @keyframes textGlow {
@@ -1184,7 +1186,8 @@
     .target-card:nth-child(2).warning-red {
       background: rgba(60, 0, 0, 0.7) !important;
       border: 1px solid rgba(255, 50, 50, 0.8) !important;
-      animation: redPulse 1.5s infinite alternate !important;
+      animation: redPulse 2s infinite alternate !important;
+      will-change: box-shadow;
     }
 
     @keyframes redPulse {
@@ -1193,7 +1196,6 @@
           0 0 15px rgba(255, 50, 50, 0.4),
           0 0 30px rgba(255, 0, 0, 0.3),
           inset 0 0 20px rgba(255, 50, 50, 0.2);
-        background: rgba(60, 0, 0, 0.7);
       }
 
       100% {
@@ -1202,12 +1204,11 @@
           0 0 50px rgba(255, 0, 0, 0.5),
           0 0 75px rgba(200, 0, 0, 0.3),
           inset 0 0 35px rgba(255, 50, 50, 0.3);
-        background: rgba(80, 0, 0, 0.9);
       }
     }
 
     .target-card:nth-child(2).warning-red::before {
-      animation: redBorderScan 2s linear infinite !important;
+      animation: redBorderScan 3s linear infinite !important;
       background: linear-gradient(90deg,
           transparent,
           #ff3333,
@@ -1216,7 +1217,7 @@
 
     @keyframes redBorderScan {
       0% {
-        left: -100%;
+        transform: translateX(-100%);
         opacity: 0;
       }
 
@@ -1225,7 +1226,7 @@
       }
 
       100% {
-        left: 100%;
+        transform: translateX(100%);
         opacity: 0;
       }
     }
@@ -1238,7 +1239,7 @@
       background: radial-gradient(circle,
           #ff3333,
           transparent 70%) !important;
-      animation: redParticleGlow 1s ease-in-out infinite alternate !important;
+      animation: redParticleGlow 2s ease-in-out infinite alternate !important;
     }
 
     @keyframes redParticleGlow {
@@ -1264,7 +1265,7 @@
     .target-card:nth-child(2).warning-red .card-value.special {
       color: #ff6666 !important;
       text-shadow: 0 0 20px rgba(255, 50, 50, 0.9) !important;
-      animation: redTextGlow 1s ease-in-out infinite alternate !important;
+      animation: redTextGlow 2s ease-in-out infinite alternate !important;
     }
 
     @keyframes redTextGlow {
@@ -1447,18 +1448,20 @@
     .target-card:nth-child(3).warning-yellow {
       background: rgba(60, 40, 0, 0.7) !important;
       border: 1px solid rgba(255, 200, 0, 0.6) !important;
-      animation: cyberPulse 2s infinite alternate !important;
+      animation: cyberPulse 3s infinite alternate !important;
+      will-change: box-shadow;
     }
 
     .target-card:nth-child(3).warning-yellow::before {
       content: "";
       position: absolute;
       top: 0;
-      left: -100%;
+      left: 0;
       width: 100%;
       height: 2px;
       background: linear-gradient(90deg, transparent, #ffcc00, transparent);
-      animation: borderScan 3s linear infinite;
+      animation: borderScan 4s linear infinite;
+      will-change: transform, opacity;
     }
 
     .target-card:nth-child(3).warning-yellow .sparkle {
@@ -1474,7 +1477,7 @@
       height: 20px;
       border-radius: 50%;
       background: radial-gradient(circle, #ffcc00, transparent 70%);
-      animation: particleGlow 1.5s ease-in-out infinite alternate;
+      animation: particleGlow 2.5s ease-in-out infinite alternate;
       filter: blur(1px);
     }
 
@@ -1485,7 +1488,7 @@
     .target-card:nth-child(3).warning-yellow .card-value {
       color: #ffcc00 !important;
       text-shadow: 0 0 15px rgba(255, 204, 0, 0.8) !important;
-      animation: textGlow 1.5s ease-in-out infinite alternate !important;
+      animation: textGlow 2.5s ease-in-out infinite alternate !important;
     }
 
     .target-card:nth-child(3).warning-yellow .card-subtitle {
@@ -1495,11 +1498,12 @@
     .target-card:nth-child(3).warning-red {
       background: rgba(60, 0, 0, 0.7) !important;
       border: 1px solid rgba(255, 50, 50, 0.8) !important;
-      animation: redPulse 1.5s infinite alternate !important;
+      animation: redPulse 2s infinite alternate !important;
+      will-change: box-shadow;
     }
 
     .target-card:nth-child(3).warning-red::before {
-      animation: redBorderScan 2s linear infinite !important;
+      animation: redBorderScan 3s linear infinite !important;
       background: linear-gradient(90deg,
           transparent,
           #ff3333,
@@ -1514,7 +1518,7 @@
       background: radial-gradient(circle,
           #ff3333,
           transparent 70%) !important;
-      animation: redParticleGlow 1s ease-in-out infinite alternate !important;
+      animation: redParticleGlow 2s ease-in-out infinite alternate !important;
     }
 
     .target-card:nth-child(3).warning-red .card-title {
@@ -1524,7 +1528,7 @@
     .target-card:nth-child(3).warning-red .card-value {
       color: #ff6666 !important;
       text-shadow: 0 0 20px rgba(255, 50, 50, 0.9) !important;
-      animation: redTextGlow 1s ease-in-out infinite alternate !important;
+      animation: redTextGlow 2s ease-in-out infinite alternate !important;
     }
 
     .target-card:nth-child(3).warning-red .card-subtitle {
@@ -1538,11 +1542,28 @@
     }
 
     .target-card:nth-child(3).warning-expired::before {
-      animation: expiredBorderScan 4s linear infinite !important;
+      animation: expiredBorderScan 5s linear infinite !important;
       background: linear-gradient(90deg,
           transparent,
           #888888,
           transparent) !important;
+      left: 0 !important;
+    }
+
+    @keyframes expiredBorderScan {
+      0% {
+        transform: translateX(-100%);
+        opacity: 0;
+      }
+
+      50% {
+        opacity: 0.6;
+      }
+
+      100% {
+        transform: translateX(100%);
+        opacity: 0;
+      }
     }
 
     .target-card:nth-child(3).warning-expired .sparkle {
@@ -1889,7 +1910,7 @@
     /* ===== SKELETON LOADING ===== */
     .skeleton-container {
       width: 100%;
-      animation: skeleton-fade 1.5s ease-in-out infinite;
+      animation: skeleton-fade 2.5s ease-in-out infinite;
     }
 
     .skeleton-item {
@@ -1898,7 +1919,7 @@
           rgba(0, 80, 120, 0.5) 50%,
           rgba(0, 40, 80, 0.3) 75%);
       background-size: 200% 100%;
-      animation: skeleton-shimmer 1.5s infinite;
+      animation: skeleton-shimmer 2.5s infinite;
       border-radius: 10px;
       height: 90px;
       margin-bottom: 12px;
@@ -1983,7 +2004,7 @@
       box-shadow:
         0 0 25px rgba(0, 168, 255, 0.7),
         0 0 60px rgba(0, 100, 255, 0.4);
-      animation: cyberGlow 2s infinite alternate;
+      animation: cyberGlow 3s infinite alternate;
     }
 
     @keyframes cyberGlow {
@@ -2003,7 +2024,7 @@
       color: #00ffcc;
       margin-bottom: 20px;
       text-shadow: 0 0 15px rgba(0, 255, 204, 0.8);
-      animation: cyberTextPulse 1.5s infinite alternate;
+      animation: cyberTextPulse 2.5s infinite alternate;
     }
 
     @keyframes cyberTextPulse {
@@ -2108,7 +2129,7 @@
       padding: 5px 15px;
       border-radius: 30px;
       border: 1px solid rgba(255, 204, 0, 0.3);
-      animation: glowPulse 2s infinite;
+      animation: glowPulse 3s infinite;
     }
 
     @keyframes glowPulse {
@@ -5997,8 +6018,188 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
 
         window.addEventListener('resize', resize);
         resize();
-        requestAnimationFrame(drawFrame);
+
+        // --- IntersectionObserver: pause when off-screen ---
+        let rafId = null;
+        let isVisible = true;
+
+        function drawLoop(now) {
+          if (!isVisible) return; // paused
+          drawFrame(now);
+          // drawFrame already calls requestAnimationFrame internally — we override below
+        }
+
+        // Override: wrap drawFrame to use our rafId
+        const originalDrawFrame = drawFrame;
+        function managedLoop(now) {
+          if (!isVisible) { rafId = null; return; }
+          const dpr = devicePixelRatio;
+          const W = canvas.width, H = canvas.height;
+          if (!W || !H) { rafId = requestAnimationFrame(managedLoop); return; }
+          const ctx = canvas.getContext('2d');
+          ctx.clearRect(0, 0, W, H);
+
+          const t = (now - t0) * 0.0007;
+          const hp = hoverMap[id];
+          hoverMap[id] += (((card && card.matches(':hover')) ? 1 : 0) - hp) * 0.06;
+
+          const cw = 18 * dpr, ch = 16 * dpr, gx = 3 * dpr, gy = 3 * dpr;
+          const sx = cw + gx, sy = ch + gy;
+          const cols = Math.ceil(W / sx) + 2;
+          const rows = Math.ceil(H / sy) + 2;
+
+          for (let row = 0; row < rows; row++) {
+            for (let col = 0; col < cols; col++) {
+              const nx = col / Math.max(cols - 1, 1);
+              const ny = row / Math.max(rows - 1, 1);
+              const angle = 0.2 + nx * 1.1;
+              const diff = Math.max(0, Math.cos(angle));
+              const vert = 0.75 + 0.5 * (1 - ny);
+              const shim = 0.07 * Math.sin(nx * 5 - t * 2 + ny * 3);
+              const extra = hp * 0.15 * Math.sin(nx * 4 + t * 1.5);
+              const B = Math.min(1, Math.max(0, diff * vert + shim + extra));
+
+              const scaleX = 1 - nx * 0.3;
+              const drawW = Math.round(cw * scaleX);
+              if (drawW < 2 * dpr) continue;
+
+              const rx = Math.round(col * sx);
+              const ry = Math.round(row * sy);
+              const rh = Math.round(ch);
+
+              const vb = hp * 15;
+              const r = Math.round(r0 + B * (rB + vb * .3));
+              const g = Math.round(g0 + B * (gB + vb));
+              const b = Math.round(b0 + B * (bB + vb));
+              const a = (0.06 + B * 0.26 + hp * 0.05).toFixed(3);
+
+              ctx.fillStyle = `rgba(${r},${g},${b},${a})`;
+              ctx.fillRect(rx, ry, drawW, rh);
+
+              const hi = (B * 0.1 + hp * 0.04).toFixed(3);
+              const hg = ctx.createLinearGradient(rx, ry, rx, ry + rh * .45);
+              hg.addColorStop(0, `rgba(255,255,255,${hi})`);
+              hg.addColorStop(1, 'rgba(255,255,255,0)');
+              ctx.fillStyle = hg;
+              ctx.fillRect(rx, ry, drawW, rh * .45);
+
+              const sh = (0.35 * (1 - B * 0.5)).toFixed(3);
+              const sg = ctx.createLinearGradient(rx, ry + rh * .6, rx, ry + rh);
+              sg.addColorStop(0, 'rgba(0,0,0,0)');
+              sg.addColorStop(1, `rgba(0,0,0,${sh})`);
+              ctx.fillStyle = sg;
+              ctx.fillRect(rx, ry + rh * .6, drawW, rh * .4);
+
+              ctx.strokeStyle = `rgba(0,190,235,${(0.02 + B * 0.07).toFixed(3)})`;
+              ctx.lineWidth = dpr * 0.5;
+              ctx.strokeRect(rx + .5, ry + .5, drawW - 1, rh - 1);
+            }
+          }
+
+          const fl = ctx.createLinearGradient(0, 0, W * 0.5, 0);
+          fl.addColorStop(0, 'rgba(4,13,26,1)');
+          fl.addColorStop(0.55, 'rgba(4,13,26,0.8)');
+          fl.addColorStop(1, 'rgba(4,13,26,0)');
+          ctx.fillStyle = fl; ctx.fillRect(0, 0, W * 0.5, H);
+
+          const ft = ctx.createLinearGradient(0, 0, 0, H * .15);
+          ft.addColorStop(0, 'rgba(4,13,26,.9)'); ft.addColorStop(1, 'rgba(4,13,26,0)');
+          ctx.fillStyle = ft; ctx.fillRect(0, 0, W, H * .15);
+          const fb = ctx.createLinearGradient(0, H * .82, 0, H);
+          fb.addColorStop(0, 'rgba(4,13,26,0)'); fb.addColorStop(1, 'rgba(4,13,26,.9)');
+          ctx.fillStyle = fb; ctx.fillRect(0, H * .82, W, H * .18);
+
+          rafId = requestAnimationFrame(managedLoop);
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              if (!isVisible) {
+                isVisible = true;
+                rafId = requestAnimationFrame(managedLoop);
+              }
+            } else {
+              isVisible = false;
+              if (rafId !== null) {
+                cancelAnimationFrame(rafId);
+                rafId = null;
+              }
+            }
+          });
+        }, { threshold: 0 });
+
+        const targetEl = card || canvas;
+        observer.observe(targetEl);
+        rafId = requestAnimationFrame(managedLoop);
       });
+    })();
+  </script>
+
+  <!-- ============================================================
+       PERFORMANCE: IntersectionObserver để pause CSS animations
+       khi phần tử ra khỏi viewport, resume khi xuất hiện lại
+  ============================================================ -->
+  <script>
+    (function () {
+      'use strict';
+
+      // Các selector có CSS animation cần pause khi off-screen
+      const ANIMATED_SELECTORS = [
+        '.streak-dashboard',       // shine animation
+        '.streak-counter',         // shine animation
+        '.floating-elements',      // float animations
+        '.cyber-line',             // scan animation
+        '.module-card.locked',     // lockPulse
+        '[class*="warning-yellow"]', // cyberPulse, borderScan, etc.
+        '[class*="warning-red"]',    // redPulse, redBorderScan, etc.
+        '.streak-badge',           // glowPulse
+        '.skeleton-container',     // skeleton-fade
+        '.skeleton-item',          // skeleton-shimmer
+      ];
+
+      function pauseAnimations(el) {
+        el.style.animationPlayState = 'paused';
+        // Cũng pause các child có animation
+        el.querySelectorAll('*').forEach(child => {
+          child.style.animationPlayState = 'paused';
+        });
+      }
+
+      function resumeAnimations(el) {
+        el.style.animationPlayState = '';
+        el.querySelectorAll('*').forEach(child => {
+          child.style.animationPlayState = '';
+        });
+      }
+
+      function observeElement(el) {
+        const obs = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              resumeAnimations(entry.target);
+            } else {
+              pauseAnimations(entry.target);
+            }
+          });
+        }, { threshold: 0, rootMargin: '50px' });
+        obs.observe(el);
+      }
+
+      function init() {
+        ANIMATED_SELECTORS.forEach(selector => {
+          document.querySelectorAll(selector).forEach(observeElement);
+        });
+
+        // Observe target cards (warning states are dynamic, so use parent)
+        document.querySelectorAll('.target-card').forEach(observeElement);
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
     })();
   </script>
   <!-- CYBER LOADING OVERLAY -->
