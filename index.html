@@ -3259,6 +3259,92 @@
       transition: none !important;
       animation-play-state: paused !important;
     }
+
+    /* ============================================================
+       REDUCE-MOTION: 3 ô Target Card → giao diện đơn giản
+       Ẩn toàn bộ HUD nặng (canvas, SVG, ring, scan, corner…)
+       Hiện lại tc-left chiếm toàn bộ card, padding chuẩn
+    ============================================================ */
+
+    /* 1. Reset card về layout đơn giản */
+    body.reduce-motion .target-info .target-card {
+      height: auto !important;
+      min-height: unset !important;
+      padding: 20px !important;
+      background: rgba(0, 30, 60, 0.5) !important;
+      border: 1px solid rgba(0, 150, 255, 0.2) !important;
+      box-shadow: none !important;
+      overflow: visible !important;
+      cursor: default !important;
+    }
+
+    /* 2. Bỏ glow bar trên cùng */
+    body.reduce-motion .target-info .target-card::before {
+      display: none !important;
+    }
+
+    /* 3. Ẩn toàn bộ HUD decorative */
+    body.reduce-motion .target-info .target-card .tc-corner,
+    body.reduce-motion .target-info .target-card .tc-right,
+    body.reduce-motion .target-info .target-card .tc-icon,
+    body.reduce-motion .target-info .target-card .sparkle,
+    body.reduce-motion .target-info .target-card .tc-active-dot {
+      display: none !important;
+      visibility: hidden !important;
+    }
+
+    /* 4. tc-left chiếm toàn bộ chiều rộng, padding chuẩn */
+    body.reduce-motion .target-info .target-card .tc-left {
+      width: 100% !important;
+      height: auto !important;
+      padding: 0 !important;
+      position: static !important;
+      display: block !important;
+      z-index: auto !important;
+    }
+
+    /* 5. Khôi phục font-size card-title về chuẩn Deepseek */
+    body.reduce-motion .target-info .target-card .card-title {
+      font-size: 16px !important;
+      color: #88d3ff !important;
+      margin-bottom: 10px !important;
+      text-transform: none !important;
+      letter-spacing: normal !important;
+    }
+    body.reduce-motion .target-info .target-card .card-title i {
+      font-size: 14px !important;
+      color: #88d3ff !important;
+    }
+
+    /* 6. Khôi phục card-value */
+    body.reduce-motion .target-info .target-card .card-value {
+      font-size: 26px !important;
+      color: #00ffcc !important;
+      text-shadow: 0 0 10px rgba(0, 255, 204, 0.5) !important;
+      letter-spacing: normal !important;
+      line-height: normal !important;
+    }
+    body.reduce-motion .target-info .target-card .card-value.special {
+      color: #ff9900 !important;
+      text-shadow: 0 0 10px rgba(255, 153, 0, 0.5) !important;
+    }
+
+    /* 7. Khôi phục card-subtitle */
+    body.reduce-motion .target-info .target-card .card-subtitle {
+      font-size: 14px !important;
+      color: #a0c8e0 !important;
+      margin-top: 5px !important;
+      letter-spacing: normal !important;
+      line-height: normal !important;
+    }
+
+    /* 8. Hover đơn giản — chỉ màu border, không có transform */
+    body.reduce-motion .target-info .target-card:hover {
+      border-color: rgba(0, 150, 255, 0.5) !important;
+      box-shadow: none !important;
+      transform: none !important;
+    }
+
     /* Giữ lại transition cho settings dropdown/toggle bản thân để UI vẫn mượt */
     body.reduce-motion .settings-dropdown {
       transition: opacity 0.15s ease, transform 0.15s ease !important;
@@ -6179,6 +6265,9 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
       const t0 = performance.now();
       const hoverMap = { tcCanvas0: 0, tcCanvas1: 0, tcCanvas2: 0 };
 
+      // Global registry để settings JS có thể pause/resume canvas loops
+      window._n1cs_canvasControllers = window._n1cs_canvasControllers || [];
+
       configs.forEach(({ id, r0, g0, b0, rB, gB, bB }, idx) => {
         const canvas = document.getElementById(id);
         if (!canvas) return;
@@ -6390,6 +6479,22 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
         const targetEl = card || canvas;
         observer.observe(targetEl);
         rafId = requestAnimationFrame(managedLoop);
+
+        // Đăng ký controller để settings JS có thể pause/resume
+        window._n1cs_canvasControllers.push({
+          pause: function () {
+            if (isVisible) {
+              isVisible = false;
+              if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
+            }
+          },
+          resume: function () {
+            if (!isVisible) {
+              isVisible = true;
+              rafId = requestAnimationFrame(managedLoop);
+            }
+          }
+        });
       });
     })();
   </script>
@@ -6488,8 +6593,14 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
       function applyAnimationState(disabled) {
         if (disabled) {
           document.body.classList.add('reduce-motion');
+          // Dừng toàn bộ canvas RAF loops
+          var ctrls = window._n1cs_canvasControllers || [];
+          ctrls.forEach(function (c) { c.pause(); });
         } else {
           document.body.classList.remove('reduce-motion');
+          // Khởi động lại canvas RAF loops
+          var ctrls = window._n1cs_canvasControllers || [];
+          ctrls.forEach(function (c) { c.resume(); });
         }
       }
 
