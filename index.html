@@ -3280,6 +3280,30 @@
       width: 100% !important;
     }
 
+    /* ── Fix modal: animation bị tắt nên frame/backdrop kẹt ở opacity:0 ── */
+    /* Backdrop: hiện ngay, không cần transition opacity */
+    body.reduce-motion .module-display-backdrop.show {
+      opacity: 1 !important;
+      transition: none !important;
+    }
+    /* Frame: animation modalIn bị tắt → set thẳng trạng thái cuối */
+    body.reduce-motion .module-display-frame.show {
+      opacity: 1 !important;
+      transform: translate(-50%, -50%) scale(1) !important;
+      filter: none !important;
+      animation: none !important;
+    }
+    /* Test modal (nếu có) — cùng vấn đề */
+    body.reduce-motion .test-modal-backdrop.show {
+      opacity: 1 !important;
+      transition: none !important;
+    }
+    body.reduce-motion .test-modal-frame.show {
+      opacity: 1 !important;
+      transform: translate(-50%, -50%) scale(1) !important;
+      animation: none !important;
+    }
+
     /* Giữ lại transition cho settings dropdown/toggle bản thân để UI vẫn mượt */
     body.reduce-motion .settings-dropdown {
       transition: opacity 0.15s ease, transform 0.15s ease !important;
