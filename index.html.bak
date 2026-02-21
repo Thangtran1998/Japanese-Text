@@ -4847,7 +4847,15 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
                 time: "40 phút",
                 difficulty: "Khó",
                 url: "Mimikara-1-5.html",
-              }
+              },
+{
+              id: 1006,
+              name: "Từ vựng Mimikara Unit 1 (131-150)",
+              questions: 40,
+              time: "40 phút",
+              difficulty: "Khó",
+              url: "Mimikara-2-3.html",
+            }
               ],
           },
 {
