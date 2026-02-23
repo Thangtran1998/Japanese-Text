@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Từ vựng Mimikara Unit 2 (111-130) - Cyberpunk Quiz</title>
+    <title>Từ vựng khó Unit 1 phần 2 - Cyberpunk Quiz</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -1707,7 +1707,7 @@
 
     <!-- Main Title - SỬA: thêm placeholder cho tên bài test và tổng số câu -->
     <h1 style="margin-bottom: 30px">
-      📚 CYBERPUNK QUIZ - TỪ VỰNG MIMIKARA UNIT 2 (111-130) (39 câu)
+      📚 CYBERPUNK QUIZ - TỪ VỰNG KHÓ UNIT 1 PHẦN 2 (40 câu)
     </h1>
 
     <!-- Timer Panel -->
@@ -1900,180 +1900,7 @@
     <!-- MAIN CONTENT -->
     <div id="mainContentWrapper" class="main-content-wrapper">
       <div class="main-quiz-container">
-<!-- AUDIO PLAYER TỔNG - GIỮ NGUYÊN TRẠNG THÁI BAN ĐẦU -->
-<div style="margin-bottom: 20px; padding: 15px; background: rgba(0,20,40,0.5); border-radius: 10px; border: 1px solid rgba(0,150,255,0.3);"
-     data-excel-audio="Mimikara-2-2.mp3"
-     data-excel-exists="true">
-  <!-- Dòng 1: Dropdown chọn file và các nút điều khiển chính -->
-  <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap;">
-    <span style="color: var(--secondary-glow); font-weight: bold">AUDIO:</span>
-    
-    <!-- Dropdown chọn file audio -->
-    <select id="mainAudioSelect" 
-      style="
-        background: rgba(0, 10, 25, 0.9);
-        color: var(--text-primary);
-        border: 1px solid rgba(0, 150, 255, 0.6);
-        border-radius: 5px;
-        padding: 8px 15px;
-        min-width: 300px;
-        cursor: pointer;
-        outline: none;
-        font-family: monospace;
-      "
-      onchange="changeAudioFile(this.value)">
-      <option value="Mimikara-1-1.mp3" >Mimikara-1-1.mp3</option>
-<option value="Mimikara-1-2.mp3" >Mimikara-1-2.mp3</option>
-<option value="Mimikara-1-3.mp3" >Mimikara-1-3.mp3</option>
-<option value="Mimikara-1-4.mp3" >Mimikara-1-4.mp3</option>
-<option value="Mimikara-1-5.mp3" >Mimikara-1-5.mp3</option>
-<option value="Mimikara-2-1.mp3" >Mimikara-2-1.mp3</option>
-<option value="Mimikara-2-2.mp3" selected>Mimikara-2-2.mp3</option>
-<option value="Mimikara-2-3.mp3" >Mimikara-2-3.mp3</option>
-<option value="Mimikara-2-4.mp3" >Mimikara-2-4.mp3</option>
-<option value="Mimikara-2-5.mp3" >Mimikara-2-5.mp3</option>
-<option value="N1_Try Test 1.3.mp3" >N1_Try Test 1.3.mp3</option>
-<option value="N1_Try Test 10.3.mp3" >N1_Try Test 10.3.mp3</option>
-<option value="N1_Try Test 2.3.mp3" >N1_Try Test 2.3.mp3</option>
-<option value="N1_Try Test 3.3.mp3" >N1_Try Test 3.3.mp3</option>
-<option value="N1_Try Test 3.3_2.mp3" >N1_Try Test 3.3_2.mp3</option>
-<option value="N1_Try Test 3.3_3.mp3" >N1_Try Test 3.3_3.mp3</option>
-<option value="N1_Try Test 3.3_4.mp3" >N1_Try Test 3.3_4.mp3</option>
-<option value="N1_Try Test 4.3_1.mp3" >N1_Try Test 4.3_1.mp3</option>
-<option value="N1_Try Test 4.3_2.mp3" >N1_Try Test 4.3_2.mp3</option>
-<option value="N1_Try Test 4.3_3.mp3" >N1_Try Test 4.3_3.mp3</option>
-<option value="N1_Try Test 5.4.mp3" >N1_Try Test 5.4.mp3</option>
-<option value="N1_Try Test 5.4_2.mp3" >N1_Try Test 5.4_2.mp3</option>
-<option value="N1_Try Test 5.4_3.mp3" >N1_Try Test 5.4_3.mp3</option>
-<option value="N1_Try Test 5.4_4.mp3" >N1_Try Test 5.4_4.mp3</option>
-<option value="N1_Try Test 5.4_5.mp3" >N1_Try Test 5.4_5.mp3</option>
-<option value="N1_Try Test 6.3.mp3" >N1_Try Test 6.3.mp3</option>
-<option value="N1_Try Test 7.3.mp3" >N1_Try Test 7.3.mp3</option>
-<option value="N1_Try Test 7.3_2.mp3" >N1_Try Test 7.3_2.mp3</option>
-<option value="N1_Try Test 7.3_3.mp3" >N1_Try Test 7.3_3.mp3</option>
-<option value="N1_Try Test 7.3_4.mp3" >N1_Try Test 7.3_4.mp3</option>
-<option value="N1_Try Test 8.3.mp3" >N1_Try Test 8.3.mp3</option>
-<option value="N1_Try Test 8.3_2.mp3" >N1_Try Test 8.3_2.mp3</option>
-<option value="N1_Try Test 8.3_3.mp3" >N1_Try Test 8.3_3.mp3</option>
-<option value="N1_Try Test 9.3.mp3" >N1_Try Test 9.3.mp3</option>
-
-    </select>
-
-    <!-- Nút Play/Pause -->
-    <button
-      id="mainPlayPauseBtn"
-      onclick="toggleMainAudio()"
-      style="
-        background: linear-gradient(135deg, #00cc66, #00ff88);
-        border: none;
-        border-radius: 5px;
-        color: #0a0e17;
-        padding: 8px 15px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-      "
-    >
-      <i class="fas fa-play"></i> Phát
-    </button>
-
-    <!-- Speed Control -->
-    <div style="
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        background: rgba(0, 0, 0, 0.3);
-        padding: 5px 10px;
-        border-radius: 5px;
-      ">
-      <i class="fas fa-tachometer-alt" style="color: var(--secondary-glow)"></i>
-      <select id="mainSpeedSelect" 
-        style="
-          background: rgba(0, 10, 25, 0.9);
-          color: var(--text-primary);
-          border: 1px solid rgba(0, 150, 255, 0.4);
-          border-radius: 5px;
-          padding: 5px;
-          cursor: pointer;
-          outline: none;
-        "
-        onchange="changePlaybackSpeed(this.value)">
-        <option value="0.5">0.5x</option>
-        <option value="0.75">0.75x</option>
-        <option value="1" selected>1x</option>
-        <option value="1.25">1.25x</option>
-        <option value="1.5">1.5x</option>
-        <option value="2">2x</option>
-      </select>
-    </div>
-
-    <!-- Volume control with mute button -->
-    <div style="
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        background: rgba(0, 0, 0, 0.3);
-        padding: 5px 10px;
-        border-radius: 5px;
-      ">
-      <i class="fas fa-volume-up" 
-         id="mainVolumeIcon" 
-         style="color: var(--secondary-glow); cursor: pointer; font-size: 18px;" 
-         onclick="toggleMute(event)"
-         onmouseover="this.style.opacity='0.8'"
-         onmouseout="this.style.opacity='1'"
-         title="Nhấn để tắt/bật âm thanh">
-      </i>
-      <input
-        type="range"
-        id="mainVolumeSlider"
-        min="0"
-        max="1"
-        step="0.1"
-        value="1"
-        style="width: 80px; cursor: pointer;"
-      />
-    </div>
-
-    <!-- Hiển thị thời gian đếm ngược -->
-    <span
-      id="mainAudioTime"
-      style="
-        color: var(--secondary-glow);
-        font-family: 'Orbitron', sans-serif;
-        min-width: 60px;
-      "
-      >00:00</span
-    >
-  </div>
-
-  <!-- Dòng 2: Thanh tua (seek bar) -->
-  <div style="display: flex; align-items: center; gap: 10px; padding: 0 5px;">
-    <span style="color: var(--secondary-glow); font-size: 12px; min-width: 40px;" id="mainCurrentTime">00:00</span>
-    <input
-      type="range"
-      id="mainSeekBar"
-      min="0"
-      max="100"
-      value="0"
-      step="0.1"
-      style="
-        flex: 1;
-        height: 6px;
-        background: linear-gradient(90deg, var(--primary-glow), var(--secondary-glow));
-        border-radius: 3px;
-        cursor: pointer;
-        -webkit-appearance: none;
-      "
-      oninput="seekAudio(this.value)"
-    />
-    <span style="color: var(--secondary-glow); font-size: 12px; min-width: 40px;" id="mainDuration">00:00</span>
-  </div>
-</div>
-
-<!-- Audio element - SỬ DỤNG JAVASCRIPT ĐỂ TẢI FILE -->
-<audio id="mainAudio" preload="auto" style="display: none;"></audio>
+<!-- Không có audio chính -->
         <!-- H2 - SỬA: thêm placeholder cho tên bài test -->
         <h2
           style="
@@ -2083,7 +1910,7 @@
           "
         >
           <i class="fas fa-file-alt" style="color: var(--secondary-glow)"></i>
-          TỪ VỰNG MIMIKARA UNIT 2 (111-130)
+          TỪ VỰNG KHÓ UNIT 1 PHẦN 2
         </h2>
         <form id="quizForm"></form>
       </div>
@@ -2187,314 +2014,322 @@
       const quizData = [
   {
     number: 1,
-    question: '捻る',
-    options: ['ひねる', 'みわける', 'みかける', 'くむ'],
+    question: '人通り',
+    options: ['ひとどおり', 'すいてき', 'はしゅ', 'えもの'],
     answer: '1',
-    detail: '🔴 捻る（ひねる）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 捻（ねん）＝ vặn, bóp<br>- Nghĩa đen: Dùng tay xoay, vặn một vật.<br>- Nghĩa Hán Việt: Niễn<br>- Ý nghĩa: Hành động vặn, xoắn, bẻ cong bằng tay. Cũng được dùng với nghĩa bóng chỉ việc suy nghĩ, tạo ra điều gì đó một cách khác thường hoặc phức tạp.<br>  → Chỉ hành động vật lý (vặn nắp, vặn khóa) hoặc tinh thần (nghĩ ra ý tưởng lắt léo, đánh đố).<br><br>💬 Ví dụ:<br>1. 蛇口を捻って水を止める。<br>　→ Vặn vòi nước để ngắt nước.<br><br>2. 彼はいつも捻った問題を出してくる。<br>　→ Anh ấy lúc nào cũng đưa ra những câu hỏi đánh đố.<br><br>3. 首を捻りながら難しい問題を考えた。<br>　→ Vừa vặn cổ (tỏ vẻ nghi ngờ, khó hiểu) vừa suy nghĩ về vấn đề khó.<br><br>🧠 Cách nhớ:<br>- Hình ảnh bàn tay (手) đang vặn (捻) một cái nắp chai.<br>- Liên tưởng đến âm Hán Việt "Niễn" - nghe như "nghiền, nắn" cũng có liên quan đến động tác xoắn, vặn.<br><br>✨（連）Các từ kết nối: 蛇口(じゃぐち)を捻る Vặn vòi nước<br>                        捻った問題 Câu hỏi đánh đố',
+    detail: '🔴 人通り（ひとどおり）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 人（ひと）＝ người<br>  • 通り（どおり）＝ sự đi qua, sự lưu thông<br>- Nghĩa đen: sự đi lại của người<br>- Nghĩa Hán Việt: nhân thông hành<br>- Ý nghĩa: lưu lượng người qua lại, sự đông đúc của người đi đường<br>  → Chỉ mức độ đông đúc của người đi bộ trên đường phố, lối đi.<br><br>💬 Ví dụ:<br>1. この道は人通りが多い。<br>　→ Con đường này có nhiều người qua lại.<br><br>2. 夜になると、人通りが少なくなる。<br>　→ Đến đêm, lượng người qua lại trở nên ít đi.<br><br>3. 人通りが絶えない繁華街。<br>　→ Khu phố sầm uất không lúc nào ngớt người qua lại.<br><br>🧠 Cách nhớ:<br><br><br>✨（連）Các từ kết nối:<br>➕（合）Các từ kết hợp:<br>↔️（類）Các từ liên quan:<br>📎（対）Các từ trái nghĩa:<br>⚠️ Chú ý:',
     isReading: false
   },
   {
     number: 2,
-    question: '千切れる',
-    options: ['みわける', 'ちぎれる', 'はう', 'あおぐ'],
+    question: '天罰',
+    options: ['たより', 'てんばつ', 'とる', 'すいてき'],
     answer: '2',
-    detail: '🔴 千切れる（ちぎれる）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 千（ち）＝ nghìn<br>  • 切れる（きれる）＝ bị cắt, bị đứt<br>- Nghĩa đen: Bị cắt/bứt thành nhiều mảnh nhỏ.<br>- Nghĩa Hán Việt: Thiên thiệt.<br>- Ý nghĩa: Bị xé, bị bứt, bị đứt thành nhiều mảnh nhỏ.<br>  → Nhấn mạnh việc một vật bị tách rời thành nhiều phần nhỏ, thường là những vật mảnh, dễ rách như giấy, lá cây, dây, vải mỏng.<br><br>💬 Ví dụ:<br>1. 風で洗濯物が千切れて飛んでいった。<br>　→ Quần áo phơi bị gió xé rách và bay đi.<br><br>2. 子供が嬉しそうにパンを千切って食べている。<br>　→ Đứa trẻ vui vẻ xé nhỏ bánh mì ra ăn.<br><br>3. 強い力で引っ張ったら、ロープが千切れた。<br>　→ Khi kéo với lực mạnh, sợi dây thừng đã bị đứt thành nhiều đoạn.<br><br>🧠 Cách nhớ:<br>- Ghép nghĩa chữ Hán: 千 (nghìn - nhiều) + 切れる (bị cắt) = bị cắt thành nhiều (nghìn) mảnh.<br>- Liên tưởng: Hành động xé một tờ giấy thành nhiều mảnh nhỏ như confetti.<br><br>✨（連）Các từ kết nối: 紙・紐が・ロープが千切れた<br>                        紙が千切れた。Tờ giấy bị xé rách.<br>                        紐が千切れた。Sợi dây bị đứt tung ra.<br>                        ロープが千切れた。Sợi dây thừng bị đứt thành nhiều đoạn.<br><br>↔️（対）Các từ trái nghĩa: 切れる Bị cắt, bị đứt, hết (Nhấn mạnh vật bị chia tách hoặc hết, thường gọn, sắc bén)<br>                          破れる Bị rách, bị phá vỡ, bị tổn thương (Rách/đứt, nhưng không nhấn mạnh thành nhiều mảnh, chỉ cần rách hoặc hỏng)<br>                          千切れる Bị xé thành nhiều mảnh, bị bứt ra (Nhấn mạnh vật bị tách thành nhiều mảnh nhỏ, thường là vật mảnh như giấy, lá, dây, cành cây)',
+    detail: '🔴 天罰（てんばつ）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 天（てん）＝ trời<br>  • 罰（ばつ）＝ sự trừng phạt<br>- Nghĩa đen: Sự trừng phạt từ trời.<br>- Nghĩa Hán Việt: Thiên phạt.<br>- Ý nghĩa: Sự trừng phạt của thần linh, trời cao; hình phạt tự nhiên hoặc đạo đức cho những hành vi xấu xa.<br>  → Thường dùng để chỉ sự trừng trị công bằng, hợp lý cho những việc ác.<br><br>💬 Ví dụ:<br>1. 嘘をつき続けた彼には天罰が下った。<br>　→ Anh ta, kẻ đã liên tục nói dối, đã bị trời phạt.<br><br>2. そんな悪事を働けば、いずれ天罰が当たるよ。<br>　→ Nếu cứ làm việc xấu như thế, sớm muộn gì cũng bị trời phạt đấy.<br><br>3. これは天罰だと思って諦めるしかない。<br>　→ Chỉ còn cách từ bỏ và coi đây là sự trừng phạt của ông trời.<br><br>🧠 Cách nhớ: "Thiên phạt" trong Hán Việt có nghĩa là "trời phạt". Hãy nhớ rằng "天" là trời, "罰" là phạt, ghép lại thành "hình phạt từ trời cao".',
     isReading: false
   },
   {
     number: 3,
-    question: '千切る',
-    options: ['ちぎる', 'みわける', 'みかける', 'あおぐ'],
+    question: '宣告',
+    options: ['せんこく', 'せんい', 'ひとどおり', 'すいてき'],
     answer: '1',
-    detail: '🔴 千切る（ちぎる）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 千（せん）＝ một nghìn<br>  • 切る（きる）＝ cắt<br>- Nghĩa đen: Cắt thành từng mảnh nhỏ, xé vụn.<br>- Nghĩa Hán Việt: Thiên thiết<br>- Ý nghĩa: Hành động xé, bứt, cắt một vật gì đó thành nhiều mảnh nhỏ, thường bằng tay.<br>  → Thể hiện sự dứt khoát, mạnh mẽ khi tách rời hoặc phá vỡ một thứ gì đó.<br><br>💬 Ví dụ:<br>1. パンを千切って食べる。<br>　→ Xé bánh mì ra ăn.<br><br>2. 彼は怒って手紙を千切った。<br>　→ Anh ấy tức giận xé nát bức thư.<br><br>3. 千切った花びらを散らす。<br>　→ Rải những cánh hoa đã bứt ra.<br><br>🧠 Cách nhớ:<br>- Hình ảnh xé một tờ giấy thành một nghìn (千) mảnh bằng cách cắt (切る).<br>- Liên tưởng đến âm Hán Việt 「Thiên thiết」 - cắt ra thành nghìn mảnh.<br><br>✨（連）Các từ kết nối: 噛みちぎる (かみちぎる) Cắn đứt, xé bằng răng<br>                        食いちぎる (くいちぎる) Cắn xé và ăn luôn<br>                        褒めちぎる (ほめちぎる) Khen ngợi một cách dồn dập, hết lời, triệt để<br>                        ぶっちぎる Xé toang',
+    detail: '🔴 宣告（せんこく）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 宣（せん）＝ tuyên bố, công bố<br>  • 告（こく）＝ báo cáo, thông báo<br>- Nghĩa đen: Tuyên bố, công bố một cách chính thức.<br>- Nghĩa Hán Việt: Tuyên cáo.<br>- Ý nghĩa: Hành động chính thức thông báo một sự việc quan trọng, thường là một quyết định, kết quả hoặc tình trạng nghiêm trọng.<br>  → Mang sắc thái trang trọng, nghiêm túc, thường dùng trong các tình huống chính thức hoặc có tính pháp lý.<br><br>💬 Ví dụ:<br>1. 医者は彼に余命宣告をした。<br>　→ Bác sĩ đã tuyên bố thời gian sống còn lại cho anh ta.<br><br>2. 会社は破産を宣告された。<br>　→ Công ty đã bị tuyên bố phá sản.<br><br>3. 判事が最終判決を宣告した。<br>　→ Thẩm phán đã tuyên bố phán quyết cuối cùng.<br><br>🧠 Cách nhớ:',
     isReading: false
   },
   {
     number: 4,
-    question: '束ねる',
-    options: ['たばねる', 'ひねる', 'うちあける', 'みわたす'],
+    question: '柳',
+    options: ['やなぎ', 'れんさ', 'ひとどおり', 'えもの'],
     answer: '1',
-    detail: '🔴 束ねる（たばねる）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 束（たば）＝ bó, bó lại<br>  • ねる（ねる）＝ (hậu tố động từ) làm, thực hiện<br>- Nghĩa đen: Gom nhiều thứ lại và buộc thành một bó.<br>- Nghĩa Hán Việt: Thúc (bó lại, thúc đẩy)<br>- Ý nghĩa: Tập hợp, gom lại những thứ dài, mỏng, rời rạc (như tóc, củi, giấy tờ) và buộc chúng lại với nhau thành một bó gọn gàng.<br>  → Thường dùng cho tóc, hoa, củi, giấy tờ, v.v.<br><br>💬 Ví dụ:<br>1. 彼女は長い髪を後ろで束ねている。<br>　→ Cô ấy buộc tóc dài ra phía sau.<br><br>2. 古い新聞をひもで束ねてリサイクルに出した。<br>　→ Tôi bó những tờ báo cũ bằng dây và đem đi tái chế.<br><br>3. 花束は美しい花を束ねて作られる。<br>　→ Bó hoa được làm bằng cách bó những bông hoa đẹp lại.<br><br>🧠 Cách nhớ:<br>- Hình ảnh: Tạo một 「たば」(bó) từ nhiều thứ rời rạc.<br>- Liên tưởng: 「たば」+ 「ねる」= hành động tạo ra một bó.<br><br>✨（連）Các từ kết nối: 長い髪を一つに束ねた<br>                        古新聞を束ねる<br><br>↔️（類）Các từ liên quan: 括る (くくる) Buộc, trói, cột lại<br>                          一括払い Thanh toán 1 lần',
+    detail: '🔴 柳（やなぎ）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 柳（やなぎ）＝ cây liễu<br>- Nghĩa đen: Một loại cây thân gỗ, cành mềm dẻo, thường rủ xuống.<br>- Nghĩa Hán Việt: Liễu<br>- Ý nghĩa: Chỉ cây liễu, một loại cây cảnh phổ biến ở Nhật Bản, biểu tượng cho vẻ đẹp duyên dáng, mềm mại nhưng kiên cường.<br>  → Thường xuất hiện trong thơ ca, văn hóa Nhật Bản.<br><br>💬 Ví dụ:<br>1. 川のほとりに柳が植えられている。<br>　→ Cây liễu được trồng ở bờ sông.<br><br>2. 柳の枝が風に揺れている。<br>　→ Cành liễu đung đưa trong gió.<br><br>3. 春になると、柳が芽吹き始める。<br>　→ Khi mùa xuân đến, cây liễu bắt đầu đâm chồi.<br><br>🧠 Cách nhớ:<br>やなぎ → “Ya… nặng ghê…”→ Cây liễu rủ xuống vì nặng',
     isReading: false
   },
   {
     number: 5,
-    question: '扇ぐ',
-    options: ['あおぐ', 'うちあける', 'いいつける', 'みかける'],
-    answer: '1',
-    detail: '🔴 扇ぐ（あおぐ）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 扇（あおぎ）＝ quạt<br>- Nghĩa đen: Dùng vật như quạt để tạo ra gió.<br>- Nghĩa Hán Việt: Phiến<br>- Ý nghĩa: Dùng tay hoặc vật dụng để phe phẩy tạo ra gió, thường để làm mát hoặc thổi bùng lên.<br>  → Hành động làm cho không khí chuyển động.<br><br>💬 Ví dụ:<br>1. 暑いので、うちわで顔を扇いだ。<br>　→ Vì trời nóng, tôi đã dùng quạt để quạt vào mặt.<br><br>2. 火を扇いで強くした。<br>　→ Quạt cho ngọn lửa bùng mạnh lên.<br><br>3. 彼は新聞紙を扇いで煙を払った。<br>　→ Anh ấy dùng tờ báo quạt để phẩy khói đi.<br><br>🧠 Cách nhớ:<br>- Chữ Kanji 扇 trông giống một cánh cửa (戸) bị che bởi cánh (羽), liên tưởng đến vật có cánh để quạt.<br>- Âm đọc あおぐ gần với あお (xanh, gió), liên tưởng đến hành động tạo ra gió.<br><br>✨（連）Các từ kết nối: 団扇・扇子(うちわ・せんす)を扇ぐ',
+    question: '水滴',
+    options: ['じょういっぱい', 'すいてき', 'くだく', 'えいき'],
+    answer: '2',
+    detail: '🔴 水滴（すいてき）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 水（みず）＝ nước<br>  • 滴（しずく）＝ giọt<br>- Nghĩa đen: giọt nước<br>- Nghĩa Hán Việt: thủy trích<br>- Ý nghĩa: chỉ những giọt nước nhỏ, thường dùng để chỉ hiện tượng nước nhỏ giọt hoặc tích tụ thành giọt.<br>  → Từ ghép của 水 (nước) và 滴 (giọt).<br><br>💬 Ví dụ:<br>1. 葉の上に水滴が光っている。<br>　→ Những giọt nước lấp lánh trên lá cây.<br><br>2. 水道の蛇口から水滴が落ちている。<br>　→ Nước nhỏ giọt từ vòi nước.<br><br>3. 冷たいグラスの外側に水滴がついた。<br>　→ Những giọt nước đọng lại bên ngoài ly nước lạnh.<br><br>🧠 Cách nhớ:<br><br><br>✨（連）Các từ kết nối:<br>➕（合）Các từ kết hợp:<br>↔️（類）Các từ liên quan:<br>📎（対）Các từ trái nghĩa:<br>⚠️ Chú ý:',
     isReading: false
   },
   {
     number: 6,
-    question: '汲む',
-    options: ['ささやく', 'くむ', 'ひねる', 'ちぎれる'],
+    question: '涎',
+    options: ['せんい', 'よだれ', 'ひとどおり', 'てんばつ'],
     answer: '2',
-    detail: '🔴 汲む（くむ）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 汲（く）む ＝ múc, hút, hiểu, lắng nghe<br>- Nghĩa đen: Dùng vật chứa để lấy chất lỏng (như nước) từ nguồn.<br>- Nghĩa Hán Việt: Cấp (lấy nước)<br>- Ý nghĩa: Hành động lấy nước hoặc chất lỏng. Nghĩa bóng chỉ việc thấu hiểu, nắm bắt ý đồ, tình cảm hoặc tình hình của người khác.<br>  → Từ việc múc nước, mở rộng nghĩa thành việc tiếp nhận, lĩnh hội những thứ trừu tượng như tâm tư, ý định.<br><br>💬 Ví dụ:<br>1. 井戸から水を汲む。<br>　→ Múc nước từ giếng.<br><br>2. 上司の意を汲んで行動する。<br>　→ Hành động dựa trên việc thấu hiểu ý đồ của cấp trên.<br><br>3. 彼は空気を読むのが上手で、場の雰囲気をよく汲む。<br>　→ Anh ấy giỏi đọc không khí và rất thấu hiểu bầu không khí của hiện trường.<br><br>🧠 Cách nhớ:<br>- Liên tưởng đến hình ảnh dùng gầu (chữ 汲 có bộ thủy) để múc (む) nước.<br>- Nghĩa bóng: Để hiểu ý người khác, cần phải múc (tiếp nhận) thông tin từ họ.<br><br>✨（連）Các từ kết nối: 井戸水(いどみず)を汲む<br>                        上司の意を汲む Hiểu ý cấp trên',
+    detail: '🔴 涎（よだれ）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 涎（よだれ）＝ nước miếng, nước dãi<br>- Nghĩa đen: Chất lỏng trong miệng tiết ra.<br>- Nghĩa Hán Việt: Diên (nước dãi).<br>- Ý nghĩa: Nước bọt tiết ra từ miệng, thường do đói, thèm ăn hoặc khi ngủ.<br>  → Chỉ nước dãi.<br><br>💬 Ví dụ:<br>1. 美味しそうな料理を見て、涎が出た。<br>　→ Nhìn món ăn ngon mà nước miếng chảy ra.<br><br>2. 赤ちゃんが涎を垂らしている。<br>　→ Em bé đang chảy nước dãi.<br><br>3. あの話を聞くたびに、涎が出そうになる。<br>　→ Mỗi lần nghe câu chuyện đó là tôi lại thèm chảy nước miếng.<br><br>🧠 Cách nhớ:<br>“Yo… đã quá!” → nước miếng rơi ra 😆',
     isReading: false
   },
   {
     number: 7,
-    question: '咥える',
-    options: ['みかける', 'くわえる', 'うつむく', 'ささやく'],
+    question: '播種',
+    options: ['とる', 'はしゅ', 'ひとどおり', 'よだれ'],
     answer: '2',
-    detail: '🔴 咥える（くわえる）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 咥（くわ）＝ ngậm, cắn<br>- Nghĩa đen: Dùng miệng giữ chặt một vật.<br>- Nghĩa Hán Việt: Hiếp (ngậm, cắn)<br>- Ý nghĩa: Hành động dùng răng hoặc môi giữ chặt một vật trong miệng.<br>  → Thường dùng để miêu tả hành động ngậm, cắn một vật như điếu thuốc, ống điếu, khăn...<br><br>💬 Ví dụ:<br>1. 彼はいつもパイプを咥えている。<br>　→ Anh ấy lúc nào cũng ngậm ống điếu.<br><br>2. 犬が新聞を咥えて持ってきた。<br>　→ Con chó ngậm tờ báo mang đến.<br><br>3. タバコを咥えながら仕事をする。<br>　→ Vừa ngậm điếu thuốc vừa làm việc.<br><br>🧠 Cách nhớ:<br>- Hình ảnh 「口」 (khẩu - miệng) trong chữ 「咥」 liên quan đến hành động dùng miệng.<br>- Âm đọc 「くわえる」 gần giống với 「加える」 (thêm vào), nghĩ đến việc "thêm" một vật vào miệng.<br><br>✨（連）Các từ kết nối: タバコ・パイプを咥える',
+    detail: '🔴 播種（はしゅ）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 播（は）＝ gieo, rắc<br>  • 種（しゅ）＝ hạt giống<br>- Nghĩa đen: Gieo hạt giống.<br>- Nghĩa Hán Việt: Phát chủng.<br>- Ý nghĩa: Hành động gieo hạt giống xuống đất để trồng trọt.<br>  → Chỉ việc bắt đầu một quá trình hoặc gieo mầm cho một ý tưởng, sự việc trong tương lai.<br><br>💬 Ví dụ:<br>1. 春になると、農家は田んぼに稲の播種を始める。<br>　→ Vào mùa xuân, các nông dân bắt đầu gieo hạt lúa trên cánh đồng.<br><br>2. このプロジェクトは、未来への希望の播種だ。<br>　→ Dự án này là việc gieo mầm hy vọng cho tương lai.<br><br>3. 播種の時期を間違えると、収穫に影響する。<br>　→ Nếu sai thời điểm gieo hạt, nó sẽ ảnh hưởng đến vụ thu hoạch.<br><br>🧠 Cách nhớ: Hãy tưởng tượng một người nông dân (は) đang rắc những hạt giống (しゅ) xuống đất. Chữ 播 có bộ Thủ (tay) chỉ hành động, và 種 là hạt giống. Hành động “は（播）ける” hạt “しゅ（種）” chính là はしゅ.<br><br>✨（連）Các từ kết nối:<br>➕（合）Các từ kết hợp:<br>↔️（類）Các từ liên quan:<br>📎（対）Các từ trái nghĩa:<br>⚠️ Chú ý:',
     isReading: false
   },
   {
     number: 8,
-    question: '舐める',
-    options: ['なめる', 'うちあける', 'のりすごす', 'くむ'],
+    question: '申し出',
+    options: ['もうしで', 'じょういっぱい', 'えいき', 'よだれ'],
     answer: '1',
-    detail: '🔴 舐める（なめる）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 舐（な）＝ liếm<br>- Nghĩa đen: Dùng lưỡi để làm ướt hoặc cảm nhận bề mặt của vật gì đó.<br>- Nghĩa Hán Việt: Thiểm (liếm)<br>- Ý nghĩa: Hành động liếm. Thường được dùng với nghĩa bóng là coi thường, đánh giá thấp ai đó hoặc điều gì đó.<br>  → Có hai nghĩa chính: (1) Liếm. (2) Coi thường, xem nhẹ.<br><br>💬 Ví dụ:<br>1. 猫が自分の足を舐めている。<br>　→ Con mèo đang liếm chân của nó.<br><br>2. 彼は相手の実力を舐めている。<br>　→ Anh ta đang coi thường thực lực của đối thủ.<br><br>3. この仕事を舐めてかかると失敗するよ。<br>　→ Nếu anh xem nhẹ công việc này thì sẽ thất bại đấy.<br><br>🧠 Cách nhớ:<br>- Liên tưởng đến âm Hán Việt 「thiểm」, nghĩa là liếm.<br>- Hình ảnh một con thú 「な（Na）」đang 「め（Me）」liếm (舐める) thức ăn.<br><br>✨（連）Các từ kết nối: 舐めるように可愛がる Chỉ việc quá yêu thương một người/loài động vật nào đó<br><br>↔️（類）Các từ liên quan: なめてかかる Coi thường, xem nhẹ<br>                          侮る Khinh thường, khinh bỉ<br>                          軽く見る Xem nhẹ<br>                          甘く見る Xem nhẹ',
+    detail: '🔴 申し出（もうしで）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 申（もう）＝ nói, bày tỏ<br>  • 出（で）＝ đưa ra<br>- Nghĩa đen: Đưa ra lời nói.<br>- Nghĩa Hán Việt: Thân xuất.<br>- Ý nghĩa: Lời đề nghị, sự đề xuất, sự xin phép.<br>  → Chỉ việc chủ động đưa ra ý kiến, nguyện vọng hoặc yêu cầu với người khác.<br><br>💬 Ví dụ:<br>1. 彼は会社を辞めるという申し出をした。<br>　→ Anh ấy đã đưa ra đề nghị xin nghỉ việc ở công ty.<br><br>2. 支援の申し出を快く受け入れた。<br>　→ Đã vui vẻ chấp nhận lời đề nghị hỗ trợ.<br><br>3. その申し出は断らざるを得なかった。<br>　→ Lời đề nghị đó đành phải từ chối.<br><br>🧠 Cách nhớ:<br><br>✨（連）Các từ kết nối:<br>➕（合）Các từ kết hợp:<br>↔️（類）Các từ liên quan:<br>📎（対）Các từ trái nghĩa:<br>⚠️ Chú ý:',
     isReading: false
   },
   {
     number: 9,
-    question: '俯く',
-    options: ['ちぎる', 'うつむく', 'みわける', 'うちあける'],
+    question: '苦戦',
+    options: ['くだく', 'くせん', 'せんこく', 'はしゅ'],
     answer: '2',
-    detail: '🔴 俯く（うつむく）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 俯（ふ）＝ cúi xuống<br>  • く（く）＝ (phụ tố biểu thị hành động)<br>- Nghĩa đen: Hướng mặt xuống dưới.<br>- Nghĩa Hán Việt: Phủ (cúi xuống).<br>- Ý nghĩa: Cúi đầu, cúi mặt xuống.<br>  → Thường biểu thị trạng thái buồn bã, xấu hổ, suy tư hoặc nhìn xuống vật gì đó.<br><br>💬 Ví dụ:<br>1. 恥ずかしくて俯く。<br>　→ Vì xấu hổ mà cúi mặt.<br><br>2. 彼は俯いて歩いていた。<br>　→ Anh ấy vừa đi vừa cúi mặt.<br><br>3. 俯いて地面を見つめる。<br>　→ Cúi xuống nhìn chằm chằm vào mặt đất.<br><br>🧠 Cách nhớ:<br>- Liên tưởng: 「俯く」nghe như “út mù khơi” → Khi buồn (út) thì cúi mặt (mù khơi) xuống.<br>- Phân tích chữ Hán: Chữ 俯 có bộ Nhân Đứng (亻) chỉ người và chữ 府 (phủ) gợi ý về sự hướng xuống, phủ phục.<br><br>➕（合）Các từ kết hợp: 俯き加減 Hơi cúi mặt',
+    detail: '🔴 苦戦（くせん）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 苦（く）＝ khổ, gian khổ, khó khăn<br>  • 戦（せん）＝ chiến đấu, trận chiến<br>- Nghĩa đen: trận chiến gian khổ<br>- Nghĩa Hán Việt: Khổ chiến<br>- Ý nghĩa: Cuộc chiến đấu gian khổ, khó khăn; tình trạng vật lộn vất vả để đạt được điều gì đó hoặc để giành chiến thắng.<br>  → Chỉ một cuộc đấu tranh, cạnh tranh hoặc thử thách diễn ra rất khó khăn, không dễ dàng giành phần thắng.<br><br>💬 Ví dụ:<br>1. 強豪チームとの試合は苦戦を強いられた。<br>　→ Chúng tôi buộc phải trải qua một trận chiến khó khăn trong trận đấu với đội mạnh.<br><br>2. 新しいプロジェクトで予想外の苦戦が続いている。<br>　→ Chúng tôi đang liên tục gặp phải những khó khăn ngoài dự kiến trong dự án mới.<br><br>3. 彼は初めての海外営業で苦戦しているようだ。<br>　→ Anh ấy dường như đang gặp khó khăn trong chuyến đi bán hàng ở nước ngoài đầu tiên.<br><br>🧠 Cách nhớ:<br>Hãy tưởng tượng một trận chiến (戦) đầy đắng cay, gian khổ (苦). Khi nhớ đến cảm giác "khổ" trong "khổ chiến", bạn sẽ liên tưởng ngay đến một cuộc chiến đấu vô cùng vất vả và khó nhọc.<br><br>✨（連）Các từ kết nối: <br>➕（合）Các từ kết hợp: <br>↔️（類）Các từ liên quan: <br>📎（対）Các từ trái nghĩa: <br>⚠️ Chú ý:',
     isReading: false
   },
   {
     number: 10,
-    question: '這う',
-    options: ['はう', 'ひねる', 'みかける', 'ささやく'],
-    answer: '1',
-    detail: '🔴 這う（はう）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 這（は）＝ bò, trườn<br>- Nghĩa đen: Di chuyển bằng cách để bụng hoặc thân tiếp xúc với mặt đất hoặc bề mặt.<br>- Nghĩa Hán Việt: Giá<br>- Ý nghĩa: Hành động bò, trườn của động vật hoặc người.<br>  → Thường dùng cho côn trùng, rắn, hoặc khi con người di chuyển trong tư thế thấp.<br><br>💬 Ví dụ:<br>1. 赤ちゃんが床を這う。<br>　→ Em bé bò trên sàn nhà.<br><br>2. 毛虫が木の枝を這っている。<br>　→ Con sâu bò đang trườn trên cành cây.<br><br>3. 兵士たちは敵に気付かれないように地面を這って進んだ。<br>　→ Các binh sĩ tiến lên bằng cách bò dưới đất để không bị kẻ địch phát hiện.<br><br>🧠 Cách nhớ:<br>- Liên tưởng âm 「はう」 với hình ảnh một con rắn phát ra tiếng 「はー」 khi bò.<br>- Chữ Hán 這 có bộ Xước (辶) chỉ sự di chuyển, phần còn lại gợi hình ảnh thân thể uốn lượn khi bò.<br><br>✨（連）Các từ kết nối: 虫・へびが地面・壁を這う<br>                        Côn trùng/rắn bò trên mặt đất/tường.',
+    question: '摂る',
+    options: ['ひとどおり', 'とる', 'てんばつ', 'もうしで'],
+    answer: '2',
+    detail: '🔴 摂る（とる）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 摂（せつ）＝ lấy, hấp thu, nhiếp chính<br>- Nghĩa đen: lấy vào, thu nạp<br>- Nghĩa Hán Việt: nhiếp<br>- Ý nghĩa: chỉ việc đưa thức ăn, dinh dưỡng hoặc một chất nào đó vào trong cơ thể.<br>  → Thường dùng với nghĩa "hấp thu", "nạp vào" như ăn uống, bổ sung dinh dưỡng.<br><br>💬 Ví dụ:<br>1. 毎日、ビタミンを摂るようにしています。<br>　→ Tôi cố gắng bổ sung vitamin mỗi ngày.<br><br>2. カルシウムを十分に摂ることが大切だ。<br>　→ Việc hấp thu đủ canxi là rất quan trọng.<br><br>3. この薬は食後に摂ってください。<br>　→ Hãy uống thuốc này sau bữa ăn.<br><br>🧠 Cách nhớ: Từ này dùng chữ Hán 摂 (nhiếp), gợi ý việc thu nạp, tiếp nhận (như trong từ "hấp thu" 摂取). Hãy liên tưởng đến việc "nhiếp" lấy dinh dưỡng vào cơ thể.<br><br>✨（連）Các từ kết nối:<br>➕（合）Các từ kết hợp:<br>↔️（類）Các từ liên quan:<br>📎（対）Các từ trái nghĩa:<br>⚠️ Chú ý:',
     isReading: false
   },
   {
     number: 11,
-    question: '囁く',
-    options: ['いいつける', 'なめる', 'ちぎる', 'ささやく'],
-    answer: '4',
-    detail: '🔴 囁く（ささやく）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 囁（ささや）＝ thì thầm<br>- Nghĩa đen: Nói với giọng rất nhỏ, nhẹ nhàng.<br>- Nghĩa Hán Việt: Nhiếp (thì thầm)<br>- Ý nghĩa: Hành động nói chuyện với âm lượng rất thấp, thường để chỉ nói riêng với ai đó hoặc nói những điều thân mật, bí mật.<br>  → Thường mang sắc thái lãng mạn, bí ẩn hoặc tâm sự.<br><br>💬 Ví dụ:<br>1. 彼は彼女の耳元で優しく囁いた。<br>　→ Anh ấy thì thầm dịu dàng bên tai cô ấy.<br><br>2. 木々の間を風が囁くように通り抜けた。<br>　→ Cơn gió luồn qua giữa những tán cây như đang thì thầm.<br><br>3. 愛の言葉を囁き合う。<br>　→ Thì thầm với nhau những lời yêu thương.<br><br>🧠 Cách nhớ:<br>- Tưởng tượng âm thanh "sasa" giống tiếng lá cây xào xạc, kết hợp với "yaku" (nói) → nói nhỏ như tiếng lá xào xạc.<br>- Liên tưởng đến hình ảnh hai người gần nhau, miệng (khẩu 口) ở gần tai (nhĩ 耳) để thì thầm.<br><br>✨（連）Các từ kết nối: 耳元で囁く Thì thầm vào tai<br>                        愛を囁く Thì thầm lời yêu thương<br><br>↔️（類）Các từ liên quan: 呟く (つぶやく) Thì thầm độc thoại<br>                          囁く(ささやく) Thì thầm với đối phương<br>                          噂 (うわさ) Lời đồn',
+    question: '繊維',
+    options: ['せんい', 'えいき', 'たより', 'すいてき'],
+    answer: '1',
+    detail: '🔴 繊維（せんい）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 繊（せん）＝ mảnh, nhỏ, tinh tế<br>  • 維（い）＝ duy trì, kết nối, sợi<br>- Nghĩa đen: Những sợi mảnh được kết nối lại.<br>- Nghĩa Hán Việt: Ti duy<br>- Ý nghĩa: Chỉ sợi, chất xơ, vật liệu dạng sợi.<br>  → Dùng để chỉ các loại sợi tự nhiên hoặc nhân tạo dùng trong dệt may, hoặc chất xơ trong thực phẩm.<br><br>💬 Ví dụ:<br>1. この服は天然繊維でできています。<br>　→ Bộ quần áo này được làm từ sợi tự nhiên.<br><br>2. 食物繊維は健康に良い。<br>　→ Chất xơ thực phẩm tốt cho sức khỏe.<br><br>3. ガラス繊維は強度が高い。<br>　→ Sợi thủy tinh có độ bền cao.<br><br>🧠 Cách nhớ:<br>繊 TIÊM (thanh mảnh) : Kim TIÊM thanh mảnh như sợi chỉ,bình thường thôi nên không cần sợ, tiêm xong cũng vứt xuống đất :)<br><br>➕（合）Các từ kết hợp: 食物繊維 Chất sơ',
     isReading: false
   },
   {
     number: 12,
-    question: '喚く',
-    options: ['はう', 'わめく', 'みわける', 'ひねる'],
-    answer: '2',
-    detail: '🔴 喚く（わめく）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 喚（かん）＝ gọi, kêu lên<br>  • く（く）＝ (phần okurigana)<br>- Nghĩa đen: Gào lên, kêu to.<br>- Nghĩa Hán Việt: Hoán (kêu gọi, la lên)<br>- Ý nghĩa: La hét, gào thét ầm ĩ, thường thể hiện sự tức giận, đau khổ hoặc phản đối kịch liệt.<br>  → Hành động hét to với cường độ mạnh và thái độ dữ dội.<br><br>💬 Ví dụ:<br>1. 子供が駄々をこねて喚いている。<br>　→ Đứa trẻ đang ăn vạ và gào thét.<br><br>2. 酔っぱらいが店先で何か喚いていた。<br>　→ Một gã say đang gào thét điều gì đó trước cửa tiệm.<br><br>3. そんなに喚かなくても、話は聞いていますよ。<br>　→ Anh không cần phải hét như vậy, tôi đang nghe đây.<br><br>🧠 Cách nhớ:<br>- Kanji 喚 có bộ Khẩu (口) chỉ miệng, liên tưởng đến hành động dùng miệng để 「叫ぶ（さけぶ）」(la hét) hoặc 「怒鳴る（どなる）」(quát tháo).<br>- Âm Hán Việt là 「hoán」như trong 「喚起（かんき）」(kêu gọi, khơi dậy), giúp nhớ nghĩa "kêu gọi, la lên".<br><br>➕（合）Các từ kết hợp: 泣き喚く Kêu khóc<br>                        喚き散らす La hét om sòm, gào thét khắp nơi<br>                        喚き声 Tiếng la hét',
+    question: '連鎖',
+    options: ['すいてき', 'えもの', 'れんさ', 'ひとどおり'],
+    answer: '3',
+    detail: '🔴 連鎖（れんさ）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 連（れん）＝ liên kết, nối tiếp<br>  • 鎖（さ）＝ dây xích, xiềng xích<br>- Nghĩa đen: Sự nối tiếp bằng dây xích.<br>- Nghĩa Hán Việt: Liên tỏa.<br>- Ý nghĩa: Chuỗi, dây chuyền. Chỉ một loạt sự vật, sự việc được kết nối hoặc xảy ra liên tiếp nhau.<br>  → Từ này thường dùng trong các thuật ngữ khoa học, kinh tế và sinh học.<br><br>💬 Ví dụ:<br>1. その事件は連鎖反応を引き起こした。<br>　→ Sự kiện đó đã gây ra phản ứng dây chuyền.<br><br>2. 自然界の食物連鎖は複雑だ。<br>　→ Chuỗi thức ăn trong tự nhiên rất phức tạp.<br><br>3. 連鎖販売取引に注意が必要だ。<br>　→ Cần thận trọng với các giao dịch bán hàng đa cấp.<br><br>🧠 Cách nhớ:<br>連 LIÊN<br>鎖 TỎA : Dùng xích kim loại để khóa tiền lại (Hình ảnh những vòng tròn nối nhau gọi là tỏa)<br><br>✨（連）Các từ kết nối: 連鎖反応 Phản ứng dây chuyền<br>食物連鎖 Chuỗi thức ăn (sinh học)<br>連鎖販売 Bán hàng đa cấp (MLM : Multi-Level Marketing)/bán hàng theo chuỗi<br>↔️（類）Các từ liên quan: 鎖 (くさり) Xích',
     isReading: false
   },
   {
     number: 13,
-    question: '言いつける',
-    options: ['はう', 'あおぐ', 'うちあける', 'いいつける'],
+    question: '仕掛け',
+    options: ['やなぎ', 'もうしで', 'すいてき', 'しかけ'],
     answer: '4',
-    detail: '🔴 言いつける（いいつける）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 言（い）＝ nói<br>  • 付（つ）＝ gắn, đính kèm<br>- Nghĩa đen: Nói để gắn (trách nhiệm, mệnh lệnh) cho ai đó.<br>- Nghĩa Hán Việt: Ngôn phó<br>- Ý nghĩa: Ra lệnh, chỉ thị cho ai đó làm việc gì; hoặc báo cáo, mách lẻo với người có quyền về hành vi xấu của người khác.<br>  → Thường dùng khi người trên (cha mẹ, thầy cô, cấp trên) ra lệnh cho người dưới, hoặc khi trẻ con mách người lớn về lỗi của bạn.<br><br>💬 Ví dụ:<br>1. 母は私に弟の面倒を見るよう言いつけた。<br>　→ Mẹ đã bảo tôi phải trông nom em trai.<br><br>2. 先生に言いつけられたことをちゃんと守りなさい。<br>　→ Hãy tuân thủ đúng những điều thầy cô đã dặn.<br><br>3. 彼は私が遅刻したことを上司に言いつけた。<br>　→ Anh ta đã mách sếp việc tôi đi trễ.<br><br>🧠 Cách nhớ:<br>- Ghép 言う（いう - nói）và 付ける（つける - gắn vào）: 「Nói để gắn nhiệm vụ cho ai」→ ra lệnh, mách lẻo.<br>- Hình ảnh: Một người chỉ tay và nói 「いいつけ！」, gắn nhiệm vụ cho người khác.<br><br>↔️（類）Các từ liên quan: 命じる (めいじる) Ra lệnh<br>                          言いつけを守る Tuân theo mệnh lệnh<br>                          告げ口をする (つげぐち) Mách lẻo, mách với người trên, báo cáo chuyện của người khác',
+    detail: '🔴 仕掛け（しかけ）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 仕（し）＝ làm việc, phục vụ<br>  • 掛け（かけ）＝ treo, móc, bắt đầu<br>- Nghĩa đen: Thứ được bố trí, lắp đặt để hoạt động.<br>- Nghĩa Hán Việt: Sự quải (sự treo, móc vào), Sự sứ (sự bố trí công việc).<br>- Ý nghĩa: Chỉ một cơ cấu, thiết bị được lắp đặt sẵn; sự sắp xếp, bố trí; hoặc hành động bắt đầu làm một việc gì đó.<br>  → Thường chỉ những thứ được chuẩn bị kỹ lưỡng, có chủ đích để thực hiện một chức năng hoặc mục đích cụ thể.<br><br>💬 Ví dụ:<br>1. この時計は複雑な仕掛けになっている。<br>　→ Chiếc đồng hồ này có một cơ cấu phức tạp.<br><br>2. 舞台の仕掛けがうまくいった。<br>　→ Hiệu ứng sân khấu đã diễn ra suôn sẻ.<br><br>3. 新しいプロジェクトに仕掛ける。<br>　→ Bắt tay vào một dự án mới.<br><br>🧠 Cách nhớ:<br><br>✨（連）Các từ kết nối: 時計の仕掛け Cơ cấu đồng hồ<br>罠の仕掛け Cơ cấu bẫy<br>巧妙な仕掛け Dàn dựng, mánh khóe khéo léo<br>仕事を仕掛ける Bắt tay làm việc<br>↔️（類）Các từ liên quan: 仕組み Hệ thống,cấu trúc tổng thể<br>仕掛け Cơ cấu hoạt động cụ thể',
     isReading: false
   },
   {
     number: 14,
-    question: '打ち明ける',
-    options: ['うつむく', 'うちあける', 'みかける', 'ささやく'],
-    answer: '2',
-    detail: '🔴 打ち明ける（うちあける）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 打（う）＝ đánh, nói ra<br>  • 明（あ）＝ sáng, rõ ràng<br>- Nghĩa đen: Đánh mở ra<br>- Nghĩa Hán Việt: Đả minh<br>- Ý nghĩa: Thổ lộ, bày tỏ một điều bí mật hoặc suy nghĩ thầm kín mà trước đây đã giấu kín.<br>  → Thường dùng khi muốn nói ra sự thật, tâm tư, tình cảm thật lòng.<br><br>💬 Ví dụ:<br>1. 彼は悩みを親友に打ち明けた。<br>　→ Anh ấy đã thổ lộ nỗi lo lắng với người bạn thân.<br><br>2. 本当の気持ちを打ち明けるのは勇気がいる。<br>　→ Cần có dũng khí để thổ lộ tình cảm thật sự.<br><br>3. 秘密を打ち明けたら、気持ちが楽になった。<br>　→ Sau khi thổ lộ bí mật, tâm trạng trở nên nhẹ nhõm hơn.<br><br>🧠 Cách nhớ:<br>- Hình dung việc 「打つ」(đánh, nói) vào một cánh cửa đóng kín để 「明ける」(mở ra) nó, tức là mở lòng nói ra điều bí mật.<br>- Ghép âm: 「うちあける」→ "úi cha kê rờ" (nói ra điều gì đó khiến người nghe "úi chà").<br><br>✨（連）Các từ kết nối: 本心を打ち明ける Thú thật lòng mình<br><br>↔️（類）Các từ liên quan: 告白 Bộc bạch, tỏ tình',
+    question: '砕く',
+    options: ['はしゅ', 'せんこく', 'きんだんしょうじょう', 'くだく'],
+    answer: '4',
+    detail: '🔴 砕く（くだく）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 砕（サイ）＝ đập vỡ, nghiền nát<br>- Nghĩa đen: Làm cho vật thể cứng vỡ thành những mảnh nhỏ.<br>- Nghĩa Hán Việt: TOÁI<br>- Ý nghĩa: Hành động đập vỡ, nghiền nát vật thể cứng. Cũng dùng với nghĩa bóng là chia nhỏ, phân tích hoặc làm cho mềm đi, dễ tiếp cận.<br>  → Chỉ việc phá vỡ trạng thái nguyên vẹn, cứng nhắc thành những phần nhỏ hơn, linh hoạt hơn.<br><br>💬 Ví dụ:<br>1. 氷を砕いてグラスに入れる。<br>　→ Đập vỡ đá rồi cho vào cốc.<br><br>2. 複雑な問題を砕いて考えよう。<br>　→ Hãy chia nhỏ vấn đề phức tạp ra để suy nghĩ.<br><br>3. 彼は堅苦しい雰囲気を砕くのが上手だ。<br>　→ Anh ấy rất giỏi trong việc phá tan bầu không khí cứng nhắc.<br><br>🧠 Cách nhớ:<br>砕 TOÁI : Đập đá thành 9,10 mảnh<br><br>➕（合）Các từ kết hợp: 話を砕いて説明する Chia nhỏ câu chuyện rồi giải thích<br>心を砕く Bận tâm, dốc lòng suy nghĩ',
     isReading: false
   },
   {
     number: 15,
-    question: '見かける',
-    options: ['うつむく', 'みかける', 'ちぎれる', 'あおぐ'],
+    question: '丈一杯',
+    options: ['やなぎ', 'じょういっぱい', 'せんい', 'えもの'],
     answer: '2',
-    detail: '🔴 見かける（みかける）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 見（み）＝ nhìn, xem<br>  • 掛ける（かける）＝ treo, móc, thực hiện một phần<br>- Nghĩa đen: Bắt gặp, nhìn thấy (một phần)<br>- Nghĩa Hán Việt: Kiến quải<br>- Ý nghĩa: Tình cờ nhìn thấy, bắt gặp ai đó hoặc cái gì đó.<br>  → Nhấn mạnh sự tình cờ, thoáng qua, không chủ đích tìm kiếm.<br><br>💬 Ví dụ:<br>1. 駅で昔の友達を見かけた。<br>　→ Tôi đã bắt gặp người bạn cũ ở nhà ga.<br><br>2. 最近、この辺で変わった鳥を見かける。<br>　→ Gần đây, tôi hay thấy một con chim lạ quanh đây.<br><br>3. あの俳優を町で見かけたという噂だ。<br>　→ Có tin đồn là đã bắt gặp diễn viên đó trong thị trấn.<br><br>🧠 Cách nhớ:<br>- Ghép nghĩa: 見 (nhìn) + かける (một phần) → nhìn thấy một phần, tình cờ lọt vào tầm mắt.<br>- Liên tưởng: Đang đi thì mắt (見) bị cái gì đó móc (かける) lại, quay lại nhìn thì là bắt gặp.<br><br>↔️（類）Các từ liên quan: 目にする Nhấn mạnh trải nghiệm bằng mắt, thường là việc đáng chú ý hoặc ấn tượng, để mắt đến.<br>                          見かける Nhấn mạnh tình cờ / thoáng qua, không phải chủ động tìm kiếm.',
+    detail: '🔴 丈一杯（たけいっぱい）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 丈（たけ）＝ chiều cao, tầm vóc<br>  • 一（いち）＝ một<br>  • 杯（はい）＝ cốc, ly<br>- Nghĩa đen: Một cốc đầy đến mức bằng chiều cao của nó.<br>- Nghĩa Hán Việt: Trượng nhất bôi.<br>- Ý nghĩa: Hết mức có thể, đến giới hạn tối đa.<br>  → Diễn tả việc làm gì đó với toàn bộ khả năng, sức lực hoặc dung tích hiện có.<br><br>💬 Ví dụ:<br>1. 彼は丈一杯の力で走った。<br>　→ Anh ấy đã chạy với toàn bộ sức lực của mình.<br><br>2. このバッグは丈一杯に本が詰まっている。<br>　→ Chiếc cặp này được nhét đầy sách đến mức tối đa.<br><br>3. 丈一杯の愛情を注いで子育てをする。<br>　→ Nuôi dạy con cái với tất cả tình yêu thương có thể.<br><br>🧠 Cách nhớ:<br>Tương tự 精一杯 nhưng dùng 丈 (chiều cao) thay vì 精 (tinh thần). Hình ảnh một cốc nước được đổ đầy đến miệng, cao bằng chính chiều cao của cốc, không thể thêm được nữa.<br><br>↔️（類）Các từ liên quan: 精一杯 Dùng mọi tình huống<br>丈一杯 Chủ yếu dùng trong văn viết',
     isReading: false
   },
   {
     number: 16,
-    question: '見分ける',
-    options: ['うちあける', 'みわける', 'ちぎる', 'なめる'],
-    answer: '2',
-    detail: '🔴 見分ける（みわける）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 見（み）＝ nhìn, xem<br>  • 分（わ）ける ＝ phân chia, phân biệt<br>- Nghĩa đen: Nhìn ra và phân biệt.<br>- Nghĩa Hán Việt: Kiến phân.<br>- Ý nghĩa: Phân biệt, nhận ra sự khác biệt giữa các sự vật, hiện tượng.<br>  → Nhấn mạnh khả năng quan sát và nhận biết bằng mắt hoặc cảm nhận để tìm ra điểm khác biệt.<br><br>💬 Ví dụ:<br>1. 本物と偽物を見分けるのは難しい。<br>　→ Rất khó để phân biệt hàng thật và hàng giả.<br><br>2. 彼は双子の兄弟をすぐに見分けられる。<br>　→ Anh ấy có thể ngay lập tức phân biệt được hai anh em sinh đôi.<br><br>3. 経験を積むと、細かい違いを見分ける力がつく。<br>　→ Khi tích lũy kinh nghiệm, bạn sẽ có khả năng phân biệt được những điểm khác biệt nhỏ.<br><br>🧠 Cách nhớ:<br>- Gồm chữ 見 (nhìn) và 分ける (phân chia) → Nhìn để phân chia, tức là nhìn ra sự khác biệt để phân biệt.<br>- Liên tưởng: 見る（みる）＋ 分かる（わかる）＝ 見分ける（みわける）→ Nhìn và hiểu ra sự khác biệt.<br><br>↔️（類）Các từ liên quan: 識別 (しきべつ) Trang trọng, chuyên môn, nhấn mạnh khả năng nhận biết chi tiết<br>                          区別 Trung lập, dùng để nói về sự khác nhau rõ ràng giữa nhóm / loại<br>                          見かける Hội thoại, thực tế, nhấn mạnh khả năng nhận ra sự khác nhau bằng mắt / cảm nhận',
+    question: '獲物',
+    options: ['はしゅ', 'たより', 'えもの', 'れんさ'],
+    answer: '3',
+    detail: '🔴 獲物（えもの）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 獲（え）＝ bắt được, thu được<br>  • 物（もの）＝ vật, đồ vật<br>- Nghĩa đen: Vật bắt được<br>- Nghĩa Hán Việt: Hoạch vật<br>- Ý nghĩa: Chỉ con mồi, thứ đã săn bắt hoặc thu được (thường từ săn bắn, đánh cá, chiến trận).<br>  → Chỉ thành quả thu được từ việc săn bắn, đánh bắt hoặc chiến đấu.<br><br>💬 Ví dụ:<br>1. 狩りの獲物は鹿でした。<br>　→ Con mồi của cuộc săn là một con hươu.<br><br>2. 彼は大きな魚を獲物にした。<br>　→ Anh ấy đã bắt được một con cá lớn làm chiến lợi phẩm.<br><br>3. 獲物を求めて森を歩き回る。<br>　→ Đi lang thang trong rừng để tìm kiếm con mồi.<br><br>🧠 Cách nhớ:<br>獲 Hoạch : Chó đuổi bắt chim trên đồng cỏ<br><br>↔️（類）Các từ liên quan: 獲得 Thu được, có được',
     isReading: false
   },
   {
     number: 17,
-    question: '見渡す',
-    options: ['みかける', 'みわたす', 'うつむく', 'みわける'],
-    answer: '2',
-    detail: '🔴 見渡す（みわたす）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 見（み）＝ nhìn, xem<br>  • 渡す（わたす）＝ vượt qua, truyền qua<br>- Nghĩa đen: Nhìn xuyên qua, nhìn vượt qua (một phạm vi)<br>- Nghĩa Hán Việt: Kiến đỗ<br>- Ý nghĩa: Nhìn bao quát, quan sát toàn bộ một phạm vi rộng lớn.<br>  → Thường dùng để diễn tả hành động nhìn ngắm toàn cảnh, tầm nhìn rộng.<br><br>💬 Ví dụ:<br>1. 山の頂上から町全体を見渡した。<br>　→ Từ đỉnh núi, tôi đã nhìn bao quát toàn bộ thị trấn.<br><br>2. 会場を見渡すと、たくさんの人が集まっていた。<br>　→ Khi nhìn bao quát khắp hội trường, rất nhiều người đã tụ tập.<br><br>3. 見渡す限りの桜並木がとても美しかった。<br>　→ Hàng cây anh đào trải dài ngút tầm mắt thật đẹp.<br><br>🧠 Cách nhớ:<br>- Ghép nghĩa: 見 (nhìn) + 渡す (vượt qua) = nhìn vượt qua, tức là nhìn xa, nhìn rộng.<br>- Liên tưởng: Đứng trên cao và nhìn (見) xa tới tận chân trời, như thể ánh mắt có thể vượt qua (渡す) mọi khoảng cách.<br><br>➕（合）Các từ kết hợp: 見渡す限り Rộng,xa ngút tầm mắt',
+    question: '英気',
+    options: ['えいき', 'とる', 'ひとどおり', 'てんばつ'],
+    answer: '1',
+    detail: '🔴 英気（えいき）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 英（えい）＝ tinh anh, xuất sắc<br>  • 気（き）＝ tinh thần, khí chất<br>- Nghĩa đen: Tinh thần, khí chất xuất sắc, mạnh mẽ.<br>- Nghĩa Hán Việt: Anh khí.<br>- Ý nghĩa: Sức lực tinh thần, sự hăng hái, nhiệt huyết.<br>  → Chỉ tinh thần minh mẫn, sức sống và ý chí mạnh mẽ để hành động hoặc sáng tạo.<br><br>💬 Ví dụ:<br>1. 休暇を取って英気を養う<br>　→ Nghỉ phép để dưỡng sức, hồi phục tinh thần.<br><br>2. 温泉で英気を養った<br>　→ Đi suối nước nóng để hồi phục tinh thần.<br><br>3. 新しいプロジェクトに取り組むために英気を養う<br>　→ Dưỡng sức để bắt tay vào một dự án mới.<br><br>🧠 Cách nhớ:<br><br>✨（連）Các từ kết nối: 休暇を取って英気を養う Nghỉ phép để dưỡng sức<br>温泉で英気を養った Đi suối nước nóng để hồi phục tinh thần<br>➕（合）Các từ kết hợp: <br>↔️（類）Các từ liên quan: <br>📎（対）Các từ trái nghĩa: Trang trọng, văn viết, thường dùng trong: Phát biểu công việc,Báo chí, Email lịch sự<br>⚠️ Chú ý:',
     isReading: false
   },
   {
     number: 18,
-    question: '見落とす',
-    options: ['みわたす', 'みかける', 'みおとす', 'くわえる'],
-    answer: '3',
-    detail: '🔴 見落とす（みおとす）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 見（み）＝ nhìn, xem<br>  • 落とす（おとす）＝ làm rơi, bỏ sót<br>- Nghĩa đen: Nhìn mà làm rơi mất.<br>- Nghĩa Hán Việt: Kiến lạc.<br>- Ý nghĩa: Không nhìn thấy, không phát hiện ra điều gì đó do sơ suất, bỏ qua một cách vô tình.<br>  → Chỉ việc không chú ý đến, không nhận ra một chi tiết, sự vật, sự việc nào đó mà lẽ ra phải thấy.<br><br>💬 Ví dụ:<br>1. 書類の重要な部分を見落としていた。<br>　→ Tôi đã bỏ sót phần quan trọng trong tài liệu.<br><br>2. 誤字を見落とさないように注意して読む。<br>　→ Tôi đọc một cách cẩn thận để không bỏ sót lỗi chính tả.<br><br>3. 彼は信号を見落として、そのまま進んでしまった。<br>　→ Anh ấy đã không nhìn thấy đèn tín hiệu và cứ thế đi tiếp.<br><br>🧠 Cách nhớ:<br>- Ghép nghĩa của hai chữ: 見 (nhìn) + 落とす (làm rơi) → Nhìn mà làm rơi mất (thông tin, chi tiết) → Bỏ sót.<br>- Liên tưởng: Khi đọc vội, bạn 「見」る (nhìn) nhưng thông tin lại bị 「落とす」 (rơi/trượt) khỏi tầm mắt.<br><br>↔️（類）Các từ liên quan: 見落とし Sự bỏ sót',
+    question: '便り',
+    options: ['たより', 'えもの', 'ひとどおり', 'きんだんしょうじょう'],
+    answer: '1',
+    detail: '🔴 便り（たより）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 便（たよ）り ＝ tin tức, thư từ<br>- Nghĩa đen: Thứ mang lại tin tức.<br>- Nghĩa Hán Việt: Tiện<br>- Ý nghĩa: Tin tức, thư từ, thông báo.<br>  → Chỉ thông tin về tình hình của ai đó hoặc sự việc được truyền đạt bằng thư hoặc lời nói.<br><br>💬 Ví dụ:<br>1. 故郷からの便りが待ち遠しい。<br>　→ Tôi nóng lòng chờ tin tức từ quê nhà.<br><br>2. 彼からは何の便りもない。<br>　→ Không có tin tức gì từ anh ấy cả.<br><br>3. 春の便りを聞く。<br>　→ Nghe tin báo mùa xuân đến.<br><br>🧠 Cách nhớ:',
     isReading: false
   },
   {
     number: 19,
-    question: '乗り過ごす',
-    options: ['うちあける', 'ちぎれる', 'のりすごす', 'ささやく'],
+    question: '促す',
+    options: ['ひとどおり', 'しかけ', 'うながす', 'もうしで'],
     answer: '3',
-    detail: '🔴 乗り過ごす（のりすごす）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 乗（の）り ＝ lên, đi lên (phương tiện)<br>  • 過（す）ごす ＝ vượt qua, trải qua<br>- Nghĩa đen: Đi (trên phương tiện) vượt qua (điểm dừng)<br>- Nghĩa Hán Việt: Thừa quá<br>- Ý nghĩa: Vô tình đi quá trạm dừng dự định trên tàu, xe buýt, v.v.<br>  → Chỉ sự việc xảy ra do không chú ý, không cố ý.<br><br>💬 Ví dụ:<br>1. 寝ていて、駅を乗り過ごしてしまった。<br>　→ Tôi đã ngủ quên và đi quá mất ga.<br><br>2. スマホを見ていて、バス停を乗り過ごす。<br>　→ Nhìn điện thoại mà đi quá trạm xe buýt.<br><br>3. 降りる駅を乗り過ごさないように注意する。<br>　→ Chú ý để không đi quá ga cần xuống.<br><br>🧠 Cách nhớ:<br>- Ghép nghĩa: 「乗る」(lên xe) + 「過ごす」(vượt qua) = lên xe và vượt qua điểm cần xuống.<br>- Phân biệt với 「乗り越す」(cố ý đi quá trạm để trốn vé): 「過ごす」mang nghĩa trải qua, thường là vô tình.<br><br>📎（対）Các từ trái nghĩa: 乗り越す Cố ý đi quá trạm',
+    detail: '🔴 促す（うながす）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 促（そく）＝ thúc giục, xúc tiến<br>- Nghĩa đen: Thúc đẩy, giục giã ai đó làm gì.<br>- Nghĩa Hán Việt: Xúc<br>- Ý nghĩa: Thúc giục, khuyến khích, đốc thúc người khác hành động hoặc tiến triển một việc gì đó.<br>  → Hành động tạo áp lực nhẹ hoặc nhắc nhở để sự việc tiến triển nhanh hơn.<br><br>💬 Ví dụ:<br>1. 返事を促すメールを送った。<br>　→ Tôi đã gửi một email thúc giục (họ) trả lời.<br><br>2. 先生は遅れている生徒を促した。<br>　→ Giáo viên đã thúc giục học sinh đang bị chậm tiến độ.<br><br>3. 成長を促す環境を作る。<br>　→ Tạo ra một môi trường thúc đẩy sự phát triển.<br><br>🧠 Cách nhớ:<br><br><br>✨（連）Các từ kết nối:<br>➕（合）Các từ kết hợp:<br>↔️（類）Các từ liên quan:<br>📎（対）Các từ trái nghĩa:<br>⚠️ Chú ý:',
     isReading: false
   },
   {
     number: 20,
-    question: 'Vặn, xoay (Linh hoạt hơn 捻じる),đánh đố',
-    options: ['捻る', '束ねる', '扇ぐ', '見落とす'],
-    answer: '1',
-    detail: '🔴 捻る（ひねる）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 捻（ねん）＝ vặn, bóp<br>- Nghĩa đen: Dùng tay xoay, vặn một vật.<br>- Nghĩa Hán Việt: Niễn<br>- Ý nghĩa: Hành động vặn, xoắn, bẻ cong bằng tay. Cũng được dùng với nghĩa bóng chỉ việc suy nghĩ, tạo ra điều gì đó một cách khác thường hoặc phức tạp.<br>  → Chỉ hành động vật lý (vặn nắp, vặn khóa) hoặc tinh thần (nghĩ ra ý tưởng lắt léo, đánh đố).<br><br>💬 Ví dụ:<br>1. 蛇口を捻って水を止める。<br>　→ Vặn vòi nước để ngắt nước.<br><br>2. 彼はいつも捻った問題を出してくる。<br>　→ Anh ấy lúc nào cũng đưa ra những câu hỏi đánh đố.<br><br>3. 首を捻りながら難しい問題を考えた。<br>　→ Vừa vặn cổ (tỏ vẻ nghi ngờ, khó hiểu) vừa suy nghĩ về vấn đề khó.<br><br>🧠 Cách nhớ:<br>- Hình ảnh bàn tay (手) đang vặn (捻) một cái nắp chai.<br>- Liên tưởng đến âm Hán Việt "Niễn" - nghe như "nghiền, nắn" cũng có liên quan đến động tác xoắn, vặn.<br><br>✨（連）Các từ kết nối: 蛇口(じゃぐち)を捻る Vặn vòi nước<br>                        捻った問題 Câu hỏi đánh đố',
+    question: '禁断症状',
+    options: ['うながす', 'えもの', 'きんだんしょうじょう', 'はしゅ'],
+    answer: '3',
+    detail: '🔴 禁断症状（きんだんしょうじょう）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 禁（きん）＝ cấm, ngăn cấm<br>  • 断（だん）＝ cắt đứt, đoạn tuyệt<br>  • 症（しょう）＝ triệu chứng<br>  • 状（じょう）＝ tình trạng<br>- Nghĩa đen: Tình trạng triệu chứng do bị cấm đoán, cắt đứt.<br>- Nghĩa Hán Việt: Cấm đoạn chứng trạng.<br>- Ý nghĩa: Các triệu chứng khó chịu về thể chất hoặc tinh thần xuất hiện khi ngừng đột ngột một chất gây nghiện (như rượu, thuốc lá, ma túy) hoặc một hành vi quen thuộc.<br>  → Thường dùng trong y học và tâm lý học.<br><br>💬 Ví dụ:<br>1. タバコをやめてから、強い禁断症状に悩まされた。<br>　→ Sau khi bỏ thuốc lá, tôi đã bị các triệu chứng cai nghiện mạnh làm khổ sở.<br><br>2. スマホ依存の禁断症状として、不安やイライラを感じる人もいる。<br>　→ Có người cảm thấy bồn chồn và cáu kỉnh như một triệu chứng cai nghiện của việc nghiện điện thoại thông minh.<br><br>3. アルコール依存症の治療では、禁断症状の管理が重要だ。<br>　→ Trong điều trị nghiện rượu, việc quản lý các triệu chứng cai nghiện là rất quan trọng.<br><br>🧠 Cách nhớ:<br>禁断（cấm đoán, kiêng kỵ）＋ 症状（triệu chứng）＝ Các triệu chứng khó chịu khi phải kiêng/không được dùng thứ mình nghiện.<br><br>✨（連）Các từ kết nối:<br>➕（合）Các từ kết hợp:<br>↔️（類）Các từ liên quan:<br>📎（対）Các từ trái nghĩa:<br>⚠️ Chú ý:',
     isReading: false
   },
   {
     number: 21,
-    question: 'Bị đứt, rách',
-    options: ['俯く', '千切れる', '束ねる', '乗り過ごす'],
+    question: 'Dòng người',
+    options: ['摂る', '人通り', '繊維', '便り'],
     answer: '2',
-    detail: '🔴 千切れる（ちぎれる）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 千（ち）＝ nghìn<br>  • 切れる（きれる）＝ bị cắt, bị đứt<br>- Nghĩa đen: Bị cắt/bứt thành nhiều mảnh nhỏ.<br>- Nghĩa Hán Việt: Thiên thiệt.<br>- Ý nghĩa: Bị xé, bị bứt, bị đứt thành nhiều mảnh nhỏ.<br>  → Nhấn mạnh việc một vật bị tách rời thành nhiều phần nhỏ, thường là những vật mảnh, dễ rách như giấy, lá cây, dây, vải mỏng.<br><br>💬 Ví dụ:<br>1. 風で洗濯物が千切れて飛んでいった。<br>　→ Quần áo phơi bị gió xé rách và bay đi.<br><br>2. 子供が嬉しそうにパンを千切って食べている。<br>　→ Đứa trẻ vui vẻ xé nhỏ bánh mì ra ăn.<br><br>3. 強い力で引っ張ったら、ロープが千切れた。<br>　→ Khi kéo với lực mạnh, sợi dây thừng đã bị đứt thành nhiều đoạn.<br><br>🧠 Cách nhớ:<br>- Ghép nghĩa chữ Hán: 千 (nghìn - nhiều) + 切れる (bị cắt) = bị cắt thành nhiều (nghìn) mảnh.<br>- Liên tưởng: Hành động xé một tờ giấy thành nhiều mảnh nhỏ như confetti.<br><br>✨（連）Các từ kết nối: 紙・紐が・ロープが千切れた<br>                        紙が千切れた。Tờ giấy bị xé rách.<br>                        紐が千切れた。Sợi dây bị đứt tung ra.<br>                        ロープが千切れた。Sợi dây thừng bị đứt thành nhiều đoạn.<br><br>↔️（対）Các từ trái nghĩa: 切れる Bị cắt, bị đứt, hết (Nhấn mạnh vật bị chia tách hoặc hết, thường gọn, sắc bén)<br>                          破れる Bị rách, bị phá vỡ, bị tổn thương (Rách/đứt, nhưng không nhấn mạnh thành nhiều mảnh, chỉ cần rách hoặc hỏng)<br>                          千切れる Bị xé thành nhiều mảnh, bị bứt ra (Nhấn mạnh vật bị tách thành nhiều mảnh nhỏ, thường là vật mảnh như giấy, lá, dây, cành cây)',
+    detail: '🔴 人通り（ひとどおり）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 人（ひと）＝ người<br>  • 通り（どおり）＝ sự đi qua, sự lưu thông<br>- Nghĩa đen: sự đi lại của người<br>- Nghĩa Hán Việt: nhân thông hành<br>- Ý nghĩa: lưu lượng người qua lại, sự đông đúc của người đi đường<br>  → Chỉ mức độ đông đúc của người đi bộ trên đường phố, lối đi.<br><br>💬 Ví dụ:<br>1. この道は人通りが多い。<br>　→ Con đường này có nhiều người qua lại.<br><br>2. 夜になると、人通りが少なくなる。<br>　→ Đến đêm, lượng người qua lại trở nên ít đi.<br><br>3. 人通りが絶えない繁華街。<br>　→ Khu phố sầm uất không lúc nào ngớt người qua lại.<br><br>🧠 Cách nhớ:<br><br><br>✨（連）Các từ kết nối:<br>➕（合）Các từ kết hợp:<br>↔️（類）Các từ liên quan:<br>📎（対）Các từ trái nghĩa:<br>⚠️ Chú ý:',
     isReading: false
   },
   {
     number: 22,
-    question: 'Xé, bứt, ngắt bằng tay',
-    options: ['俯く', '千切れる', '千切る', '這う'],
-    answer: '3',
-    detail: '🔴 千切る（ちぎる）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 千（せん）＝ một nghìn<br>  • 切る（きる）＝ cắt<br>- Nghĩa đen: Cắt thành từng mảnh nhỏ, xé vụn.<br>- Nghĩa Hán Việt: Thiên thiết<br>- Ý nghĩa: Hành động xé, bứt, cắt một vật gì đó thành nhiều mảnh nhỏ, thường bằng tay.<br>  → Thể hiện sự dứt khoát, mạnh mẽ khi tách rời hoặc phá vỡ một thứ gì đó.<br><br>💬 Ví dụ:<br>1. パンを千切って食べる。<br>　→ Xé bánh mì ra ăn.<br><br>2. 彼は怒って手紙を千切った。<br>　→ Anh ấy tức giận xé nát bức thư.<br><br>3. 千切った花びらを散らす。<br>　→ Rải những cánh hoa đã bứt ra.<br><br>🧠 Cách nhớ:<br>- Hình ảnh xé một tờ giấy thành một nghìn (千) mảnh bằng cách cắt (切る).<br>- Liên tưởng đến âm Hán Việt 「Thiên thiết」 - cắt ra thành nghìn mảnh.<br><br>✨（連）Các từ kết nối: 噛みちぎる (かみちぎる) Cắn đứt, xé bằng răng<br>                        食いちぎる (くいちぎる) Cắn xé và ăn luôn<br>                        褒めちぎる (ほめちぎる) Khen ngợi một cách dồn dập, hết lời, triệt để<br>                        ぶっちぎる Xé toang',
+    question: 'Trời phạt, hình phạt',
+    options: ['天罰', '獲物', '摂る', '禁断症状'],
+    answer: '1',
+    detail: '🔴 天罰（てんばつ）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 天（てん）＝ trời<br>  • 罰（ばつ）＝ sự trừng phạt<br>- Nghĩa đen: Sự trừng phạt từ trời.<br>- Nghĩa Hán Việt: Thiên phạt.<br>- Ý nghĩa: Sự trừng phạt của thần linh, trời cao; hình phạt tự nhiên hoặc đạo đức cho những hành vi xấu xa.<br>  → Thường dùng để chỉ sự trừng trị công bằng, hợp lý cho những việc ác.<br><br>💬 Ví dụ:<br>1. 嘘をつき続けた彼には天罰が下った。<br>　→ Anh ta, kẻ đã liên tục nói dối, đã bị trời phạt.<br><br>2. そんな悪事を働けば、いずれ天罰が当たるよ。<br>　→ Nếu cứ làm việc xấu như thế, sớm muộn gì cũng bị trời phạt đấy.<br><br>3. これは天罰だと思って諦めるしかない。<br>　→ Chỉ còn cách từ bỏ và coi đây là sự trừng phạt của ông trời.<br><br>🧠 Cách nhớ: "Thiên phạt" trong Hán Việt có nghĩa là "trời phạt". Hãy nhớ rằng "天" là trời, "罰" là phạt, ghép lại thành "hình phạt từ trời cao".',
     isReading: false
   },
   {
     number: 23,
-    question: 'Cột lại, sắp xếp lại (thành bó)',
-    options: ['束ねる', '見渡す', '這う', '千切れる'],
-    answer: '1',
-    detail: '🔴 束ねる（たばねる）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 束（たば）＝ bó, bó lại<br>  • ねる（ねる）＝ (hậu tố động từ) làm, thực hiện<br>- Nghĩa đen: Gom nhiều thứ lại và buộc thành một bó.<br>- Nghĩa Hán Việt: Thúc (bó lại, thúc đẩy)<br>- Ý nghĩa: Tập hợp, gom lại những thứ dài, mỏng, rời rạc (như tóc, củi, giấy tờ) và buộc chúng lại với nhau thành một bó gọn gàng.<br>  → Thường dùng cho tóc, hoa, củi, giấy tờ, v.v.<br><br>💬 Ví dụ:<br>1. 彼女は長い髪を後ろで束ねている。<br>　→ Cô ấy buộc tóc dài ra phía sau.<br><br>2. 古い新聞をひもで束ねてリサイクルに出した。<br>　→ Tôi bó những tờ báo cũ bằng dây và đem đi tái chế.<br><br>3. 花束は美しい花を束ねて作られる。<br>　→ Bó hoa được làm bằng cách bó những bông hoa đẹp lại.<br><br>🧠 Cách nhớ:<br>- Hình ảnh: Tạo một 「たば」(bó) từ nhiều thứ rời rạc.<br>- Liên tưởng: 「たば」+ 「ねる」= hành động tạo ra một bó.<br><br>✨（連）Các từ kết nối: 長い髪を一つに束ねた<br>                        古新聞を束ねる<br><br>↔️（類）Các từ liên quan: 括る (くくる) Buộc, trói, cột lại<br>                          一括払い Thanh toán 1 lần',
+    question: 'Sự tuyên án',
+    options: ['柳', '連鎖', '宣告', '仕掛け'],
+    answer: '3',
+    detail: '🔴 宣告（せんこく）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 宣（せん）＝ tuyên bố, công bố<br>  • 告（こく）＝ báo cáo, thông báo<br>- Nghĩa đen: Tuyên bố, công bố một cách chính thức.<br>- Nghĩa Hán Việt: Tuyên cáo.<br>- Ý nghĩa: Hành động chính thức thông báo một sự việc quan trọng, thường là một quyết định, kết quả hoặc tình trạng nghiêm trọng.<br>  → Mang sắc thái trang trọng, nghiêm túc, thường dùng trong các tình huống chính thức hoặc có tính pháp lý.<br><br>💬 Ví dụ:<br>1. 医者は彼に余命宣告をした。<br>　→ Bác sĩ đã tuyên bố thời gian sống còn lại cho anh ta.<br><br>2. 会社は破産を宣告された。<br>　→ Công ty đã bị tuyên bố phá sản.<br><br>3. 判事が最終判決を宣告した。<br>　→ Thẩm phán đã tuyên bố phán quyết cuối cùng.<br><br>🧠 Cách nhớ:',
     isReading: false
   },
   {
     number: 24,
-    question: 'Quạt',
-    options: ['扇ぐ', '這う', '喚く', '乗り過ごす'],
-    answer: '1',
-    detail: '🔴 扇ぐ（あおぐ）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 扇（あおぎ）＝ quạt<br>- Nghĩa đen: Dùng vật như quạt để tạo ra gió.<br>- Nghĩa Hán Việt: Phiến<br>- Ý nghĩa: Dùng tay hoặc vật dụng để phe phẩy tạo ra gió, thường để làm mát hoặc thổi bùng lên.<br>  → Hành động làm cho không khí chuyển động.<br><br>💬 Ví dụ:<br>1. 暑いので、うちわで顔を扇いだ。<br>　→ Vì trời nóng, tôi đã dùng quạt để quạt vào mặt.<br><br>2. 火を扇いで強くした。<br>　→ Quạt cho ngọn lửa bùng mạnh lên.<br><br>3. 彼は新聞紙を扇いで煙を払った。<br>　→ Anh ấy dùng tờ báo quạt để phẩy khói đi.<br><br>🧠 Cách nhớ:<br>- Chữ Kanji 扇 trông giống một cánh cửa (戸) bị che bởi cánh (羽), liên tưởng đến vật có cánh để quạt.<br>- Âm đọc あおぐ gần với あお (xanh, gió), liên tưởng đến hành động tạo ra gió.<br><br>✨（連）Các từ kết nối: 団扇・扇子(うちわ・せんす)を扇ぐ',
+    question: 'Cây liễu',
+    options: ['促す', '柳', '苦戦', '繊維'],
+    answer: '2',
+    detail: '🔴 柳（やなぎ）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 柳（やなぎ）＝ cây liễu<br>- Nghĩa đen: Một loại cây thân gỗ, cành mềm dẻo, thường rủ xuống.<br>- Nghĩa Hán Việt: Liễu<br>- Ý nghĩa: Chỉ cây liễu, một loại cây cảnh phổ biến ở Nhật Bản, biểu tượng cho vẻ đẹp duyên dáng, mềm mại nhưng kiên cường.<br>  → Thường xuất hiện trong thơ ca, văn hóa Nhật Bản.<br><br>💬 Ví dụ:<br>1. 川のほとりに柳が植えられている。<br>　→ Cây liễu được trồng ở bờ sông.<br><br>2. 柳の枝が風に揺れている。<br>　→ Cành liễu đung đưa trong gió.<br><br>3. 春になると、柳が芽吹き始める。<br>　→ Khi mùa xuân đến, cây liễu bắt đầu đâm chồi.<br><br>🧠 Cách nhớ:<br>やなぎ → “Ya… nặng ghê…”→ Cây liễu rủ xuống vì nặng',
     isReading: false
   },
   {
     number: 25,
-    question: 'Múc (chất lỏng), thấu hiểu, cảm thông, hiểu ý',
-    options: ['見分ける', '汲む', '俯く', 'くぐる'],
-    answer: '2',
-    detail: '🔴 汲む（くむ）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 汲（く）む ＝ múc, hút, hiểu, lắng nghe<br>- Nghĩa đen: Dùng vật chứa để lấy chất lỏng (như nước) từ nguồn.<br>- Nghĩa Hán Việt: Cấp (lấy nước)<br>- Ý nghĩa: Hành động lấy nước hoặc chất lỏng. Nghĩa bóng chỉ việc thấu hiểu, nắm bắt ý đồ, tình cảm hoặc tình hình của người khác.<br>  → Từ việc múc nước, mở rộng nghĩa thành việc tiếp nhận, lĩnh hội những thứ trừu tượng như tâm tư, ý định.<br><br>💬 Ví dụ:<br>1. 井戸から水を汲む。<br>　→ Múc nước từ giếng.<br><br>2. 上司の意を汲んで行動する。<br>　→ Hành động dựa trên việc thấu hiểu ý đồ của cấp trên.<br><br>3. 彼は空気を読むのが上手で、場の雰囲気をよく汲む。<br>　→ Anh ấy giỏi đọc không khí và rất thấu hiểu bầu không khí của hiện trường.<br><br>🧠 Cách nhớ:<br>- Liên tưởng đến hình ảnh dùng gầu (chữ 汲 có bộ thủy) để múc (む) nước.<br>- Nghĩa bóng: Để hiểu ý người khác, cần phải múc (tiếp nhận) thông tin từ họ.<br><br>✨（連）Các từ kết nối: 井戸水(いどみず)を汲む<br>                        上司の意を汲む Hiểu ý cấp trên',
+    question: 'Giọt nước',
+    options: ['苦戦', '人通り', '砕く', '水滴'],
+    answer: '4',
+    detail: '🔴 水滴（すいてき）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 水（みず）＝ nước<br>  • 滴（しずく）＝ giọt<br>- Nghĩa đen: giọt nước<br>- Nghĩa Hán Việt: thủy trích<br>- Ý nghĩa: chỉ những giọt nước nhỏ, thường dùng để chỉ hiện tượng nước nhỏ giọt hoặc tích tụ thành giọt.<br>  → Từ ghép của 水 (nước) và 滴 (giọt).<br><br>💬 Ví dụ:<br>1. 葉の上に水滴が光っている。<br>　→ Những giọt nước lấp lánh trên lá cây.<br><br>2. 水道の蛇口から水滴が落ちている。<br>　→ Nước nhỏ giọt từ vòi nước.<br><br>3. 冷たいグラスの外側に水滴がついた。<br>　→ Những giọt nước đọng lại bên ngoài ly nước lạnh.<br><br>🧠 Cách nhớ:<br><br><br>✨（連）Các từ kết nối:<br>➕（合）Các từ kết hợp:<br>↔️（類）Các từ liên quan:<br>📎（対）Các từ trái nghĩa:<br>⚠️ Chú ý:',
     isReading: false
   },
   {
     number: 26,
-    question: 'Ngậm, kẹp, giữ (bằng miệng)',
-    options: ['俯く', '捻る', '咥える', '言いつける'],
-    answer: '3',
-    detail: '🔴 咥える（くわえる）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 咥（くわ）＝ ngậm, cắn<br>- Nghĩa đen: Dùng miệng giữ chặt một vật.<br>- Nghĩa Hán Việt: Hiếp (ngậm, cắn)<br>- Ý nghĩa: Hành động dùng răng hoặc môi giữ chặt một vật trong miệng.<br>  → Thường dùng để miêu tả hành động ngậm, cắn một vật như điếu thuốc, ống điếu, khăn...<br><br>💬 Ví dụ:<br>1. 彼はいつもパイプを咥えている。<br>　→ Anh ấy lúc nào cũng ngậm ống điếu.<br><br>2. 犬が新聞を咥えて持ってきた。<br>　→ Con chó ngậm tờ báo mang đến.<br><br>3. タバコを咥えながら仕事をする。<br>　→ Vừa ngậm điếu thuốc vừa làm việc.<br><br>🧠 Cách nhớ:<br>- Hình ảnh 「口」 (khẩu - miệng) trong chữ 「咥」 liên quan đến hành động dùng miệng.<br>- Âm đọc 「くわえる」 gần giống với 「加える」 (thêm vào), nghĩ đến việc "thêm" một vật vào miệng.<br><br>✨（連）Các từ kết nối: タバコ・パイプを咥える',
+    question: 'Nước dãi',
+    options: ['便り', '涎', '人通り', '宣告'],
+    answer: '2',
+    detail: '🔴 涎（よだれ）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 涎（よだれ）＝ nước miếng, nước dãi<br>- Nghĩa đen: Chất lỏng trong miệng tiết ra.<br>- Nghĩa Hán Việt: Diên (nước dãi).<br>- Ý nghĩa: Nước bọt tiết ra từ miệng, thường do đói, thèm ăn hoặc khi ngủ.<br>  → Chỉ nước dãi.<br><br>💬 Ví dụ:<br>1. 美味しそうな料理を見て、涎が出た。<br>　→ Nhìn món ăn ngon mà nước miếng chảy ra.<br><br>2. 赤ちゃんが涎を垂らしている。<br>　→ Em bé đang chảy nước dãi.<br><br>3. あの話を聞くたびに、涎が出そうになる。<br>　→ Mỗi lần nghe câu chuyện đó là tôi lại thèm chảy nước miếng.<br><br>🧠 Cách nhớ:<br>“Yo… đã quá!” → nước miếng rơi ra 😆',
     isReading: false
   },
   {
     number: 27,
-    question: 'Liếm',
-    options: ['見渡す', '捻る', '舐める', '千切る'],
-    answer: '3',
-    detail: '🔴 舐める（なめる）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 舐（な）＝ liếm<br>- Nghĩa đen: Dùng lưỡi để làm ướt hoặc cảm nhận bề mặt của vật gì đó.<br>- Nghĩa Hán Việt: Thiểm (liếm)<br>- Ý nghĩa: Hành động liếm. Thường được dùng với nghĩa bóng là coi thường, đánh giá thấp ai đó hoặc điều gì đó.<br>  → Có hai nghĩa chính: (1) Liếm. (2) Coi thường, xem nhẹ.<br><br>💬 Ví dụ:<br>1. 猫が自分の足を舐めている。<br>　→ Con mèo đang liếm chân của nó.<br><br>2. 彼は相手の実力を舐めている。<br>　→ Anh ta đang coi thường thực lực của đối thủ.<br><br>3. この仕事を舐めてかかると失敗するよ。<br>　→ Nếu anh xem nhẹ công việc này thì sẽ thất bại đấy.<br><br>🧠 Cách nhớ:<br>- Liên tưởng đến âm Hán Việt 「thiểm」, nghĩa là liếm.<br>- Hình ảnh một con thú 「な（Na）」đang 「め（Me）」liếm (舐める) thức ăn.<br><br>✨（連）Các từ kết nối: 舐めるように可愛がる Chỉ việc quá yêu thương một người/loài động vật nào đó<br><br>↔️（類）Các từ liên quan: なめてかかる Coi thường, xem nhẹ<br>                          侮る Khinh thường, khinh bỉ<br>                          軽く見る Xem nhẹ<br>                          甘く見る Xem nhẹ',
+    question: 'Gieo hạt',
+    options: ['播種', '禁断症状', '促す', '苦戦'],
+    answer: '1',
+    detail: '🔴 播種（はしゅ）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 播（は）＝ gieo, rắc<br>  • 種（しゅ）＝ hạt giống<br>- Nghĩa đen: Gieo hạt giống.<br>- Nghĩa Hán Việt: Phát chủng.<br>- Ý nghĩa: Hành động gieo hạt giống xuống đất để trồng trọt.<br>  → Chỉ việc bắt đầu một quá trình hoặc gieo mầm cho một ý tưởng, sự việc trong tương lai.<br><br>💬 Ví dụ:<br>1. 春になると、農家は田んぼに稲の播種を始める。<br>　→ Vào mùa xuân, các nông dân bắt đầu gieo hạt lúa trên cánh đồng.<br><br>2. このプロジェクトは、未来への希望の播種だ。<br>　→ Dự án này là việc gieo mầm hy vọng cho tương lai.<br><br>3. 播種の時期を間違えると、収穫に影響する。<br>　→ Nếu sai thời điểm gieo hạt, nó sẽ ảnh hưởng đến vụ thu hoạch.<br><br>🧠 Cách nhớ: Hãy tưởng tượng một người nông dân (は) đang rắc những hạt giống (しゅ) xuống đất. Chữ 播 có bộ Thủ (tay) chỉ hành động, và 種 là hạt giống. Hành động “は（播）ける” hạt “しゅ（種）” chính là はしゅ.<br><br>✨（連）Các từ kết nối:<br>➕（合）Các từ kết hợp:<br>↔️（類）Các từ liên quan:<br>📎（対）Các từ trái nghĩa:<br>⚠️ Chú ý:',
     isReading: false
   },
   {
     number: 28,
-    question: 'Nhìn xuống, cuối mặt xuống (Thường vì buồn, xấu hổ, suy nghĩ)',
-    options: ['乗り過ごす', '俯く', '見落とす', '舐める'],
-    answer: '2',
-    detail: '🔴 俯く（うつむく）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 俯（ふ）＝ cúi xuống<br>  • く（く）＝ (phụ tố biểu thị hành động)<br>- Nghĩa đen: Hướng mặt xuống dưới.<br>- Nghĩa Hán Việt: Phủ (cúi xuống).<br>- Ý nghĩa: Cúi đầu, cúi mặt xuống.<br>  → Thường biểu thị trạng thái buồn bã, xấu hổ, suy tư hoặc nhìn xuống vật gì đó.<br><br>💬 Ví dụ:<br>1. 恥ずかしくて俯く。<br>　→ Vì xấu hổ mà cúi mặt.<br><br>2. 彼は俯いて歩いていた。<br>　→ Anh ấy vừa đi vừa cúi mặt.<br><br>3. 俯いて地面を見つめる。<br>　→ Cúi xuống nhìn chằm chằm vào mặt đất.<br><br>🧠 Cách nhớ:<br>- Liên tưởng: 「俯く」nghe như “út mù khơi” → Khi buồn (út) thì cúi mặt (mù khơi) xuống.<br>- Phân tích chữ Hán: Chữ 俯 có bộ Nhân Đứng (亻) chỉ người và chữ 府 (phủ) gợi ý về sự hướng xuống, phủ phục.<br><br>➕（合）Các từ kết hợp: 俯き加減 Hơi cúi mặt',
+    question: 'Đề nghị, yêu cầu, đòi hỏi',
+    options: ['涎', '仕掛け', '申し出', '繊維'],
+    answer: '3',
+    detail: '🔴 申し出（もうしで）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 申（もう）＝ nói, bày tỏ<br>  • 出（で）＝ đưa ra<br>- Nghĩa đen: Đưa ra lời nói.<br>- Nghĩa Hán Việt: Thân xuất.<br>- Ý nghĩa: Lời đề nghị, sự đề xuất, sự xin phép.<br>  → Chỉ việc chủ động đưa ra ý kiến, nguyện vọng hoặc yêu cầu với người khác.<br><br>💬 Ví dụ:<br>1. 彼は会社を辞めるという申し出をした。<br>　→ Anh ấy đã đưa ra đề nghị xin nghỉ việc ở công ty.<br><br>2. 支援の申し出を快く受け入れた。<br>　→ Đã vui vẻ chấp nhận lời đề nghị hỗ trợ.<br><br>3. その申し出は断らざるを得なかった。<br>　→ Lời đề nghị đó đành phải từ chối.<br><br>🧠 Cách nhớ:<br><br>✨（連）Các từ kết nối:<br>➕（合）Các từ kết hợp:<br>↔️（類）Các từ liên quan:<br>📎（対）Các từ trái nghĩa:<br>⚠️ Chú ý:',
     isReading: false
   },
   {
     number: 29,
-    question: 'Bò',
-    options: ['汲む', '喚く', '這う', 'くぐる'],
+    question: 'Cuộc đấu tranh gian khổ',
+    options: ['人通り', '英気', '苦戦', '宣告'],
     answer: '3',
-    detail: '🔴 這う（はう）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 這（は）＝ bò, trườn<br>- Nghĩa đen: Di chuyển bằng cách để bụng hoặc thân tiếp xúc với mặt đất hoặc bề mặt.<br>- Nghĩa Hán Việt: Giá<br>- Ý nghĩa: Hành động bò, trườn của động vật hoặc người.<br>  → Thường dùng cho côn trùng, rắn, hoặc khi con người di chuyển trong tư thế thấp.<br><br>💬 Ví dụ:<br>1. 赤ちゃんが床を這う。<br>　→ Em bé bò trên sàn nhà.<br><br>2. 毛虫が木の枝を這っている。<br>　→ Con sâu bò đang trườn trên cành cây.<br><br>3. 兵士たちは敵に気付かれないように地面を這って進んだ。<br>　→ Các binh sĩ tiến lên bằng cách bò dưới đất để không bị kẻ địch phát hiện.<br><br>🧠 Cách nhớ:<br>- Liên tưởng âm 「はう」 với hình ảnh một con rắn phát ra tiếng 「はー」 khi bò.<br>- Chữ Hán 這 có bộ Xước (辶) chỉ sự di chuyển, phần còn lại gợi hình ảnh thân thể uốn lượn khi bò.<br><br>✨（連）Các từ kết nối: 虫・へびが地面・壁を這う<br>                        Côn trùng/rắn bò trên mặt đất/tường.',
+    detail: '🔴 苦戦（くせん）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 苦（く）＝ khổ, gian khổ, khó khăn<br>  • 戦（せん）＝ chiến đấu, trận chiến<br>- Nghĩa đen: trận chiến gian khổ<br>- Nghĩa Hán Việt: Khổ chiến<br>- Ý nghĩa: Cuộc chiến đấu gian khổ, khó khăn; tình trạng vật lộn vất vả để đạt được điều gì đó hoặc để giành chiến thắng.<br>  → Chỉ một cuộc đấu tranh, cạnh tranh hoặc thử thách diễn ra rất khó khăn, không dễ dàng giành phần thắng.<br><br>💬 Ví dụ:<br>1. 強豪チームとの試合は苦戦を強いられた。<br>　→ Chúng tôi buộc phải trải qua một trận chiến khó khăn trong trận đấu với đội mạnh.<br><br>2. 新しいプロジェクトで予想外の苦戦が続いている。<br>　→ Chúng tôi đang liên tục gặp phải những khó khăn ngoài dự kiến trong dự án mới.<br><br>3. 彼は初めての海外営業で苦戦しているようだ。<br>　→ Anh ấy dường như đang gặp khó khăn trong chuyến đi bán hàng ở nước ngoài đầu tiên.<br><br>🧠 Cách nhớ:<br>Hãy tưởng tượng một trận chiến (戦) đầy đắng cay, gian khổ (苦). Khi nhớ đến cảm giác "khổ" trong "khổ chiến", bạn sẽ liên tưởng ngay đến một cuộc chiến đấu vô cùng vất vả và khó nhọc.<br><br>✨（連）Các từ kết nối: <br>➕（合）Các từ kết hợp: <br>↔️（類）Các từ liên quan: <br>📎（対）Các từ trái nghĩa: <br>⚠️ Chú ý:',
     isReading: false
   },
   {
     number: 30,
-    question: 'Chui qua, đi xuyên qua',
-    options: ['捻る', 'くぐる', '見分ける', '千切る'],
-    answer: '2',
-    detail: '🔴 潜る／くぐる<br><br>🈶 Nghĩa & Giải thích:<br><br>Kanji:<br>• 潜（せん）＝ lặn, ẩn mình<br>• 括（không dùng trong từ này nhưng くぐる còn có kanji khác như「潜る」「くぐる」viết hiragana phổ biến hơn）<br><br>Nghĩa đen: Chui qua, lách qua, đi xuyên qua một không gian hẹp hoặc phía dưới vật gì đó.<br><br>Nghĩa Hán Việt: Tiềm (潜)<br><br>Ý nghĩa:<br>→ Chỉ hành động đi qua bên dưới, chui qua (cổng, rèm, bàn, đường hầm…).<br>→ Cũng dùng nghĩa bóng: vượt qua (khó khăn, giai đoạn, quy định), thoát khỏi sự kiểm soát.<br><br>💬 Ví dụ:<br><br>トンネルをくぐる。<br>　→ Đi xuyên qua đường hầm.<br><br>暖簾をくぐって店に入る。<br>　→ Vén rèm (noren) bước vào quán.<br><br>厳しい時代をくぐり抜けた。<br>　→ Đã vượt qua một thời kỳ khó khăn.<br><br>テーブルの下をくぐる。<br>　→ Chui qua dưới bàn.<br><br>🧠 Cách nhớ:<br><br>Hình dung một người cúi thấp người để chui qua cổng torii hoặc chui dưới bàn.<br><br>“くぐる” nghe giống “cúi gừ gừ” → phải cúi xuống mới chui qua được 😄<br><br>✨（連）Các từ kết nối:<br><br>鳥居(とりい)をくぐる → Đi qua cổng đền<br><br>暖簾(のれん)をくぐる → Vén rèm bước vào quán<br><br>困難(こんなん)をくぐり抜ける → Vượt qua khó khăn',
+    question: 'Ăn (sáng, trưa,…), hấp thụ (vitamin)',
+    options: ['摂る', '播種', '丈一杯', '繊維'],
+    answer: '1',
+    detail: '🔴 摂る（とる）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 摂（せつ）＝ lấy, hấp thu, nhiếp chính<br>- Nghĩa đen: lấy vào, thu nạp<br>- Nghĩa Hán Việt: nhiếp<br>- Ý nghĩa: chỉ việc đưa thức ăn, dinh dưỡng hoặc một chất nào đó vào trong cơ thể.<br>  → Thường dùng với nghĩa "hấp thu", "nạp vào" như ăn uống, bổ sung dinh dưỡng.<br><br>💬 Ví dụ:<br>1. 毎日、ビタミンを摂るようにしています。<br>　→ Tôi cố gắng bổ sung vitamin mỗi ngày.<br><br>2. カルシウムを十分に摂ることが大切だ。<br>　→ Việc hấp thu đủ canxi là rất quan trọng.<br><br>3. この薬は食後に摂ってください。<br>　→ Hãy uống thuốc này sau bữa ăn.<br><br>🧠 Cách nhớ: Từ này dùng chữ Hán 摂 (nhiếp), gợi ý việc thu nạp, tiếp nhận (như trong từ "hấp thu" 摂取). Hãy liên tưởng đến việc "nhiếp" lấy dinh dưỡng vào cơ thể.<br><br>✨（連）Các từ kết nối:<br>➕（合）Các từ kết hợp:<br>↔️（類）Các từ liên quan:<br>📎（対）Các từ trái nghĩa:<br>⚠️ Chú ý:',
     isReading: false
   },
   {
     number: 31,
-    question: 'Thì thầm, đồn thổi',
-    options: ['咥える', '打ち明ける', '囁く', '這う'],
+    question: 'Sợi, thớ (TIÊM DUY)',
+    options: ['涎', '人通り', '繊維', '苦戦'],
     answer: '3',
-    detail: '🔴 囁く（ささやく）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 囁（ささや）＝ thì thầm<br>- Nghĩa đen: Nói với giọng rất nhỏ, nhẹ nhàng.<br>- Nghĩa Hán Việt: Nhiếp (thì thầm)<br>- Ý nghĩa: Hành động nói chuyện với âm lượng rất thấp, thường để chỉ nói riêng với ai đó hoặc nói những điều thân mật, bí mật.<br>  → Thường mang sắc thái lãng mạn, bí ẩn hoặc tâm sự.<br><br>💬 Ví dụ:<br>1. 彼は彼女の耳元で優しく囁いた。<br>　→ Anh ấy thì thầm dịu dàng bên tai cô ấy.<br><br>2. 木々の間を風が囁くように通り抜けた。<br>　→ Cơn gió luồn qua giữa những tán cây như đang thì thầm.<br><br>3. 愛の言葉を囁き合う。<br>　→ Thì thầm với nhau những lời yêu thương.<br><br>🧠 Cách nhớ:<br>- Tưởng tượng âm thanh "sasa" giống tiếng lá cây xào xạc, kết hợp với "yaku" (nói) → nói nhỏ như tiếng lá xào xạc.<br>- Liên tưởng đến hình ảnh hai người gần nhau, miệng (khẩu 口) ở gần tai (nhĩ 耳) để thì thầm.<br><br>✨（連）Các từ kết nối: 耳元で囁く Thì thầm vào tai<br>                        愛を囁く Thì thầm lời yêu thương<br><br>↔️（類）Các từ liên quan: 呟く (つぶやく) Thì thầm độc thoại<br>                          囁く(ささやく) Thì thầm với đối phương<br>                          噂 (うわさ) Lời đồn',
+    detail: '🔴 繊維（せんい）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 繊（せん）＝ mảnh, nhỏ, tinh tế<br>  • 維（い）＝ duy trì, kết nối, sợi<br>- Nghĩa đen: Những sợi mảnh được kết nối lại.<br>- Nghĩa Hán Việt: Ti duy<br>- Ý nghĩa: Chỉ sợi, chất xơ, vật liệu dạng sợi.<br>  → Dùng để chỉ các loại sợi tự nhiên hoặc nhân tạo dùng trong dệt may, hoặc chất xơ trong thực phẩm.<br><br>💬 Ví dụ:<br>1. この服は天然繊維でできています。<br>　→ Bộ quần áo này được làm từ sợi tự nhiên.<br><br>2. 食物繊維は健康に良い。<br>　→ Chất xơ thực phẩm tốt cho sức khỏe.<br><br>3. ガラス繊維は強度が高い。<br>　→ Sợi thủy tinh có độ bền cao.<br><br>🧠 Cách nhớ:<br>繊 TIÊM (thanh mảnh) : Kim TIÊM thanh mảnh như sợi chỉ,bình thường thôi nên không cần sợ, tiêm xong cũng vứt xuống đất :)<br><br>➕（合）Các từ kết hợp: 食物繊維 Chất sơ',
     isReading: false
   },
   {
     number: 32,
-    question: 'La hét, quát',
-    options: ['汲む', '捻る', '俯く', '喚く'],
-    answer: '4',
-    detail: '🔴 喚く（わめく）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 喚（かん）＝ gọi, kêu lên<br>  • く（く）＝ (phần okurigana)<br>- Nghĩa đen: Gào lên, kêu to.<br>- Nghĩa Hán Việt: Hoán (kêu gọi, la lên)<br>- Ý nghĩa: La hét, gào thét ầm ĩ, thường thể hiện sự tức giận, đau khổ hoặc phản đối kịch liệt.<br>  → Hành động hét to với cường độ mạnh và thái độ dữ dội.<br><br>💬 Ví dụ:<br>1. 子供が駄々をこねて喚いている。<br>　→ Đứa trẻ đang ăn vạ và gào thét.<br><br>2. 酔っぱらいが店先で何か喚いていた。<br>　→ Một gã say đang gào thét điều gì đó trước cửa tiệm.<br><br>3. そんなに喚かなくても、話は聞いていますよ。<br>　→ Anh không cần phải hét như vậy, tôi đang nghe đây.<br><br>🧠 Cách nhớ:<br>- Kanji 喚 có bộ Khẩu (口) chỉ miệng, liên tưởng đến hành động dùng miệng để 「叫ぶ（さけぶ）」(la hét) hoặc 「怒鳴る（どなる）」(quát tháo).<br>- Âm Hán Việt là 「hoán」như trong 「喚起（かんき）」(kêu gọi, khơi dậy), giúp nhớ nghĩa "kêu gọi, la lên".<br><br>➕（合）Các từ kết hợp: 泣き喚く Kêu khóc<br>                        喚き散らす La hét om sòm, gào thét khắp nơi<br>                        喚き声 Tiếng la hét',
+    question: 'Dây xích, hệ thống, chuỗi',
+    options: ['宣告', '連鎖', '獲物', '繊維'],
+    answer: '2',
+    detail: '🔴 連鎖（れんさ）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 連（れん）＝ liên kết, nối tiếp<br>  • 鎖（さ）＝ dây xích, xiềng xích<br>- Nghĩa đen: Sự nối tiếp bằng dây xích.<br>- Nghĩa Hán Việt: Liên tỏa.<br>- Ý nghĩa: Chuỗi, dây chuyền. Chỉ một loạt sự vật, sự việc được kết nối hoặc xảy ra liên tiếp nhau.<br>  → Từ này thường dùng trong các thuật ngữ khoa học, kinh tế và sinh học.<br><br>💬 Ví dụ:<br>1. その事件は連鎖反応を引き起こした。<br>　→ Sự kiện đó đã gây ra phản ứng dây chuyền.<br><br>2. 自然界の食物連鎖は複雑だ。<br>　→ Chuỗi thức ăn trong tự nhiên rất phức tạp.<br><br>3. 連鎖販売取引に注意が必要だ。<br>　→ Cần thận trọng với các giao dịch bán hàng đa cấp.<br><br>🧠 Cách nhớ:<br>連 LIÊN<br>鎖 TỎA : Dùng xích kim loại để khóa tiền lại (Hình ảnh những vòng tròn nối nhau gọi là tỏa)<br><br>✨（連）Các từ kết nối: 連鎖反応 Phản ứng dây chuyền<br>食物連鎖 Chuỗi thức ăn (sinh học)<br>連鎖販売 Bán hàng đa cấp (MLM : Multi-Level Marketing)/bán hàng theo chuỗi<br>↔️（類）Các từ liên quan: 鎖 (くさり) Xích',
     isReading: false
   },
   {
     number: 33,
-    question: 'Ra lệnh, mách',
-    options: ['千切る', '見かける', '言いつける', 'くぐる'],
-    answer: '3',
-    detail: '🔴 言いつける（いいつける）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 言（い）＝ nói<br>  • 付（つ）＝ gắn, đính kèm<br>- Nghĩa đen: Nói để gắn (trách nhiệm, mệnh lệnh) cho ai đó.<br>- Nghĩa Hán Việt: Ngôn phó<br>- Ý nghĩa: Ra lệnh, chỉ thị cho ai đó làm việc gì; hoặc báo cáo, mách lẻo với người có quyền về hành vi xấu của người khác.<br>  → Thường dùng khi người trên (cha mẹ, thầy cô, cấp trên) ra lệnh cho người dưới, hoặc khi trẻ con mách người lớn về lỗi của bạn.<br><br>💬 Ví dụ:<br>1. 母は私に弟の面倒を見るよう言いつけた。<br>　→ Mẹ đã bảo tôi phải trông nom em trai.<br><br>2. 先生に言いつけられたことをちゃんと守りなさい。<br>　→ Hãy tuân thủ đúng những điều thầy cô đã dặn.<br><br>3. 彼は私が遅刻したことを上司に言いつけた。<br>　→ Anh ta đã mách sếp việc tôi đi trễ.<br><br>🧠 Cách nhớ:<br>- Ghép 言う（いう - nói）và 付ける（つける - gắn vào）: 「Nói để gắn nhiệm vụ cho ai」→ ra lệnh, mách lẻo.<br>- Hình ảnh: Một người chỉ tay và nói 「いいつけ！」, gắn nhiệm vụ cho người khác.<br><br>↔️（類）Các từ liên quan: 命じる (めいじる) Ra lệnh<br>                          言いつけを守る Tuân theo mệnh lệnh<br>                          告げ口をする (つげぐち) Mách lẻo, mách với người trên, báo cáo chuyện của người khác',
+    question: 'Cơ chế, mánh khóe, bẫy,bắt đầu làm gì đó',
+    options: ['天罰', '仕掛け', '促す', '禁断症状'],
+    answer: '2',
+    detail: '🔴 仕掛け（しかけ）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 仕（し）＝ làm việc, phục vụ<br>  • 掛け（かけ）＝ treo, móc, bắt đầu<br>- Nghĩa đen: Thứ được bố trí, lắp đặt để hoạt động.<br>- Nghĩa Hán Việt: Sự quải (sự treo, móc vào), Sự sứ (sự bố trí công việc).<br>- Ý nghĩa: Chỉ một cơ cấu, thiết bị được lắp đặt sẵn; sự sắp xếp, bố trí; hoặc hành động bắt đầu làm một việc gì đó.<br>  → Thường chỉ những thứ được chuẩn bị kỹ lưỡng, có chủ đích để thực hiện một chức năng hoặc mục đích cụ thể.<br><br>💬 Ví dụ:<br>1. この時計は複雑な仕掛けになっている。<br>　→ Chiếc đồng hồ này có một cơ cấu phức tạp.<br><br>2. 舞台の仕掛けがうまくいった。<br>　→ Hiệu ứng sân khấu đã diễn ra suôn sẻ.<br><br>3. 新しいプロジェクトに仕掛ける。<br>　→ Bắt tay vào một dự án mới.<br><br>🧠 Cách nhớ:<br><br>✨（連）Các từ kết nối: 時計の仕掛け Cơ cấu đồng hồ<br>罠の仕掛け Cơ cấu bẫy<br>巧妙な仕掛け Dàn dựng, mánh khóe khéo léo<br>仕事を仕掛ける Bắt tay làm việc<br>↔️（類）Các từ liên quan: 仕組み Hệ thống,cấu trúc tổng thể<br>仕掛け Cơ cấu hoạt động cụ thể',
     isReading: false
   },
   {
     number: 34,
-    question: 'Thú nhận, tiết lộ, bày tỏ',
-    options: ['打ち明ける', '千切れる', '見落とす', '乗り過ごす'],
+    question: 'Đập vỡ, nghiền nhỏ',
+    options: ['砕く', '仕掛け', '促す', '天罰'],
     answer: '1',
-    detail: '🔴 打ち明ける（うちあける）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 打（う）＝ đánh, nói ra<br>  • 明（あ）＝ sáng, rõ ràng<br>- Nghĩa đen: Đánh mở ra<br>- Nghĩa Hán Việt: Đả minh<br>- Ý nghĩa: Thổ lộ, bày tỏ một điều bí mật hoặc suy nghĩ thầm kín mà trước đây đã giấu kín.<br>  → Thường dùng khi muốn nói ra sự thật, tâm tư, tình cảm thật lòng.<br><br>💬 Ví dụ:<br>1. 彼は悩みを親友に打ち明けた。<br>　→ Anh ấy đã thổ lộ nỗi lo lắng với người bạn thân.<br><br>2. 本当の気持ちを打ち明けるのは勇気がいる。<br>　→ Cần có dũng khí để thổ lộ tình cảm thật sự.<br><br>3. 秘密を打ち明けたら、気持ちが楽になった。<br>　→ Sau khi thổ lộ bí mật, tâm trạng trở nên nhẹ nhõm hơn.<br><br>🧠 Cách nhớ:<br>- Hình dung việc 「打つ」(đánh, nói) vào một cánh cửa đóng kín để 「明ける」(mở ra) nó, tức là mở lòng nói ra điều bí mật.<br>- Ghép âm: 「うちあける」→ "úi cha kê rờ" (nói ra điều gì đó khiến người nghe "úi chà").<br><br>✨（連）Các từ kết nối: 本心を打ち明ける Thú thật lòng mình<br><br>↔️（類）Các từ liên quan: 告白 Bộc bạch, tỏ tình',
+    detail: '🔴 砕く（くだく）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 砕（サイ）＝ đập vỡ, nghiền nát<br>- Nghĩa đen: Làm cho vật thể cứng vỡ thành những mảnh nhỏ.<br>- Nghĩa Hán Việt: TOÁI<br>- Ý nghĩa: Hành động đập vỡ, nghiền nát vật thể cứng. Cũng dùng với nghĩa bóng là chia nhỏ, phân tích hoặc làm cho mềm đi, dễ tiếp cận.<br>  → Chỉ việc phá vỡ trạng thái nguyên vẹn, cứng nhắc thành những phần nhỏ hơn, linh hoạt hơn.<br><br>💬 Ví dụ:<br>1. 氷を砕いてグラスに入れる。<br>　→ Đập vỡ đá rồi cho vào cốc.<br><br>2. 複雑な問題を砕いて考えよう。<br>　→ Hãy chia nhỏ vấn đề phức tạp ra để suy nghĩ.<br><br>3. 彼は堅苦しい雰囲気を砕くのが上手だ。<br>　→ Anh ấy rất giỏi trong việc phá tan bầu không khí cứng nhắc.<br><br>🧠 Cách nhớ:<br>砕 TOÁI : Đập đá thành 9,10 mảnh<br><br>➕（合）Các từ kết hợp: 話を砕いて説明する Chia nhỏ câu chuyện rồi giải thích<br>心を砕く Bận tâm, dốc lòng suy nghĩ',
     isReading: false
   },
   {
     number: 35,
-    question: 'Bắt gặp, nhìn thấy',
-    options: ['見かける', '喚く', '見落とす', '千切れる'],
-    answer: '1',
-    detail: '🔴 見かける（みかける）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 見（み）＝ nhìn, xem<br>  • 掛ける（かける）＝ treo, móc, thực hiện một phần<br>- Nghĩa đen: Bắt gặp, nhìn thấy (một phần)<br>- Nghĩa Hán Việt: Kiến quải<br>- Ý nghĩa: Tình cờ nhìn thấy, bắt gặp ai đó hoặc cái gì đó.<br>  → Nhấn mạnh sự tình cờ, thoáng qua, không chủ đích tìm kiếm.<br><br>💬 Ví dụ:<br>1. 駅で昔の友達を見かけた。<br>　→ Tôi đã bắt gặp người bạn cũ ở nhà ga.<br><br>2. 最近、この辺で変わった鳥を見かける。<br>　→ Gần đây, tôi hay thấy một con chim lạ quanh đây.<br><br>3. あの俳優を町で見かけたという噂だ。<br>　→ Có tin đồn là đã bắt gặp diễn viên đó trong thị trấn.<br><br>🧠 Cách nhớ:<br>- Ghép nghĩa: 見 (nhìn) + かける (một phần) → nhìn thấy một phần, tình cờ lọt vào tầm mắt.<br>- Liên tưởng: Đang đi thì mắt (見) bị cái gì đó móc (かける) lại, quay lại nhìn thì là bắt gặp.<br><br>↔️（類）Các từ liên quan: 目にする Nhấn mạnh trải nghiệm bằng mắt, thường là việc đáng chú ý hoặc ấn tượng, để mắt đến.<br>                          見かける Nhấn mạnh tình cờ / thoáng qua, không phải chủ động tìm kiếm.',
+    question: 'Hết sức lực',
+    options: ['申し出', '宣告', '丈一杯', '涎'],
+    answer: '3',
+    detail: '🔴 丈一杯（たけいっぱい）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 丈（たけ）＝ chiều cao, tầm vóc<br>  • 一（いち）＝ một<br>  • 杯（はい）＝ cốc, ly<br>- Nghĩa đen: Một cốc đầy đến mức bằng chiều cao của nó.<br>- Nghĩa Hán Việt: Trượng nhất bôi.<br>- Ý nghĩa: Hết mức có thể, đến giới hạn tối đa.<br>  → Diễn tả việc làm gì đó với toàn bộ khả năng, sức lực hoặc dung tích hiện có.<br><br>💬 Ví dụ:<br>1. 彼は丈一杯の力で走った。<br>　→ Anh ấy đã chạy với toàn bộ sức lực của mình.<br><br>2. このバッグは丈一杯に本が詰まっている。<br>　→ Chiếc cặp này được nhét đầy sách đến mức tối đa.<br><br>3. 丈一杯の愛情を注いで子育てをする。<br>　→ Nuôi dạy con cái với tất cả tình yêu thương có thể.<br><br>🧠 Cách nhớ:<br>Tương tự 精一杯 nhưng dùng 丈 (chiều cao) thay vì 精 (tinh thần). Hình ảnh một cốc nước được đổ đầy đến miệng, cao bằng chính chiều cao của cốc, không thể thêm được nữa.<br><br>↔️（類）Các từ liên quan: 精一杯 Dùng mọi tình huống<br>丈一杯 Chủ yếu dùng trong văn viết',
     isReading: false
   },
   {
     number: 36,
-    question: 'Phân biệt (nhìn để phân biệt)',
-    options: ['舐める', '千切る', '汲む', '見分ける'],
+    question: 'Con mồi',
+    options: ['促す', '便り', '苦戦', '獲物'],
     answer: '4',
-    detail: '🔴 見分ける（みわける）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 見（み）＝ nhìn, xem<br>  • 分（わ）ける ＝ phân chia, phân biệt<br>- Nghĩa đen: Nhìn ra và phân biệt.<br>- Nghĩa Hán Việt: Kiến phân.<br>- Ý nghĩa: Phân biệt, nhận ra sự khác biệt giữa các sự vật, hiện tượng.<br>  → Nhấn mạnh khả năng quan sát và nhận biết bằng mắt hoặc cảm nhận để tìm ra điểm khác biệt.<br><br>💬 Ví dụ:<br>1. 本物と偽物を見分けるのは難しい。<br>　→ Rất khó để phân biệt hàng thật và hàng giả.<br><br>2. 彼は双子の兄弟をすぐに見分けられる。<br>　→ Anh ấy có thể ngay lập tức phân biệt được hai anh em sinh đôi.<br><br>3. 経験を積むと、細かい違いを見分ける力がつく。<br>　→ Khi tích lũy kinh nghiệm, bạn sẽ có khả năng phân biệt được những điểm khác biệt nhỏ.<br><br>🧠 Cách nhớ:<br>- Gồm chữ 見 (nhìn) và 分ける (phân chia) → Nhìn để phân chia, tức là nhìn ra sự khác biệt để phân biệt.<br>- Liên tưởng: 見る（みる）＋ 分かる（わかる）＝ 見分ける（みわける）→ Nhìn và hiểu ra sự khác biệt.<br><br>↔️（類）Các từ liên quan: 識別 (しきべつ) Trang trọng, chuyên môn, nhấn mạnh khả năng nhận biết chi tiết<br>                          区別 Trung lập, dùng để nói về sự khác nhau rõ ràng giữa nhóm / loại<br>                          見かける Hội thoại, thực tế, nhấn mạnh khả năng nhận ra sự khác nhau bằng mắt / cảm nhận',
+    detail: '🔴 獲物（えもの）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 獲（え）＝ bắt được, thu được<br>  • 物（もの）＝ vật, đồ vật<br>- Nghĩa đen: Vật bắt được<br>- Nghĩa Hán Việt: Hoạch vật<br>- Ý nghĩa: Chỉ con mồi, thứ đã săn bắt hoặc thu được (thường từ săn bắn, đánh cá, chiến trận).<br>  → Chỉ thành quả thu được từ việc săn bắn, đánh bắt hoặc chiến đấu.<br><br>💬 Ví dụ:<br>1. 狩りの獲物は鹿でした。<br>　→ Con mồi của cuộc săn là một con hươu.<br><br>2. 彼は大きな魚を獲物にした。<br>　→ Anh ấy đã bắt được một con cá lớn làm chiến lợi phẩm.<br><br>3. 獲物を求めて森を歩き回る。<br>　→ Đi lang thang trong rừng để tìm kiếm con mồi.<br><br>🧠 Cách nhớ:<br>獲 Hoạch : Chó đuổi bắt chim trên đồng cỏ<br><br>↔️（類）Các từ liên quan: 獲得 Thu được, có được',
     isReading: false
   },
   {
     number: 37,
-    question: 'Nhìn ra xa, nhìn tổng quan',
-    options: ['見落とす', '見分ける', '見渡す', '俯く'],
-    answer: '3',
-    detail: '🔴 見渡す（みわたす）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 見（み）＝ nhìn, xem<br>  • 渡す（わたす）＝ vượt qua, truyền qua<br>- Nghĩa đen: Nhìn xuyên qua, nhìn vượt qua (một phạm vi)<br>- Nghĩa Hán Việt: Kiến đỗ<br>- Ý nghĩa: Nhìn bao quát, quan sát toàn bộ một phạm vi rộng lớn.<br>  → Thường dùng để diễn tả hành động nhìn ngắm toàn cảnh, tầm nhìn rộng.<br><br>💬 Ví dụ:<br>1. 山の頂上から町全体を見渡した。<br>　→ Từ đỉnh núi, tôi đã nhìn bao quát toàn bộ thị trấn.<br><br>2. 会場を見渡すと、たくさんの人が集まっていた。<br>　→ Khi nhìn bao quát khắp hội trường, rất nhiều người đã tụ tập.<br><br>3. 見渡す限りの桜並木がとても美しかった。<br>　→ Hàng cây anh đào trải dài ngút tầm mắt thật đẹp.<br><br>🧠 Cách nhớ:<br>- Ghép nghĩa: 見 (nhìn) + 渡す (vượt qua) = nhìn vượt qua, tức là nhìn xa, nhìn rộng.<br>- Liên tưởng: Đứng trên cao và nhìn (見) xa tới tận chân trời, như thể ánh mắt có thể vượt qua (渡す) mọi khoảng cách.<br><br>➕（合）Các từ kết hợp: 見渡す限り Rộng,xa ngút tầm mắt',
+    question: 'Sinh khí, năng lượng tinh thần',
+    options: ['涎', '英気', '苦戦', '獲物'],
+    answer: '2',
+    detail: '🔴 英気（えいき）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 英（えい）＝ tinh anh, xuất sắc<br>  • 気（き）＝ tinh thần, khí chất<br>- Nghĩa đen: Tinh thần, khí chất xuất sắc, mạnh mẽ.<br>- Nghĩa Hán Việt: Anh khí.<br>- Ý nghĩa: Sức lực tinh thần, sự hăng hái, nhiệt huyết.<br>  → Chỉ tinh thần minh mẫn, sức sống và ý chí mạnh mẽ để hành động hoặc sáng tạo.<br><br>💬 Ví dụ:<br>1. 休暇を取って英気を養う<br>　→ Nghỉ phép để dưỡng sức, hồi phục tinh thần.<br><br>2. 温泉で英気を養った<br>　→ Đi suối nước nóng để hồi phục tinh thần.<br><br>3. 新しいプロジェクトに取り組むために英気を養う<br>　→ Dưỡng sức để bắt tay vào một dự án mới.<br><br>🧠 Cách nhớ:<br><br>✨（連）Các từ kết nối: 休暇を取って英気を養う Nghỉ phép để dưỡng sức<br>温泉で英気を養った Đi suối nước nóng để hồi phục tinh thần<br>➕（合）Các từ kết hợp: <br>↔️（類）Các từ liên quan: <br>📎（対）Các từ trái nghĩa: Trang trọng, văn viết, thường dùng trong: Phát biểu công việc,Báo chí, Email lịch sự<br>⚠️ Chú ý:',
     isReading: false
   },
   {
     number: 38,
-    question: 'Bỏ lở, để sót',
-    options: ['見落とす', '汲む', '俯く', '見かける'],
-    answer: '1',
-    detail: '🔴 見落とす（みおとす）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 見（み）＝ nhìn, xem<br>  • 落とす（おとす）＝ làm rơi, bỏ sót<br>- Nghĩa đen: Nhìn mà làm rơi mất.<br>- Nghĩa Hán Việt: Kiến lạc.<br>- Ý nghĩa: Không nhìn thấy, không phát hiện ra điều gì đó do sơ suất, bỏ qua một cách vô tình.<br>  → Chỉ việc không chú ý đến, không nhận ra một chi tiết, sự vật, sự việc nào đó mà lẽ ra phải thấy.<br><br>💬 Ví dụ:<br>1. 書類の重要な部分を見落としていた。<br>　→ Tôi đã bỏ sót phần quan trọng trong tài liệu.<br><br>2. 誤字を見落とさないように注意して読む。<br>　→ Tôi đọc một cách cẩn thận để không bỏ sót lỗi chính tả.<br><br>3. 彼は信号を見落として、そのまま進んでしまった。<br>　→ Anh ấy đã không nhìn thấy đèn tín hiệu và cứ thế đi tiếp.<br><br>🧠 Cách nhớ:<br>- Ghép nghĩa của hai chữ: 見 (nhìn) + 落とす (làm rơi) → Nhìn mà làm rơi mất (thông tin, chi tiết) → Bỏ sót.<br>- Liên tưởng: Khi đọc vội, bạn 「見」る (nhìn) nhưng thông tin lại bị 「落とす」 (rơi/trượt) khỏi tầm mắt.<br><br>↔️（類）Các từ liên quan: 見落とし Sự bỏ sót',
+    question: 'Thư từ, tin tức, thông báo',
+    options: ['禁断症状', '便り', '苦戦', '天罰'],
+    answer: '2',
+    detail: '🔴 便り（たより）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 便（たよ）り ＝ tin tức, thư từ<br>- Nghĩa đen: Thứ mang lại tin tức.<br>- Nghĩa Hán Việt: Tiện<br>- Ý nghĩa: Tin tức, thư từ, thông báo.<br>  → Chỉ thông tin về tình hình của ai đó hoặc sự việc được truyền đạt bằng thư hoặc lời nói.<br><br>💬 Ví dụ:<br>1. 故郷からの便りが待ち遠しい。<br>　→ Tôi nóng lòng chờ tin tức từ quê nhà.<br><br>2. 彼からは何の便りもない。<br>　→ Không có tin tức gì từ anh ấy cả.<br><br>3. 春の便りを聞く。<br>　→ Nghe tin báo mùa xuân đến.<br><br>🧠 Cách nhớ:',
     isReading: false
   },
   {
     number: 39,
-    question: 'Đi quá ga, trạm cần xuống',
-    options: ['乗り過ごす', '見落とす', '俯く', '千切れる'],
-    answer: '1',
-    detail: '🔴 乗り過ごす（のりすごす）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 乗（の）り ＝ lên, đi lên (phương tiện)<br>  • 過（す）ごす ＝ vượt qua, trải qua<br>- Nghĩa đen: Đi (trên phương tiện) vượt qua (điểm dừng)<br>- Nghĩa Hán Việt: Thừa quá<br>- Ý nghĩa: Vô tình đi quá trạm dừng dự định trên tàu, xe buýt, v.v.<br>  → Chỉ sự việc xảy ra do không chú ý, không cố ý.<br><br>💬 Ví dụ:<br>1. 寝ていて、駅を乗り過ごしてしまった。<br>　→ Tôi đã ngủ quên và đi quá mất ga.<br><br>2. スマホを見ていて、バス停を乗り過ごす。<br>　→ Nhìn điện thoại mà đi quá trạm xe buýt.<br><br>3. 降りる駅を乗り過ごさないように注意する。<br>　→ Chú ý để không đi quá ga cần xuống.<br><br>🧠 Cách nhớ:<br>- Ghép nghĩa: 「乗る」(lên xe) + 「過ごす」(vượt qua) = lên xe và vượt qua điểm cần xuống.<br>- Phân biệt với 「乗り越す」(cố ý đi quá trạm để trốn vé): 「過ごす」mang nghĩa trải qua, thường là vô tình.<br><br>📎（対）Các từ trái nghĩa: 乗り越す Cố ý đi quá trạm',
+    question: 'Thúc giục, khuyến khích ai đó làm điều gì đó một cách tinh tế hơn',
+    options: ['水滴', '促す', '獲物', '連鎖'],
+    answer: '2',
+    detail: '🔴 促す（うながす）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 促（そく）＝ thúc giục, xúc tiến<br>- Nghĩa đen: Thúc đẩy, giục giã ai đó làm gì.<br>- Nghĩa Hán Việt: Xúc<br>- Ý nghĩa: Thúc giục, khuyến khích, đốc thúc người khác hành động hoặc tiến triển một việc gì đó.<br>  → Hành động tạo áp lực nhẹ hoặc nhắc nhở để sự việc tiến triển nhanh hơn.<br><br>💬 Ví dụ:<br>1. 返事を促すメールを送った。<br>　→ Tôi đã gửi một email thúc giục (họ) trả lời.<br><br>2. 先生は遅れている生徒を促した。<br>　→ Giáo viên đã thúc giục học sinh đang bị chậm tiến độ.<br><br>3. 成長を促す環境を作る。<br>　→ Tạo ra một môi trường thúc đẩy sự phát triển.<br><br>🧠 Cách nhớ:<br><br><br>✨（連）Các từ kết nối:<br>➕（合）Các từ kết hợp:<br>↔️（類）Các từ liên quan:<br>📎（対）Các từ trái nghĩa:<br>⚠️ Chú ý:',
+    isReading: false
+  },
+  {
+    number: 40,
+    question: 'Triệu chứng khi cai nghiện',
+    options: ['涎', '禁断症状', '播種', '宣告'],
+    answer: '2',
+    detail: '🔴 禁断症状（きんだんしょうじょう）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 禁（きん）＝ cấm, ngăn cấm<br>  • 断（だん）＝ cắt đứt, đoạn tuyệt<br>  • 症（しょう）＝ triệu chứng<br>  • 状（じょう）＝ tình trạng<br>- Nghĩa đen: Tình trạng triệu chứng do bị cấm đoán, cắt đứt.<br>- Nghĩa Hán Việt: Cấm đoạn chứng trạng.<br>- Ý nghĩa: Các triệu chứng khó chịu về thể chất hoặc tinh thần xuất hiện khi ngừng đột ngột một chất gây nghiện (như rượu, thuốc lá, ma túy) hoặc một hành vi quen thuộc.<br>  → Thường dùng trong y học và tâm lý học.<br><br>💬 Ví dụ:<br>1. タバコをやめてから、強い禁断症状に悩まされた。<br>　→ Sau khi bỏ thuốc lá, tôi đã bị các triệu chứng cai nghiện mạnh làm khổ sở.<br><br>2. スマホ依存の禁断症状として、不安やイライラを感じる人もいる。<br>　→ Có người cảm thấy bồn chồn và cáu kỉnh như một triệu chứng cai nghiện của việc nghiện điện thoại thông minh.<br><br>3. アルコール依存症の治療では、禁断症状の管理が重要だ。<br>　→ Trong điều trị nghiện rượu, việc quản lý các triệu chứng cai nghiện là rất quan trọng.<br><br>🧠 Cách nhớ:<br>禁断（cấm đoán, kiêng kỵ）＋ 症状（triệu chứng）＝ Các triệu chứng khó chịu khi phải kiêng/không được dùng thứ mình nghiện.<br><br>✨（連）Các từ kết nối:<br>➕（合）Các từ kết hợp:<br>↔️（類）Các từ liên quan:<br>📎（対）Các từ trái nghĩa:<br>⚠️ Chú ý:',
     isReading: false
   }
 ]; 

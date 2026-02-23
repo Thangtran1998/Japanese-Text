@@ -4916,6 +4916,14 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
               time: "32 phút",
               difficulty: "Khó",
               url: "Mimikara-2-4.html",
+            },
+{
+              id: 2005,
+              name: "Từ vựng Mimikara Unit 2 (171-190)",
+              questions: 36,
+              time: "36 phút",
+              difficulty: "Khó",
+              url: "Mimikara-2-5.html",
             }
               ],
           }
@@ -5096,46 +5104,15 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
       // Bài test cho "Từ vựng khó"
       "Từ vựng khó": {
         title: "Từ vựng khó N1",
+        name: "Unit 1",
         tests: [
           {
             id: 1,
-            name: "Bài test Từ vựng khó đề thi 2010-2015",
-            questions: 30,
-            time: "25 phút",
+            name: "Từ vựng khó phần 1",
+            questions: 36,
+            time: "36 phút",
             difficulty: "Khó",
-            url: "test-hard-2010-2015.html",
-          },
-          {
-            id: 2,
-            name: "Bài test Từ vựng khó đề thi 2016-2020",
-            questions: 30,
-            time: "25 phút",
-            difficulty: "Khó",
-            url: "test-hard-2016-2020.html",
-          },
-          {
-            id: 3,
-            name: "Bài test Từ vựng khó đề thi 2021-2025",
-            questions: 30,
-            time: "25 phút",
-            difficulty: "Khó",
-            url: "test-hard-2021-2025.html",
-          },
-          {
-            id: 4,
-            name: "Bài test Từ vựng Kanji khó",
-            questions: 25,
-            time: "20 phút",
-            difficulty: "Khó",
-            url: "test-hard-kanji.html",
-          },
-          {
-            id: 5,
-            name: "Bài test Từ vựng Onomatopoeia",
-            questions: 20,
-            time: "15 phút",
-            difficulty: "Khó",
-            url: "test-onomatopoeia.html",
+            url: "Vocab-Hard-1-1.html",
           },
         ],
       },
