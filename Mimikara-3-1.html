@@ -1,0 +1,4066 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Từ vựng Mimikara Unit 3 (191-200) - Cyberpunk Quiz</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ===== RESET & VARIABLES ===== */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary-glow: #00a8ff;
+        --secondary-glow: #00ffcc;
+        --danger-glow: #ff3366;
+        --warning-glow: #ff9900;
+        --bg-primary: #0a0e17;
+        --bg-secondary: rgba(0, 20, 40, 0.6);
+        --bg-tertiary: rgba(0, 30, 60, 0.5);
+        --border-glow: rgba(0, 150, 255, 0.3);
+        --text-primary: #e0f7ff;
+        --text-secondary: #a0c8e0;
+        --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        --sidebar-width: 320px;
+        --sidebar-collapsed-width: 60px;
+      }
+
+      body {
+        font-family: "Exo 2", sans-serif;
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+        min-height: 100vh;
+        overflow-x: hidden;
+        background-image:
+          radial-gradient(
+            circle at 20% 30%,
+            rgba(16, 64, 120, 0.15) 0%,
+            transparent 20%
+          ),
+          radial-gradient(
+            circle at 80% 70%,
+            rgba(0, 150, 200, 0.1) 0%,
+            transparent 20%
+          ),
+          linear-gradient(to bottom, #0a0e17, #0c1220);
+        padding: 20px;
+        max-width: 1600px;
+        margin: auto;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* ===== BACKGROUND EFFECTS ===== */
+      .cyber-grid {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image:
+          linear-gradient(rgba(0, 150, 255, 0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0, 150, 255, 0.05) 1px, transparent 1px);
+        background-size: 40px 40px;
+        z-index: -1;
+        opacity: 0.4;
+      }
+
+      .cyber-line {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .cyber-line::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(
+          to right,
+          transparent,
+          #00ffcc,
+          transparent
+        );
+        animation: scan 4s linear infinite;
+      }
+
+      @keyframes scan {
+        0% {
+          top: 0%;
+        }
+
+        100% {
+          top: 100%;
+        }
+      }
+
+      /* ===== FLOATING BUTTONS ===== */
+      .floating-btn-container {
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        transition: var(--transition-smooth);
+      }
+
+      .floating-btn-container.left {
+        left: 20px;
+      }
+
+      .floating-btn-container.right {
+        right: 20px;
+      }
+
+      .floating-btn-container.hidden {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      .floating-btn {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #1a2a3a, #0f1a24);
+        border: 2px solid var(--primary-glow);
+        color: var(--primary-glow);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 24px;
+        box-shadow: 0 0 20px rgba(0, 168, 255, 0.3);
+        transition: var(--transition-smooth);
+        position: relative;
+      }
+
+      .floating-btn:hover {
+        transform: scale(1.1);
+        border-color: var(--secondary-glow);
+        color: var(--secondary-glow);
+        box-shadow: 0 0 30px rgba(0, 255, 204, 0.5);
+      }
+
+      .floating-btn .badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: linear-gradient(135deg, #ff3366, #ff0066);
+        color: white;
+        border-radius: 50%;
+        width: 22px;
+        height: 22px;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        border: 2px solid var(--bg-primary);
+      }
+
+      .btn-tooltip {
+        position: absolute;
+        background: rgba(0, 20, 40, 0.95);
+        color: var(--secondary-glow);
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: 14px;
+        white-space: nowrap;
+        pointer-events: none;
+        opacity: 0;
+        transition: var(--transition-smooth);
+        border: 1px solid var(--border-glow);
+        font-family: "Orbitron", sans-serif;
+        font-weight: 500;
+        backdrop-filter: blur(10px);
+      }
+
+      .floating-btn.left .btn-tooltip {
+        left: 70px;
+      }
+
+      .floating-btn.right .btn-tooltip {
+        right: 70px;
+      }
+
+      .floating-btn:hover .btn-tooltip {
+        opacity: 1;
+      }
+
+      /* ===== SIDEBAR PANELS ===== */
+      .sidebar-panel {
+        position: fixed;
+        top: 100px;
+        bottom: 30px;
+        width: var(--sidebar-width);
+        background: rgba(0, 15, 30, 0.95);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--border-glow);
+        box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+        z-index: 9998;
+        transition: var(--transition-smooth);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        border-radius: 16px;
+      }
+
+      .sidebar-panel.left {
+        left: 20px;
+        transform: translateX(
+          calc(var(--sidebar-collapsed-width) - var(--sidebar-width) - 20px)
+        );
+        border-right: 2px solid var(--danger-glow);
+      }
+
+      .sidebar-panel.right {
+        right: 20px;
+        transform: translateX(
+          calc(var(--sidebar-width) - var(--sidebar-collapsed-width) + 20px)
+        );
+        border-left: 2px solid var(--primary-glow);
+      }
+
+      .sidebar-panel.left.active,
+      .sidebar-panel.right.active {
+        transform: translateX(0);
+      }
+
+      .sidebar-panel.left:not(.active) .sidebar-content,
+      .sidebar-panel.right:not(.active) .sidebar-content {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .sidebar-panel.left:not(.active) .sidebar-header,
+      .sidebar-panel.right:not(.active) .sidebar-header {
+        justify-content: center;
+        padding: 20px 0;
+        height: 100%;
+        display: flex;
+        align-items: center;
+      }
+
+      .sidebar-panel.left:not(.active) .sidebar-header h3 span,
+      .sidebar-panel.right:not(.active) .sidebar-header h3 span {
+        display: none;
+      }
+
+      .sidebar-panel.left:not(.active) .sidebar-header h3 i,
+      .sidebar-panel.right:not(.active) .sidebar-header h3 i {
+        margin: 0;
+        font-size: 28px;
+      }
+
+      .sidebar-panel.left:not(.active) .sidebar-close,
+      .sidebar-panel.right:not(.active) .sidebar-close {
+        display: none;
+      }
+
+      .sidebar-toggle {
+        position: absolute;
+        width: 30px;
+        height: 60px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-glow),
+          var(--secondary-glow)
+        );
+        border: none;
+        border-radius: 8px;
+        color: #0a0e17;
+        cursor: pointer;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        font-weight: bold;
+        transition: var(--transition-smooth);
+        z-index: 100;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .sidebar-panel.left.active .sidebar-toggle {
+        right: -15px;
+        display: flex;
+      }
+
+      .sidebar-panel.right.active .sidebar-toggle {
+        left: -15px;
+        display: flex;
+      }
+
+      .sidebar-toggle:hover {
+        transform: translateY(-50%) scale(1.1);
+        box-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+      }
+
+      .sidebar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 25px;
+        border-bottom: 1px solid rgba(0, 255, 204, 0.3);
+        transition: var(--transition-smooth);
+      }
+
+      .sidebar-header h3 {
+        font-family: "Orbitron", sans-serif;
+        color: var(--secondary-glow);
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0;
+      }
+
+      .sidebar-close {
+        background: rgba(255, 50, 50, 0.2);
+        border: 1px solid rgba(255, 50, 50, 0.5);
+        color: #ff6666;
+        width: 36px;
+        height: 36px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.25s;
+        font-family: Orbitron, sans-serif;
+      }
+
+      .sidebar-close:hover {
+        background: rgba(255, 50, 50, 0.4);
+        box-shadow: 0 0 10px rgba(255, 50, 50, 0.4);
+        transform: translateY(-1px);
+      }
+
+      .sidebar-close i {
+        font-size: 16px; /* Điều chỉnh kích thước icon nếu cần */
+      }
+
+      .sidebar-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 25px;
+        transition: var(--transition-smooth);
+      }
+
+      /* ===== TIMER PANEL ===== */
+      .timer-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 10000;
+        background: rgba(0, 20, 40, 0.95);
+        border-radius: 15px;
+        padding: 15px 20px;
+        border: 1px solid var(--border-glow);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(15px);
+        width: 350px;
+        display: flex;
+        align-items: center;
+        transition: var(--transition-smooth);
+      }
+
+      .timer-controls {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        gap: 10px;
+      }
+
+      .timer-input-group {
+        display: flex;
+        gap: 8px;
+      }
+
+      .timer-input {
+        width: 70px;
+        height: 42px;
+        padding: 0 12px;
+        background: rgba(0, 10, 25, 0.9);
+        border: 1px solid rgba(0, 150, 255, 0.6);
+        border-radius: 10px;
+        color: var(--text-primary);
+        text-align: center;
+        font-family: "Orbitron", sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        transition: var(--transition-smooth);
+      }
+
+      .timer-input:focus {
+        outline: none;
+        border-color: var(--secondary-glow);
+        box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+      }
+
+      .set-btn {
+        width: 50px;
+        height: 42px;
+        background: linear-gradient(135deg, #0066cc, var(--primary-glow));
+        border: none;
+        border-radius: 10px;
+        color: white;
+        font-family: "Orbitron", sans-serif;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition-smooth);
+      }
+
+      .set-btn:hover {
+        background: linear-gradient(
+          135deg,
+          var(--primary-glow),
+          var(--secondary-glow)
+        );
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 168, 255, 0.4);
+      }
+
+      .start-btn {
+        width: 44px;
+        height: 42px;
+        background: linear-gradient(135deg, #00cc66, #00ff88);
+        border: none;
+        border-radius: 10px;
+        color: #0a0e17;
+        font-size: 16px;
+        cursor: pointer;
+        transition: var(--transition-smooth);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .start-btn:hover {
+        background: linear-gradient(135deg, #00ff88, var(--secondary-glow));
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4);
+      }
+
+      .timer-display {
+        min-width: 110px;
+        height: 42px;
+        font-family: "Orbitron", sans-serif;
+        font-size: 20px;
+        font-weight: 900;
+        color: var(--warning-glow);
+        text-shadow: 0 0 10px rgba(255, 153, 0, 0.5);
+        background: rgba(0, 0, 0, 0.4);
+        padding: 0 15px;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 153, 0, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* ===== MAIN CONTENT WRAPPER ===== */
+      .main-content-wrapper {
+        margin-left: calc(var(--sidebar-collapsed-width) + 20px);
+        margin-right: calc(var(--sidebar-collapsed-width) + 20px);
+        transition: var(--transition-smooth);
+        padding: 20px;
+        margin-top: 80px;
+      }
+
+      .main-content-wrapper.left-expanded {
+        margin-left: calc(var(--sidebar-width) + 40px);
+      }
+
+      .main-content-wrapper.right-expanded {
+        margin-right: calc(var(--sidebar-width) + 40px);
+      }
+
+      .main-quiz-container {
+        background: rgba(0, 20, 40, 0.6);
+        border-radius: 16px;
+        padding: 30px;
+        border: 1px solid var(--border-glow);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(10px);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .main-quiz-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(
+          to right,
+          var(--primary-glow),
+          var(--secondary-glow)
+        );
+      }
+
+      /* ===== QUIZ STYLES ===== */
+      .question-block {
+        background: var(--bg-tertiary);
+        border-radius: 12px;
+        padding: 25px;
+        margin-bottom: 25px;
+        border: 1px solid rgba(0, 150, 255, 0.2);
+        transition: var(--transition-smooth);
+        position: relative;
+      }
+
+      .question-block:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 100, 255, 0.3);
+        border-color: var(--primary-glow);
+      }
+
+      .question-number {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--secondary-glow);
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .question-text {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        line-height: 1.6;
+      }
+
+      .answer-option {
+        display: block;
+        margin-bottom: 12px;
+        padding: 15px 20px;
+        background: rgba(0, 40, 80, 0.4);
+        border: 1px solid rgba(0, 150, 255, 0.2);
+        border-radius: 10px;
+        color: var(--text-primary);
+        cursor: pointer;
+        transition: var(--transition-smooth);
+      }
+
+      .answer-option:hover {
+        background: rgba(0, 80, 160, 0.5);
+        border-color: var(--primary-glow);
+        transform: translateX(8px);
+        box-shadow: 0 5px 15px rgba(0, 100, 255, 0.3);
+      }
+
+      .answer-option input[type="radio"] {
+        margin-right: 15px;
+        transform: scale(1.2);
+        accent-color: var(--secondary-glow);
+      }
+
+      .detail-btn {
+        padding: 12px 24px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-glow),
+          var(--secondary-glow)
+        );
+        color: #0a0e17;
+        border: none;
+        border-radius: 8px;
+        font-family: "Orbitron", sans-serif;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 15px;
+        transition: var(--transition-smooth);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .detail-btn:hover {
+        background: linear-gradient(
+          135deg,
+          var(--secondary-glow),
+          var(--primary-glow)
+        );
+        box-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+        transform: translateY(-2px);
+      }
+
+      /* ===== READING COMPREHENSION ===== */
+      .reading-comprehension {
+        background: rgba(0, 30, 80, 0.6);
+        border-left: 4px solid var(--secondary-glow);
+        padding: 25px;
+        border-radius: 12px;
+        position: relative;
+        margin-bottom: 20px;
+        padding-top: 70px;
+      }
+
+      .reading-title {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(0, 255, 204, 0.2);
+        position: relative;
+        z-index: 5;
+      }
+
+      .reading-timer-container {
+        position: absolute;
+        top: 15px;
+        right: 25px;
+        width: 350px;
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--border-glow);
+        border-radius: 30px;
+        padding: 8px 15px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        z-index: 20;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        transition: var(--transition-smooth);
+      }
+
+      .highlight-controls {
+        position: absolute;
+        top: 15px;
+        right: 400px;
+        display: flex;
+        gap: 8px;
+        background: rgba(0, 20, 40, 0.9);
+        padding: 8px 15px;
+        border-radius: 30px;
+        border: 1px solid var(--border-glow);
+        z-index: 20;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        align-items: center;
+        height: 46px;
+        width: auto;
+      }
+
+      .highlight-btn {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        cursor: pointer;
+        transition: var(--transition-smooth);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .highlight-btn:hover {
+        transform: scale(1.15);
+        box-shadow: 0 0 15px currentColor;
+        border-color: white;
+      }
+
+      .highlight-btn.red {
+        background-color: #ff3333;
+        color: white;
+      }
+
+      .highlight-btn.blue {
+        background-color: #00a8ff;
+        color: white;
+      }
+
+      .highlight-btn.purple {
+        background-color: #aa00ff;
+        color: white;
+      }
+
+      .highlight-btn.black {
+        background-color: #000000;
+        color: white;
+        border-color: rgba(255, 255, 255, 0.5);
+      }
+
+      .highlight-btn.remove-btn {
+        background: linear-gradient(135deg, #ff3333, #ff6600);
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      .reading-timer-input {
+        width: 50px;
+        height: 32px;
+        background: rgba(0, 10, 25, 0.9);
+        border: 1px solid rgba(0, 150, 255, 0.4);
+        border-radius: 20px;
+        color: var(--text-primary);
+        text-align: center;
+        font-size: 13px;
+        padding: 0 8px;
+        transition: var(--transition-smooth);
+      }
+
+      .reading-timer-input:focus {
+        outline: none;
+        border-color: var(--secondary-glow);
+        box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+      }
+
+      .reading-timer-btn {
+        padding: 6px 14px;
+        background: linear-gradient(135deg, #0066cc, var(--primary-glow));
+        border: none;
+        border-radius: 20px;
+        color: white;
+        font-size: 12px;
+        cursor: pointer;
+        transition: var(--transition-smooth);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        font-weight: 500;
+        white-space: nowrap;
+      }
+
+      .reading-timer-btn i {
+        font-size: 11px;
+      }
+
+      .reading-timer-btn:hover {
+        background: linear-gradient(
+          135deg,
+          var(--primary-glow),
+          var(--secondary-glow)
+        );
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 168, 255, 0.4);
+      }
+
+      .reading-timer-display {
+        font-family: "Orbitron", sans-serif;
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--secondary-glow);
+        padding: 0 8px;
+        min-width: 60px;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 20px;
+        padding: 4px 10px;
+        border: 1px solid rgba(0, 255, 204, 0.3);
+        letter-spacing: 1px;
+      }
+
+      .reading-label {
+        background: linear-gradient(
+          135deg,
+          var(--primary-glow),
+          var(--secondary-glow)
+        );
+        color: #0a0e17;
+        padding: 5px 18px;
+        border-radius: 30px;
+        font-family: "Orbitron", sans-serif;
+        font-weight: 700;
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 15px rgba(0, 168, 255, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        position: relative;
+        overflow: hidden;
+        transition: var(--transition-smooth);
+        animation: reading-pulse 3s infinite ease-in-out;
+      }
+
+      .reading-label::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.3),
+          transparent
+        );
+        transition: left 0.5s ease;
+      }
+
+      .reading-label:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 25px rgba(0, 255, 204, 0.5);
+      }
+
+      .reading-label:hover::before {
+        left: 100%;
+      }
+
+      @keyframes reading-pulse {
+        0% {
+          box-shadow: 0 0 15px rgba(0, 168, 255, 0.3);
+        }
+
+        50% {
+          box-shadow: 0 0 25px rgba(0, 255, 204, 0.5);
+        }
+
+        100% {
+          box-shadow: 0 0 15px rgba(0, 168, 255, 0.3);
+        }
+      }
+
+      .sub-question-container {
+        margin: 25px 0 15px 25px;
+        padding-left: 20px;
+        border-left: 3px solid rgba(0, 150, 255, 0.3);
+      }
+
+      .sub-question-box {
+        background: rgba(0, 40, 80, 0.4);
+        border: 1px solid rgba(0, 150, 255, 0.2);
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 15px;
+      }
+
+      .sub-question-box p {
+        font-weight: 600;
+        color: var(--secondary-glow);
+        margin-bottom: 15px;
+        font-size: 17px;
+      }
+
+      .sub-question-options {
+        margin-top: 15px;
+      }
+
+      .sub-question-key {
+        font-size: 12px;
+        color: #888;
+        margin-left: 10px;
+        font-family: monospace;
+      }
+
+      /* ===== QUIZ HISTORY ===== */
+      #quizHistory {
+        max-height: 200px;
+        overflow-y: auto;
+        margin-top: 15px;
+      }
+
+      #quizHistory li {
+        background: rgba(0, 40, 80, 0.5);
+        padding: 10px;
+        margin-bottom: 8px;
+        border-radius: 6px;
+        border-left: 3px solid var(--primary-glow);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      /* ===== WRONG ANSWERS LIST ===== */
+      .wrong-answers-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .wrong-answer-item {
+        background: rgba(255, 51, 51, 0.1);
+        border-left: 4px solid #ff3366;
+        padding: 15px;
+        border-radius: 8px;
+        transition: var(--transition-smooth);
+      }
+
+      .wrong-answer-item:hover {
+        background: rgba(255, 51, 51, 0.2);
+        transform: translateX(5px);
+      }
+
+      /* ===== BUTTON STYLES ===== */
+      .cyber-button {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 10px;
+        background: linear-gradient(135deg, #0066cc, var(--primary-glow));
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-family: "Orbitron", sans-serif;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition-smooth);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .cyber-button::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: left 0.5s;
+      }
+
+      .cyber-button:hover {
+        background: linear-gradient(
+          135deg,
+          var(--primary-glow),
+          var(--secondary-glow)
+        );
+        transform: translateY(-2px);
+        box-shadow: 0 0 20px rgba(0, 168, 255, 0.5);
+      }
+
+      .cyber-button:hover::before {
+        left: 100%;
+      }
+
+      /* ===== DETAIL POPUP (GIẢI THÍCH) - NEW STYLE ===== */
+      .detail-popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: min(760px, 94vw);
+        max-height: 82vh;
+        overflow: hidden;
+
+        background: rgba(0, 18, 36, 0.98);
+        border: 3px solid rgba(0, 255, 204, 0.65); /* ✅ viền dày */
+        border-radius: 18px;
+
+        box-shadow:
+          0 25px 60px rgba(0, 0, 0, 0.85),
+          0 0 30px rgba(0, 255, 204, 0.18);
+        backdrop-filter: blur(18px);
+
+        z-index: 200000;
+        animation: popup-appear 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .detail-popup::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 5px;
+        width: 100%;
+        background: linear-gradient(
+          90deg,
+          var(--primary-glow),
+          var(--secondary-glow)
+        );
+        opacity: 0.9;
+      }
+
+      .detail-popup-inner {
+        padding: 22px 22px 18px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .detail-popup-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid rgba(0, 255, 204, 0.22);
+      }
+
+      .detail-popup-title {
+        margin: 0;
+        font-family: Orbitron, sans-serif;
+        color: var(--secondary-glow);
+        font-size: 18px;
+        letter-spacing: 0.5px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      /* ✅ Nút Đóng giống hệt style bạn đưa */
+      .detail-popup-close.test-modal-close {
+        background: rgba(255, 50, 50, 0.2);
+        border: 1px solid rgba(255, 50, 50, 0.5);
+        color: #ff6666;
+        padding: 6px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.25s;
+        font-size: 13px;
+        font-family: Orbitron, sans-serif;
+      }
+
+      .detail-popup-close.test-modal-close:hover {
+        background: rgba(255, 50, 50, 0.4);
+        box-shadow: 0 0 10px rgba(255, 50, 50, 0.4);
+        transform: translateY(-1px);
+      }
+
+      /* Nội dung cuộn */
+      .detail-popup .detail-scroll {
+        overflow-y: auto;
+        max-height: calc(82vh - 120px);
+        padding-right: 10px;
+        line-height: 1.85;
+        font-size: 16px;
+
+        background: rgba(0, 0, 0, 0.18);
+        border: 1px solid rgba(0, 255, 204, 0.18);
+        border-radius: 12px;
+        padding: 14px 14px;
+      }
+
+      /* Scrollbar đẹp (Chrome/Edge) */
+      .detail-popup .detail-scroll::-webkit-scrollbar {
+        width: 10px;
+      }
+      .detail-popup .detail-scroll::-webkit-scrollbar-thumb {
+        background: rgba(0, 255, 204, 0.35);
+        border-radius: 10px;
+        border: 2px solid rgba(0, 18, 36, 0.98);
+      }
+      .detail-popup .detail-scroll::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.25);
+        border-radius: 10px;
+      }
+
+      /* ===== DETAIL POPUP SCROLL ===== */
+      .detail-popup .detail-scroll {
+        overflow-y: auto;
+        max-height: calc(80vh - 120px);
+        /* trừ phần header + padding */
+        padding-right: 10px;
+        /* chừa chỗ cho scrollbar */
+      }
+
+      /* (Tuỳ chọn) làm scrollbar đẹp hơn trên Chrome/Edge */
+      .detail-popup .detail-scroll::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      .detail-popup .detail-scroll::-webkit-scrollbar-thumb {
+        background: rgba(0, 255, 204, 0.35);
+        border-radius: 10px;
+        border: 2px solid rgba(0, 20, 40, 0.98);
+      }
+
+      .detail-popup .detail-scroll::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.25);
+        border-radius: 10px;
+      }
+
+      /* ===== DARK MODE TOGGLE ===== */
+      #darkModeToggleBtn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #4c7cff, #6f61e8);
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 24px;
+        box-shadow: 0 0 20px rgba(0, 168, 255, 0.3);
+        z-index: 10001;
+        transition: var(--transition-smooth);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #darkModeToggleBtn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 30px rgba(0, 255, 204, 0.5);
+      }
+
+      /* ===== CORRECT / WRONG ANSWER STYLES ===== */
+      .correct-answer {
+        color: #2e7d32;
+        font-weight: bold;
+        margin-left: 8px;
+      }
+
+      .wrong-answer {
+        color: #c62828;
+        font-weight: bold;
+        margin-left: 8px;
+      }
+
+      /* ===== RESPONSIVE ===== */
+      @media (max-width: 768px) {
+        .timer-container {
+          position: relative;
+          width: 100%;
+          top: 0;
+          right: 0;
+          margin-bottom: 20px;
+        }
+
+        .sidebar-panel {
+          width: 100%;
+          left: 0 !important;
+          right: 0 !important;
+          top: 0 !important;
+          bottom: 0 !important;
+          border-radius: 0;
+        }
+
+        .main-content-wrapper {
+          margin-left: 0 !important;
+          margin-right: 0 !important;
+        }
+
+        .floating-btn-container {
+          display: none;
+        }
+
+        .highlight-controls {
+          position: relative;
+          top: auto;
+          right: auto;
+          margin-top: 15px;
+        }
+      }
+
+      @media (max-width: 900px) {
+        .reading-timer-container {
+          position: relative;
+          top: auto;
+          right: auto;
+          width: 100%;
+          margin-top: 15px;
+          margin-bottom: 10px;
+          border-radius: 15px;
+        }
+
+        .highlight-controls {
+          position: relative;
+          top: auto;
+          right: auto;
+          width: 100%;
+          margin-top: 10px;
+          margin-bottom: 15px;
+          justify-content: center;
+          height: auto;
+        }
+
+        .reading-comprehension {
+          padding-top: 25px;
+        }
+      }
+      /* ===== BACK TO TOP BUTTON ===== */
+      #backToTopBtn {
+        position: fixed;
+        bottom: 70px; /* nằm phía trên nút dark mode để không đè nhau */
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: rgba(0, 20, 40, 0.95);
+        border: 2px solid var(--secondary-glow);
+        color: var(--secondary-glow);
+        cursor: pointer;
+        font-size: 22px;
+        z-index: 10002;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 20px rgba(0, 255, 204, 0.25);
+        backdrop-filter: blur(10px);
+        transition: var(--transition-smooth);
+
+        /* ẩn mặc định */
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translateY(10px);
+      }
+
+      #backToTopBtn.show {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+
+      #backToTopBtn:hover {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 0 30px rgba(0, 255, 204, 0.45);
+        border-color: var(--primary-glow);
+        color: var(--primary-glow);
+      }
+      /* ===== FIREWORKS EFFECT ===== */
+      .fireworks-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 999999;
+      }
+
+      .firework-particle {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        pointer-events: none;
+        animation: firework-explode 1.5s ease-out forwards;
+      }
+
+      @keyframes firework-explode {
+        0% {
+          transform: translate(0, 0) scale(1);
+          opacity: 1;
+        }
+        100% {
+          transform: translate(var(--tx), var(--ty)) scale(0.2);
+          opacity: 0;
+        }
+      }
+
+      /* Hiệu ứng confetti rơi (thay thế hoặc bổ sung) */
+      .confetti {
+        position: fixed;
+        width: 10px;
+        height: 10px;
+        background-color: #f00;
+        position: fixed;
+        top: -10px;
+        z-index: 999999;
+        animation: confetti-fall linear forwards;
+      }
+
+      @keyframes confetti-fall {
+        to {
+          transform: translateY(100vh) rotate(720deg);
+        }
+      }
+
+      @keyframes bounce {
+        from {
+          transform: translateX(-50%) translateY(0);
+        }
+        to {
+          transform: translateX(-50%) translateY(-20px);
+        }
+      }
+      /* Khóa scroll ngoài khi mở popup */
+      body.modal-open {
+        overflow: hidden;
+      }
+
+      /* (Tuỳ chọn) mượt hơn trên mobile */
+      body.modal-open {
+        touch-action: none;
+      }
+      /* ===== RESULT POPUP - GIỐNG DETAIL POPUP ===== */
+      .result-popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: min(500px, 90vw);
+        max-height: 82vh;
+        overflow: hidden;
+
+        background: rgba(0, 18, 36, 0.98);
+
+        /* 2 ĐƯỜNG VIỀN */
+        border: 6px solid #00ffcc; /* Viền ngoài dày */
+        outline: 4px solid rgba(255, 102, 0, 0.3); /* Viền trong mờ */
+        outline-offset: -10px; /* Điều chỉnh vị trí viền trong */
+
+        border-radius: 24px;
+
+        box-shadow:
+          0 25px 60px rgba(0, 0, 0, 0.85),
+          0 0 40px rgba(255, 102, 0, 0.5);
+        backdrop-filter: blur(18px);
+
+        z-index: 200000;
+        animation: popup-appear 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .result-popup-inner {
+        padding: 22px 22px 18px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .result-popup-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid rgba(0, 255, 204, 0.22);
+      }
+
+      .result-popup-title {
+        margin: 0;
+        font-family: Orbitron, sans-serif;
+        color: var(--secondary-glow);
+        font-size: 18px;
+        letter-spacing: 0.5px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+      }
+
+      .result-popup-content {
+        overflow-y: auto;
+        max-height: calc(82vh - 120px);
+        padding-right: 10px;
+
+        background: transparent; /* KHÔNG tô màu đặc */
+        border: 1px solid rgba(0, 255, 204, 0.18);
+        border-radius: 12px;
+        padding: 20px 20px;
+        text-align: center;
+      }
+
+      /* Scrollbar đẹp cho result popup */
+      .result-popup-content::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      .result-popup-content::-webkit-scrollbar-thumb {
+        background: rgba(0, 255, 204, 0.35);
+        border-radius: 10px;
+        border: 2px solid rgba(0, 18, 36, 0.98);
+      }
+
+      .result-popup-content::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.25);
+        border-radius: 10px;
+      }
+
+      /* Hiệu ứng đặc biệt cho điểm 100% */
+      .result-popup.perfect-score {
+        animation:
+          popup-appear 0.3s,
+          glow-pulse 1s infinite;
+        border-color: gold;
+        box-shadow: 0 0 80px gold;
+      }
+
+      @keyframes glow-pulse {
+        0%,
+        100% {
+          box-shadow: 0 0 50px gold;
+        }
+        50% {
+          box-shadow: 0 0 100px #ffaa00;
+        }
+      }
+
+      /* Trophy icon styling */
+      .result-popup .fa-trophy {
+        font-size: 50px;
+        color: #ffd700;
+        margin-bottom: 15px;
+        filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.5));
+      }
+
+      /* Score styling */
+      #popupScore {
+        font-size: 56px;
+        font-weight: 900;
+        font-family: "Orbitron", sans-serif;
+        color: var(--secondary-glow);
+        text-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+        margin: 15px 0;
+        letter-spacing: 2px;
+      }
+
+      /* Comment styling */
+      #popupComment {
+        font-size: 20px;
+        color: var(--text-primary);
+        padding: 15px 20px;
+        background: linear-gradient(
+          135deg,
+          rgba(0, 150, 255, 0.1),
+          rgba(0, 255, 204, 0.1)
+        );
+        border-radius: 50px;
+        display: inline-block;
+        border: 1px solid rgba(0, 255, 204, 0.3);
+      }
+
+      /* Hiệu ứng đặc biệt cho điểm 100% */
+      .result-popup.perfect-score {
+        animation:
+          popup-appear 0.3s,
+          glow-pulse 1s infinite;
+        border-color: gold;
+        box-shadow: 0 0 80px gold;
+      }
+
+      @keyframes glow-pulse {
+        0%,
+        100% {
+          box-shadow: 0 0 50px gold;
+        }
+        50% {
+          box-shadow: 0 0 100px #ffaa00;
+        }
+      }
+
+      /* ===== TIME UP ALERT - CŨNG CẦN THÊM ===== */
+      .time-up-alert {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: linear-gradient(135deg, #d32f2f, #b71c1c);
+        color: white;
+        padding: 30px 50px;
+        border-radius: 20px;
+        font-size: 28px;
+        font-weight: bold;
+        z-index: 200000;
+        box-shadow: 0 0 50px rgba(211, 47, 47, 0.5);
+        border: 2px solid #ff8a80;
+        text-align: center;
+        animation: popup-appear 0.3s;
+      }
+      /* Overlay làm tối màn hình */
+      .result-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7); /* Độ tối 70% */
+        backdrop-filter: blur(5px); /* Hiệu ứng mờ (tùy chọn) */
+        z-index: 199999; /* Thấp hơn popup một chút */
+        display: none;
+        animation: fadeIn 0.3s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      /* ===== MAIN AUDIO PLAYER STYLES ===== */
+      #mainAudioSelect {
+        outline: none;
+        transition: var(--transition-smooth);
+      }
+
+      #mainAudioSelect:hover {
+        border-color: var(--secondary-glow);
+        box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+      }
+
+      #mainAudioSelect option {
+        background: #0a0e17;
+        color: var(--text-primary);
+      }
+
+      #mainPlayPauseBtn {
+        background: linear-gradient(135deg, #00cc66, #00ff88);
+        border: none;
+        border-radius: 5px;
+        color: #0a0e17;
+        padding: 8px 15px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        transition: var(--transition-smooth);
+      }
+
+      #mainPlayPauseBtn:hover {
+        background: linear-gradient(135deg, #00ff88, var(--secondary-glow));
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4);
+      }
+
+      #mainPlayPauseBtn.playing {
+        background: linear-gradient(135deg, #ff3333, #ff6600);
+      }
+
+      #mainVolumeSlider {
+        -webkit-appearance: none;
+        height: 4px;
+        background: linear-gradient(
+          90deg,
+          var(--primary-glow),
+          var(--secondary-glow)
+        );
+        border-radius: 2px;
+        outline: none;
+      }
+
+      #mainVolumeSlider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--secondary-glow);
+        cursor: pointer;
+        border: 2px solid white;
+        box-shadow: 0 0 10px var(--secondary-glow);
+      }
+
+      /* Responsive */
+      @media (max-width: 900px) {
+        .main-quiz-container > div:first-child {
+          flex-direction: column;
+          gap: 15px;
+        }
+
+        .main-quiz-container > div:first-child > div {
+          width: 100%;
+          flex-wrap: wrap;
+        }
+
+        #mainAudioSelect {
+          min-width: 150px;
+        }
+      }
+      /* ===== CUSTOM SEEK BAR STYLES ===== */
+      #mainSeekBar {
+        -webkit-appearance: none;
+        appearance: none;
+        height: 6px;
+        background: linear-gradient(
+          90deg,
+          var(--primary-glow),
+          var(--secondary-glow)
+        );
+        border-radius: 3px;
+        outline: none;
+      }
+
+      #mainSeekBar::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: white;
+        cursor: pointer;
+        border: 2px solid var(--secondary-glow);
+        box-shadow: 0 0 10px var(--secondary-glow);
+        transition: all 0.2s;
+      }
+
+      #mainSeekBar::-webkit-slider-thumb:hover {
+        transform: scale(1.2);
+        box-shadow: 0 0 15px var(--secondary-glow);
+      }
+
+      #mainSeekBar::-moz-range-thumb {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: white;
+        cursor: pointer;
+        border: 2px solid var(--secondary-glow);
+        box-shadow: 0 0 10px var(--secondary-glow);
+        transition: all 0.2s;
+      }
+
+      #mainSeekBar::-moz-range-thumb:hover {
+        transform: scale(1.2);
+        box-shadow: 0 0 15px var(--secondary-glow);
+      }
+
+      /* Speed select styling */
+      #mainSpeedSelect {
+        background: rgba(0, 10, 25, 0.9);
+        color: var(--text-primary);
+        border: 1px solid rgba(0, 150, 255, 0.4);
+        border-radius: 5px;
+        padding: 5px;
+        cursor: pointer;
+        outline: none;
+        transition: all 0.3s;
+      }
+
+      #mainSpeedSelect:hover {
+        border-color: var(--secondary-glow);
+        box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+      }
+
+      #mainSpeedSelect option {
+        background: #0a0e17;
+        color: var(--text-primary);
+      }
+      /* ===== CUSTOM DROPDOWN STYLES ===== */
+      #mainAudioSelect {
+        background: rgba(0, 10, 25, 0.9);
+        color: var(--text-primary);
+        border: 1px solid rgba(0, 150, 255, 0.6);
+        border-radius: 5px;
+        padding: 8px 15px;
+        min-width: 250px;
+        cursor: pointer;
+        outline: none;
+        font-family: monospace;
+        transition: all 0.3s;
+      }
+
+      #mainAudioSelect:hover {
+        border-color: var(--secondary-glow);
+        box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+      }
+
+      #mainAudioSelect option {
+        background: #0a0e17;
+        color: var(--text-primary);
+        padding: 10px;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        #mainAudioSelect {
+          min-width: 100%;
+          margin-bottom: 10px;
+        }
+      }
+      /* Style cho option disabled */
+      #mainAudioSelect option:disabled {
+        color: #ff6666;
+        font-style: italic;
+        background: rgba(255, 50, 50, 0.1);
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Background Effects -->
+    <div class="cyber-grid"></div>
+    <div class="cyber-line"></div>
+
+    <!-- Main Title - SỬA: thêm placeholder cho tên bài test và tổng số câu -->
+    <h1 style="margin-bottom: 30px">
+      📚 CYBERPUNK QUIZ - TỪ VỰNG MIMIKARA UNIT 3 (191-200) (20 câu)
+    </h1>
+
+    <!-- Timer Panel -->
+    <div class="timer-container">
+      <div class="timer-controls">
+        <div class="timer-input-group">
+          <input
+            type="number"
+            id="setTimeInput"
+            class="timer-input"
+            placeholder="20"
+            min="1"
+            max="120"
+            value="20"
+          />
+          <button class="set-btn" onclick="setTimer()">Đặt</button>
+        </div>
+        <button class="start-btn" onclick="toggleTimer()">
+          <i class="fas fa-play"></i>
+        </button>
+        <span id="timerDisplay" class="timer-display">20:00</span>
+      </div>
+    </div>
+
+    <!-- Dark Mode Toggle -->
+    <button id="darkModeToggleBtn" onclick="toggleDarkMode()">🌙</button>
+    <!-- Back To Top -->
+    <button id="backToTopBtn" onclick="scrollToTop()" title="Lên đầu trang">
+      <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- FLOATING BUTTONS -->
+    <div id="leftFloatingBtn" class="floating-btn-container left">
+      <div class="floating-btn left" onclick="toggleSidebar('left')">
+        <i class="fas fa-times-circle"></i>
+        <span class="badge" id="wrongAnswersBadge">0</span>
+        <span class="btn-tooltip">Câu đã sai</span>
+      </div>
+    </div>
+    <div id="rightFloatingBtn" class="floating-btn-container right">
+      <div class="floating-btn right" onclick="toggleSidebar('right')">
+        <i class="fas fa-cog"></i>
+        <span class="btn-tooltip">Điều khiển</span>
+      </div>
+    </div>
+
+    <!-- LEFT SIDEBAR - Wrong Answers -->
+    <div id="leftSidebarPanel" class="sidebar-panel left">
+      <button class="sidebar-toggle" onclick="toggleSidebar('left')">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <div class="sidebar-header">
+        <h3>
+          <i class="fas fa-times-circle" style="color: #ff3366"></i
+          ><span>CÂU ĐÃ SAI</span>
+        </h3>
+        <button class="sidebar-close" onclick="forceCloseSidebar('left')">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="sidebar-content">
+        <div style="margin-bottom: 20px; display: flex; gap: 10px">
+          <button
+            class="cyber-button"
+            onclick="showWrongAnswers()"
+            style="flex: 2"
+          >
+            <i class="fas fa-eye"></i> Xem
+          </button>
+          <button
+            class="cyber-button"
+            onclick="practiceWrongAnswers()"
+            style="flex: 2"
+          >
+            <i class="fas fa-graduation-cap"></i> Luyện
+          </button>
+          <button
+            class="cyber-button"
+            onclick="clearWrongAnswers()"
+            style="
+              flex: 1;
+              background: linear-gradient(135deg, #ff3333, #ff6600);
+            "
+          >
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+        <div id="wrongAnswersList" class="wrong-answers-list"></div>
+      </div>
+    </div>
+
+    <!-- RIGHT SIDEBAR - Controls -->
+    <div id="rightSidebarPanel" class="sidebar-panel right">
+      <button class="sidebar-toggle" onclick="toggleSidebar('right')">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+      <div class="sidebar-header">
+        <h3>
+          <i class="fas fa-tasks" style="color: var(--secondary-glow)"></i
+          ><span>ĐIỀU KHIỂN</span>
+        </h3>
+        <button class="sidebar-close" onclick="forceCloseSidebar('right')">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="sidebar-content">
+        <button class="cyber-button" onclick="submitQuiz()">
+          <i class="fas fa-paper-plane"></i> Nộp bài
+        </button>
+        <button class="cyber-button" onclick="resetQuiz()">
+          <i class="fas fa-redo-alt"></i> Làm lại
+        </button>
+        <button
+          id="showAnswersBtn"
+          class="cyber-button"
+          onclick="showCorrectAnswers()"
+          style="
+            display: none;
+            background: linear-gradient(135deg, #00cc66, #00ff88);
+          "
+        >
+          <i class="fas fa-check-circle"></i> Hiện đáp án
+        </button>
+
+        <h4
+          style="
+            color: var(--secondary-glow);
+            margin: 20px 0 10px;
+            font-family: Orbitron;
+          "
+        >
+          <i class="fas fa-history"></i> LỊCH SỬ
+        </h4>
+        <ul id="quizHistory"></ul>
+
+        <h4
+          style="
+            color: var(--secondary-glow);
+            margin: 20px 0 10px;
+            font-family: Orbitron;
+          "
+        >
+          <i class="fas fa-edit"></i> CẬP NHẬT ĐÁP ÁN
+        </h4>
+        <input
+          type="text"
+          id="editKey"
+          placeholder="Ví dụ: q1 hoặc 4.1"
+          style="
+            width: 100%;
+            margin-bottom: 10px;
+            background: rgba(0, 10, 25, 0.9);
+            color: white;
+            border: 1px solid var(--border-glow);
+            border-radius: 6px;
+            padding: 10px;
+          "
+        />
+        <input
+          type="text"
+          id="editValue"
+          placeholder="Số đáp án (1-4)"
+          style="
+            width: 100%;
+            margin-bottom: 10px;
+            background: rgba(0, 10, 25, 0.9);
+            color: white;
+            border: 1px solid var(--border-glow);
+            border-radius: 6px;
+            padding: 10px;
+          "
+        />
+        <button
+          class="cyber-button"
+          onclick="updateAnswer()"
+          style="margin-bottom: 5px"
+        >
+          <i class="fas fa-save"></i> Cập nhật
+        </button>
+        <button
+          class="cyber-button"
+          id="clearAnswersBtn"
+          style="background: linear-gradient(135deg, #ff3333, #ff6600)"
+        >
+          <i class="fas fa-eraser"></i> Xóa cập nhật
+        </button>
+      </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="mainContentWrapper" class="main-content-wrapper">
+      <div class="main-quiz-container">
+<!-- AUDIO PLAYER TỔNG - GIỮ NGUYÊN TRẠNG THÁI BAN ĐẦU -->
+<div style="margin-bottom: 20px; padding: 15px; background: rgba(0,20,40,0.5); border-radius: 10px; border: 1px solid rgba(0,150,255,0.3);"
+     data-excel-audio="Mimikara-3-1.mp3"
+     data-excel-exists="false">
+  <!-- Dòng 1: Dropdown chọn file và các nút điều khiển chính -->
+  <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap;">
+    <span style="color: var(--secondary-glow); font-weight: bold">AUDIO:</span>
+    
+    <!-- Dropdown chọn file audio -->
+    <select id="mainAudioSelect" 
+      style="
+        background: rgba(0, 10, 25, 0.9);
+        color: var(--text-primary);
+        border: 1px solid rgba(0, 150, 255, 0.6);
+        border-radius: 5px;
+        padding: 8px 15px;
+        min-width: 300px;
+        cursor: pointer;
+        outline: none;
+        font-family: monospace;
+      "
+      onchange="changeAudioFile(this.value)">
+      <option value="" disabled selected>⚠️ Không tìm thấy tệp 'Mimikara-3-1.mp3'</option>
+<option value="Mimikara-1-1.mp3" >Mimikara-1-1.mp3</option>
+<option value="Mimikara-1-2.mp3" >Mimikara-1-2.mp3</option>
+<option value="Mimikara-1-3.mp3" >Mimikara-1-3.mp3</option>
+<option value="Mimikara-1-4.mp3" >Mimikara-1-4.mp3</option>
+<option value="Mimikara-1-5.mp3" >Mimikara-1-5.mp3</option>
+<option value="Mimikara-2-1.mp3" >Mimikara-2-1.mp3</option>
+<option value="Mimikara-2-2.mp3" >Mimikara-2-2.mp3</option>
+<option value="Mimikara-2-3.mp3" >Mimikara-2-3.mp3</option>
+<option value="Mimikara-2-4.mp3" >Mimikara-2-4.mp3</option>
+<option value="Mimikara-2-5.mp3" >Mimikara-2-5.mp3</option>
+<option value="N1_Try Test 1.3.mp3" >N1_Try Test 1.3.mp3</option>
+<option value="N1_Try Test 10.3.mp3" >N1_Try Test 10.3.mp3</option>
+<option value="N1_Try Test 2.3.mp3" >N1_Try Test 2.3.mp3</option>
+<option value="N1_Try Test 3.3.mp3" >N1_Try Test 3.3.mp3</option>
+<option value="N1_Try Test 3.3_2.mp3" >N1_Try Test 3.3_2.mp3</option>
+<option value="N1_Try Test 3.3_3.mp3" >N1_Try Test 3.3_3.mp3</option>
+<option value="N1_Try Test 3.3_4.mp3" >N1_Try Test 3.3_4.mp3</option>
+<option value="N1_Try Test 4.3_1.mp3" >N1_Try Test 4.3_1.mp3</option>
+<option value="N1_Try Test 4.3_2.mp3" >N1_Try Test 4.3_2.mp3</option>
+<option value="N1_Try Test 4.3_3.mp3" >N1_Try Test 4.3_3.mp3</option>
+<option value="N1_Try Test 5.4.mp3" >N1_Try Test 5.4.mp3</option>
+<option value="N1_Try Test 5.4_2.mp3" >N1_Try Test 5.4_2.mp3</option>
+<option value="N1_Try Test 5.4_3.mp3" >N1_Try Test 5.4_3.mp3</option>
+<option value="N1_Try Test 5.4_4.mp3" >N1_Try Test 5.4_4.mp3</option>
+<option value="N1_Try Test 5.4_5.mp3" >N1_Try Test 5.4_5.mp3</option>
+<option value="N1_Try Test 6.3.mp3" >N1_Try Test 6.3.mp3</option>
+<option value="N1_Try Test 7.3.mp3" >N1_Try Test 7.3.mp3</option>
+<option value="N1_Try Test 7.3_2.mp3" >N1_Try Test 7.3_2.mp3</option>
+<option value="N1_Try Test 7.3_3.mp3" >N1_Try Test 7.3_3.mp3</option>
+<option value="N1_Try Test 7.3_4.mp3" >N1_Try Test 7.3_4.mp3</option>
+<option value="N1_Try Test 8.3.mp3" >N1_Try Test 8.3.mp3</option>
+<option value="N1_Try Test 8.3_2.mp3" >N1_Try Test 8.3_2.mp3</option>
+<option value="N1_Try Test 8.3_3.mp3" >N1_Try Test 8.3_3.mp3</option>
+<option value="N1_Try Test 9.3.mp3" >N1_Try Test 9.3.mp3</option>
+
+    </select>
+
+    <!-- Nút Play/Pause -->
+    <button
+      id="mainPlayPauseBtn"
+      onclick="toggleMainAudio()"
+      style="
+        background: linear-gradient(135deg, #00cc66, #00ff88);
+        border: none;
+        border-radius: 5px;
+        color: #0a0e17;
+        padding: 8px 15px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      "
+    >
+      <i class="fas fa-play"></i> Phát
+    </button>
+
+    <!-- Speed Control -->
+    <div style="
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        background: rgba(0, 0, 0, 0.3);
+        padding: 5px 10px;
+        border-radius: 5px;
+      ">
+      <i class="fas fa-tachometer-alt" style="color: var(--secondary-glow)"></i>
+      <select id="mainSpeedSelect" 
+        style="
+          background: rgba(0, 10, 25, 0.9);
+          color: var(--text-primary);
+          border: 1px solid rgba(0, 150, 255, 0.4);
+          border-radius: 5px;
+          padding: 5px;
+          cursor: pointer;
+          outline: none;
+        "
+        onchange="changePlaybackSpeed(this.value)">
+        <option value="0.5">0.5x</option>
+        <option value="0.75">0.75x</option>
+        <option value="1" selected>1x</option>
+        <option value="1.25">1.25x</option>
+        <option value="1.5">1.5x</option>
+        <option value="2">2x</option>
+      </select>
+    </div>
+
+    <!-- Volume control with mute button -->
+    <div style="
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        background: rgba(0, 0, 0, 0.3);
+        padding: 5px 10px;
+        border-radius: 5px;
+      ">
+      <i class="fas fa-volume-up" 
+         id="mainVolumeIcon" 
+         style="color: var(--secondary-glow); cursor: pointer; font-size: 18px;" 
+         onclick="toggleMute(event)"
+         onmouseover="this.style.opacity='0.8'"
+         onmouseout="this.style.opacity='1'"
+         title="Nhấn để tắt/bật âm thanh">
+      </i>
+      <input
+        type="range"
+        id="mainVolumeSlider"
+        min="0"
+        max="1"
+        step="0.1"
+        value="1"
+        style="width: 80px; cursor: pointer;"
+      />
+    </div>
+
+    <!-- Hiển thị thời gian đếm ngược -->
+    <span
+      id="mainAudioTime"
+      style="
+        color: var(--secondary-glow);
+        font-family: 'Orbitron', sans-serif;
+        min-width: 60px;
+      "
+      >00:00</span
+    >
+  </div>
+
+  <!-- Dòng 2: Thanh tua (seek bar) -->
+  <div style="display: flex; align-items: center; gap: 10px; padding: 0 5px;">
+    <span style="color: var(--secondary-glow); font-size: 12px; min-width: 40px;" id="mainCurrentTime">00:00</span>
+    <input
+      type="range"
+      id="mainSeekBar"
+      min="0"
+      max="100"
+      value="0"
+      step="0.1"
+      style="
+        flex: 1;
+        height: 6px;
+        background: linear-gradient(90deg, var(--primary-glow), var(--secondary-glow));
+        border-radius: 3px;
+        cursor: pointer;
+        -webkit-appearance: none;
+      "
+      oninput="seekAudio(this.value)"
+    />
+    <span style="color: var(--secondary-glow); font-size: 12px; min-width: 40px;" id="mainDuration">00:00</span>
+  </div>
+</div>
+
+<!-- Audio element - SỬ DỤNG JAVASCRIPT ĐỂ TẢI FILE -->
+<audio id="mainAudio" preload="auto" style="display: none;"></audio>
+        <!-- H2 - SỬA: thêm placeholder cho tên bài test -->
+        <h2
+          style="
+            margin-bottom: 25px;
+            border-bottom: 2px solid rgba(0, 255, 204, 0.3);
+            padding-bottom: 15px;
+          "
+        >
+          <i class="fas fa-file-alt" style="color: var(--secondary-glow)"></i>
+          TỪ VỰNG MIMIKARA UNIT 3 (191-200)
+        </h2>
+        <form id="quizForm"></form>
+      </div>
+    </div>
+
+    <!-- Popups -->
+    <div id="timeUpAlert" class="time-up-alert" style="display: none">
+      <i
+        class="fas fa-hourglass-end"
+        style="font-size: 40px; margin-bottom: 20px"
+      ></i>
+      <h2>⏰ HẾT THỜI GIAN!</h2>
+      <p style="margin-top: 10px">Bạn đã hết thời gian làm bài rồi!</p>
+    </div>
+    <!-- Overlay làm tối màn hình -->
+    <div id="resultOverlay" class="result-overlay"></div>
+
+    <div id="resultPopup" class="result-popup" style="display: none">
+      <div class="result-popup-inner">
+        <div class="result-popup-header">
+          <h3 class="result-popup-title">
+            <i
+              class="fas fa-trophy"
+              style="color: #ffd700; font-size: 24px"
+            ></i>
+            KẾT QUẢ CỦA BẠN
+          </h3>
+          <button
+            class="detail-popup-close test-modal-close"
+            onclick="closeResultPopup()"
+          >
+            Đóng
+          </button>
+        </div>
+
+        <div class="result-popup-content">
+          <i
+            class="fas fa-trophy"
+            style="font-size: 60px; color: #ffd700; margin-bottom: 15px"
+          ></i>
+          <div class="score" id="popupScore"></div>
+          <div
+            id="popupComment"
+            style="font-size: 20px; margin-top: 15px"
+          ></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ==================== INITIALIZATION ====================
+      window.answers = JSON.parse(
+        localStorage.getItem("customAnswers") || "{}",
+      );
+      let readingComprehensionCount = 0;
+      const readingTimers = {};
+      const savedRanges = {};
+
+
+      // ==================== PROGRESS CONFIG (đồng bộ theo User ID) ====================
+      const API_URL = "https://n1-license-server.onrender.com/api";
+      const LS_DEVICE_ID = "n1_device_id";
+      const LS_LICENSE = "n1_license";
+
+      function getTestId() {
+        const p = new URL(location.href).pathname;
+        return p.split("/").pop() || "unknown.html";
+      }
+
+      function makeAttemptId() {
+        return `${Date.now()}_${Math.random().toString(16).slice(2)}`;
+      }
+
+      async function tryMarkPerfect() {
+        const deviceId = localStorage.getItem(LS_DEVICE_ID) || "";
+        const license = localStorage.getItem(LS_LICENSE) || "";
+        if (!deviceId || !license) return;
+
+        const moduleId = getTestId();
+        //const attemptId = makeAttemptId();
+
+        try {
+          const res = await fetch(`${API_URL}/progress/mark-perfect`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ deviceId, license, moduleId}),
+          });
+          if (!res.ok) return;
+
+          const data = await res.json();
+          if (data && data.ok) {
+            console.log("[PROGRESS] saved", { moduleId, ...data });
+          }
+        } catch (e) {
+          console.log("progress api offline", e);
+        }
+      }
+
+
+      // ==================== QUIZ DATA ====================
+      const quizData = [
+  {
+    number: 1,
+    question: '頑丈',
+    options: ['がんじょう', 'かんじょう', 'がんじょい', 'がんじょく'],
+    answer: '1',
+    detail: '🔴 頑丈（がんじょう）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 頑（がん）＝ cứng đầu, bướng bỉnh<br>  • 丈（じょう）＝ chiều dài, vững chãi<br>- Nghĩa đen: Cứng chắc và vững vàng<br>- Nghĩa Hán Việt: Ngoan trượng<br>- Ý nghĩa: Chỉ sự chắc chắn, bền bỉ, có khả năng chịu lực tốt, không dễ bị hư hỏng.<br>  → Thường dùng để miêu tả đồ vật, vật liệu, kết cấu; đôi khi dùng cho người (thể hình).<br><br>💬 Ví dụ:<br>1. この家具はとても頑丈に作られている。<br>　→ Bộ bàn ghế này được làm rất chắc chắn.<br><br>2. 彼は頑丈な体付きをしている。<br>　→ Anh ấy có một thể hình vạm vỡ/chắc nịch.<br><br>3. 頑丈な箱に入れて送れば壊れない。<br>　→ Nếu gửi trong một chiếc hộp chắc chắn thì sẽ không bị vỡ.<br><br>🧠 Cách nhớ:<br><br>✨（連）Các từ kết nối: 頑丈な家/ドア/体付き→ Nhà, cửa, thể hình chắn chắn<br><br>➕（合）Các từ kết hợp: 頑丈さ→ Sức chắn chắn<br><br>↔️（類）Các từ liên quan: 頑丈な→ Nhấn mạnh tính chịu lực mạnh, trang trọng hơn 丈夫 (Chủ yếu dùng cho đồ vật, số ít cho người)<br>                          丈夫な→ Nhấn mạnh tính chịu lực trung bình, phổ biến trong hội thoại thường ngày (đồ vật+người)<br>                          がっしりした→ Trang trọng thấp, chỉ dùng cho người<br>                          強固→ Nhấn mạnh tính chịu lực mạnh, trang trọng cao, thường dùng trong văn bản kỹ thuật (KHÔNG  dùng cho người, chỉ dùng cho vật)',
+    isReading: false
+  },
+  {
+    number: 2,
+    question: '柔軟',
+    options: ['じゅうなん', 'じゅうにん', 'じゅうねん', 'じゅなんい'],
+    answer: '1',
+    detail: '🔴 柔軟（じゅうなん）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 柔（じゅう）＝ mềm, dịu dàng<br>  • 軟（なん）＝ mềm, yếu<br>- Nghĩa đen: Mềm và dẻo dai.<br>- Nghĩa Hán Việt: Nhu nhuyễn.<br>- Ý nghĩa: Tính chất mềm dẻo, có thể uốn cong mà không gãy; dùng để chỉ tư duy, thái độ có thể thay đổi linh hoạt để thích ứng với hoàn cảnh.<br>  → Chỉ sự linh hoạt, không cứng nhắc.<br><br>💬 Ví dụ:<br>1. 彼は柔軟な考え方の持ち主だ。<br>　→ Anh ấy là người có cách suy nghĩ linh hoạt.<br><br>2. この素材はとても柔軟で加工しやすい。<br>　→ Chất liệu này rất mềm dẻo và dễ gia công.<br><br>3. 状況に応じて柔軟に対応する必要がある。<br>　→ Cần phải ứng phó một cách linh hoạt tùy theo tình huống.<br><br>🧠 Cách nhớ:<br><br>✨（連）Các từ kết nối: 柔軟な考え方/姿勢→ Suy nghĩ, điệu bộ linh hoạt<br><br>➕（合）Các từ kết hợp: 柔軟体操→ Bài tập kéo giãn cơ / thể dục mềm dẻo<br>                        柔軟剤→Nước xả làm mềm vải<br>                        柔軟さ→ Độ mềm dẻo<br>                        柔軟性→ Tính mềm dẻo, linh hoạt<br><br>↔️（類）Các từ liên quan: 柔軟な→ Mềm + có khả năng thay đổi / thích nghi<br>                          柔らかい→ Mềm (Cảm giác khi chạm vào)<br>                          しなやかな→ Mềm nhưng có lực, có độ đàn hồi đẹp, không yếu',
+    isReading: false
+  },
+  {
+    number: 3,
+    question: '平ら',
+    options: ['たいう', 'たうい', 'うつい', 'たいら'],
+    answer: '4',
+    detail: '🔴 平ら（たいら）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 平（たい）＝ bằng phẳng, bình thường<br>- Nghĩa đen: Trạng thái không có chỗ lồi lõm, gồ ghề.<br>- Nghĩa Hán Việt: Bình (bằng phẳng).<br>- Ý nghĩa: Tính từ đuôi na (な-adjective) miêu tả bề mặt hoặc không gian phẳng, không gồ ghề. Cũng có thể dùng với nghĩa bóng chỉ sự bình tĩnh, không xáo trộn.<br>  → Dùng để miêu tả địa hình, bề mặt vật thể, hoặc tâm trạng.<br><br>💬 Ví dụ:<br>1. この板の表面はとても平らだ。<br>　→ Bề mặt của tấm ván này rất bằng phẳng.<br><br>2. 平らな道を歩くのは楽だ。<br>　→ Đi bộ trên con đường bằng phẳng thì dễ chịu.<br><br>3. 彼はどんな時も心を平らに保っている。<br>　→ Anh ấy luôn giữ cho tâm trạng bình tĩnh trong mọi hoàn cảnh.<br><br>🧠 Cách nhớ: Chữ 平 (bằng) đã có nghĩa phẳng, thêm ら (ra) tạo cảm giác trải rộng ra → "bằng phẳng trải rộng".<br><br>➕（合）Các từ kết hợp: 平らな道→ Con đường bằng phẳng<br>                        平らにする→ Làm cho bằng phẳng<br><br>↔️（類）Các từ liên quan: 平らな→ Phẳng, không gồ ghề (Dùng cho bề mặt, địa hình và cả nghĩa bóng : Bình tĩnh)<br>                          平たい→ Phẳng và mỏng / bè ra (Nhấn mạnh hình dạng “dẹt”)<br>                          平滑→ Nhẵn, trơn láng (Thuần kỹ thuật,nhấn mạnh độ nhẵn, ma sát thấp)<br>                          水平→ Nằm ngang<br>                          均一→ Đồng đều, không chỗ dày chỗ mỏng<br>                          垂直→ Thẳng đứng, vuông góc',
+    isReading: false
+  },
+  {
+    number: 4,
+    question: '平行',
+    options: ['へいこお', 'へいこい', 'へいこう', 'へいこく'],
+    answer: '3',
+    detail: '🔴 平行（へいこう）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 平（へい）＝ bằng phẳng, bình thường<br>  • 行（こう）＝ đi, hành động<br>- Nghĩa đen: Đi trên một mặt phẳng, không giao nhau.<br>- Nghĩa Hán Việt: Bình hành<br>- Ý nghĩa: Song song, diễn ra đồng thời mà không giao nhau.<br>  → Chỉ hai đường thẳng không bao giờ gặp nhau, hoặc hai sự việc diễn ra cùng lúc một cách độc lập.<br><br>💬 Ví dụ:<br>1. この二本の線は平行です。<br>　→ Hai đường thẳng này song song với nhau.<br><br>2. 二つのプロジェクトが平行して進められている。<br>　→ Hai dự án đang được tiến hành song song.<br><br>3. 交渉は平行線をたどり、合意に至らなかった。<br>　→ Cuộc đàm phán rơi vào thế bế tắc và không đạt được thỏa thuận.<br><br>🧠 Cách nhớ: Hình ảnh hai đường ray tàu hỏa (線路) chạy song song (平行) mãi mãi không gặp nhau trên một mặt đất bằng phẳng (平).<br><br>➕（合）Các từ kết hợp: 平行線→ Đường song song<br>                        平行線をたどる→ Rơi vào thế bế tắc, không đạt được thỏa thuận<br>                        2面のコートで平行して試合が行われる→ Trận đấu được tổ chức song song cả 2 mặt trận<br><br>↔️（類）Các từ liên quan: 垂直な→ Thẳng đứng, vuông góc<br>                          同時に→ Đồng thời',
+    isReading: false
+  },
+  {
+    number: 5,
+    question: '手近',
+    options: ['てぢき', 'てぢく', 'てぢけ', 'てぢか'],
+    answer: '4',
+    detail: '🔴 手近（てぢか）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 手（て）＝ tay<br>  • 近（ちか）＝ gần<br>- Nghĩa đen: Gần tay<br>- Nghĩa Hán Việt: Thủ cận<br>- Ý nghĩa: Chỉ những thứ ở gần, dễ lấy, dễ thấy, dễ sử dụng hoặc những ví dụ, kiến thức quen thuộc, dễ hiểu.<br>  → Diễn tả sự tiện lợi, dễ tiếp cận.<br><br>💬 Ví dụ:<br>1. 手近な道具で修理する。<br>　→ Sửa chữa bằng dụng cụ có sẵn bên cạnh.<br><br>2. 本を手近な場所に置いておく。<br>　→ Để sách ở nơi tiện tay.<br><br>3. 手近な例を挙げて説明してください。<br>　→ Hãy đưa ra một ví dụ quen thuộc để giải thích.<br><br>🧠 Cách nhớ:<br><br>✨（連）Các từ kết nối: 手近なものを使う→ Dùng những thứ có sẵn gần bên<br>                        手近な場所に置く→ Đặt ở chỗ tiện tay<br>                        手近な例を挙げて説明する→ Đưa ra ví dụ quen thuộc, có sẵn để giải thích',
+    isReading: false
+  },
+  {
+    number: 6,
+    question: '渋い',
+    options: ['しぶい', 'しぶう', 'しぼい', 'しびい'],
+    answer: '1',
+    detail: '🔴 渋い（しぶい）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 渋（しぶ）＝ chát, đắng, khó chịu<br>- Nghĩa đen: Có vị chát, đắng (như trà, rượu vang chưa chín); có màu sắc tối, trầm, không sặc sỡ.<br>- Nghĩa Hán Việt: Sáp<br>- Ý nghĩa: Chỉ vị giác chát, đắng. Chỉ màu sắc, phong cách trầm lặng, giản dị nhưng tinh tế, sang trọng. Chỉ tính cách chín chắn, đáng tin cậy.<br>  → Từ vị giác mở rộng sang thẩm mỹ và tính cách.<br><br>💬 Ví dụ:<br>1. このお茶は渋い<br>　→ Trà này hơi đắng/chát<br><br>2. 渋い男<br>　→ Người đàn ông trầm tính, đáng tin cậy, có phong cách riêng<br><br>3. 彼は渋い服装をしている<br>　→ Anh ấy ăn mặc giản dị mà sang trọng<br><br>🧠 Cách nhớ:<br>渋る (shiburu) = miễn cưỡng, do dự, liên tưởng đến “vị chát” (渋い) → khó uống, không dễ dàng” → từ đó mở nghĩa “miễn cưỡng / do dự”.<br><br>✨（連）Các từ kết nối: このお茶は渋い→ Trà này hơi đắng<br>                        渋い男→ Người đàn ông trầm tính, đáng tin cậy, có phong cách riêng<br>                        彼は渋い服装をしている→ Anh ấy ăn mặc giản dị mà sang trọng<br><br>➕（合）Các từ kết hợp: 渋さ→ Độ đắng, vẻ sẫm, sự chần chừ<br>                        渋み→ Vị đắng<br><br>↔️（類）Các từ liên quan: 渋る→ Do dự, chần chừ, ngần ngại, khó chịu / khan hiếm (Ví dụ: giá cả, mua bán → không dễ đưa ra, khó khăn)',
+    isReading: false
+  },
+  {
+    number: 7,
+    question: '香ばしい',
+    options: ['こうばしゅ', 'こうばしい', 'こうばしょ', 'こばしいい'],
+    answer: '2',
+    detail: '🔴 香ばしい（こうばしい）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 香（こう）＝ hương thơm<br>  • ばしい（hậu tố biểu thị tính chất）= có vẻ, mang tính chất<br>- Nghĩa đen: Có mùi thơm<br>- Nghĩa Hán Việt: Hương<br>- Ý nghĩa: Chỉ mùi thơm hấp dẫn, dễ chịu, thường là mùi thơm từ đồ ăn thức uống được nướng, rang, xào.<br>  → Thường dùng để miêu tả mùi thơm của cà phê rang, bánh mì nướng, hạt nướng, v.v.<br><br>💬 Ví dụ:<br>1. パンを焼く香ばしい匂いが台所に広がった。<br>　→ Mùi thơm của bánh mì nướng lan tỏa khắp nhà bếp.<br><br>2. このコーヒーは香ばしい風味が特徴だ。<br>　→ Loại cà phê này có đặc trưng là hương vị thơm ngậy.<br><br>3. 秋になると、焼き芋の香ばしい香りが恋しくなる。<br>　→ Vào mùa thu, tôi lại thấy nhớ mùi thơm của khoai nướng.<br><br>🧠 Cách nhớ: Từ 香 (hương) gợi nhớ đến mùi thơm. Hậu tố ばしい thường dùng trong các tính từ như 大人びしい (trưởng thành), 荒々しい (hung dữ) để chỉ tính chất. Vậy 香ばしい là "mang tính chất thơm", tức là thơm ngát.<br><br>➕（合）Các từ kết hợp: 香ばし匂い→ Mùi thơm<br>                        香ばしさ→ Độ thơm',
+    isReading: false
+  },
+  {
+    number: 8,
+    question: '華やか',
+    options: ['はなやう', 'はなやあ', 'はなやく', 'はなやか'],
+    answer: '4',
+    detail: '🔴 華やか（はなやか）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 華（はな）＝ hoa, sự rực rỡ<br>  • やか（やか）＝ (hậu tố tạo tính từ) mang tính chất<br>- Nghĩa đen: Mang tính chất của hoa, rực rỡ như hoa.<br>- Nghĩa Hán Việt: Hoa.<br>- Ý nghĩa: Lộng lẫy, sang trọng, rực rỡ, tươi đẹp.<br>  → Thường dùng để miêu tả vẻ ngoài, không khí, sự kiện, màu sắc... tạo ấn tượng tinh tế, đẹp mắt và thu hút.<br><br>💬 Ví dụ:<br>1. 彼女はいつも華やかな服を着ている。<br>　→ Cô ấy lúc nào cũng mặc những bộ quần áo lộng lẫy.<br><br>2. 結婚式はとても華やかな雰囲気だった。<br>　→ Đám cưới có một bầu không khí rất lộng lẫy.<br><br>3. 華やかな色の花が庭いっぱいに咲いている。<br>　→ Những bông hoa với màu sắc rực rỡ nở đầy vườn.<br><br>🧠 Cách nhớ:<br>華々しい→ Rực rỡ, tráng lệ<br>華々しい活躍→ Thành tích rực rỡ, hoạt động xuất sắc<br>華やか→ Lộng lẫy (Tập trung: vẻ ngoài, ánh nhìn, màu sắc, ấn tượng tinh tế)<br>盛大→ Hoành tráng, hùng vĩ (Tập trung: khối lượng, quy mô, sự long trọng)<br><br>➕（合）Các từ kết hợp: 華やかさ→Sự trang trọng, lộng lẫy(mức độ)<br><br>↔️（類）Các từ liên quan: 華々しい→ Rực rỡ, tráng lệ<br>                          華々しい活躍→ Thành tích rực rỡ, hoạt động xuất sắc<br>                          華やか→ Lộng lẫy (Tập trung: vẻ ngoài, ánh nhìn, màu sắc, ấn tượng tinh tế)<br>                          盛大→ Hoành tráng, hùng vĩ (Tập trung: khối lượng, quy mô, sự long trọng)',
+    isReading: false
+  },
+  {
+    number: 9,
+    question: '盛大',
+    options: ['せいだう', 'せいだお', 'せいだい', 'せいだえ'],
+    answer: '3',
+    detail: '🔴 盛大（せいだい）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 盛（せい）＝ hưng thịnh, thịnh vượng<br>  • 大（だい）＝ to lớn<br>- Nghĩa đen: Sự thịnh vượng to lớn<br>- Nghĩa Hán Việt: Thịnh đại<br>- Ý nghĩa: Chỉ sự kiện, lễ hội, nghi lễ có quy mô lớn, hoành tráng, long trọng.<br>  → Thường dùng để miêu tả các sự kiện được tổ chức một cách trang trọng và quy mô.<br><br>💬 Ví dụ:<br>1. 卒業式は盛大に行われた。<br>　→ Lễ tốt nghiệp đã được tổ chức một cách long trọng.<br><br>2. 彼らの結婚式は本当に盛大だった。<br>　→ Đám cưới của họ thực sự rất hoành tráng.<br><br>3. 祭りを盛大に祝おう。<br>　→ Hãy cùng ăn mừng lễ hội một cách thật rầm rộ.<br><br>🧠 Cách nhớ:<br><br>➕（合）Các từ kết hợp: 盛大さ→ Sự hoành tráng, hùng vĩ<br><br>↔️（類）Các từ liên quan: 華やか→ Lộng lẫy (Tập trung: vẻ ngoài, ánh nhìn, màu sắc, ấn tượng tinh tế)<br>                          盛大→ Hoành tráng, hùng vĩ (Tập trung: khối lượng, quy mô, sự long trọng)',
+    isReading: false
+  },
+  {
+    number: 10,
+    question: '鮮やか',
+    options: ['あざやう', 'あざやこ', 'あざやか', 'あざやき'],
+    answer: '3',
+    detail: '🔴 鮮やか（あざやか）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 鮮（あざ）＝ tươi, rõ ràng<br>  • やか（やか）＝ (hậu tố tạo tính từ)<br>- Nghĩa đen: Trạng thái tươi mới, rõ ràng và nổi bật.<br>- Nghĩa Hán Việt: Tiên (tươi mới, rõ ràng)<br>- Ý nghĩa: Tươi tắn, rực rỡ, sống động, rõ ràng và ấn tượng.<br>  → Dùng để miêu tả màu sắc, hình ảnh, ký ức hay hành động một cách nổi bật và sinh động.<br><br>💬 Ví dụ:<br>1. 彼女は鮮やかな赤いドレスを着ていた。<br>　→ Cô ấy đã mặc một chiếc váy đỏ rực rỡ.<br><br>2. 彼の記憶は鮮やかだ。<br>　→ Ký ức của anh ấy thật sống động/rõ ràng.<br><br>3. 鮮やかなプレーでゴールを決めた。<br>　→ Anh ấy đã ghi bàn bằng một pha xử lý đẹp mắt.<br><br>🧠 Cách nhớ: Từ 鮮 (sen) trong 新鮮 (shinsen - tươi mới) và 鮮明 (senmei - rõ ràng). Kết hợp với hậu tố やか tạo thành tính từ miêu tả sự tươi mới, rõ ràng đến mức nổi bật, gây ấn tượng.<br><br>➕（合）Các từ kết hợp: 色鮮やかな→ Màu sắc tươi thắm<br>                        鮮やかさ→ Sự tươi tắn<br><br>↔️（類）Các từ liên quan: 鮮明な→ Tươi sáng<br>                          見事な→ Đẹp mắt, đẹp đẽ<br><br>📎（対）Các từ trái nghĩa: 不鮮明な(ふせんめい)→ Tăm tối',
+    isReading: false
+  },
+  {
+    number: 11,
+    question: 'Chắc chắn, bền, cứng cáp, dai sức',
+    options: ['堅固', '強固', '強靭', '頑丈'],
+    answer: '4',
+    detail: '🔴 頑丈（がんじょう）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 頑（がん）＝ cứng đầu, bướng bỉnh<br>  • 丈（じょう）＝ chiều dài, vững chãi<br>- Nghĩa đen: Cứng chắc và vững vàng<br>- Nghĩa Hán Việt: Ngoan trượng<br>- Ý nghĩa: Chỉ sự chắc chắn, bền bỉ, có khả năng chịu lực tốt, không dễ bị hư hỏng.<br>  → Thường dùng để miêu tả đồ vật, vật liệu, kết cấu; đôi khi dùng cho người (thể hình).<br><br>💬 Ví dụ:<br>1. この家具はとても頑丈に作られている。<br>　→ Bộ bàn ghế này được làm rất chắc chắn.<br><br>2. 彼は頑丈な体付きをしている。<br>　→ Anh ấy có một thể hình vạm vỡ/chắc nịch.<br><br>3. 頑丈な箱に入れて送れば壊れない。<br>　→ Nếu gửi trong một chiếc hộp chắc chắn thì sẽ không bị vỡ.<br><br>🧠 Cách nhớ:<br><br>✨（連）Các từ kết nối: 頑丈な家/ドア/体付き→ Nhà, cửa, thể hình chắn chắn<br><br>➕（合）Các từ kết hợp: 頑丈さ→ Sức chắn chắn<br><br>↔️（類）Các từ liên quan: 頑丈な→ Nhấn mạnh tính chịu lực mạnh, trang trọng hơn 丈夫 (Chủ yếu dùng cho đồ vật, số ít cho người)<br>                          丈夫な→ Nhấn mạnh tính chịu lực trung bình, phổ biến trong hội thoại thường ngày (đồ vật+người)<br>                          がっしりした→ Trang trọng thấp, chỉ dùng cho người<br>                          強固→ Nhấn mạnh tính chịu lực mạnh, trang trọng cao, thường dùng trong văn bản kỹ thuật (KHÔNG  dùng cho người, chỉ dùng cho vật)',
+    isReading: false
+  },
+  {
+    number: 12,
+    question: 'Mềm, dẻo, linh hoạt',
+    options: ['柔う', '黒い', '高い', '柔軟'],
+    answer: '4',
+    detail: '🔴 柔軟（じゅうなん）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 柔（じゅう）＝ mềm, dịu dàng<br>  • 軟（なん）＝ mềm, yếu<br>- Nghĩa đen: Mềm và dẻo dai.<br>- Nghĩa Hán Việt: Nhu nhuyễn.<br>- Ý nghĩa: Tính chất mềm dẻo, có thể uốn cong mà không gãy; dùng để chỉ tư duy, thái độ có thể thay đổi linh hoạt để thích ứng với hoàn cảnh.<br>  → Chỉ sự linh hoạt, không cứng nhắc.<br><br>💬 Ví dụ:<br>1. 彼は柔軟な考え方の持ち主だ。<br>　→ Anh ấy là người có cách suy nghĩ linh hoạt.<br><br>2. この素材はとても柔軟で加工しやすい。<br>　→ Chất liệu này rất mềm dẻo và dễ gia công.<br><br>3. 状況に応じて柔軟に対応する必要がある。<br>　→ Cần phải ứng phó một cách linh hoạt tùy theo tình huống.<br><br>🧠 Cách nhớ:<br><br>✨（連）Các từ kết nối: 柔軟な考え方/姿勢→ Suy nghĩ, điệu bộ linh hoạt<br><br>➕（合）Các từ kết hợp: 柔軟体操→ Bài tập kéo giãn cơ / thể dục mềm dẻo<br>                        柔軟剤→Nước xả làm mềm vải<br>                        柔軟さ→ Độ mềm dẻo<br>                        柔軟性→ Tính mềm dẻo, linh hoạt<br><br>↔️（類）Các từ liên quan: 柔軟な→ Mềm + có khả năng thay đổi / thích nghi<br>                          柔らかい→ Mềm (Cảm giác khi chạm vào)<br>                          しなやかな→ Mềm nhưng có lực, có độ đàn hồi đẹp, không yếu',
+    isReading: false
+  },
+  {
+    number: 13,
+    question: 'Bằng phẳng',
+    options: ['平行', '平坦', '平ら', '均等'],
+    answer: '3',
+    detail: '🔴 平ら（たいら）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 平（たい）＝ bằng phẳng, bình thường<br>- Nghĩa đen: Trạng thái không có chỗ lồi lõm, gồ ghề.<br>- Nghĩa Hán Việt: Bình (bằng phẳng).<br>- Ý nghĩa: Tính từ đuôi na (な-adjective) miêu tả bề mặt hoặc không gian phẳng, không gồ ghề. Cũng có thể dùng với nghĩa bóng chỉ sự bình tĩnh, không xáo trộn.<br>  → Dùng để miêu tả địa hình, bề mặt vật thể, hoặc tâm trạng.<br><br>💬 Ví dụ:<br>1. この板の表面はとても平らだ。<br>　→ Bề mặt của tấm ván này rất bằng phẳng.<br><br>2. 平らな道を歩くのは楽だ。<br>　→ Đi bộ trên con đường bằng phẳng thì dễ chịu.<br><br>3. 彼はどんな時も心を平らに保っている。<br>　→ Anh ấy luôn giữ cho tâm trạng bình tĩnh trong mọi hoàn cảnh.<br><br>🧠 Cách nhớ: Chữ 平 (bằng) đã có nghĩa phẳng, thêm ら (ra) tạo cảm giác trải rộng ra → "bằng phẳng trải rộng".<br><br>➕（合）Các từ kết hợp: 平らな道→ Con đường bằng phẳng<br>                        平らにする→ Làm cho bằng phẳng<br><br>↔️（類）Các từ liên quan: 平らな→ Phẳng, không gồ ghề (Dùng cho bề mặt, địa hình và cả nghĩa bóng : Bình tĩnh)<br>                          平たい→ Phẳng và mỏng / bè ra (Nhấn mạnh hình dạng “dẹt”)<br>                          平滑→ Nhẵn, trơn láng (Thuần kỹ thuật,nhấn mạnh độ nhẵn, ma sát thấp)<br>                          水平→ Nằm ngang<br>                          均一→ Đồng đều, không chỗ dày chỗ mỏng<br>                          垂直→ Thẳng đứng, vuông góc',
+    isReading: false
+  },
+  {
+    number: 14,
+    question: 'Song song',
+    options: ['平う', '平行', '黒い', '高い'],
+    answer: '2',
+    detail: '🔴 平行（へいこう）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 平（へい）＝ bằng phẳng, bình thường<br>  • 行（こう）＝ đi, hành động<br>- Nghĩa đen: Đi trên một mặt phẳng, không giao nhau.<br>- Nghĩa Hán Việt: Bình hành<br>- Ý nghĩa: Song song, diễn ra đồng thời mà không giao nhau.<br>  → Chỉ hai đường thẳng không bao giờ gặp nhau, hoặc hai sự việc diễn ra cùng lúc một cách độc lập.<br><br>💬 Ví dụ:<br>1. この二本の線は平行です。<br>　→ Hai đường thẳng này song song với nhau.<br><br>2. 二つのプロジェクトが平行して進められている。<br>　→ Hai dự án đang được tiến hành song song.<br><br>3. 交渉は平行線をたどり、合意に至らなかった。<br>　→ Cuộc đàm phán rơi vào thế bế tắc và không đạt được thỏa thuận.<br><br>🧠 Cách nhớ: Hình ảnh hai đường ray tàu hỏa (線路) chạy song song (平行) mãi mãi không gặp nhau trên một mặt đất bằng phẳng (平).<br><br>➕（合）Các từ kết hợp: 平行線→ Đường song song<br>                        平行線をたどる→ Rơi vào thế bế tắc, không đạt được thỏa thuận<br>                        2面のコートで平行して試合が行われる→ Trận đấu được tổ chức song song cả 2 mặt trận<br><br>↔️（類）Các từ liên quan: 垂直な→ Thẳng đứng, vuông góc<br>                          同時に→ Đồng thời',
+    isReading: false
+  },
+  {
+    number: 15,
+    question: 'Gần tay, ở tầm với, quen thuộc',
+    options: ['手元', '近所', '手近', '近辺'],
+    answer: '3',
+    detail: '🔴 手近（てぢか）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 手（て）＝ tay<br>  • 近（ちか）＝ gần<br>- Nghĩa đen: Gần tay<br>- Nghĩa Hán Việt: Thủ cận<br>- Ý nghĩa: Chỉ những thứ ở gần, dễ lấy, dễ thấy, dễ sử dụng hoặc những ví dụ, kiến thức quen thuộc, dễ hiểu.<br>  → Diễn tả sự tiện lợi, dễ tiếp cận.<br><br>💬 Ví dụ:<br>1. 手近な道具で修理する。<br>　→ Sửa chữa bằng dụng cụ có sẵn bên cạnh.<br><br>2. 本を手近な場所に置いておく。<br>　→ Để sách ở nơi tiện tay.<br><br>3. 手近な例を挙げて説明してください。<br>　→ Hãy đưa ra một ví dụ quen thuộc để giải thích.<br><br>🧠 Cách nhớ:<br><br>✨（連）Các từ kết nối: 手近なものを使う→ Dùng những thứ có sẵn gần bên<br>                        手近な場所に置く→ Đặt ở chỗ tiện tay<br>                        手近な例を挙げて説明する→ Đưa ra ví dụ quen thuộc, có sẵn để giải thích',
+    isReading: false
+  },
+  {
+    number: 16,
+    question: 'Vị đắng, chát<br>Lịch sự, tao nhã, có phong cách trưởng thành<br>Cá tính cứng rắn, kiệm lời',
+    options: ['苦い', '渋い', '辛い', '塩い'],
+    answer: '2',
+    detail: '🔴 渋い（しぶい）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 渋（しぶ）＝ chát, đắng, khó chịu<br>- Nghĩa đen: Có vị chát, đắng (như trà, rượu vang chưa chín); có màu sắc tối, trầm, không sặc sỡ.<br>- Nghĩa Hán Việt: Sáp<br>- Ý nghĩa: Chỉ vị giác chát, đắng. Chỉ màu sắc, phong cách trầm lặng, giản dị nhưng tinh tế, sang trọng. Chỉ tính cách chín chắn, đáng tin cậy.<br>  → Từ vị giác mở rộng sang thẩm mỹ và tính cách.<br><br>💬 Ví dụ:<br>1. このお茶は渋い<br>　→ Trà này hơi đắng/chát<br><br>2. 渋い男<br>　→ Người đàn ông trầm tính, đáng tin cậy, có phong cách riêng<br><br>3. 彼は渋い服装をしている<br>　→ Anh ấy ăn mặc giản dị mà sang trọng<br><br>🧠 Cách nhớ:<br>渋る (shiburu) = miễn cưỡng, do dự, liên tưởng đến “vị chát” (渋い) → khó uống, không dễ dàng” → từ đó mở nghĩa “miễn cưỡng / do dự”.<br><br>✨（連）Các từ kết nối: このお茶は渋い→ Trà này hơi đắng<br>                        渋い男→ Người đàn ông trầm tính, đáng tin cậy, có phong cách riêng<br>                        彼は渋い服装をしている→ Anh ấy ăn mặc giản dị mà sang trọng<br><br>➕（合）Các từ kết hợp: 渋さ→ Độ đắng, vẻ sẫm, sự chần chừ<br>                        渋み→ Vị đắng<br><br>↔️（類）Các từ liên quan: 渋る→ Do dự, chần chừ, ngần ngại, khó chịu / khan hiếm (Ví dụ: giá cả, mua bán → không dễ đưa ra, khó khăn)',
+    isReading: false
+  },
+  {
+    number: 17,
+    question: 'Thơm, dễ chịu',
+    options: ['美味しい', '香ばしう', '香うばし', '香ばしい'],
+    answer: '4',
+    detail: '🔴 香ばしい（こうばしい）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 香（こう）＝ hương thơm<br>  • ばしい（hậu tố biểu thị tính chất）= có vẻ, mang tính chất<br>- Nghĩa đen: Có mùi thơm<br>- Nghĩa Hán Việt: Hương<br>- Ý nghĩa: Chỉ mùi thơm hấp dẫn, dễ chịu, thường là mùi thơm từ đồ ăn thức uống được nướng, rang, xào.<br>  → Thường dùng để miêu tả mùi thơm của cà phê rang, bánh mì nướng, hạt nướng, v.v.<br><br>💬 Ví dụ:<br>1. パンを焼く香ばしい匂いが台所に広がった。<br>　→ Mùi thơm của bánh mì nướng lan tỏa khắp nhà bếp.<br><br>2. このコーヒーは香ばしい風味が特徴だ。<br>　→ Loại cà phê này có đặc trưng là hương vị thơm ngậy.<br><br>3. 秋になると、焼き芋の香ばしい香りが恋しくなる。<br>　→ Vào mùa thu, tôi lại thấy nhớ mùi thơm của khoai nướng.<br><br>🧠 Cách nhớ: Từ 香 (hương) gợi nhớ đến mùi thơm. Hậu tố ばしい thường dùng trong các tính từ như 大人びしい (trưởng thành), 荒々しい (hung dữ) để chỉ tính chất. Vậy 香ばしい là "mang tính chất thơm", tức là thơm ngát.<br><br>➕（合）Các từ kết hợp: 香ばし匂い→ Mùi thơm<br>                        香ばしさ→ Độ thơm',
+    isReading: false
+  },
+  {
+    number: 18,
+    question: 'Lộng lẫy, trang trọng',
+    options: ['鮮やか', '華やか', '華やう', '華うや'],
+    answer: '2',
+    detail: '🔴 華やか（はなやか）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 華（はな）＝ hoa, sự rực rỡ<br>  • やか（やか）＝ (hậu tố tạo tính từ) mang tính chất<br>- Nghĩa đen: Mang tính chất của hoa, rực rỡ như hoa.<br>- Nghĩa Hán Việt: Hoa.<br>- Ý nghĩa: Lộng lẫy, sang trọng, rực rỡ, tươi đẹp.<br>  → Thường dùng để miêu tả vẻ ngoài, không khí, sự kiện, màu sắc... tạo ấn tượng tinh tế, đẹp mắt và thu hút.<br><br>💬 Ví dụ:<br>1. 彼女はいつも華やかな服を着ている。<br>　→ Cô ấy lúc nào cũng mặc những bộ quần áo lộng lẫy.<br><br>2. 結婚式はとても華やかな雰囲気だった。<br>　→ Đám cưới có một bầu không khí rất lộng lẫy.<br><br>3. 華やかな色の花が庭いっぱいに咲いている。<br>　→ Những bông hoa với màu sắc rực rỡ nở đầy vườn.<br><br>🧠 Cách nhớ:<br>華々しい→ Rực rỡ, tráng lệ<br>華々しい活躍→ Thành tích rực rỡ, hoạt động xuất sắc<br>華やか→ Lộng lẫy (Tập trung: vẻ ngoài, ánh nhìn, màu sắc, ấn tượng tinh tế)<br>盛大→ Hoành tráng, hùng vĩ (Tập trung: khối lượng, quy mô, sự long trọng)<br><br>➕（合）Các từ kết hợp: 華やかさ→Sự trang trọng, lộng lẫy(mức độ)<br><br>↔️（類）Các từ liên quan: 華々しい→ Rực rỡ, tráng lệ<br>                          華々しい活躍→ Thành tích rực rỡ, hoạt động xuất sắc<br>                          華やか→ Lộng lẫy (Tập trung: vẻ ngoài, ánh nhìn, màu sắc, ấn tượng tinh tế)<br>                          盛大→ Hoành tráng, hùng vĩ (Tập trung: khối lượng, quy mô, sự long trọng)',
+    isReading: false
+  },
+  {
+    number: 19,
+    question: 'Hùng vĩ, hoành tráng',
+    options: ['盛況', '盛典', '盛う', '盛大'],
+    answer: '4',
+    detail: '🔴 盛大（せいだい）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 盛（せい）＝ hưng thịnh, thịnh vượng<br>  • 大（だい）＝ to lớn<br>- Nghĩa đen: Sự thịnh vượng to lớn<br>- Nghĩa Hán Việt: Thịnh đại<br>- Ý nghĩa: Chỉ sự kiện, lễ hội, nghi lễ có quy mô lớn, hoành tráng, long trọng.<br>  → Thường dùng để miêu tả các sự kiện được tổ chức một cách trang trọng và quy mô.<br><br>💬 Ví dụ:<br>1. 卒業式は盛大に行われた。<br>　→ Lễ tốt nghiệp đã được tổ chức một cách long trọng.<br><br>2. 彼らの結婚式は本当に盛大だった。<br>　→ Đám cưới của họ thực sự rất hoành tráng.<br><br>3. 祭りを盛大に祝おう。<br>　→ Hãy cùng ăn mừng lễ hội một cách thật rầm rộ.<br><br>🧠 Cách nhớ:<br><br>➕（合）Các từ kết hợp: 盛大さ→ Sự hoành tráng, hùng vĩ<br><br>↔️（類）Các từ liên quan: 華やか→ Lộng lẫy (Tập trung: vẻ ngoài, ánh nhìn, màu sắc, ấn tượng tinh tế)<br>                          盛大→ Hoành tráng, hùng vĩ (Tập trung: khối lượng, quy mô, sự long trọng)',
+    isReading: false
+  },
+  {
+    number: 20,
+    question: 'Tưới thắm, tươi đẹp',
+    options: ['華やか', '鮮やか', '柔らか', '鮮やう'],
+    answer: '2',
+    detail: '🔴 鮮やか（あざやか）<br><br>🈶 Nghĩa & Giải thích:<br>- Kanji:<br>  • 鮮（あざ）＝ tươi, rõ ràng<br>  • やか（やか）＝ (hậu tố tạo tính từ)<br>- Nghĩa đen: Trạng thái tươi mới, rõ ràng và nổi bật.<br>- Nghĩa Hán Việt: Tiên (tươi mới, rõ ràng)<br>- Ý nghĩa: Tươi tắn, rực rỡ, sống động, rõ ràng và ấn tượng.<br>  → Dùng để miêu tả màu sắc, hình ảnh, ký ức hay hành động một cách nổi bật và sinh động.<br><br>💬 Ví dụ:<br>1. 彼女は鮮やかな赤いドレスを着ていた。<br>　→ Cô ấy đã mặc một chiếc váy đỏ rực rỡ.<br><br>2. 彼の記憶は鮮やかだ。<br>　→ Ký ức của anh ấy thật sống động/rõ ràng.<br><br>3. 鮮やかなプレーでゴールを決めた。<br>　→ Anh ấy đã ghi bàn bằng một pha xử lý đẹp mắt.<br><br>🧠 Cách nhớ: Từ 鮮 (sen) trong 新鮮 (shinsen - tươi mới) và 鮮明 (senmei - rõ ràng). Kết hợp với hậu tố やか tạo thành tính từ miêu tả sự tươi mới, rõ ràng đến mức nổi bật, gây ấn tượng.<br><br>➕（合）Các từ kết hợp: 色鮮やかな→ Màu sắc tươi thắm<br>                        鮮やかさ→ Sự tươi tắn<br><br>↔️（類）Các từ liên quan: 鮮明な→ Tươi sáng<br>                          見事な→ Đẹp mắt, đẹp đẽ<br><br>📎（対）Các từ trái nghĩa: 不鮮明な(ふせんめい)→ Tăm tối',
+    isReading: false
+  }
+]; 
+
+      // ==================== TIMER FUNCTIONS ====================
+      let timerInterval;
+      let defaultTime = 20;
+      let remainingTime = defaultTime * 60;
+      let isTimerRunning = false;
+
+      function setTimer() {
+        const inputMinutes = parseInt(
+          document.getElementById("setTimeInput").value,
+        );
+        if (!isNaN(inputMinutes) && inputMinutes > 0) {
+          defaultTime = inputMinutes;
+          remainingTime = defaultTime * 60;
+          updateTimerDisplay();
+        }
+      }
+
+      function toggleTimer() {
+        isTimerRunning ? pauseTimer() : startTimer();
+      }
+
+      function startTimer() {
+        if (isTimerRunning) return;
+        isTimerRunning = true;
+        document.querySelector(".start-btn").classList.add("running");
+        document.querySelector(".start-btn").innerHTML =
+          '<i class="fas fa-pause"></i>';
+        if (timerInterval) clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+          remainingTime--;
+          updateTimerDisplay();
+          if (remainingTime <= 60)
+            document.getElementById("timerDisplay").classList.add("warning");
+          if (remainingTime <= 0) {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            isTimerRunning = false;
+            document.querySelector(".start-btn").classList.remove("running");
+            document.querySelector(".start-btn").innerHTML =
+              '<i class="fas fa-play"></i>';
+            document.getElementById("timeUpAlert").style.display = "block";
+            setTimeout(
+              () =>
+                (document.getElementById("timeUpAlert").style.display = "none"),
+              3000,
+            );
+          }
+        }, 1000);
+      }
+
+      function pauseTimer() {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        isTimerRunning = false;
+        document.querySelector(".start-btn").classList.remove("running");
+        document.querySelector(".start-btn").innerHTML =
+          '<i class="fas fa-play"></i>';
+      }
+
+      function resetTimer() {
+        pauseTimer();
+        remainingTime = defaultTime * 60;
+        updateTimerDisplay();
+        document.getElementById("timerDisplay").classList.remove("warning");
+      }
+
+      function updateTimerDisplay() {
+        const minutes = Math.floor(remainingTime / 60);
+        const seconds = remainingTime % 60;
+        document.getElementById("timerDisplay").textContent =
+          `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+      }
+
+      // ==================== READING TIMER FUNCTIONS ====================
+      function setReadingTimer(idx) {
+        const inputEl = document.getElementById(`readTimeInput-${idx}`);
+        if (!inputEl) return;
+        const minutes = parseInt(inputEl.value);
+        if (isNaN(minutes) || minutes <= 0) {
+          alert("Nhập số phút ≥ 1.");
+          return;
+        }
+        readingTimers[idx] = {
+          remaining: minutes * 60,
+          original: minutes * 60,
+          intervalId: null,
+        };
+        updateReadingTimerDisplay(idx);
+      }
+
+      function startReadingTimer(idx) {
+        if (!readingTimers[idx])
+          readingTimers[idx] = {
+            remaining: 60,
+            original: 60,
+            intervalId: null,
+          };
+        if (readingTimers[idx].intervalId) return;
+        readingTimers[idx].intervalId = setInterval(() => {
+          const timerObj = readingTimers[idx];
+          timerObj.remaining--;
+          updateReadingTimerDisplay(idx);
+          if (timerObj.remaining <= 0) {
+            clearInterval(timerObj.intervalId);
+            timerObj.intervalId = null;
+            showTimeUpAlert(idx);
+          }
+        }, 1000);
+      }
+
+      function resetReadingTimer(idx) {
+        const timerObj = readingTimers[idx];
+        if (timerObj) {
+          if (timerObj.intervalId) {
+            clearInterval(timerObj.intervalId);
+            timerObj.intervalId = null;
+          }
+          timerObj.remaining = timerObj.original || 0;
+          updateReadingTimerDisplay(idx);
+        }
+      }
+
+      function updateReadingTimerDisplay(idx) {
+        const disp = document.getElementById(`readingTimerDisplay-${idx}`);
+        if (!disp) return;
+        const timerObj = readingTimers[idx] || { remaining: 0 };
+        let sec = timerObj.remaining < 0 ? 0 : timerObj.remaining;
+        const m = Math.floor(sec / 60);
+        const s = sec % 60;
+        disp.textContent = `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+      }
+
+      function showTimeUpAlert(idx) {
+        const readingBlock = document.querySelector(
+          `.reading-comprehension[data-index='${idx}']`,
+        );
+        if (!readingBlock) return;
+        const readingLabel = readingBlock.querySelector(".reading-label");
+        const readingName = readingLabel
+          ? readingLabel.textContent.trim()
+          : `Đọc hiểu ${idx + 1}`;
+        const alertDiv = document.createElement("div");
+        alertDiv.innerHTML = `⏰ Hết thời gian của <strong>${readingName}</strong> rồi!`;
+        alertDiv.style.cssText = `position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #d32f2f; color: white; padding: 20px 40px; border-radius: 5px; font-size: 24px; z-index: 100000; box-shadow: 0 4px 8px rgba(0,0,0,0.2);`;
+        document.body.appendChild(alertDiv);
+        setTimeout(() => alertDiv.remove(), 3000);
+      }
+
+      // ==================== HIGHLIGHT FUNCTIONS ====================
+      function highlightSelection(idx, color) {
+        const selection = window.getSelection();
+        const range =
+          savedRanges[idx] ||
+          (selection.rangeCount > 0
+            ? selection.getRangeAt(0).cloneRange()
+            : null);
+        if (!range || range.collapsed) {
+          alert(
+            "Vui lòng bôi đen văn bản trong phần đọc hiểu trước khi đổi màu.",
+          );
+          return;
+        }
+        const readingBlock = document.querySelector(
+          `.reading-comprehension[data-index="${idx}"]`,
+        );
+        if (
+          !readingBlock ||
+          !readingBlock.contains(range.commonAncestorContainer)
+        ) {
+          alert("Vui lòng chọn văn bản trong phần đọc hiểu tương ứng.");
+          return;
+        }
+        const fragment = range.extractContents();
+        const span = document.createElement("span");
+        span.style.color = color;
+        span.style.fontWeight = "bold";
+        span.appendChild(fragment);
+        range.insertNode(span);
+        savedRanges[idx] = null;
+        selection.removeAllRanges();
+      }
+
+      function removeHighlights(idx) {
+        const readingBlock = document.querySelector(
+          `.reading-comprehension[data-index="${idx}"]`,
+        );
+        if (!readingBlock) return;
+        const highlightedSpans = readingBlock.querySelectorAll(
+          'span[style*="color:"]',
+        );
+        highlightedSpans.forEach((span) => {
+          const content = document.createDocumentFragment();
+          while (span.firstChild) content.appendChild(span.firstChild);
+          span.parentNode.insertBefore(content, span);
+          span.parentNode.removeChild(span);
+        });
+      }
+
+      function findAncestor(el, fn) {
+        while (el) {
+          if (fn(el)) return el;
+          el = el.parentNode;
+        }
+        return null;
+      }
+
+      // Save selection for highlight
+      document.addEventListener("mouseup", function (e) {
+        const sel = window.getSelection();
+        if (sel.isCollapsed) return;
+        const range = sel.getRangeAt(0);
+        const readingBlock = findAncestor(
+          range.commonAncestorContainer,
+          (el) =>
+            el.classList && el.classList.contains("reading-comprehension"),
+        );
+        if (readingBlock) {
+          const idx = parseInt(readingBlock.getAttribute("data-index"));
+          savedRanges[idx] = range.cloneRange();
+        }
+      });
+
+      // ==================== RENDER QUIZ ====================
+      function renderQuiz() {
+        const form = document.getElementById("quizForm");
+        if (!form) return;
+        form.innerHTML = "";
+        readingComprehensionCount = 0;
+
+        quizData.forEach((q, index) => {
+          const div = document.createElement("div");
+          div.classList.add("question-block");
+
+          if (q.isReading) {
+            readingComprehensionCount++;
+            let subQuestionsHtml = "";
+            if (q.subQuestions && q.subQuestions.length > 0) {
+              subQuestionsHtml = q.subQuestions
+                .map(
+                  (subQ, subIndex) => `
+              <div class="sub-question-container">
+                <div class="sub-question-box">
+                  <p><strong>${subQ.number}.</strong> ${subQ.subQuestion} <span class="sub-question-key">[key: q${index}_${subIndex}]</span></p>
+                  <div class="sub-question-options">
+                    ${subQ.options
+                      .map(
+                        (opt, optIndex) => `
+                      <label class="answer-option">
+                        <input type="radio" name="q${index}_${subIndex}" value="${optIndex + 1}">
+                        ${opt}
+                      </label>
+                    `,
+                      )
+                      .join("")}
+                  </div>
+                </div>
+              </div>
+            `,
+                )
+                .join("");
+            }
+
+            div.innerHTML = `
+            <div class="reading-comprehension" data-index="${index}">
+              <div class="reading-title">
+                <span class="reading-label">ĐỌC HIỂU ${readingComprehensionCount}</span>
+              </div>
+              <div class="highlight-controls">
+                <div class="highlight-btn red" onclick="highlightSelection(${index}, '#ff3333'); event.preventDefault();" title="Đỏ"></div>
+                <div class="highlight-btn blue" onclick="highlightSelection(${index}, '#00a8ff'); event.preventDefault();" title="Xanh"></div>
+                <div class="highlight-btn purple" onclick="highlightSelection(${index}, '#aa00ff'); event.preventDefault();" title="Tím"></div>
+                <div class="highlight-btn black" onclick="highlightSelection(${index}, '#000000'); event.preventDefault();" title="Đen"></div>
+                <div class="highlight-btn remove-btn" onclick="removeHighlights(${index}); event.preventDefault();" title="Xóa highlight"><i class="fas fa-times"></i></div>
+              </div>
+              <div class="reading-timer-container" data-timer-index="${index}">
+                <input type="number" class="reading-timer-input" id="readTimeInput-${index}" placeholder="1" min="1" max="120" value="5">
+                <button type="button" class="reading-timer-btn" onclick="setReadingTimer(${index}); event.preventDefault();"><i class="fas fa-clock"></i> Đặt</button>
+                <button type="button" class="reading-timer-btn" onclick="startReadingTimer(${index}); event.preventDefault();"><i class="fas fa-play"></i></button>
+                <button type="button" class="reading-timer-btn" onclick="resetReadingTimer(${index}); event.preventDefault();"><i class="fas fa-undo"></i></button>
+                <span class="reading-timer-display" id="readingTimerDisplay-${index}">00:00</span>
+              </div>
+              <div class="reading-content">
+                <p><strong>${q.question}</strong></p>
+                ${q.content ? `<p>${q.content}</p>` : ``}
+              </div>
+              ${subQuestionsHtml}
+            </div>
+          `;
+            if (q.subQuestions) {
+              q.subQuestions.forEach((subQ, subIndex) => {
+                if (!window.quizAnswers) window.quizAnswers = {};
+                window.quizAnswers[`q${index}_${subIndex}`] = subQ.answer;
+              });
+            }
+          } else {
+            div.innerHTML = `
+            <div class="question-number"><span style="background: linear-gradient(135deg, var(--primary-glow), var(--secondary-glow)); color: #0a0e17; padding: 5px 12px; border-radius: 20px; font-size: 16px;">Câu ${q.number}</span></div>
+            <p class="question-text">${q.question}</p>
+          `;
+            q.options.forEach((opt, i) => {
+              const label = document.createElement("label");
+              label.classList.add("answer-option");
+              label.innerHTML = `<input type="radio" name="q${index}" value="${i + 1}"> ${opt}`;
+              div.appendChild(label);
+            });
+            const detailBtn = document.createElement("button");
+            detailBtn.classList.add("detail-btn");
+            detailBtn.innerHTML =
+              '<i class="fas fa-info-circle"></i> Xem chi tiết';
+            detailBtn.addEventListener("click", (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              showQuestionDetail(index);
+            });
+            div.appendChild(detailBtn);
+            if (!window.quizAnswers) window.quizAnswers = {};
+            window.quizAnswers[`q${index}`] = q.answer;
+          }
+          form.appendChild(div);
+        });
+      }
+
+      // ==================== SIDEBAR TOGGLE ====================
+      function toggleSidebar(side) {
+        const panel = document.getElementById(`${side}SidebarPanel`);
+        const floatingBtn = document.getElementById(`${side}FloatingBtn`);
+        const wrapper = document.getElementById("mainContentWrapper");
+        const isActive = panel.classList.contains("active");
+        if (!isActive) {
+          panel.classList.add("active");
+          floatingBtn.classList.add("hidden");
+          if (side === "left") wrapper.classList.add("left-expanded");
+          else wrapper.classList.add("right-expanded");
+        } else {
+          panel.classList.remove("active");
+          floatingBtn.classList.remove("hidden");
+          if (side === "left") wrapper.classList.remove("left-expanded");
+          else wrapper.classList.remove("right-expanded");
+        }
+        localStorage.setItem(`${side}SidebarActive`, !isActive);
+      }
+
+      function forceCloseSidebar(side) {
+        const panel = document.getElementById(`${side}SidebarPanel`);
+        const floatingBtn = document.getElementById(`${side}FloatingBtn`);
+        const wrapper = document.getElementById("mainContentWrapper");
+        panel.classList.remove("active");
+        floatingBtn.classList.remove("hidden");
+        if (side === "left") wrapper.classList.remove("left-expanded");
+        else wrapper.classList.remove("right-expanded");
+        localStorage.setItem(`${side}SidebarActive`, "false");
+      }
+      // ==================== FIREWORKS EFFECT ====================
+      function launchFireworks() {
+        // Tạo container nếu chưa có
+        let container = document.querySelector(".fireworks-container");
+        if (!container) {
+          container = document.createElement("div");
+          container.className = "fireworks-container";
+          document.body.appendChild(container);
+        }
+
+        // Số lượng pháo hoa
+        const particleCount = 150;
+
+        for (let i = 0; i < particleCount; i++) {
+          setTimeout(() => {
+            createFireworkParticle(container);
+          }, i * 20); // Mỗi hạt cách nhau 20ms
+        }
+
+        // Thêm confetti rơi
+        for (let i = 0; i < 50; i++) {
+          setTimeout(() => {
+            createConfetti();
+          }, i * 30);
+        }
+
+        // Tự động xóa container sau 5 giây
+        setTimeout(() => {
+          if (container) container.remove();
+        }, 5000);
+      }
+
+      function createFireworkParticle(container) {
+        const particle = document.createElement("div");
+        particle.className = "firework-particle";
+
+        // Màu sắc ngẫu nhiên rực rỡ
+        const colors = [
+          "#ff3333",
+          "#ff9933",
+          "#ffff33",
+          "#33ff33",
+          "#33ffff",
+          "#3366ff",
+          "#9933ff",
+          "#ff33ff",
+          "#ff0066",
+          "#ff6600",
+          "#ffcc00",
+          "#00ffcc",
+        ];
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        particle.style.backgroundColor = color;
+        particle.style.boxShadow = `0 0 15px ${color}`;
+
+        // Vị trí trung tâm màn hình
+        const x = window.innerWidth / 2 + (Math.random() - 0.5) * 300;
+        const y = window.innerHeight / 2 + (Math.random() - 0.5) * 200;
+
+        particle.style.left = x + "px";
+        particle.style.top = y + "px";
+
+        // Hướng bay ngẫu nhiên
+        const tx = (Math.random() - 0.5) * 500;
+        const ty = (Math.random() - 0.5) * 500;
+
+        particle.style.setProperty("--tx", tx + "px");
+        particle.style.setProperty("--ty", ty + "px");
+
+        container.appendChild(particle);
+
+        // Tự xóa sau khi animation kết thúc
+        setTimeout(() => particle.remove(), 1500);
+      }
+
+      function createConfetti() {
+        const confetti = document.createElement("div");
+        confetti.className = "confetti";
+
+        // Màu sắc ngẫu nhiên
+        const colors = [
+          "#f00",
+          "#0f0",
+          "#00f",
+          "#ff0",
+          "#f0f",
+          "#0ff",
+          "#ff8800",
+        ];
+        confetti.style.backgroundColor =
+          colors[Math.floor(Math.random() * colors.length)];
+
+        // Hình dạng ngẫu nhiên (vuông, tròn, chữ nhật)
+        const shapes = ["50%", "0", "20%"];
+        confetti.style.borderRadius =
+          shapes[Math.floor(Math.random() * shapes.length)];
+
+        // Vị trí ngẫu nhiên
+        confetti.style.left = Math.random() * 100 + "%";
+
+        // Kích thước ngẫu nhiên
+        const size = 5 + Math.random() * 10;
+        confetti.style.width = size + "px";
+        confetti.style.height = size + "px";
+
+        // Thời gian rơi ngẫu nhiên
+        const duration = 3 + Math.random() * 4;
+        confetti.style.animation = `confetti-fall ${duration}s linear forwards`;
+
+        document.body.appendChild(confetti);
+
+        // Tự xóa sau khi rơi xong
+        setTimeout(() => confetti.remove(), duration * 1000);
+      }
+
+      // Thêm hiệu ứng âm thanh (tùy chọn)
+      function playVictorySound() {
+        try {
+          const audioContext = new (
+            window.AudioContext || window.webkitAudioContext
+          )();
+
+          // Tạo âm thanh đơn giản
+          const osc = audioContext.createOscillator();
+          const gainNode = audioContext.createGain();
+
+          osc.type = "sine";
+          osc.frequency.value = 523.25; // C5
+
+          gainNode.gain.value = 0.1;
+          gainNode.gain.exponentialRampToValueAtTime(
+            0.01,
+            audioContext.currentTime + 2,
+          );
+
+          osc.connect(gainNode);
+          gainNode.connect(audioContext.destination);
+
+          osc.start();
+          osc.stop(audioContext.currentTime + 2);
+        } catch (e) {
+          console.log("Không thể phát âm thanh", e);
+        }
+      }
+
+      // ==================== QUIZ FUNCTIONS ====================
+      function submitQuiz() {
+        const form = document.getElementById("quizForm");
+        let correctAnswers = 0;
+        let totalQuestions = 0;
+
+        quizData.forEach((q) => {
+          if (q.isReading && q.subQuestions)
+            totalQuestions += q.subQuestions.length;
+          else totalQuestions++;
+        });
+
+        quizData.forEach((q, index) => {
+          if (q.isReading && q.subQuestions) {
+            q.subQuestions.forEach((subQ, subIndex) => {
+              const name = `q${index}_${subIndex}`;
+              const selected = form.querySelector(
+                `input[name='${name}']:checked`,
+              );
+              const correct =
+                (window.answers && window.answers[name]) ||
+                (window.quizAnswers && window.quizAnswers[name]);
+              if (selected && selected.value === correct) {
+                correctAnswers++;
+                selected.parentElement.innerHTML +=
+                  ' <span class="correct-answer">✅ Đúng</span>';
+              } else if (selected) {
+                selected.parentElement.innerHTML +=
+                  ' <span class="wrong-answer">❌ Sai</span>';
+                saveWrongAnswer(
+                  name,
+                  subQ.subQuestion,
+                  selected.value,
+                  correct,
+                );
+              }
+            });
+          } else {
+            const name = `q${index}`;
+            const selected = form.querySelector(
+              `input[name='${name}']:checked`,
+            );
+            const correct =
+              (window.answers && window.answers[name]) ||
+              (window.quizAnswers && window.quizAnswers[name]);
+            if (selected && selected.value === correct) {
+              correctAnswers++;
+              selected.parentElement.innerHTML +=
+                ' <span class="correct-answer">✅ Đúng</span>';
+            } else if (selected) {
+              selected.parentElement.innerHTML +=
+                ' <span class="wrong-answer">❌ Sai</span>';
+              saveWrongAnswer(name, q.question, selected.value, correct);
+            }
+          }
+        });
+
+        const percentage = Math.round((correctAnswers / totalQuestions) * 100);
+        document.getElementById("popupScore").textContent =
+          `${correctAnswers}/${totalQuestions} (${percentage}%)`;
+        document.getElementById("popupComment").innerHTML =
+          getResultComment(percentage);
+        document.getElementById("resultOverlay").style.display = "block";
+        document.getElementById("resultPopup").style.display = "block";
+        saveQuizHistory(correctAnswers, percentage);
+        document.getElementById("showAnswersBtn").style.display = "flex";
+        form
+          .querySelectorAll("input")
+          .forEach((input) => (input.disabled = true));
+        pauseTimer();
+        // ===== THÊM ĐOẠN NÀY ĐỂ KÍCH HOẠT PHÁO HOA KHI ĐẠT 100% =====
+        if (percentage === 100) {
+          launchFireworks();
+          tryMarkPerfect();
+          // Phát âm thanh nếu muốn (cần sự tương tác của user trước đó)
+          // playVictorySound();
+
+          // Thêm hiệu ứng đặc biệt cho popup
+          const popup = document.getElementById("resultPopup");
+          popup.style.animation = "popup-appear 0.3s, glow-pulse 1s infinite";
+
+          // Thêm class đặc biệt
+          popup.classList.add("perfect-score");
+
+          // Tạo thông báo
+          // Tạo thông báo
+          // Tạo thông báo perfect và đưa lên trên cùng
+          const perfectMsg = document.createElement("div");
+          perfectMsg.style.cssText = `
+  position: fixed;
+  top: 15%;  /* Đưa lên cao hơn */
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, gold, #ffaa00);
+  color: #000;
+  padding: 15px 35px;
+  border-radius: 60px;
+  font-size: 36px;
+  font-weight: 900;
+  z-index: 200001;  /* Cao hơn popup */
+  animation: perfect-float 0.8s ease infinite alternate;
+  text-shadow: 2px 2px 4px rgba(255,255,255,0.5);
+  box-shadow: 0 0 50px gold, 0 10px 20px rgba(0,0,0,0.3);
+  border: 3px solid white;
+  letter-spacing: 2px;
+  white-space: nowrap;
+  font-family: 'Orbitron', sans-serif;
+`;
+
+          perfectMsg.innerHTML = "🏆 PERFECT! 100% 🏆";
+          document.body.appendChild(perfectMsg);
+
+          // Thêm animation riêng cho perfect message
+          const style = document.createElement("style");
+          style.innerHTML = `
+  @keyframes perfect-float {
+    0% {
+      transform: translateX(-50%) translateY(0);
+      box-shadow: 0 0 50px gold, 0 10px 20px rgba(0,0,0,0.3);
+    }
+    100% {
+      transform: translateX(-50%) translateY(-15px);
+      box-shadow: 0 0 70px #ffaa00, 0 20px 30px rgba(0,0,0,0.4);
+    }
+  }
+`;
+          document.head.appendChild(style);
+
+          setTimeout(() => {
+            perfectMsg.remove();
+            style.remove(); // Xóa cả style khi kết thúc
+          }, 4000);
+        }
+      }
+
+      function resetQuiz() {
+        const form = document.getElementById("quizForm");
+        if (form) form.reset();
+        Object.values(readingTimers).forEach((obj) => {
+          if (obj.intervalId) clearInterval(obj.intervalId);
+        });
+        renderQuiz();
+        closeResultPopup();
+
+        // XÓA HIỆU ỨNG 100 ĐIỂM
+        const popup = document.getElementById("resultPopup");
+        popup.classList.remove("perfect-score");
+        popup.style.animation = ""; // Xóa animation inline nếu có
+        popup.style.borderColor = ""; // Reset về màu mặc định
+        popup.style.boxShadow = ""; // Reset box-shadow
+
+        document.getElementById("showAnswersBtn").style.display = "none";
+        document.getElementById("showAnswersBtn").disabled = false;
+        resetTimer();
+      }
+
+      function showCorrectAnswers() {
+        quizData.forEach((q, idx) => {
+          if (q.isReading && q.subQuestions) {
+            q.subQuestions.forEach((subQ, subIdx) => {
+              const name = `q${idx}_${subIdx}`;
+              const correct =
+                (window.answers && window.answers[name]) ||
+                (window.quizAnswers && window.quizAnswers[name]);
+              document
+                .querySelectorAll(`input[name='${name}']`)
+                .forEach((input) => {
+                  const label = input.parentElement;
+                  if (
+                    input.value === correct &&
+                    !label.innerHTML.includes("✅ Đáp án đúng")
+                  ) {
+                    label.innerHTML +=
+                      ' <span class="correct-answer">✅ Đáp án đúng</span>';
+                  }
+                });
+            });
+          } else {
+            const name = `q${idx}`;
+            const correct =
+              (window.answers && window.answers[name]) ||
+              (window.quizAnswers && window.quizAnswers[name]);
+            document
+              .querySelectorAll(`input[name='${name}']`)
+              .forEach((input) => {
+                const label = input.parentElement;
+                if (
+                  input.value === correct &&
+                  !label.innerHTML.includes("✅ Đáp án đúng")
+                ) {
+                  label.innerHTML +=
+                    ' <span class="correct-answer">✅ Đáp án đúng</span>';
+                }
+              });
+          }
+        });
+        document.getElementById("showAnswersBtn").disabled = true;
+      }
+      let __scrollY = 0;
+
+      function lockBodyScroll() {
+        __scrollY = window.scrollY || document.documentElement.scrollTop || 0;
+
+        // bù độ rộng scrollbar để khỏi “giật” layout
+        const scrollbarWidth =
+          window.innerWidth - document.documentElement.clientWidth;
+
+        document.body.classList.add("modal-open");
+        document.body.style.position = "fixed";
+        document.body.style.top = `-${__scrollY}px`;
+        document.body.style.left = "0";
+        document.body.style.right = "0";
+        document.body.style.width = "100%";
+        document.body.style.paddingRight = scrollbarWidth
+          ? `${scrollbarWidth}px`
+          : "";
+      }
+
+      function unlockBodyScroll() {
+        document.body.classList.remove("modal-open");
+        document.body.style.position = "";
+        document.body.style.top = "";
+        document.body.style.left = "";
+        document.body.style.right = "";
+        document.body.style.width = "";
+        document.body.style.paddingRight = "";
+
+        window.scrollTo(0, __scrollY);
+      }
+
+      function showQuestionDetail(index) {
+        const question = quizData[index];
+        const detailValue = question.detail || "Không có chi tiết bổ sung";
+
+        // Tạo popup
+        const detailPopup = document.createElement("div");
+        detailPopup.className = "detail-popup";
+
+        detailPopup.innerHTML = `
+    <div class="detail-popup-inner">
+      <div class="detail-popup-header">
+        <h3 class="detail-popup-title">
+          <i class="fas fa-info-circle"></i> GIẢI THÍCH
+        </h3>
+        <button class="detail-popup-close test-modal-close" type="button">
+          Đóng
+        </button>
+      </div>
+
+      <div class="detail-scroll">
+        <p style="margin:0;">${detailValue}</p>
+      </div>
+    </div>
+  `;
+
+        // ===== HÀM ĐÓNG POPUP =====
+        function closePopup() {
+          detailPopup.remove();
+          unlockBodyScroll();
+          document.removeEventListener("keydown", handleEsc);
+        }
+
+        // ===== ĐÓNG BẰNG NÚT =====
+        const closeBtn = detailPopup.querySelector(".detail-popup-close");
+        closeBtn.addEventListener("click", closePopup);
+
+        // ===== CLICK NỀN NGOÀI ĐỂ ĐÓNG =====
+        detailPopup.addEventListener("click", function (e) {
+          if (e.target === detailPopup) {
+            closePopup();
+          }
+        });
+
+        // ===== ĐÓNG BẰNG ESC =====
+        function handleEsc(e) {
+          if (e.key === "Escape") {
+            closePopup();
+          }
+        }
+
+        document.addEventListener("keydown", handleEsc);
+
+        // ===== KHÓA SCROLL NGOÀI =====
+        lockBodyScroll();
+
+        // Thêm popup vào body
+        document.body.appendChild(detailPopup);
+      }
+
+      function getResultComment(percentage) {
+        if (percentage >= 90) return "🏆 素晴らしいいいい - Xuất sắc!";
+        if (percentage >= 70) return "🌟 いいね！ - Khá tốt!";
+        if (percentage >= 50) return "📚 いいよー - Cần cố gắng thêm!";
+        return "💪 大丈夫、頑張れ！ - Đừng nản, cố lên!";
+      }
+
+      function saveQuizHistory(score, percentage) {
+        const list = document.getElementById("quizHistory");
+        if (!list) return;
+        const time = new Date().toLocaleTimeString("vi-VN");
+        const li = document.createElement("li");
+        li.innerHTML = `<span><i class="fas fa-clock"></i> ${time}</span><span style="color: var(--secondary-glow);">${score}/${Object.keys(window.quizAnswers || {}).length} (${percentage}%)</span><button onclick="this.parentElement.remove()" style="background: none; border: none; color: #ff6b6b; cursor: pointer;">×</button>`;
+        list.prepend(li);
+      }
+
+      function closeResultPopup() {
+        document.getElementById("resultPopup").style.display = "none";
+        document.getElementById("resultOverlay").style.display = "none";
+        // Xóa class perfect-score nếu có
+        document
+          .getElementById("resultPopup")
+          .classList.remove("perfect-score");
+      }
+
+      // ==================== WRONG ANSWERS ====================
+      function saveWrongAnswer(
+        questionKey,
+        questionText,
+        userAnswer,
+        correctAnswer,
+      ) {
+        let wrongAnswers = JSON.parse(
+          localStorage.getItem("wrongAnswers") || "[]",
+        );
+        wrongAnswers.push({
+          id: Date.now(),
+          questionKey,
+          questionText,
+          userAnswer,
+          correctAnswer,
+          timestamp: new Date().toLocaleString("vi-VN"),
+        });
+        localStorage.setItem("wrongAnswers", JSON.stringify(wrongAnswers));
+        updateWrongAnswersBadge();
+        displayWrongAnswers();
+      }
+
+      function displayWrongAnswers() {
+        const wrongAnswers = JSON.parse(
+          localStorage.getItem("wrongAnswers") || "[]",
+        );
+        const container = document.getElementById("wrongAnswersList");
+        if (!container) return;
+        if (wrongAnswers.length === 0) {
+          container.innerHTML =
+            '<p style="text-align: center; color: #999; padding: 20px;">🎉 Chưa có câu sai nào!</p>';
+          return;
+        }
+        let html = "";
+        wrongAnswers
+          .sort((a, b) => b.timestamp.localeCompare(a.timestamp))
+          .forEach((item, index) => {
+            html += `
+          <div class="wrong-answer-item">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+              <strong style="color: #ff3366;">#${index + 1}</strong>
+              <button onclick="removeWrongAnswer(${item.id})" style="background: none; border: none; color: #ff3366; cursor: pointer; font-size: 16px;">✕</button>
+            </div>
+            <p style="margin-bottom: 8px; font-size: 14px;">${item.questionText}</p>
+            <div style="display: flex; gap: 15px; font-size: 13px;">
+              <span style="color: #ff6b6b;">❌ ${item.userAnswer}</span>
+              <span style="color: #00ff88;">✅ ${item.correctAnswer}</span>
+              <span style="color: #999;">${item.timestamp}</span>
+            </div>
+          </div>
+        `;
+          });
+        container.innerHTML = html;
+      }
+
+      function updateWrongAnswersBadge() {
+        const wrongAnswers = JSON.parse(
+          localStorage.getItem("wrongAnswers") || "[]",
+        );
+        const badge = document.getElementById("wrongAnswersBadge");
+        if (badge) {
+          badge.textContent = wrongAnswers.length;
+          badge.style.display = wrongAnswers.length > 0 ? "flex" : "none";
+        }
+      }
+
+      function showWrongAnswers() {
+        displayWrongAnswers();
+        const leftPanel = document.getElementById("leftSidebarPanel");
+        const leftFloatingBtn = document.getElementById("leftFloatingBtn");
+        const wrapper = document.getElementById("mainContentWrapper");
+        if (!leftPanel.classList.contains("active")) {
+          leftPanel.classList.add("active");
+          leftFloatingBtn.classList.add("hidden");
+          wrapper.classList.add("left-expanded");
+          localStorage.setItem("leftSidebarActive", "true");
+        }
+      }
+
+      function removeWrongAnswer(id) {
+        let wrongAnswers = JSON.parse(
+          localStorage.getItem("wrongAnswers") || "[]",
+        );
+        wrongAnswers = wrongAnswers.filter((item) => item.id !== id);
+        localStorage.setItem("wrongAnswers", JSON.stringify(wrongAnswers));
+        displayWrongAnswers();
+        updateWrongAnswersBadge();
+      }
+
+      function clearWrongAnswers() {
+        if (confirm("Bạn có chắc muốn xóa tất cả lịch sử câu sai?")) {
+          localStorage.removeItem("wrongAnswers");
+          displayWrongAnswers();
+          updateWrongAnswersBadge();
+        }
+      }
+
+      function practiceWrongAnswers() {
+        const wrongAnswers = JSON.parse(
+          localStorage.getItem("wrongAnswers") || "[]",
+        );
+        if (wrongAnswers.length === 0) {
+          alert("🎉 Chưa có câu sai nào để luyện tập!");
+          return;
+        }
+        alert("🚀 Chức năng luyện tập đang phát triển!");
+      }
+
+      // ==================== CẬP NHẬT ĐÁP ÁN - SỬA THEO YÊU CẦU ====================
+      function findKeyBySubQNumber(number) {
+        for (let i = 0; i < quizData.length; i++) {
+          const q = quizData[i];
+          if (!q.isReading) {
+            if (q.number == number) return `q${i}`;
+          } else if (q.subQuestions) {
+            for (let j = 0; j < q.subQuestions.length; j++) {
+              const subQ = q.subQuestions[j];
+              if (subQ.number == number) return `q${i}_${j}`;
+            }
+          }
+        }
+        return null;
+      }
+
+      function updateAnswer() {
+        let keyOrNumber = document.getElementById("editKey").value.trim();
+        const value = document.getElementById("editValue").value.trim();
+
+        if (!window.answers) window.answers = {};
+
+        // Nếu nhập số, tự động dò key theo subQ.number
+        if (/^\d+(\.\d+)?$/.test(keyOrNumber)) {
+          const mappedKey = findKeyBySubQNumber(keyOrNumber);
+          if (!mappedKey) {
+            alert(`❌ Không tìm thấy câu hỏi số ${keyOrNumber}!`);
+            return;
+          }
+          keyOrNumber = mappedKey;
+        }
+
+        if (keyOrNumber && value) {
+          window.answers[keyOrNumber] = value;
+          localStorage.setItem("customAnswers", JSON.stringify(window.answers));
+          alert(
+            `✅ Đáp án của ${keyOrNumber} đã được cập nhật thành ${value}.`,
+          );
+          document.getElementById("editKey").value = "";
+          document.getElementById("editValue").value = "";
+        } else {
+          alert("❌ Vui lòng nhập đầy đủ thông tin!");
+        }
+      }
+
+      function clearUpdatedAnswers() {
+        const ok = confirm("Bạn có chắc muốn xóa cập nhật đáp án không?");
+        if (!ok) return;
+        localStorage.removeItem("customAnswers");
+        window.answers = {};
+        alert("✅ Đã xóa hết các cập nhật đáp án.");
+      }
+
+      // ==================== DARK MODE ====================
+      function toggleDarkMode() {
+        document.body.classList.toggle("dark");
+        const btn = document.getElementById("darkModeToggleBtn");
+        const isDark = document.body.classList.contains("dark");
+        btn.textContent = isDark ? "☀️" : "🌙";
+        localStorage.setItem("darkMode", isDark ? "1" : "0");
+      }
+
+      function applyDarkMode(isDark) {
+        document.body.classList.toggle("dark", isDark);
+        const btn = document.getElementById("darkModeToggleBtn");
+        if (btn) btn.textContent = isDark ? "☀️" : "🌙";
+      }
+      // ==================== BACK TO TOP ====================
+      function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function updateBackToTopVisibility() {
+        const btn = document.getElementById("backToTopBtn");
+        if (!btn) return;
+        if (window.scrollY > 300) btn.classList.add("show");
+        else btn.classList.remove("show");
+      }
+
+      // ==================== INITIALIZATION ====================
+      window.onload = function () {
+        renderQuiz();
+        updateTimerDisplay();
+        displayWrongAnswers();
+        updateWrongAnswersBadge();
+
+        const savedDarkMode = localStorage.getItem("darkMode");
+        if (savedDarkMode) applyDarkMode(savedDarkMode === "1");
+
+        const leftActive = localStorage.getItem("leftSidebarActive") === "true";
+        const rightActive =
+          localStorage.getItem("rightSidebarActive") === "true";
+        const wrapper = document.getElementById("mainContentWrapper");
+
+        if (leftActive) {
+          document.getElementById("leftSidebarPanel").classList.add("active");
+          document.getElementById("leftFloatingBtn").classList.add("hidden");
+          wrapper.classList.add("left-expanded");
+        }
+        if (rightActive) {
+          document.getElementById("rightSidebarPanel").classList.add("active");
+          document.getElementById("rightFloatingBtn").classList.add("hidden");
+          wrapper.classList.add("right-expanded");
+        }
+      };
+
+      // Scroll effect for timer
+      window.addEventListener("scroll", function () {
+        const timer = document.querySelector(".timer-container");
+        if (timer) {
+          timer.style.opacity = window.scrollY > 100 ? "0.9" : "1";
+          timer.style.transform =
+            window.scrollY > 100 ? "scale(0.98)" : "scale(1)";
+        }
+        updateBackToTopVisibility();
+      });
+
+      // Event listeners
+      document
+        .getElementById("clearAnswersBtn")
+        .addEventListener("click", clearUpdatedAnswers);
+      // ==================== MAIN AUDIO PLAYER FUNCTIONS - GIỮ NGUYÊN TRẠNG THÁI BAN ĐẦU THEO EXCEL ====================
+      let mainAudio = null;
+      let isMainAudioPlaying = false;
+      let previousVolume = 1; // Lưu volume trước khi mute
+      let isSeeking = false; // Đang tua thì không cập nhật thanh trượt
+
+      // Sử dụng multiple event listeners để đảm bảo DOM đã sẵn sàng
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", function () {
+          console.log("DOMContentLoaded - Đang khởi tạo audio player...");
+          setTimeout(initAudioPlayer, 100);
+        });
+      } else {
+        console.log("DOM đã sẵn sàng - Đang khởi tạo audio player...");
+        setTimeout(initAudioPlayer, 100);
+      }
+
+      // Hàm khởi tạo chính
+      function getHtmlSelectedOption(selectEl) {
+        // Lấy option có ATTRIBUTE selected trong HTML (không phải property do browser restore)
+        let opt = selectEl.querySelector("option[selected]");
+        if (!opt) {
+          // fallback an toàn: nếu không có, dùng option đang selectedIndex hoặc option đầu
+          opt =
+            selectEl.options[selectEl.selectedIndex] ||
+            selectEl.options[0] ||
+            null;
+        }
+        return opt;
+      }
+
+      function forceBackToHtmlDefault(selectEl) {
+        const htmlSelected = getHtmlSelectedOption(selectEl);
+        if (!htmlSelected) return null;
+
+        // Ép select quay đúng về default theo HTML
+        selectEl.value = htmlSelected.value;
+        return htmlSelected;
+      }
+
+      function disableAudioControls(reasonText) {
+        const btn = document.getElementById("mainPlayPauseBtn");
+        const seekBar = document.getElementById("mainSeekBar");
+
+        if (btn) {
+          btn.disabled = true;
+          btn.style.opacity = "0.5";
+          btn.style.cursor = "not-allowed";
+          btn.title = reasonText ? reasonText : "Không có file audio hợp lệ";
+        }
+
+        if (seekBar) {
+          seekBar.disabled = true;
+          seekBar.style.opacity = "0.5";
+          seekBar.style.cursor = "not-allowed";
+        }
+
+        if (mainAudio) {
+          mainAudio.pause();
+          isMainAudioPlaying = false;
+          mainAudio.removeAttribute("src");
+          while (mainAudio.firstChild)
+            mainAudio.removeChild(mainAudio.firstChild);
+          mainAudio.load();
+        }
+      }
+
+      function loadFromHtmlSelectedOption() {
+        const audioSelect = document.getElementById("mainAudioSelect");
+        if (!audioSelect) return;
+
+        // 1) MỖI LẦN LOAD: ép về option có attribute selected trong HTML
+        const htmlSelected = forceBackToHtmlDefault(audioSelect);
+        if (!htmlSelected) return;
+
+        // 2) JS LUÔN LẤY option đang selected TRONG SELECT để load
+        const opt = audioSelect.options[audioSelect.selectedIndex];
+        const val = opt ? opt.value : "";
+
+        if (val) {
+          changeAudioFile(val);
+        } else {
+          // Trường hợp warning option (disabled + selected) hoặc option trống
+          disableAudioControls(opt ? opt.textContent.trim() : "");
+        }
+
+        // 3) CHỈ restore tốc độ phát (được phép)
+        restorePlaybackSpeed();
+      }
+
+      function initAudioPlayer() {
+        initMainAudio();
+        // ===== THÊM ĐOẠN NÀY ĐỂ ĐẢM BẢO VOLUME 50% =====
+    const volumeSlider = document.getElementById("mainVolumeSlider");
+    if (mainAudio && volumeSlider) {
+        mainAudio.volume = 0.5;
+        volumeSlider.value = 0.5;
+        previousVolume = 0.5; // Cập nhật previousVolume
+        updateVolumeIcon();
+    }
+
+        // Load mặc định ngay sau khi init
+        loadFromHtmlSelectedOption();
+      }
+
+      // DOM ready
+      document.addEventListener("DOMContentLoaded", initAudioPlayer);
+
+      // BẮT BUỘC: xử lý back/forward cache + refresh kiểu restore form state
+      window.addEventListener("pageshow", function () {
+        loadFromHtmlSelectedOption();
+      });
+
+      // Hàm load audio mặc định từ selected option
+      function loadDefaultAudio() {
+        console.log("loadDefaultAudio được gọi");
+
+        const audioSelect = document.getElementById("mainAudioSelect");
+        if (!audioSelect) {
+          console.error("Không tìm thấy mainAudioSelect");
+          return;
+        }
+
+        // Log để debug
+        console.log("Số lượng options:", audioSelect.options.length);
+        for (let i = 0; i < audioSelect.options.length; i++) {
+          console.log(
+            `Option ${i}: value="${audioSelect.options[i].value}", selected=${audioSelect.options[i].selected}, text="${audioSelect.options[i].text}"`,
+          );
+        }
+
+        // Lấy option đang được selected trong HTML (do Java code set)
+        const selectedIndex = audioSelect.selectedIndex;
+        console.log("selectedIndex:", selectedIndex);
+
+        if (selectedIndex === -1) {
+          console.log("Không có option nào được selected");
+          return;
+        }
+
+        const selectedOption = audioSelect.options[selectedIndex];
+        console.log("Selected option:", selectedOption);
+
+        if (!selectedOption) {
+          console.log("Không tìm thấy selected option");
+          return;
+        }
+
+        const selectedValue = selectedOption.value;
+        console.log("Selected value:", selectedValue);
+
+        // KHÔNG lưu vào localStorage, chỉ dựa vào selected từ HTML
+        if (selectedValue && selectedValue !== "") {
+          // Có file được chọn (file Excel tồn tại)
+          console.log("Load file mặc định từ Excel:", selectedValue);
+          changeAudioFile(selectedValue);
+        } else {
+          // Không có giá trị (option thông báo đang được selected)
+          console.log("File Excel không tồn tại, hiển thị thông báo");
+
+          // Disable nút play
+          const btn = document.getElementById("mainPlayPauseBtn");
+          if (btn) {
+            btn.disabled = true;
+            btn.style.opacity = "0.5";
+            btn.style.cursor = "not-allowed";
+            btn.title =
+              "Không tìm thấy file audio từ Excel: " +
+              (selectedOption.text || "").replace("⚠️ ", "");
+          }
+
+          // Disable thanh seek bar
+          const seekBar = document.getElementById("mainSeekBar");
+          if (seekBar) {
+            seekBar.disabled = true;
+            seekBar.style.opacity = "0.5";
+            seekBar.style.cursor = "not-allowed";
+          }
+
+          // Reset audio element
+          if (mainAudio) {
+            mainAudio.pause();
+            mainAudio.removeAttribute("src");
+            while (mainAudio.firstChild) {
+              mainAudio.removeChild(mainAudio.firstChild);
+            }
+            mainAudio.load();
+          }
+        }
+
+        // Khôi phục tốc độ phát (giữ nguyên nếu muốn)
+        restorePlaybackSpeed();
+      }
+
+      function initMainAudio() {
+        mainAudio = document.getElementById("mainAudio");
+        if (!mainAudio) {
+          console.error("Không tìm thấy element audio!");
+          return;
+        }
+        console.log("Đã tìm thấy mainAudio");
+        mainAudio.volume = 0.5;  // 0.5 = 50%
+
+        // Volume control
+        const volumeSlider = document.getElementById("mainVolumeSlider");
+        if (volumeSlider) {
+        volumeSlider.value = 0.5;
+          volumeSlider.addEventListener("input", function (e) {
+            if (mainAudio) {
+              const volume = parseFloat(e.target.value);
+              mainAudio.volume = volume;
+              mainAudio.muted = volume === 0;
+              previousVolume = volume > 0 ? volume : previousVolume;
+              updateVolumeIcon();
+              console.log("Volume:", volume);
+            }
+          });
+        }
+
+        // Time update
+        mainAudio.addEventListener("timeupdate", function () {
+          if (!isSeeking) {
+            updateSeekBar();
+          }
+          updateMainAudioTime();
+          updateCurrentTime();
+        });
+
+        // Audio ended
+        mainAudio.addEventListener("ended", function () {
+          console.log("Audio kết thúc");
+          isMainAudioPlaying = false;
+          const btn = document.getElementById("mainPlayPauseBtn");
+          if (btn) {
+            btn.innerHTML = '<i class="fas fa-play"></i> Phát';
+            btn.style.background = "linear-gradient(135deg, #00cc66, #00ff88)";
+          }
+
+          const seekBar = document.getElementById("mainSeekBar");
+          if (seekBar) {
+            seekBar.value = 0;
+          }
+        });
+
+        // Load metadata
+        mainAudio.addEventListener("loadedmetadata", function () {
+          console.log("Đã tải metadata, duration:", mainAudio.duration);
+          updateMainAudioTime();
+          updateDuration();
+
+          const seekBar = document.getElementById("mainSeekBar");
+          if (seekBar) {
+            seekBar.max = 100;
+          }
+
+          // Áp dụng tốc độ đã lưu
+          const savedSpeed = localStorage.getItem("audioPlaybackSpeed");
+          if (savedSpeed && mainAudio) {
+            mainAudio.playbackRate = parseFloat(savedSpeed);
+          }
+
+          // Tự động phát lại nếu đang ở chế độ phát
+          if (isMainAudioPlaying) {
+            mainAudio
+              .play()
+              .catch((e) => console.log("Không thể tự động phát:", e));
+          }
+        });
+
+        // Error handling
+        mainAudio.addEventListener("error", function (e) {
+          console.error("Lỗi audio:", e);
+          showAudioError();
+        });
+      }
+
+      // Hàm thay đổi file audio từ dropdown
+      function changeAudioFile(fileName) {
+        console.log("changeAudioFile được gọi với fileName:", fileName);
+
+        if (!fileName || fileName === "") {
+          console.log("fileName rỗng, disable controls");
+
+          // Disable các controls
+          const btn = document.getElementById("mainPlayPauseBtn");
+          if (btn) {
+            btn.disabled = true;
+            btn.style.opacity = "0.5";
+            btn.style.cursor = "not-allowed";
+            btn.title = "Vui lòng chọn file audio hợp lệ";
+          }
+
+          const seekBar = document.getElementById("mainSeekBar");
+          if (seekBar) {
+            seekBar.disabled = true;
+            seekBar.style.opacity = "0.5";
+            seekBar.style.cursor = "not-allowed";
+          }
+
+          // Dừng audio hiện tại
+          if (mainAudio) {
+            mainAudio.pause();
+            isMainAudioPlaying = false;
+          }
+
+          return;
+        }
+
+        console.log("Chuyển sang file audio:", fileName);
+        loadAudioFile(fileName);
+
+        // Enable các controls
+        const btn = document.getElementById("mainPlayPauseBtn");
+        if (btn) {
+          btn.disabled = false;
+          btn.style.opacity = "1";
+          btn.style.cursor = "pointer";
+          btn.title = "";
+        }
+
+        const seekBar = document.getElementById("mainSeekBar");
+        if (seekBar) {
+          seekBar.disabled = false;
+          seekBar.style.opacity = "1";
+          seekBar.style.cursor = "pointer";
+        }
+      }
+
+      // Hàm tải file audio
+      function loadAudioFile(fileName) {
+        if (!fileName) return;
+
+        console.log("loadAudioFile:", fileName);
+
+        if (!mainAudio) {
+          mainAudio = document.getElementById("mainAudio");
+          if (!mainAudio) {
+            console.error("Không tìm thấy mainAudio trong loadAudioFile");
+            return;
+          }
+        }
+
+        // Dừng audio hiện tại
+        mainAudio.pause();
+        isMainAudioPlaying = false;
+
+        // Cập nhật UI
+        const btn = document.getElementById("mainPlayPauseBtn");
+        if (btn) {
+          btn.innerHTML = '<i class="fas fa-play"></i> Phát';
+          btn.style.background = "linear-gradient(135deg, #00cc66, #00ff88)";
+        }
+
+        // Tạo đường dẫn mới
+        const audioPath = "audios/" + fileName;
+        console.log("Đang tải audio:", audioPath);
+
+        // Xóa các source cũ
+        while (mainAudio.firstChild) {
+          mainAudio.removeChild(mainAudio.firstChild);
+        }
+
+        // Thêm source mới
+        const fileExt = fileName.split(".").pop().toLowerCase();
+        let mimeType = "audio/mpeg";
+        if (fileExt === "m4a") mimeType = "audio/mp4";
+        else if (fileExt === "wav") mimeType = "audio/wav";
+        else if (fileExt === "ogg") mimeType = "audio/ogg";
+
+        const source = document.createElement("source");
+        source.src = audioPath;
+        source.type = mimeType;
+        mainAudio.appendChild(source);
+
+        // Load lại audio
+        mainAudio.load();
+
+        // Reset seek bar
+        const seekBar = document.getElementById("mainSeekBar");
+        if (seekBar) {
+          seekBar.value = 0;
+          seekBar.disabled = false;
+        }
+
+        // Reset thời gian hiển thị
+        document.getElementById("mainCurrentTime").textContent = "00:00";
+        document.getElementById("mainDuration").textContent = "00:00";
+        document.getElementById("mainAudioTime").textContent = "00:00";
+      }
+
+      // Hàm khôi phục tốc độ phát
+      function restorePlaybackSpeed() {
+        const savedSpeed = localStorage.getItem("audioPlaybackSpeed");
+        const speedSelect = document.getElementById("mainSpeedSelect");
+
+        if (savedSpeed && speedSelect) {
+          speedSelect.value = savedSpeed;
+          console.log("Đã khôi phục tốc độ phát:", savedSpeed);
+
+          if (mainAudio) {
+            mainAudio.playbackRate = parseFloat(savedSpeed);
+          }
+        }
+      }
+
+      // Hàm thay đổi tốc độ phát
+      function changePlaybackSpeed(speed) {
+        if (!mainAudio) {
+          mainAudio = document.getElementById("mainAudio");
+        }
+
+        if (mainAudio) {
+          const speedValue = parseFloat(speed);
+          mainAudio.playbackRate = speedValue;
+          console.log("Tốc độ phát:", mainAudio.playbackRate);
+
+          // Lưu tốc độ vào localStorage (chỉ lưu tốc độ, không lưu file)
+          localStorage.setItem("audioPlaybackSpeed", speed);
+
+          showSpeedNotification(speed);
+        }
+      }
+
+      // Các hàm còn lại giữ nguyên...
+      function showSpeedNotification(speed) {
+        const oldNotif = document.getElementById("speedNotification");
+        if (oldNotif) oldNotif.remove();
+
+        const notif = document.createElement("div");
+        notif.id = "speedNotification";
+        notif.innerHTML = `⚡ Tốc độ: ${speed}x`;
+        notif.style.cssText = `
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(135deg, var(--primary-glow), var(--secondary-glow));
+        color: #0a0e17;
+        padding: 10px 25px;
+        border-radius: 30px;
+        font-weight: bold;
+        z-index: 100000;
+        animation: speedFade 2s forwards;
+        box-shadow: 0 0 20px rgba(0,255,204,0.5);
+        border: 2px solid white;
+    `;
+
+        const style = document.createElement("style");
+        style.innerHTML = `
+        @keyframes speedFade {
+            0% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+            20% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            80% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+        }
+    `;
+        document.head.appendChild(style);
+
+        document.body.appendChild(notif);
+
+        setTimeout(() => {
+          if (notif) notif.remove();
+          if (style) style.remove();
+        }, 2000);
+      }
+
+      function updateVolumeIcon() {
+        const icon = document.getElementById("mainVolumeIcon");
+        if (!icon || !mainAudio) return;
+
+        if (mainAudio.muted || mainAudio.volume === 0) {
+          icon.className = "fas fa-volume-mute";
+        } else if (mainAudio.volume < 0.5) {
+          icon.className = "fas fa-volume-down";
+        } else {
+          icon.className = "fas fa-volume-up";
+        }
+      }
+
+      function toggleMute(event) {
+        if (event) {
+          event.stopPropagation();
+        }
+
+        console.log("toggleMute được gọi");
+
+        if (!mainAudio) {
+          mainAudio = document.getElementById("mainAudio");
+          if (!mainAudio) {
+            alert("Không tìm thấy audio!");
+            return;
+          }
+        }
+
+        const icon = document.getElementById("mainVolumeIcon");
+        const volumeSlider = document.getElementById("mainVolumeSlider");
+
+        if (!icon || !volumeSlider) return;
+
+        if (mainAudio.muted) {
+          mainAudio.muted = false;
+          mainAudio.volume = previousVolume;
+          volumeSlider.value = previousVolume;
+        } else {
+          previousVolume = mainAudio.volume > 0 ? mainAudio.volume : 1;
+          mainAudio.muted = true;
+          volumeSlider.value = 0;
+        }
+
+        updateVolumeIcon();
+        console.log("Mute state:", mainAudio.muted);
+      }
+
+      function toggleMainAudio() {
+        console.log("toggleMainAudio được gọi");
+
+        if (!mainAudio) {
+          mainAudio = document.getElementById("mainAudio");
+          if (!mainAudio) {
+            alert("Không tìm thấy audio! Vui lòng load lại trang.");
+            return;
+          }
+        }
+
+        const btn = document.getElementById("mainPlayPauseBtn");
+        if (!btn) return;
+
+        if (isMainAudioPlaying) {
+          mainAudio.pause();
+          btn.innerHTML = '<i class="fas fa-play"></i> Phát';
+          btn.style.background = "linear-gradient(135deg, #00cc66, #00ff88)";
+          isMainAudioPlaying = false;
+          console.log("Đã tạm dừng audio");
+        } else {
+          console.log("Đang thử phát audio...");
+
+          // Kiểm tra xem có source không
+          if (!mainAudio.querySelector("source") && !mainAudio.src) {
+            // Nếu không có source, lấy từ dropdown hiện tại
+            const audioSelect = document.getElementById("mainAudioSelect");
+            if (audioSelect && audioSelect.value) {
+              loadAudioFile(audioSelect.value);
+            } else {
+              alert("Không có file audio nào được chọn!");
+              return;
+            }
+          }
+
+          var playPromise = mainAudio.play();
+
+          if (playPromise !== undefined) {
+            playPromise
+              .then(function () {
+                console.log("Play audio thành công!");
+                btn.innerHTML = '<i class="fas fa-pause"></i> Dừng';
+                btn.style.background =
+                  "linear-gradient(135deg, #ff3333, #ff6600)";
+                isMainAudioPlaying = true;
+                updateDuration();
+
+                const savedSpeed = localStorage.getItem("audioPlaybackSpeed");
+                if (
+                  savedSpeed &&
+                  mainAudio.playbackRate !== parseFloat(savedSpeed)
+                ) {
+                  mainAudio.playbackRate = parseFloat(savedSpeed);
+                }
+              })
+              .catch(function (error) {
+                console.error("Lỗi khi play audio:", error);
+
+                if (error.name === "NotAllowedError") {
+                  alert(
+                    "Trình duyệt chặn phát audio. Vui lòng nhấn nút Phát lại!",
+                  );
+                } else if (error.name === "NotSupportedError") {
+                  alert("Định dạng audio không được hỗ trợ!");
+                } else {
+                  alert("Không thể phát audio. Lỗi: " + error.message);
+                }
+
+                btn.innerHTML = '<i class="fas fa-play"></i> Phát lại';
+                btn.style.background =
+                  "linear-gradient(135deg, #00cc66, #00ff88)";
+              });
+          }
+        }
+      }
+
+      function updateMainAudioTime() {
+        const timeSpan = document.getElementById("mainAudioTime");
+        if (!timeSpan || !mainAudio) return;
+
+        const remaining = Math.max(
+          0,
+          (mainAudio.duration || 0) - (mainAudio.currentTime || 0),
+        );
+        const remainingFormatted = formatTime(remaining);
+        timeSpan.textContent = remainingFormatted;
+      }
+
+      function formatTime(seconds) {
+        if (isNaN(seconds) || seconds === Infinity || seconds <= 0)
+          return "00:00";
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+      }
+
+      function updateDuration() {
+        const durationSpan = document.getElementById("mainDuration");
+        if (durationSpan && mainAudio) {
+          durationSpan.textContent = formatTime(mainAudio.duration || 0);
+        }
+      }
+
+      function updateCurrentTime() {
+        const currentSpan = document.getElementById("mainCurrentTime");
+        if (currentSpan && mainAudio) {
+          currentSpan.textContent = formatTime(mainAudio.currentTime || 0);
+        }
+      }
+
+      function updateSeekBar() {
+        const seekBar = document.getElementById("mainSeekBar");
+        if (seekBar && mainAudio && mainAudio.duration && !seekBar.disabled) {
+          const percent = (mainAudio.currentTime / mainAudio.duration) * 100;
+          seekBar.value = percent;
+        }
+      }
+
+      function seekAudio(value) {
+        if (!mainAudio || !mainAudio.duration) return;
+
+        isSeeking = true;
+        const seekTime = (value / 100) * mainAudio.duration;
+        mainAudio.currentTime = seekTime;
+
+        updateCurrentTime();
+
+        setTimeout(() => {
+          isSeeking = false;
+        }, 100);
+      }
+
+      function showAudioError() {
+        const btn = document.getElementById("mainPlayPauseBtn");
+        if (btn) {
+          btn.innerHTML =
+            '<i class="fas fa-exclamation-triangle"></i> Lỗi file';
+          btn.style.background = "linear-gradient(135deg, #ff3333, #ff6600)";
+        }
+      }
+
+      // Hàm reset tốc độ về mặc định (1x)
+      function resetPlaybackSpeed() {
+        const defaultSpeed = "1";
+
+        localStorage.removeItem("audioPlaybackSpeed");
+
+        const speedSelect = document.getElementById("mainSpeedSelect");
+        if (speedSelect) {
+          speedSelect.value = defaultSpeed;
+        }
+
+        if (mainAudio) {
+          mainAudio.playbackRate = 1;
+        }
+
+        showSpeedNotification(defaultSpeed);
+        console.log("Đã reset tốc độ về 1x");
+      }
+    </script>
+  </body>
+</html>
