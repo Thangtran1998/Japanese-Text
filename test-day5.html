@@ -2600,76 +2600,6 @@
 
 <body>
   <!-- INLINE SCRIPT ĐẦU TIÊN - CHẠY NGAY LẬP TỨC -->
-  <script>
-    (function () {
-      // Tạo loading element ngay lập tức
-      if (!document.getElementById('cyberLoading')) {
-        const loading = document.createElement('div');
-        loading.id = 'cyberLoading';
-        loading.style.cssText = `
-          position: fixed;
-          inset: 0;
-          background: rgba(2, 8, 18, 0.95);
-          backdrop-filter: blur(12px);
-          z-index: 999999;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        `;
-
-        loading.innerHTML = `
-          <div style="width:420px; padding:30px; border:2px solid #00a8ff; border-radius:14px; background:rgba(0,20,40,0.95); text-align:center; box-shadow:0 0 25px rgba(0,168,255,0.7);">
-            <div style="font-family:Orbitron,sans-serif; font-size:20px; letter-spacing:2px; color:#00ffcc; margin-bottom:20px; text-shadow:0 0 15px rgba(0,255,204,0.8);">
-              <span>ĐANG TẢI DỮ LIỆU</span>
-              <span style="margin-left:10px" id="cyberLoadingPercent">0%</span>
-            </div>
-            <div style="height:8px; background:rgba(0,50,100,0.4); border-radius:6px; overflow:hidden; margin-bottom:15px;">
-              <div style="height:100%; width:0%; background:linear-gradient(to right, #0066cc, #00ffcc); transition:width 120ms linear;" id="cyberLoadingBar"></div>
-            </div>
-            <div style="font-size:12px; color:#88d3ff; letter-spacing:1px;">SYSTEM PROCESSING...</div>
-          </div>
-        `;
-
-        document.body.appendChild(loading);
-      }
-
-      // Khởi tạo timer tăng % (chạy đến 90%)
-      let pct = 0;
-      const timer = setInterval(function () {
-        pct = Math.min(90, pct + (pct < 50 ? 3 : 2));
-        document.getElementById('cyberLoadingPercent')?.textContent = pct + '%';
-        document.getElementById('cyberLoadingBar')?.style.width = pct + '%';
-      }, 120);
-
-      // === QUAN TRỌNG: TẮT LOADING KHI TRANG LOAD XONG ===
-      window.addEventListener('load', function () {
-        clearInterval(timer); // Dừng timer tăng %
-
-        // Nhảy lên 100%
-        document.getElementById('cyberLoadingPercent').textContent = '100%';
-        document.getElementById('cyberLoadingBar').style.width = '100%';
-
-        // Tắt loading sau 180ms (đủ để thấy 100%)
-        setTimeout(function () {
-          const loading = document.getElementById('cyberLoading');
-          if (loading) {
-            loading.style.opacity = '0';
-            setTimeout(function () {
-              loading.remove();
-            }, 300);
-          }
-        }, 180);
-      });
-
-      // Fallback an toàn: nếu sau 5 giây mà load chưa xong thì vẫn tắt
-      setTimeout(function () {
-        if (document.getElementById('cyberLoading')) {
-          clearInterval(timer);
-          document.getElementById('cyberLoading').remove();
-        }
-      }, 5000);
-    })();
-  </script>
   <!-- Background Effects -->
   <div class="cyber-grid"></div>
   <div class="cyber-line"></div>
@@ -5201,16 +5131,24 @@
     .cyber-loading {
       position: fixed;
       inset: 0;
-      background: rgba(2, 8, 18, 0.85);
+      background: rgba(2, 8, 18, 0.98);
+      /* Tăng opacity lên 98% */
       backdrop-filter: blur(12px);
-      z-index: 20000;
-      display: none;
+      z-index: 999999;
+      /* Z-index cực cao */
+      display: flex;
+      /* Thay đổi từ 'none' sang 'flex' nhưng ẩn bằng visibility */
       align-items: center;
       justify-content: center;
+      visibility: hidden;
+      /* Ẩn bằng visibility thay vì display */
+      opacity: 0;
+      transition: opacity 0.2s ease, visibility 0.2s ease;
     }
 
     .cyber-loading.show {
-      display: flex;
+      visibility: visible;
+      opacity: 1;
     }
 
     .cyber-loading-box {
