@@ -2395,6 +2395,13 @@
       transform: translateY(0) scale(1);
     }
 
+    /* Khi kéo vào vùng ẩn: hiệu ứng nhẹ để báo hiệu */
+    .ghost-clock.hide-cue {
+      box-shadow: 0 0 10px #ff4444;
+      transform: translateY(0) scale(1.02);
+      transition: box-shadow 0.15s ease, transform 0.15s ease;
+    }
+
     .ghost-clock.peek {
       opacity: 0.85;
       pointer-events: auto;
@@ -3184,6 +3191,8 @@
       ghostProgressBar.setAttribute('stroke-dasharray', G_CIRC);
 
       let realClockVisible = true, ghostDismissed = false, ghostHoverTimeout = null, alertPopTimeout = null;
+      // Ngưỡng để kéo vào góc dưới cùng để ẩn đồng hồ (px)
+      const DOCK_HIDE_THRESHOLD = 50;
       // ===== BIẾN CHO KÉO THẢ =====
       let isDragging = false;           // Đang kéo hay không
       let dragStartX = 0, dragStartY = 0; // Vị trí bắt đầu kéo (tính theo con trỏ)
@@ -3280,6 +3289,31 @@ function updateDockCirclesPosition() {
     });
 }
 
+// ===== KIỂM TRA VÙNG ẨN Ở GÓC DƯỚI =====
+function checkHideProximity() {
+  if (!ghostClock) return null;
+  const rect = ghostClock.getBoundingClientRect();
+  const bottomDist = window.innerHeight - (rect.top + rect.height);
+  const leftDist = rect.left;
+  const rightDist = window.innerWidth - (rect.left + rect.width);
+
+  // Góc phải dưới
+  if (bottomDist <= DOCK_HIDE_THRESHOLD && rightDist <= DOCK_HIDE_THRESHOLD) return 'bottom-right';
+  // Góc trái dưới
+  if (bottomDist <= DOCK_HIDE_THRESHOLD && leftDist <= DOCK_HIDE_THRESHOLD) return 'bottom-left';
+  return null;
+}
+
+function updateHideCue() {
+  // Không hiển thị cue khi ghost đã bị ẩn
+  if (ghostDismissed) {
+    ghostClock.classList.remove('hide-cue');
+    return;
+  }
+  const side = checkHideProximity();
+  if (side) ghostClock.classList.add('hide-cue'); else ghostClock.classList.remove('hide-cue');
+}
+
 // Gọi tạo vòng tròn sau khi ghostClock đã có kích thước
 let currentDockProximity = null; // Bến đang ở gần (tên bến)
 let dockSnapTimer = null;        // Timer để tránh snap liên tục
@@ -3299,7 +3333,15 @@ function getGhostCenter() {
 
 // Hàm kiểm tra bến gần nhất
 function checkDockProximity() {
-    const center = getGhostCenter();
+  // Nếu ghost đã bị ẩn (dismissed) thì không hiển thị các dock
+  if (ghostDismissed) {
+    dockCircles.forEach(circle => circle.classList.remove('active'));
+    currentDockProximity = null;
+    updateDockEffect(null);
+    return null;
+  }
+
+  const center = getGhostCenter();
     let nearestDock = null;
     let minDistance = Infinity;
     
@@ -3450,6 +3492,24 @@ function snapToNearestDock() {
             ghostHint.textContent = '[ NHẤN ĐỂ HIỆN LẠI ]';
           });
 
+          // Click vào vùng peek => hiện lại ghost nếu đang bị dismiss
+          peekZone.addEventListener('click', () => {
+            if (!ghostDismissed) return;
+            ghostDismissed = false;
+            ghostClock.classList.remove('dismissed');
+            // Lấy vị trí lưu trong localStorage (đã được reset khi dismiss)
+            try {
+              const saved = localStorage.getItem('ghostClockPos');
+              if (saved) {
+                const p = JSON.parse(saved);
+                if (p.left !== undefined && p.top !== undefined) setGhostPosition(p.left, p.top);
+              }
+            } catch (err) { /* ignore */ }
+            ghostClock.classList.add('should-show');
+            ghostHint.textContent = '[ NHẤN ĐỂ ẨN ]';
+            updatePeekZonePosition();
+          });
+
           peekZone.addEventListener('mouseleave', () => {
             if (!ghostClock.classList.contains('peek')) return;
             clearTimeout(ghostHoverTimeout);
@@ -3592,6 +3652,8 @@ function snapToNearestDock() {
         // Cập nhật vị trí
         setGhostPosition(newLeft, newTop);
         checkDockProximity();
+        // Cập nhật hiệu ứng báo vùng ẩn khi kéo
+        try { updateHideCue(); } catch (err) { /* ignore */ }
       }
 
       function stopDrag(e) {
@@ -3613,8 +3675,34 @@ function snapToNearestDock() {
         const rect = ghostClock.getBoundingClientRect();
         ghostCurrentLeft = rect.left;
         ghostCurrentTop = rect.top;
-         snapToNearestDock();
-         updatePeekZonePosition();
+
+        // Kiểm tra xem có thả vào vùng ẩn hay không
+        const hideSide = checkHideProximity();
+        if (hideSide) {
+          // Thực hiện ẩn giống như click dismiss
+          ghostDismissed = true;
+          ghostClock.classList.remove('should-show', 'peek', 'alert-pop');
+          ghostClock.classList.add('dismissed');
+          ghostHint.textContent = '[ NHẤN ĐỂ HIỆN LẠI ]';
+          resetDockCircles();
+
+          // Reset vị trí về bến tương ứng
+          const targetDockName = hideSide === 'bottom-right' ? 'top-right' : 'top-left';
+          const targetDock = docks.find(d => d.name === targetDockName);
+          if (targetDock) {
+            // Đặt ngay vị trí bến và lưu vào localStorage
+            setGhostPosition(targetDock.getX(), targetDock.getY());
+          }
+
+          // Ẩn hiệu ứng cảnh báo
+          ghostClock.classList.remove('hide-cue');
+          updatePeekZonePosition();
+          return;
+        }
+
+        // Nếu không phải vùng ẩn thì xử lý snap bình thường
+        snapToNearestDock();
+        updatePeekZonePosition();
       }
 
       function renderGhostDigit(svgEl, num, onColor, offColor) {
@@ -3704,6 +3792,26 @@ function snapToNearestDock() {
           if (!realClockVisible) ghostClock.classList.add('should-show');
         }
       });
+
+      // Cho phép click trực tiếp vào dòng hint để hiện lại khi đang bị dismiss
+      if (ghostHint) {
+        ghostHint.addEventListener('click', (ev) => {
+          ev.stopPropagation();
+          if (!ghostDismissed) return;
+          ghostDismissed = false;
+          ghostClock.classList.remove('dismissed');
+          try {
+            const saved = localStorage.getItem('ghostClockPos');
+            if (saved) {
+              const p = JSON.parse(saved);
+              if (p.left !== undefined && p.top !== undefined) setGhostPosition(p.left, p.top);
+            }
+          } catch (err) {}
+          ghostClock.classList.add('should-show');
+          ghostHint.textContent = '[ NHẤN ĐỂ ẨN ]';
+          updatePeekZonePosition();
+        });
+      }
 
       ghostShell.addEventListener('mouseenter', () => clearTimeout(ghostHoverTimeout));
       ghostShell.addEventListener('mouseleave', () => {
