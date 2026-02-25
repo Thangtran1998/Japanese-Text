@@ -24,6 +24,7 @@
       opacity: 1;
       transition: opacity 0.25s ease, visibility 0.25s ease;
     }
+
     #cyberLoading.hide {
       opacity: 0;
       visibility: hidden;
@@ -2614,6 +2615,146 @@
       animation: none !important;
       transition: none !important;
     }
+
+    /* Trạng thái đang kéo - hiệu ứng hover mạnh hơn */
+    .ghost-clock.dragging {
+      opacity: 0.95;
+      transition: none;
+      /* Bỏ transition khi kéo để không bị giật */
+      cursor: grabbing !important;
+      box-shadow: 0 0 30px rgba(0, 255, 204, 0.8);
+    }
+
+    .ghost-clock.dragging .ghost-shell {
+      transform: scale(1.05);
+      transition: transform 0.2s ease;
+    }
+
+/* Hiệu ứng khi đang snap */
+.ghost-clock.snapping {
+    transition: left 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), top 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+/* Vòng tròn hiển thị phạm vi bắt (tùy chọn - để debug) */
+.dock-visualization {
+    position: fixed;
+    border: 2px dashed rgba(0, 255, 204, 0.3);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    animation: dock-pulse 2s infinite;
+}
+
+@keyframes dock-pulse {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: scale(1.05);
+    }
+}
+/* ===== DOCK L-SHAPED CORNERS - 4 DẤU VUÔNG CHỮ L ===== */
+.dock-circle {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    pointer-events: none;
+    z-index: 9990;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: none;
+}
+
+/* Hiện vòng khi active */
+.dock-circle.active {
+    opacity: 1;
+    display: block;
+    animation: dock-scale-pulse 1.5s ease-in-out infinite;
+}
+
+/* ===== 4 DẤU VUÔNG L TẠI 4 GÓC ===== */
+/* Góc trên-bên trái */
+.dock-corner {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border: 2px solid #ff3333;
+    pointer-events: none;
+}
+
+.dock-circle.top-right .dock-corner.corner-tl {
+    top: 0;
+    left: 0;
+    border-right: none;
+    border-bottom: none;
+}
+
+/* Góc trên-bên phải */
+.dock-circle.top-right .dock-corner.corner-tr {
+    top: 0;
+    right: 0;
+    border-left: none;
+    border-bottom: none;
+}
+
+/* Góc dưới-bên phải */
+.dock-circle.top-right .dock-corner.corner-br {
+    bottom: 0;
+    right: 0;
+    border-left: none;
+    border-top: none;
+}
+
+/* Góc dưới-bên trái */
+.dock-circle.top-right .dock-corner.corner-bl {
+    bottom: 0;
+    left: 0;
+    border-right: none;
+    border-top: none;
+}
+
+/* Tương tự cho dock bên trái */
+.dock-circle.top-left .dock-corner.corner-tl {
+    top: 0;
+    left: 0;
+    border-right: none;
+    border-bottom: none;
+}
+
+.dock-circle.top-left .dock-corner.corner-tr {
+    top: 0;
+    right: 0;
+    border-left: none;
+    border-bottom: none;
+}
+
+.dock-circle.top-left .dock-corner.corner-br {
+    bottom: 0;
+    right: 0;
+    border-left: none;
+    border-top: none;
+}
+
+.dock-circle.top-left .dock-corner.corner-bl {
+    bottom: 0;
+    left: 0;
+    border-right: none;
+    border-top: none;
+}
+
+/* Hiệu ứng nhấp nháy scale */
+@keyframes dock-scale-pulse {
+    0%, 100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 4px #ff3333);
+    }
+    50% {
+        transform: scale(1.15);
+        filter: drop-shadow(0 0 8px #ff3333);
+    }
+}
   </style>
 
 </head>
@@ -3043,6 +3184,438 @@
       ghostProgressBar.setAttribute('stroke-dasharray', G_CIRC);
 
       let realClockVisible = true, ghostDismissed = false, ghostHoverTimeout = null, alertPopTimeout = null;
+      // ===== BIẾN CHO KÉO THẢ =====
+      let isDragging = false;           // Đang kéo hay không
+      let dragStartX = 0, dragStartY = 0; // Vị trí bắt đầu kéo (tính theo con trỏ)
+      let ghostStartLeft = 0, ghostStartTop = 0; // Vị trí ban đầu của đồng hồ
+      let ghostCurrentLeft = null, ghostCurrentTop = null; // Vị trí hiện tại (nếu đã kéo)
+      // ===== CẤU HÌNH BẾN ĐỖ (DOCK) =====
+const docks = [
+    { 
+        name: 'top-right',
+        // Vị trí góc trên bên phải: cách top 5px, right 5px
+        getX: () => window.innerWidth - ghostClock.offsetWidth - 5,
+        getY: () => 5,
+        threshold: ghostClock ? ghostClock.offsetWidth * 2 : 120 // Đường kính gấp đôi
+    },
+    { 
+        name: 'top-left',
+        // Vị trí góc trên bên trái: cách top 5px, left 5px
+        getX: () => 5,
+        getY: () => 5,
+        threshold: ghostClock ? ghostClock.offsetWidth * 2 : 120
+    }
+];
+// ===== TẠO VÒNG TRÒN BẾN =====
+let dockCircles = [];
+// Reset tất cả vòng tròn về trạng thái ẩn
+function resetDockCircles() {
+    dockCircles.forEach(circle => {
+        circle.classList.remove('active');
+    });
+}
+
+// Gọi reset khi cần (ví dụ khi reset đồng hồ)
+// Có thể thêm vào hàm resetTimer hoặc nơi phù hợp
+
+// ===== TẠO VÒNG TRÒN BẾN =====
+function createDockCircles() {
+    // Xóa vòng tròn cũ nếu có
+    dockCircles.forEach(circle => {
+        if (circle && circle.parentNode) circle.parentNode.removeChild(circle);
+    });
+    dockCircles = [];
+    
+    // Tạo vòng tròn cho mỗi bến
+    docks.forEach((dock, index) => {
+        const circle = document.createElement('div');
+        circle.className = `dock-circle ${dock.name}`;
+        
+        // Tính vị trí căn giữa theo tâm bến
+        const dockX = dock.getX(); // Vị trí góc trên bên trái của đồng hồ khi ở bến
+        const dockY = dock.getY();
+        
+        // Tâm bến = dockX + (chiều rộng đồng hồ/2)
+        const centerX = dockX + (ghostClock.offsetWidth / 2);
+        const centerY = dockY + (ghostClock.offsetHeight / 2);
+        
+        // Đặt vòng tròn (trừ đi 20px để căn giữa vì kích thước là 40x40)
+        circle.style.left = (centerX - 20) + 'px';
+        circle.style.top = (centerY - 20) + 'px';
+        
+        // Tạo 4 dấu vuông L ở 4 góc
+        const corners = ['corner-tl', 'corner-tr', 'corner-br', 'corner-bl'];
+        corners.forEach(corner => {
+            const cornerEl = document.createElement('div');
+            cornerEl.className = `dock-corner ${corner}`;
+            circle.appendChild(cornerEl);
+        });
+        
+        // Mặc định ẩn (KHÔNG thêm class 'active')
+        circle.classList.remove('active');
+        
+        document.body.appendChild(circle);
+        dockCircles.push(circle);
+    });
+}
+// Gọi tạo vòng tròn sau khi trang đã tải xong
+setTimeout(() => {
+    createDockCircles();
+    console.log('✅ Đã tạo vòng tròn bến:', dockCircles.length);
+}, 500);
+
+// Cập nhật vị trí vòng tròn khi resize
+function updateDockCirclesPosition() {
+    dockCircles.forEach((circle, index) => {
+        if (!circle || !docks[index]) return;
+        
+        const dockX = docks[index].getX();
+        const dockY = docks[index].getY();
+        
+        const centerX = dockX + (ghostClock.offsetWidth / 2);
+        const centerY = dockY + (ghostClock.offsetHeight / 2);
+        
+        circle.style.left = (centerX - 20) + 'px';
+        circle.style.top = (centerY - 20) + 'px';
+    });
+}
+
+// Gọi tạo vòng tròn sau khi ghostClock đã có kích thước
+let currentDockProximity = null; // Bến đang ở gần (tên bến)
+let dockSnapTimer = null;        // Timer để tránh snap liên tục
+// Hàm tính khoảng cách giữa hai điểm
+function getDistance(x1, y1, x2, y2) {
+    return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+}
+
+// Hàm lấy tâm đồng hồ
+function getGhostCenter() {
+    const rect = ghostClock.getBoundingClientRect();
+    return {
+        x: rect.left + rect.width / 2,
+        y: rect.top + rect.height / 2
+    };
+}
+
+// Hàm kiểm tra bến gần nhất
+function checkDockProximity() {
+    const center = getGhostCenter();
+    let nearestDock = null;
+    let minDistance = Infinity;
+    
+    // Đếm số bến đang ở gần
+    let activeDocks = 0;
+    
+    docks.forEach((dock, index) => {
+        const dockX = dock.getX() + ghostClock.offsetWidth / 2; // Tâm bến
+        const dockY = dock.getY() + ghostClock.offsetHeight / 2;
+        const distance = getDistance(center.x, center.y, dockX, dockY);
+        
+        // Kiểm tra từng bến có ở gần không
+        if (distance <= dock.threshold) {
+            activeDocks++;
+            if (distance < minDistance) {
+                minDistance = distance;
+                nearestDock = dock.name;
+            }
+        }
+        
+        // Cập nhật hiển thị vòng tròn cho từng bến
+        if (dockCircles[index]) {
+            if (distance <= dock.threshold) {
+                dockCircles[index].classList.add('active');
+            } else {
+                dockCircles[index].classList.remove('active');
+            }
+        }
+    });
+    
+    // Log để debug (có thể xóa sau)
+    if (activeDocks > 0) {
+        console.log('Đang ở gần', activeDocks, 'bến');
+    }
+    
+    // Cập nhật hiệu ứng trên đồng hồ
+    if (nearestDock !== currentDockProximity) {
+        currentDockProximity = nearestDock;
+        updateDockEffect(nearestDock);
+    }
+    
+    return nearestDock;
+}
+
+// Hàm cập nhật hiệu ứng khi ở gần bến
+// Hàm cập nhật hiệu ứng khi ở gần bến - GIỜ KHÔNG CÒN HIỆU ỨNG TRÊN ĐỒNG HỒ
+function updateDockEffect(dockName) {
+    // KHÔNG làm gì cả - xóa hết hiệu ứng cũ
+    ghostClock.classList.remove('dock-proximity');
+    docks.forEach(dock => {
+        ghostClock.classList.remove(`dock-${dock.name}`);
+    });
+    
+    // Có thể thêm hiệu ứng nhỏ nếu muốn (ví dụ: đổi màu chữ)
+    if (dockName) {
+        // Ví dụ: chỉ thay đổi màu chữ của ghostLabel
+        const label = document.getElementById('ghostLabel');
+        if (label) {
+            if (dockName === 'top-right') label.style.color = '#ffaa00';
+            else if (dockName === 'top-left') label.style.color = '#ff66ff';
+        }
+    } else {
+        const label = document.getElementById('ghostLabel');
+        if (label) label.style.color = 'var(--cyan)';
+    }
+}
+
+function snapToNearestDock() {
+    if (dockSnapTimer) return;
+    
+    const nearestDock = checkDockProximity();
+    if (!nearestDock) {
+        currentDockProximity = null;
+        updateDockEffect(null);
+        return;
+    }
+    
+    const dock = docks.find(d => d.name === nearestDock);
+    if (!dock) return;
+    
+    const snapX = dock.getX();
+    const snapY = dock.getY();
+    
+    const rect = ghostClock.getBoundingClientRect();
+    if (Math.abs(rect.left - snapX) < 5 && Math.abs(rect.top - snapY) < 5) {
+        currentDockProximity = null;
+        updateDockEffect(null);
+        return;
+    }
+    
+    ghostClock.classList.add('snapping');
+    setGhostPosition(snapX, snapY);
+    
+    // Xóa hiệu ứng bến
+    currentDockProximity = null;
+    updateDockEffect(null);
+    
+    // 👉 TẮT VÒNG TRÒN
+    dockCircles.forEach(circle => {
+        circle.classList.remove('active');
+    });
+    
+    // Hiệu ứng flash khi snap
+    dockCircles.forEach((circle, index) => {
+        if (docks[index].name === nearestDock) {
+            circle.style.animation = 'none';
+            circle.offsetHeight;
+            circle.style.animation = 'dock-pulse 1.5s ease-in-out infinite';
+            circle.classList.add('active');
+            
+            setTimeout(() => {
+                // Sau 1 giây thì tắt vòng tròn
+                setTimeout(() => {
+                    circle.classList.remove('active');
+                }, 800);
+            }, 100);
+        }
+    });
+    
+    dockSnapTimer = setTimeout(() => {
+        ghostClock.classList.remove('snapping');
+        dockSnapTimer = null;
+    }, 300);
+}
+      // ===== VÙNG PEEK ĐỘNG (LUÔN BÁM THEO ĐỒNG HỒ) =====
+      let peekZone = null;
+      let updatePeekZoneInterval = null;
+
+      // Hàm tạo hoặc cập nhật vị trí vùng peek
+      function updatePeekZonePosition() {
+        if (!peekZone) {
+          peekZone = document.createElement('div');
+          Object.assign(peekZone.style, {
+            position: 'fixed',
+            zIndex: '10000',
+            pointerEvents: 'auto',
+            backgroundColor: 'transparent',
+            display: 'none'
+          });
+          document.body.appendChild(peekZone);
+
+          // Gắn sự kiện cho peekZone
+          peekZone.addEventListener('mouseenter', () => {
+            if (realClockVisible || !ghostDismissed || alertPopTimeout) return;
+            clearTimeout(ghostHoverTimeout);
+            ghostClock.classList.remove('should-show', 'alert-pop');
+            ghostClock.classList.add('peek');
+            ghostHint.textContent = '[ NHẤN ĐỂ HIỆN LẠI ]';
+          });
+
+          peekZone.addEventListener('mouseleave', () => {
+            if (!ghostClock.classList.contains('peek')) return;
+            clearTimeout(ghostHoverTimeout);
+            ghostHoverTimeout = setTimeout(() => {
+              ghostClock.classList.remove('peek');
+            }, 300);
+          });
+        }
+
+        // Cập nhật vị trí và kích thước theo đồng hồ
+        if (ghostClock && ghostClock.style.display !== 'none') {
+          const rect = ghostClock.getBoundingClientRect();
+          // Mở rộng vùng peek thêm 20px xung quanh đồng hồ
+          peekZone.style.left = (rect.left - 20) + 'px';
+          peekZone.style.top = (rect.top - 20) + 'px';
+          peekZone.style.width = (rect.width + 40) + 'px';
+          peekZone.style.height = (rect.height + 40) + 'px';
+          peekZone.style.display = 'block';
+        } else {
+          peekZone.style.display = 'none';
+        }
+      }
+
+      // Bắt đầu cập nhật vị trí peekZone liên tục
+      function startPeekZoneUpdates() {
+        if (updatePeekZoneInterval) clearInterval(updatePeekZoneInterval);
+        updatePeekZoneInterval = setInterval(updatePeekZonePosition, 100); // Cập nhật 10 lần/giây
+      }
+
+      // Dừng cập nhật
+      function stopPeekZoneUpdates() {
+        if (updatePeekZoneInterval) {
+          clearInterval(updatePeekZoneInterval);
+          updatePeekZoneInterval = null;
+        }
+        if (peekZone) peekZone.style.display = 'none';
+      }
+
+      // Khởi động ngay khi trang load
+      startPeekZoneUpdates();
+      // Hàm cập nhật vị trí đồng hồ
+      function setGhostPosition(left, top) {
+        ghostClock.style.left = left + 'px';
+        ghostClock.style.top = top + 'px';
+        ghostClock.style.right = 'auto';  // Vô hiệu hóa right
+        ghostClock.style.bottom = 'auto'; // Vô hiệu hóa bottom
+        // Lưu vào localStorage để nhớ vị trí sau khi tải lại trang
+        localStorage.setItem('ghostClockPos', JSON.stringify({ left, top }));
+            ghostCurrentLeft = left;
+    ghostCurrentTop = top;
+
+        // 👉 THÊM DÒNG NÀY: cập nhật vùng peek ngay lập tức
+        updatePeekZonePosition();
+        checkDockProximity();
+      }
+
+      // Khôi phục vị trí từ localStorage nếu có
+      try {
+        const savedPos = localStorage.getItem('ghostClockPos');
+        if (savedPos) {
+          const pos = JSON.parse(savedPos);
+          if (pos.left !== undefined && pos.top !== undefined) {
+            ghostClock.style.left = pos.left + 'px';
+            ghostClock.style.top = pos.top + 'px';
+            ghostClock.style.right = 'auto';
+            ghostClock.style.bottom = 'auto';
+            ghostCurrentLeft = pos.left;
+            ghostCurrentTop = pos.top;
+          }
+        }
+      } catch (e) {
+        console.log('Khôi phục vị trí ghost clock thất bại', e);
+      }
+      // ===== KÉO THẢ GHOST CLOCK =====
+      ghostShell.addEventListener('mousedown', startDrag);
+      ghostShell.addEventListener('touchstart', startDrag, { passive: false });
+
+      function startDrag(e) {
+        // Ngăn chặn hành vi mặc định (kéo thả ảnh, bôi đen text...)
+        e.preventDefault();
+
+        // Nếu đang có alert pop, tắt nó đi
+        if (alertPopTimeout) {
+          clearTimeout(alertPopTimeout);
+          alertPopTimeout = null;
+        }
+
+        // Xác định tọa độ bắt đầu
+        if (e.type === 'mousedown') {
+          dragStartX = e.clientX;
+          dragStartY = e.clientY;
+        } else {
+          dragStartX = e.touches[0].clientX;
+          dragStartY = e.touches[0].clientY;
+        }
+
+        // Lấy vị trí hiện tại của đồng hồ
+        const rect = ghostClock.getBoundingClientRect();
+        ghostStartLeft = rect.left;
+        ghostStartTop = rect.top;
+
+        // Đánh dấu đang kéo và thêm class
+        isDragging = true;
+        ghostClock.classList.add('dragging');
+
+        // Gắn sự kiện move và end cho toàn bộ window
+        window.addEventListener('mousemove', onDrag);
+        window.addEventListener('mouseup', stopDrag);
+        window.addEventListener('touchmove', onDrag, { passive: false });
+        window.addEventListener('touchend', stopDrag);
+        window.addEventListener('touchcancel', stopDrag);
+      }
+
+      function onDrag(e) {
+        if (!isDragging) return;
+        e.preventDefault(); // Chống cuộn trang khi kéo trên mobile
+
+        // Tính toán vị trí mới
+        let clientX, clientY;
+        if (e.type === 'mousemove') {
+          clientX = e.clientX;
+          clientY = e.clientY;
+        } else {
+          clientX = e.touches[0].clientX;
+          clientY = e.touches[0].clientY;
+        }
+
+        const deltaX = clientX - dragStartX;
+        const deltaY = clientY - dragStartY;
+
+        let newLeft = ghostStartLeft + deltaX;
+        let newTop = ghostStartTop + deltaY;
+
+        // Giới hạn trong màn hình (tùy chọn)
+        const maxLeft = window.innerWidth - ghostClock.offsetWidth;
+        const maxTop = window.innerHeight - ghostClock.offsetHeight;
+        newLeft = Math.max(5, Math.min(maxLeft - 5, newLeft));
+        newTop = Math.max(5, Math.min(maxTop - 5, newTop));
+
+        // Cập nhật vị trí
+        setGhostPosition(newLeft, newTop);
+        checkDockProximity();
+      }
+
+      function stopDrag(e) {
+        if (!isDragging) return;
+        e.preventDefault();
+
+        // Gỡ bỏ sự kiện
+        window.removeEventListener('mousemove', onDrag);
+        window.removeEventListener('mouseup', stopDrag);
+        window.removeEventListener('touchmove', onDrag);
+        window.removeEventListener('touchend', stopDrag);
+        window.removeEventListener('touchcancel', stopDrag);
+
+        // Kết thúc kéo
+        isDragging = false;
+        ghostClock.classList.remove('dragging');
+
+        // Cập nhật biến vị trí hiện tại
+        const rect = ghostClock.getBoundingClientRect();
+        ghostCurrentLeft = rect.left;
+        ghostCurrentTop = rect.top;
+         snapToNearestDock();
+         updatePeekZonePosition();
+      }
 
       function renderGhostDigit(svgEl, num, onColor, offColor) {
         const segs = DIGITS[num] !== undefined ? DIGITS[num] : DIGITS[8]; svgEl.innerHTML = '';
@@ -3064,31 +3637,74 @@
       }
       function applyGhostVisibility() {
         ghostClock.classList.remove('should-show', 'peek', 'alert-pop');
+
+        // Quản lý hiển thị peekZone
+        if (peekZone) {
+          if (realClockVisible || !ghostDismissed) {
+            peekZone.style.display = 'none'; // Không cần peekZone khi đồng hồ đang hiện
+          } else {
+            updatePeekZonePosition(); // Cập nhật vị trí và hiện peekZone
+          }
+        }
+
+        // 👉 ẨN DOCK CIRCLES KHI GHOST CLOCK KHÔNG HIỂN THỊ
+        if (realClockVisible || ghostDismissed) {
+          resetDockCircles();
+        }
+
         if (realClockVisible) return;
-        if (!ghostDismissed) { ghostClock.classList.add('should-show'); ghostHint.textContent = '[ NHẤN ĐỂ ẨN ]'; }
+        if (!ghostDismissed) {
+          ghostClock.classList.add('should-show');
+          ghostHint.textContent = '[ NHẤN ĐỂ ẨN ]';
+          // Đảm bảo right/bottom không ghi đè left/top nếu đã kéo
+          if (ghostCurrentLeft !== null && ghostCurrentTop !== null) {
+            ghostClock.style.right = 'auto';
+            ghostClock.style.bottom = 'auto';
+          }
+        }
       }
       function triggerAlertPop() {
         if (alertPopTimeout) { clearTimeout(alertPopTimeout); alertPopTimeout = null; }
-        ghostClock.classList.remove('should-show', 'peek'); ghostClock.classList.add('alert-pop');
-        alertPopTimeout = setTimeout(() => { ghostClock.classList.remove('alert-pop'); applyGhostVisibility(); alertPopTimeout = null; }, 5000);
+        ghostClock.classList.remove('should-show', 'peek');
+        ghostClock.classList.add('alert-pop');
+
+        // 👉 THÊM DÒNG NÀY: tạm ẩn peekZone khi đang alert
+        if (peekZone) peekZone.style.display = 'none';
+        
+        // 👉 ẨN DOCK CIRCLES KHI ALERT POP
+        resetDockCircles();
+
+        // Đảm bảo vị trí không bị reset
+        if (ghostCurrentLeft !== null && ghostCurrentTop !== null) {
+          ghostClock.style.right = 'auto';
+          ghostClock.style.bottom = 'auto';
+        }
+        alertPopTimeout = setTimeout(() => {
+          ghostClock.classList.remove('alert-pop');
+          applyGhostVisibility();
+          alertPopTimeout = null;
+        }, 5000);
       }
-      ghostShell.addEventListener('click', () => {
+      ghostShell.addEventListener('click', (e) => {
+        // Nếu đang kéo thì không xử lý click
+        if (isDragging) {
+          e.stopPropagation();
+          return;
+        }
         if (alertPopTimeout) { clearTimeout(alertPopTimeout); alertPopTimeout = null; }
         ghostClock.classList.remove('alert-pop', 'should-show', 'peek');
-        if (!ghostDismissed) { ghostDismissed = true; ghostHint.textContent = '[ NHẤN ĐỂ HIỆN LẠI ]'; }
-        else { ghostDismissed = false; ghostHint.textContent = '[ NHẤN ĐỂ ẨN ]'; if (!realClockVisible) ghostClock.classList.add('should-show'); }
+        if (!ghostDismissed) {
+          ghostDismissed = true;
+          ghostHint.textContent = '[ NHẤN ĐỂ HIỆN LẠI ]';
+          // 👉 ẨN DOCK CIRCLES KHI DISMISS GHOST CLOCK
+          resetDockCircles();
+        } else {
+          ghostDismissed = false;
+          ghostHint.textContent = '[ NHẤN ĐỂ ẨN ]';
+          if (!realClockVisible) ghostClock.classList.add('should-show');
+        }
       });
-      const peekZone = document.createElement('div');
-      Object.assign(peekZone.style, { position: 'fixed', top: '5px', right: '28px', width: '148px', height: '176px', zIndex: '10000', pointerEvents: 'auto' });
-      document.body.appendChild(peekZone);
-      peekZone.addEventListener('mouseenter', () => {
-        if (realClockVisible || !ghostDismissed || alertPopTimeout) return;
-        clearTimeout(ghostHoverTimeout); ghostClock.classList.remove('should-show', 'alert-pop'); ghostClock.classList.add('peek'); ghostHint.textContent = '[ NHẤN ĐỂ HIỆN LẠI ]';
-      });
-      peekZone.addEventListener('mouseleave', () => {
-        if (!ghostClock.classList.contains('peek')) return;
-        clearTimeout(ghostHoverTimeout); ghostHoverTimeout = setTimeout(() => ghostClock.classList.remove('peek'), 300);
-      });
+
       ghostShell.addEventListener('mouseenter', () => clearTimeout(ghostHoverTimeout));
       ghostShell.addEventListener('mouseleave', () => {
         if (!ghostClock.classList.contains('peek')) return;
@@ -3145,9 +3761,40 @@
       });
       hudInputMin.addEventListener('change', () => { if (!running) { getInputTime(); updateDisplay(false); syncGhost(false); } });
       hudInputSec.addEventListener('change', () => { if (!running) { getInputTime(); updateDisplay(false); syncGhost(false); } });
+      // ── Cập nhật khi resize cửa sổ ──
+window.addEventListener('resize', function() {
+    // Cập nhật threshold cho docks (vì kích thước đồng hồ có thể thay đổi)
+    docks.forEach(dock => {
+        dock.threshold = ghostClock ? ghostClock.offsetWidth * 2 : 120;
+    });
+    
+    // Kiểm tra lại khoảng cách nếu đang hiển thị
+    if (ghostClock.style.display !== 'none') {
+        checkDockProximity();
+    }
+    
+    // Cập nhật vị trí vòng tròn
+    if (typeof updateDockCirclesPosition === 'function') {
+        updateDockCirclesPosition();
+    }
+});
 
       // ── Init ──
       getInputTime(); updateDisplay(false); setStatus('standby'); syncGhost(false); applyGhostVisibility();
+      // ── Dọn dẹp khi trang đóng ──
+      window.addEventListener('beforeunload', function() {
+    stopPeekZoneUpdates();
+    if (peekZone && peekZone.parentNode) {
+        peekZone.parentNode.removeChild(peekZone);
+    }
+    
+    // 👉 THÊM DÒNG NÀY: xóa vòng tròn bến
+    dockCircles.forEach(circle => {
+        if (circle && circle.parentNode) {
+            circle.parentNode.removeChild(circle);
+        }
+    });
+});  
     })();
   </script>
 
@@ -5176,9 +5823,9 @@
     let __loadingPct = 0;
 
     // Khởi chạy progress bar ngay lập tức (loading đã hiển thị sẵn qua CSS)
-    ;(function () {
+    ; (function () {
       const pctEl = document.getElementById("cyberLoadingPercent");
-      const bar   = document.querySelector(".cyber-loading-bar-fill");
+      const bar = document.querySelector(".cyber-loading-bar-fill");
       const textEl = document.getElementById("cyberLoadingText");
       if (textEl) textEl.textContent = "ĐANG TẢI BÀI TEST";
       __loadingPct = 0;
@@ -5187,16 +5834,16 @@
         const step = __loadingPct < 50 ? 3 : __loadingPct < 80 ? 2 : 1;
         __loadingPct = Math.min(90, __loadingPct + step);
         if (pctEl) pctEl.textContent = __loadingPct + "%";
-        if (bar)   bar.style.width   = __loadingPct + "%";
+        if (bar) bar.style.width = __loadingPct + "%";
       }, 120);
     })();
 
     function showCyberLoading(text) {
       text = text || "ĐANG TẢI DỮ LIỆU";
       const loading = document.getElementById("cyberLoading");
-      const textEl  = document.getElementById("cyberLoadingText");
-      const pctEl   = document.getElementById("cyberLoadingPercent");
-      const bar     = document.querySelector(".cyber-loading-bar-fill");
+      const textEl = document.getElementById("cyberLoadingText");
+      const pctEl = document.getElementById("cyberLoadingPercent");
+      const bar = document.querySelector(".cyber-loading-bar-fill");
 
       // Nếu đang hiển thị rồi thì chỉ đổi text, không reset %
       if (!loading.classList.contains("hide")) {
@@ -5207,7 +5854,7 @@
       if (textEl) textEl.textContent = text;
       __loadingPct = 0;
       if (pctEl) pctEl.textContent = "0%";
-      if (bar)   bar.style.width   = "0%";
+      if (bar) bar.style.width = "0%";
 
       loading.classList.remove("hide");
 
@@ -5216,21 +5863,21 @@
         const step = __loadingPct < 50 ? 3 : __loadingPct < 80 ? 2 : 1;
         __loadingPct = Math.min(90, __loadingPct + step);
         if (pctEl) pctEl.textContent = __loadingPct + "%";
-        if (bar)   bar.style.width   = __loadingPct + "%";
+        if (bar) bar.style.width = __loadingPct + "%";
       }, 120);
     }
 
     function hideCyberLoading() {
       const loading = document.getElementById("cyberLoading");
-      const pctEl   = document.getElementById("cyberLoadingPercent");
-      const bar     = document.querySelector(".cyber-loading-bar-fill");
+      const pctEl = document.getElementById("cyberLoadingPercent");
+      const bar = document.querySelector(".cyber-loading-bar-fill");
 
       if (__loadingTimer) clearInterval(__loadingTimer);
       __loadingTimer = null;
 
       __loadingPct = 100;
       if (pctEl) pctEl.textContent = "100%";
-      if (bar)   bar.style.width   = "100%";
+      if (bar) bar.style.width = "100%";
 
       // Giữ 1 nhịp để người dùng thấy 100% rồi mới tắt
       setTimeout(() => {
