@@ -10,6 +10,26 @@
     href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@300;400;600&family=Share+Tech+Mono&display=swap"
     rel="stylesheet" />
   <style>
+    /* ===== CYBER LOADING - ĐẶT TRONG HEAD ĐỂ HIỆN NGAY TỪ PIXEL ĐẦU TIÊN ===== */
+    #cyberLoading {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 8, 18, 0.98);
+      backdrop-filter: blur(12px);
+      z-index: 999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      visibility: visible;
+      opacity: 1;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+    #cyberLoading.hide {
+      opacity: 0;
+      visibility: hidden;
+    }
+  </style>
+  <style>
     /* ===== RESET & VARIABLES ===== */
     * {
       margin: 0;
@@ -2599,6 +2619,19 @@
 </head>
 
 <body>
+  <!-- CYBER LOADING: phần tử đầu tiên trong body, hiển thị ngay trước mọi nội dung khác -->
+  <div id="cyberLoading">
+    <div class="cyber-loading-box">
+      <div class="cyber-loading-title">
+        <span id="cyberLoadingText">ĐANG TẢI BÀI TEST</span>
+        <span id="cyberLoadingPercent" style="margin-left: 10px">0%</span>
+      </div>
+      <div class="cyber-loading-bar">
+        <div class="cyber-loading-bar-fill"></div>
+      </div>
+      <div class="cyber-loading-sub">SYSTEM PROCESSING...</div>
+    </div>
+  </div>
   <!-- INLINE SCRIPT ĐẦU TIÊN - CHẠY NGAY LẬP TỨC -->
   <!-- Background Effects -->
   <div class="cyber-grid"></div>
@@ -4837,118 +4870,88 @@
     }
 
   </script>
-  <!-- CYBER LOADING OVERLAY - GIỐNG INDEX.HTML -->
-  <div class="cyber-loading" id="cyberLoading">
-    <div class="cyber-loading-box">
-      <div class="cyber-loading-title">
-        <span id="cyberLoadingText">ĐANG TẢI DỮ LIỆU</span>
-        <span id="cyberLoadingPercent" style="margin-left: 10px">0%</span>
-      </div>
-      <div class="cyber-loading-bar">
-        <div class="cyber-loading-bar-fill"></div>
-      </div>
-      <div class="cyber-loading-sub">SYSTEM PROCESSING...</div>
-    </div>
-  </div>
-
-  <!-- SCRIPT LOADING - GIỐNG INDEX.HTML -->
+  <!-- SCRIPT LOADING -->
   <script>
     let __loadingTimer = null;
     let __loadingPct = 0;
 
-    function showCyberLoading(text = "ĐANG TẢI DỮ LIỆU") {
-      const loading = document.getElementById("cyberLoading");
+    // Khởi chạy progress bar ngay lập tức (loading đã hiển thị sẵn qua CSS)
+    ;(function () {
+      const pctEl = document.getElementById("cyberLoadingPercent");
+      const bar   = document.querySelector(".cyber-loading-bar-fill");
+      const textEl = document.getElementById("cyberLoadingText");
+      if (textEl) textEl.textContent = "ĐANG TẢI BÀI TEST";
+      __loadingPct = 0;
+      if (__loadingTimer) clearInterval(__loadingTimer);
+      __loadingTimer = setInterval(() => {
+        const step = __loadingPct < 50 ? 3 : __loadingPct < 80 ? 2 : 1;
+        __loadingPct = Math.min(90, __loadingPct + step);
+        if (pctEl) pctEl.textContent = __loadingPct + "%";
+        if (bar)   bar.style.width   = __loadingPct + "%";
+      }, 120);
+    })();
 
-      // Nếu đang mở rồi thì chỉ đổi text, không reset % (tránh giật/quay lại 0)
-      if (loading.classList.contains("show")) {
-        const textEl = document.getElementById("cyberLoadingText");
+    function showCyberLoading(text) {
+      text = text || "ĐANG TẢI DỮ LIỆU";
+      const loading = document.getElementById("cyberLoading");
+      const textEl  = document.getElementById("cyberLoadingText");
+      const pctEl   = document.getElementById("cyberLoadingPercent");
+      const bar     = document.querySelector(".cyber-loading-bar-fill");
+
+      // Nếu đang hiển thị rồi thì chỉ đổi text, không reset %
+      if (!loading.classList.contains("hide")) {
         if (textEl) textEl.textContent = text;
         return;
       }
 
-      const textEl = document.getElementById("cyberLoadingText");
-      const pctEl = document.getElementById("cyberLoadingPercent");
-      const bar = document.querySelector(".cyber-loading-bar-fill");
-
-      textEl.textContent = text;
-
+      if (textEl) textEl.textContent = text;
       __loadingPct = 0;
       if (pctEl) pctEl.textContent = "0%";
-      if (bar) bar.style.width = "0%";
+      if (bar)   bar.style.width   = "0%";
 
-      loading.classList.add("show");
+      loading.classList.remove("hide");
 
       if (__loadingTimer) clearInterval(__loadingTimer);
       __loadingTimer = setInterval(() => {
         const step = __loadingPct < 50 ? 3 : __loadingPct < 80 ? 2 : 1;
         __loadingPct = Math.min(90, __loadingPct + step);
-        if (pctEl) pctEl.textContent = `${__loadingPct}%`;
-        if (bar) bar.style.width = `${__loadingPct}%`;
+        if (pctEl) pctEl.textContent = __loadingPct + "%";
+        if (bar)   bar.style.width   = __loadingPct + "%";
       }, 120);
     }
 
     function hideCyberLoading() {
       const loading = document.getElementById("cyberLoading");
-      const pctEl = document.getElementById("cyberLoadingPercent");
-      const bar = document.querySelector(".cyber-loading-bar-fill");
+      const pctEl   = document.getElementById("cyberLoadingPercent");
+      const bar     = document.querySelector(".cyber-loading-bar-fill");
 
-      // kết thúc thật: lên 100%
       if (__loadingTimer) clearInterval(__loadingTimer);
       __loadingTimer = null;
 
       __loadingPct = 100;
       if (pctEl) pctEl.textContent = "100%";
-      if (bar) bar.style.width = "100%";
+      if (bar)   bar.style.width   = "100%";
 
-      // giữ 1 nhịp cho người dùng thấy full rồi tắt
+      // Giữ 1 nhịp để người dùng thấy 100% rồi mới tắt
       setTimeout(() => {
-        loading.classList.remove("show");
+        loading.classList.add("hide");
       }, 180);
     }
 
-    // Tự động hiển thị loading khi trang bắt đầu load
-    (function () {
-      // Hiển thị loading ngay lập tức
-      showCyberLoading("ĐANG TẢI BÀI TEST");
+    // Ẩn khi trang load xong
+    window.addEventListener('load', function () {
+      hideCyberLoading();
+    });
 
-      // Ẩn loading khi trang đã load xong
-      window.addEventListener('load', function () {
-        hideCyberLoading();
-      });
-
-      // Fallback: Ẩn sau 3 giây nếu load quá lâu
-      setTimeout(function () {
-        hideCyberLoading();
-      }, 3000);
-    })();
+    // Fallback: ẩn sau 5 giây
+    setTimeout(function () {
+      hideCyberLoading();
+    }, 5000);
   </script>
 
-  <!-- THÊM CSS CHO CYBER LOADING (nếu chưa có) -->
+  <!-- CSS CYBER LOADING BOX/BAR (phần overlay đã được chuyển lên head) -->
   <style>
-    /* ================= CYBER LOADING ================= */
-    .cyber-loading {
-      position: fixed;
-      inset: 0;
-      background: rgba(2, 8, 18, 0.98);
-      /* Tăng opacity lên 98% */
-      backdrop-filter: blur(12px);
-      z-index: 999999;
-      /* Z-index cực cao */
-      display: flex;
-      /* Thay đổi từ 'none' sang 'flex' nhưng ẩn bằng visibility */
-      align-items: center;
-      justify-content: center;
-      visibility: hidden;
-      /* Ẩn bằng visibility thay vì display */
-      opacity: 0;
-      transition: opacity 0.2s ease, visibility 0.2s ease;
-    }
-
-    .cyber-loading.show {
-      visibility: visible;
-      opacity: 1;
-    }
-
+    /* ================= CYBER LOADING BOX/BAR ================= */
     .cyber-loading-box {
       width: 420px;
       padding: 30px;
