@@ -5013,28 +5013,47 @@ window.addEventListener('resize', function() {
 
       // ===== HÀM ĐÓNG POPUP =====
       function closePopup() {
-        detailPopup.remove();
-        unlockBodyScroll();
+        // Xóa event listeners TRƯỚC KHI xóa popup để tránh lỗi
+        document.removeEventListener("mousedown", handleClickOutside);
         document.removeEventListener("keydown", handleEsc);
+        
+        // Xóa popup khỏi DOM
+        detailPopup.remove();
+        
+        // Restore scroll position
+        unlockBodyScroll();
       }
 
       // ===== ĐÓNG BẰNG NÚT =====
       const closeBtn = detailPopup.querySelector(".detail-popup-close");
-      closeBtn.addEventListener("click", closePopup);
+      closeBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        closePopup();
+      });
 
       // ===== CLICK RA NGOÀI ĐỂ ĐÓNG (THÊM MỚI) =====
       function handleClickOutside(e) {
         // Kiểm tra nếu click vào phần tử không nằm trong popup
         if (!detailPopup.contains(e.target)) {
+          e.stopPropagation();
           closePopup();
         }
       }
+
+      // ===== NGĂN CLICK BÊN TRONG POPUP TRIGGER CLOSEMODAL =====
+      detailPopup.addEventListener("mousedown", (e) => {
+        e.stopPropagation();
+      });
+
       // Thêm event listener cho toàn bộ document
       document.addEventListener("mousedown", handleClickOutside);
 
       // ===== ĐÓNG BẰNG ESC =====
       function handleEsc(e) {
         if (e.key === "Escape") {
+          e.preventDefault();
+          e.stopPropagation();
           closePopup();
         }
       }
