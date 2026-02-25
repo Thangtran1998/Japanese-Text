@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,6 +16,7 @@
       padding: 0;
       box-sizing: border-box;
     }
+
     :root {
       --primary-glow: #00a8ff;
       --secondary-glow: #00ffcc;
@@ -1038,7 +1040,7 @@
       position: fixed;
       bottom: 30px;
       /* nằm phía trên nút dark mode để không đè nhau */
-      left: 10px;
+      right: 10px;
       width: 50px;
       height: 50px;
       border-radius: 50%;
@@ -1624,6 +1626,7 @@
     .hq-title-card {
       position: relative;
       width: 90%;
+      margin: 0 auto;
       display: grid;
       grid-template-columns: 1fr 2fr;
       align-items: stretch;
@@ -2583,10 +2586,90 @@
         gap: 8px;
       }
     }
+
+    /* ===== PERFORMANCE CONTROL ===== */
+    .pause-animations *,
+    .pause-animations *::before,
+    .pause-animations *::after {
+      animation: none !important;
+      transition: none !important;
+    }
   </style>
+
 </head>
 
 <body>
+  <!-- INLINE SCRIPT ĐẦU TIÊN - CHẠY NGAY LẬP TỨC -->
+  <script>
+    (function () {
+      // Tạo loading element ngay lập tức
+      if (!document.getElementById('cyberLoading')) {
+        const loading = document.createElement('div');
+        loading.id = 'cyberLoading';
+        loading.style.cssText = `
+          position: fixed;
+          inset: 0;
+          background: rgba(2, 8, 18, 0.95);
+          backdrop-filter: blur(12px);
+          z-index: 999999;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        `;
+
+        loading.innerHTML = `
+          <div style="width:420px; padding:30px; border:2px solid #00a8ff; border-radius:14px; background:rgba(0,20,40,0.95); text-align:center; box-shadow:0 0 25px rgba(0,168,255,0.7);">
+            <div style="font-family:Orbitron,sans-serif; font-size:20px; letter-spacing:2px; color:#00ffcc; margin-bottom:20px; text-shadow:0 0 15px rgba(0,255,204,0.8);">
+              <span>ĐANG TẢI DỮ LIỆU</span>
+              <span style="margin-left:10px" id="cyberLoadingPercent">0%</span>
+            </div>
+            <div style="height:8px; background:rgba(0,50,100,0.4); border-radius:6px; overflow:hidden; margin-bottom:15px;">
+              <div style="height:100%; width:0%; background:linear-gradient(to right, #0066cc, #00ffcc); transition:width 120ms linear;" id="cyberLoadingBar"></div>
+            </div>
+            <div style="font-size:12px; color:#88d3ff; letter-spacing:1px;">SYSTEM PROCESSING...</div>
+          </div>
+        `;
+
+        document.body.appendChild(loading);
+      }
+
+      // Khởi tạo timer tăng % (chạy đến 90%)
+      let pct = 0;
+      const timer = setInterval(function () {
+        pct = Math.min(90, pct + (pct < 50 ? 3 : 2));
+        document.getElementById('cyberLoadingPercent')?.textContent = pct + '%';
+        document.getElementById('cyberLoadingBar')?.style.width = pct + '%';
+      }, 120);
+
+      // === QUAN TRỌNG: TẮT LOADING KHI TRANG LOAD XONG ===
+      window.addEventListener('load', function () {
+        clearInterval(timer); // Dừng timer tăng %
+
+        // Nhảy lên 100%
+        document.getElementById('cyberLoadingPercent').textContent = '100%';
+        document.getElementById('cyberLoadingBar').style.width = '100%';
+
+        // Tắt loading sau 180ms (đủ để thấy 100%)
+        setTimeout(function () {
+          const loading = document.getElementById('cyberLoading');
+          if (loading) {
+            loading.style.opacity = '0';
+            setTimeout(function () {
+              loading.remove();
+            }, 300);
+          }
+        }, 180);
+      });
+
+      // Fallback an toàn: nếu sau 5 giây mà load chưa xong thì vẫn tắt
+      setTimeout(function () {
+        if (document.getElementById('cyberLoading')) {
+          clearInterval(timer);
+          document.getElementById('cyberLoading').remove();
+        }
+      }, 5000);
+    })();
+  </script>
   <!-- Background Effects -->
   <div class="cyber-grid"></div>
   <div class="cyber-line"></div>
@@ -2597,6 +2680,7 @@
   <div class="hq-title-block">
 
     <!-- Ticker -->
+    <div id="cyber-header-wrapper"></div>
     <div class="hq-ticker" aria-hidden="true">
       <div class="hq-ticker-inner">
         <span class="hq-ticker-item">◈ SYS_ACTIVE</span>
@@ -2611,99 +2695,99 @@
         <span class="hq-ticker-item"><b>40 QUESTIONS</b> :: ARMED</span>
       </div>
     </div>
+  </div>
 
-    <!-- 2-column card -->
-    <div class="hq-title-card">
+  <!-- 2-column card -->
+  <div class="hq-title-card">
 
-      <!-- Corner decorations -->
-      <svg class="hq-corner tl" viewBox="0 0 28 28" fill="none">
-        <line x1="0" y1="1" x2="28" y2="1" />
-        <line x1="1" y1="0" x2="1" y2="28" />
-      </svg>
-      <svg class="hq-corner tr" viewBox="0 0 28 28" fill="none">
-        <line x1="0" y1="1" x2="28" y2="1" />
-        <line x1="1" y1="0" x2="1" y2="28" />
-      </svg>
+    <!-- Corner decorations -->
+    <svg class="hq-corner tl" viewBox="0 0 28 28" fill="none">
+      <line x1="0" y1="1" x2="28" y2="1" />
+      <line x1="1" y1="0" x2="1" y2="28" />
+    </svg>
+    <svg class="hq-corner tr" viewBox="0 0 28 28" fill="none">
+      <line x1="0" y1="1" x2="28" y2="1" />
+      <line x1="1" y1="0" x2="1" y2="28" />
+    </svg>
 
-      <!-- Vertical separator -->
-      <div class="hq-col-sep"></div>
+    <!-- Vertical separator -->
+    <div class="hq-col-sep"></div>
 
-      <!-- ═══ LEFT: HUD TIMER ═══ -->
-      <div class="hq-timer-col">
-        <div class="hud-status">
-          <div class="hud-status-dot" id="hudStatusDot"></div>
-          <span id="hudStatusText">STANDBY</span>
-        </div>
+    <!-- ═══ LEFT: HUD TIMER ═══ -->
+    <div class="hq-timer-col">
+      <div class="hud-status">
+        <div class="hud-status-dot" id="hudStatusDot"></div>
+        <span id="hudStatusText">STANDBY</span>
+      </div>
 
-        <div class="hud-clock-wrap" id="hudClockWrap">
-          <div class="hud-ring-outer"></div>
-          <svg class="hud-progress-svg" viewBox="0 0 144 144">
-            <circle class="hud-progress-track" cx="72" cy="72" r="66" />
-            <circle class="hud-progress-bar" id="hudProgressBar" cx="72" cy="72" r="66" stroke-dasharray="414.7"
-              stroke-dashoffset="0" />
-          </svg>
-          <div class="hud-ticks" id="hudTicks"></div>
-          <div class="hud-ring-inner"></div>
-          <div class="hud-accent tl"></div>
-          <div class="hud-accent tr"></div>
-          <div class="hud-accent bl"></div>
-          <div class="hud-accent br"></div>
-          <div class="hud-face">
-            <div class="hud-seg-display" id="hudSegDisplay">
-              <svg id="hd4" width="17" height="30" viewBox="0 0 17 30" style="display:none"></svg>
-              <svg id="hd0" width="17" height="30" viewBox="0 0 17 30"></svg>
-              <svg id="hd1" width="17" height="30" viewBox="0 0 17 30"></svg>
-              <div class="hud-colon-wrap">
-                <div class="hud-colon-dot" id="hcd1"></div>
-                <div class="hud-colon-dot" id="hcd2"></div>
-              </div>
-              <svg id="hd2" width="17" height="30" viewBox="0 0 17 30"></svg>
-              <svg id="hd3" width="17" height="30" viewBox="0 0 17 30"></svg>
+      <div class="hud-clock-wrap" id="hudClockWrap">
+        <div class="hud-ring-outer"></div>
+        <svg class="hud-progress-svg" viewBox="0 0 144 144">
+          <circle class="hud-progress-track" cx="72" cy="72" r="66" />
+          <circle class="hud-progress-bar" id="hudProgressBar" cx="72" cy="72" r="66" stroke-dasharray="414.7"
+            stroke-dashoffset="0" />
+        </svg>
+        <div class="hud-ticks" id="hudTicks"></div>
+        <div class="hud-ring-inner"></div>
+        <div class="hud-accent tl"></div>
+        <div class="hud-accent tr"></div>
+        <div class="hud-accent bl"></div>
+        <div class="hud-accent br"></div>
+        <div class="hud-face">
+          <div class="hud-seg-display" id="hudSegDisplay">
+            <svg id="hd4" width="17" height="30" viewBox="0 0 17 30" style="display:none"></svg>
+            <svg id="hd0" width="17" height="30" viewBox="0 0 17 30"></svg>
+            <svg id="hd1" width="17" height="30" viewBox="0 0 17 30"></svg>
+            <div class="hud-colon-wrap">
+              <div class="hud-colon-dot" id="hcd1"></div>
+              <div class="hud-colon-dot" id="hcd2"></div>
             </div>
+            <svg id="hd2" width="17" height="30" viewBox="0 0 17 30"></svg>
+            <svg id="hd3" width="17" height="30" viewBox="0 0 17 30"></svg>
           </div>
         </div>
+      </div>
 
-        <div class="hud-controls-wrap">
-          <button class="hud-btn" id="hudResetBtn">↺ RESET</button>
-          <div style="display:flex;align-items:center;gap:4px;">
-            <div class="hud-input-group">
-              <input class="hud-time-input" id="hudInputMin" type="number" min="0" max="999" placeholder="20"
-                value="20">
-              <div class="hud-input-label">MIN</div>
-            </div>
-            <div class="hud-sep">:</div>
-            <div class="hud-input-group">
-              <input class="hud-time-input" id="hudInputSec" type="number" min="0" max="59" placeholder="00" value="0">
-              <div class="hud-input-label">SEC</div>
-            </div>
+      <div class="hud-controls-wrap">
+        <button class="hud-btn" id="hudResetBtn">↺ RESET</button>
+        <div style="display:flex;align-items:center;gap:4px;">
+          <div class="hud-input-group">
+            <input class="hud-time-input" id="hudInputMin" type="number" min="0" max="999" placeholder="20" value="20">
+            <div class="hud-input-label">MIN</div>
           </div>
-          <button class="hud-btn primary" id="hudStartBtn">▶ START</button>
+          <div class="hud-sep">:</div>
+          <div class="hud-input-group">
+            <input class="hud-time-input" id="hudInputSec" type="number" min="0" max="59" placeholder="00" value="0">
+            <div class="hud-input-label">SEC</div>
+          </div>
         </div>
-      </div><!-- end .hq-timer-col -->
+        <button class="hud-btn primary" id="hudStartBtn">▶ START</button>
+      </div>
+    </div><!-- end .hq-timer-col -->
 
-      <!-- ═══ RIGHT: TITLE ═══ -->
-      <div class="hq-title-col">
-        <div class="hq-status-bar">
-          <div class="hq-status-item"><span class="hq-status-dot green"></span>SYS ONLINE</div>
-          <div class="hq-status-item"><span class="hq-status-dot cyan"></span>MODULE : QUIZ</div>
-          <div class="hq-status-item"><span class="hq-status-dot orange"></span>STATUS : READY</div>
-        </div>
-        <div class="hq-divider"></div>
-        <div style="position:relative;">
-          <div class="hq-main-title-scanline"></div>
-          <!-- SỬA: placeholder TEST TỪ VỰNG NGÀY 4 được giữ nguyên -->
-          <h1 class="hq-main-title" data-text="TEST TỪ VỰNG NGÀY 4">TEST TỪ VỰNG NGÀY 4</h1>
-        </div>
-        <div class="hq-chips-row">
-          <!-- SỬA: placeholder 40 được giữ nguyên -->
-          <div class="hq-chip accent-cyan"><span class="hq-chip-icon cyan"></span>40 Câu hỏi</div>
-          <div class="hq-chip-sep"></div>
-          <div class="hq-chip accent-cyan"><span class="hq-chip-icon cyan"></span>CYBERPUNK QUIZ</div>
-        </div>
-        <div class="hq-bottom-bar"></div>
-      </div><!-- end .hq-title-col -->
+    <!-- ═══ RIGHT: TITLE ═══ -->
+    <div class="hq-title-col">
+      <div class="hq-status-bar">
+        <div class="hq-status-item"><span class="hq-status-dot green"></span>SYS ONLINE</div>
+        <div class="hq-status-item"><span class="hq-status-dot cyan"></span>MODULE : QUIZ</div>
+        <div class="hq-status-item"><span class="hq-status-dot orange"></span>STATUS : READY</div>
+      </div>
+      <div class="hq-divider"></div>
+      <div style="position:relative;">
+        <div class="hq-main-title-scanline"></div>
+        <!-- SỬA: placeholder TEST TỪ VỰNG NGÀY 4 được giữ nguyên -->
+        <h1 class="hq-main-title" data-text="TEST TỪ VỰNG NGÀY 4">TEST TỪ VỰNG NGÀY 4</h1>
+      </div>
+      <div class="hq-chips-row">
+        <!-- SỬA: placeholder 40 được giữ nguyên -->
+        <div class="hq-chip accent-cyan"><span class="hq-chip-icon cyan"></span>40 Câu hỏi</div>
+        <div class="hq-chip-sep"></div>
+        <div class="hq-chip accent-cyan"><span class="hq-chip-icon cyan"></span>CYBERPUNK QUIZ</div>
+      </div>
+      <div class="hq-bottom-bar"></div>
+    </div><!-- end .hq-title-col -->
 
-    </div><!-- end .hq-title-card -->
+  </div><!-- end .hq-title-card -->
   </div><!-- end .hq-title-block -->
 
   <!-- GHOST CLOCK (fixed bottom-right, mirrors HUD timer) -->
@@ -5101,9 +5185,9 @@
       showSpeedNotification(defaultSpeed);
       console.log("Đã reset tốc độ về 1x");
     }
-    
+
   </script>
-    <!-- CYBER LOADING OVERLAY - GIỐNG INDEX.HTML -->
+  <!-- CYBER LOADING OVERLAY - GIỐNG INDEX.HTML -->
   <div class="cyber-loading" id="cyberLoading">
     <div class="cyber-loading-box">
       <div class="cyber-loading-title">
@@ -5173,17 +5257,17 @@
     }
 
     // Tự động hiển thị loading khi trang bắt đầu load
-    (function() {
+    (function () {
       // Hiển thị loading ngay lập tức
       showCyberLoading("ĐANG TẢI BÀI TEST");
-      
+
       // Ẩn loading khi trang đã load xong
-      window.addEventListener('load', function() {
+      window.addEventListener('load', function () {
         hideCyberLoading();
       });
-      
+
       // Fallback: Ẩn sau 3 giây nếu load quá lâu
-      setTimeout(function() {
+      setTimeout(function () {
         hideCyberLoading();
       }, 3000);
     })();
@@ -5224,6 +5308,7 @@
       0% {
         box-shadow: 0 0 20px rgba(0, 168, 255, 0.6);
       }
+
       100% {
         box-shadow: 0 0 50px rgba(0, 255, 204, 0.8);
       }
@@ -5243,6 +5328,7 @@
       0% {
         opacity: 0.6;
       }
+
       100% {
         opacity: 1;
       }
@@ -5270,5 +5356,32 @@
       letter-spacing: 1px;
     }
   </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+      const header = document.getElementById("cyber-header-wrapper");
+
+      if (!header) return;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              header.classList.remove("pause-animations");
+            } else {
+              header.classList.add("pause-animations");
+            }
+          });
+        },
+        {
+          threshold: 0.05
+        }
+      );
+
+      observer.observe(header);
+
+    });
+  </script>
 </body>
+
 </html>
