@@ -4911,6 +4911,174 @@
       showSpeedNotification(defaultSpeed);
       console.log("Đã reset tốc độ về 1x");
     }
+    
   </script>
+    <!-- CYBER LOADING OVERLAY - GIỐNG INDEX.HTML -->
+  <div class="cyber-loading" id="cyberLoading">
+    <div class="cyber-loading-box">
+      <div class="cyber-loading-title">
+        <span id="cyberLoadingText">ĐANG TẢI DỮ LIỆU</span>
+        <span id="cyberLoadingPercent" style="margin-left: 10px">0%</span>
+      </div>
+      <div class="cyber-loading-bar">
+        <div class="cyber-loading-bar-fill"></div>
+      </div>
+      <div class="cyber-loading-sub">SYSTEM PROCESSING...</div>
+    </div>
+  </div>
+
+  <!-- SCRIPT LOADING - GIỐNG INDEX.HTML -->
+  <script>
+    let __loadingTimer = null;
+    let __loadingPct = 0;
+
+    function showCyberLoading(text = "ĐANG TẢI DỮ LIỆU") {
+      const loading = document.getElementById("cyberLoading");
+
+      // Nếu đang mở rồi thì chỉ đổi text, không reset % (tránh giật/quay lại 0)
+      if (loading.classList.contains("show")) {
+        const textEl = document.getElementById("cyberLoadingText");
+        if (textEl) textEl.textContent = text;
+        return;
+      }
+
+      const textEl = document.getElementById("cyberLoadingText");
+      const pctEl = document.getElementById("cyberLoadingPercent");
+      const bar = document.querySelector(".cyber-loading-bar-fill");
+
+      textEl.textContent = text;
+
+      __loadingPct = 0;
+      if (pctEl) pctEl.textContent = "0%";
+      if (bar) bar.style.width = "0%";
+
+      loading.classList.add("show");
+
+      if (__loadingTimer) clearInterval(__loadingTimer);
+      __loadingTimer = setInterval(() => {
+        const step = __loadingPct < 50 ? 3 : __loadingPct < 80 ? 2 : 1;
+        __loadingPct = Math.min(90, __loadingPct + step);
+        if (pctEl) pctEl.textContent = `${__loadingPct}%`;
+        if (bar) bar.style.width = `${__loadingPct}%`;
+      }, 120);
+    }
+
+    function hideCyberLoading() {
+      const loading = document.getElementById("cyberLoading");
+      const pctEl = document.getElementById("cyberLoadingPercent");
+      const bar = document.querySelector(".cyber-loading-bar-fill");
+
+      // kết thúc thật: lên 100%
+      if (__loadingTimer) clearInterval(__loadingTimer);
+      __loadingTimer = null;
+
+      __loadingPct = 100;
+      if (pctEl) pctEl.textContent = "100%";
+      if (bar) bar.style.width = "100%";
+
+      // giữ 1 nhịp cho người dùng thấy full rồi tắt
+      setTimeout(() => {
+        loading.classList.remove("show");
+      }, 180);
+    }
+
+    // Tự động hiển thị loading khi trang bắt đầu load
+    (function() {
+      // Hiển thị loading ngay lập tức
+      showCyberLoading("ĐANG TẢI BÀI TEST");
+      
+      // Ẩn loading khi trang đã load xong
+      window.addEventListener('load', function() {
+        hideCyberLoading();
+      });
+      
+      // Fallback: Ẩn sau 3 giây nếu load quá lâu
+      setTimeout(function() {
+        hideCyberLoading();
+      }, 3000);
+    })();
+  </script>
+
+  <!-- THÊM CSS CHO CYBER LOADING (nếu chưa có) -->
+  <style>
+    /* ================= CYBER LOADING ================= */
+    .cyber-loading {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 8, 18, 0.85);
+      backdrop-filter: blur(12px);
+      z-index: 20000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cyber-loading.show {
+      display: flex;
+    }
+
+    .cyber-loading-box {
+      width: 420px;
+      padding: 30px;
+      border: 2px solid #00a8ff;
+      border-radius: 14px;
+      background: rgba(0, 20, 40, 0.95);
+      text-align: center;
+      box-shadow:
+        0 0 25px rgba(0, 168, 255, 0.7),
+        0 0 60px rgba(0, 100, 255, 0.4);
+      animation: cyberGlow 3s infinite alternate;
+    }
+
+    @keyframes cyberGlow {
+      0% {
+        box-shadow: 0 0 20px rgba(0, 168, 255, 0.6);
+      }
+      100% {
+        box-shadow: 0 0 50px rgba(0, 255, 204, 0.8);
+      }
+    }
+
+    .cyber-loading-title {
+      font-family: "Orbitron", sans-serif;
+      font-size: 20px;
+      letter-spacing: 2px;
+      color: #00ffcc;
+      margin-bottom: 20px;
+      text-shadow: 0 0 15px rgba(0, 255, 204, 0.8);
+      animation: cyberTextPulse 2.5s infinite alternate;
+    }
+
+    @keyframes cyberTextPulse {
+      0% {
+        opacity: 0.6;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .cyber-loading-bar {
+      height: 8px;
+      background: rgba(0, 50, 100, 0.4);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 15px;
+    }
+
+    .cyber-loading-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(to right, #0066cc, #00ffcc);
+      transition: width 120ms linear;
+      /* chạy mượt theo % */
+    }
+
+    .cyber-loading-sub {
+      font-size: 12px;
+      color: #88d3ff;
+      letter-spacing: 1px;
+    }
+  </style>
 </body>
 </html>
