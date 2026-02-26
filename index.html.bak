@@ -4945,6 +4945,14 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
               time: "35 phút",
               difficulty: "Khó",
               url: "Mimikara-3-2.html",
+            },
+{
+              id: 3003,
+              name: "Từ vựng Mimikara Unit 3 (219-235)",
+              questions: 34,
+              time: "34 phút",
+              difficulty: "Khó",
+              url: "Mimikara-3-3.html",
             }
               ],
             }
