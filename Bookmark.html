@@ -454,26 +454,24 @@
 
     /* ===== NÚT ĐÃ NHỚ ===== */
     .da-nho-btn {
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #00dd66, #00ff88);
+      color: #0a0e17;
+      border: none;
+      border-radius: 8px;
+      font-family: "Orbitron", sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 15px;
+      margin-left: 15px;
+      transition: var(--transition-smooth);
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      margin-top: 14px;
-      padding: 9px 20px;
-      background: rgba(0, 255, 136, 0.07);
-      border: 2px solid rgba(0, 255, 136, 0.45);
-      border-radius: 8px;
-      color: #00ff88;
-      font-family: "Orbitron", sans-serif;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      letter-spacing: 0.5px;
     }
     .da-nho-btn:hover {
-      background: rgba(0, 255, 136, 0.18);
-      border-color: #00ff88;
-      box-shadow: 0 0 18px rgba(0, 255, 136, 0.3);
+      background: linear-gradient(135deg, #00ff88, #00dd66);
+      box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
       transform: translateY(-2px);
     }
     .da-nho-btn:disabled {
@@ -3269,10 +3267,10 @@
 .question-source i.fa-flask { color: #00a8ff; }
 /* ===== Ô GHI CHÚ CÂU HỎI ===== */
 .question-note {
-  text-align: center;
-  margin: 10px auto 15px auto;
+  text-align: left;
+  margin: 0;
   padding: 12px 18px;
-  max-width: 40%;
+  max-width: 50%;
   background: rgba(255, 215, 0, 0.08);
   border: 1px solid rgba(255, 215, 0, 0.3);
   border-radius: 12px;
@@ -3286,6 +3284,7 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   word-break: break-word;
   transition: all 0.3s ease;
+  float: right;
 }
 
 .question-note::before {
