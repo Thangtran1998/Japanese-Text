@@ -4457,76 +4457,105 @@
     let currentPage = 1;
 
     async function loadQuestionsFromServer() {
-      const userId = getUserId();
-      const testId = getTestIdFromUrl();
-      const form = document.getElementById('quizForm');
+  const userId = getUserId();
+  const testId = getTestIdFromUrl(); // Có thể null
+  const form = document.getElementById('quizForm');
 
-      if (!userId) {
-        if (form) form.innerHTML = `
-          <div style="text-align:center;padding:60px 20px;color:var(--text-secondary);">
-            <i class="fas fa-user-slash" style="font-size:40px;color:var(--warning-glow);margin-bottom:16px;display:block;"></i>
-            <p style="font-family:Orbitron,sans-serif;color:var(--secondary-glow);font-size:16px;">Chưa đăng nhập</p>
-            <p style="margin-top:8px;font-size:13px;">Cần userId để tải danh sách ôn tập.</p>
-          </div>`;
-        renderPagination();
-        return;
-      }
+  if (!userId) {
+    // Xử lý không có userId
+    return;
+  }
 
-      if (form) form.innerHTML = `
-        <div style="text-align:center;padding:60px 20px;color:var(--text-secondary);">
-          <i class="fas fa-circle-notch fa-spin" style="font-size:40px;color:var(--primary-glow);margin-bottom:16px;display:block;"></i>
-          <p style="font-family:Orbitron,sans-serif;font-size:14px;letter-spacing:2px;">ĐANG TẢI CÂU HỎI...</p>
-        </div>`;
-
-      try {
-        const res = await fetch(
-          `https://n1-license-server.onrender.com/api/bookmarks?userId=${encodeURIComponent(userId)}&testId=${encodeURIComponent(testId)}`
-        );
-        if (!res.ok) throw new Error('Server lỗi ' + res.status);
-        const data = await res.json();
-        if (!data.ok || !Array.isArray(data.bookmarks)) throw new Error('Dữ liệu không hợp lệ');
-
-        quizData = data.bookmarks
-          .sort((a, b) => (a.question_number || '').localeCompare(b.question_number || '', undefined, { numeric: true }))
-          .map((b, idx) => {
-            let opts = [];
-            try { opts = typeof b.options === 'string' ? JSON.parse(b.options) : (Array.isArray(b.options) ? b.options : []); } catch(e) {}
-            return {
-              number: idx + 1,
-              question: b.question_text || b.question_key || '',
-              options: opts,
-              answer: b.answer || '',
-              detail: b.detail || '',
-              isReading: false,
-              _bookmarkId: b.id,
-              _questionKey: b.question_key
-            };
-          });
-
-        console.log('[LOAD] Đã tải ' + quizData.length + ' câu từ server');
-        currentPage = 1;
-        renderPagination();
-        renderQuiz();
-        // Cập nhật số câu ở chip header
-        const chip = document.getElementById('quizCountChip');
-        if (chip) chip.textContent = quizData.length > 0 ? quizData.length + ' Câu hỏi' : 'Chưa có câu hỏi được cập nhật';
-
-      } catch(e) {
-        console.error('[LOAD] Lỗi:', e);
-        if (form) form.innerHTML = `
-          <div style="text-align:center;padding:60px 20px;color:var(--text-secondary);">
-            <i class="fas fa-exclamation-triangle" style="font-size:40px;color:var(--danger-glow);margin-bottom:16px;display:block;"></i>
-            <p style="font-family:Orbitron,sans-serif;color:var(--danger-glow);font-size:16px;">Lỗi tải dữ liệu</p>
-            <p style="margin-top:8px;font-size:13px;">${e.message}</p>
-            <button onclick="loadQuestionsFromServer()" style="margin-top:20px;padding:10px 24px;background:linear-gradient(135deg,var(--primary-glow),var(--secondary-glow));border:none;border-radius:8px;color:#0a0e17;font-family:Orbitron,sans-serif;font-weight:700;cursor:pointer;font-size:13px;">
-              <i class="fas fa-redo"></i> Thử lại
-            </button>
-          </div>`;
-        const chip = document.getElementById('quizCountChip');
-        if (chip) chip.textContent = 'Chưa có câu hỏi được cập nhật';
-        renderPagination();
-      }
+  try {
+    // Tạo URL: có testId hoặc không
+    let url = `https://n1-license-server.onrender.com/api/bookmarks?userId=${encodeURIComponent(userId)}`;
+    
+    // Nếu có testId trong URL thì thêm vào (tùy chọn)
+    const urlParams = new URLSearchParams(window.location.search);
+    const testIdParam = urlParams.get('testId');
+    if (testIdParam) {
+      url += `&testId=${encodeURIComponent(testIdParam)}`;
     }
+
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('Server lỗi ' + res.status);
+    
+    const data = await res.json();
+    if (!data.ok || !Array.isArray(data.bookmarks)) throw new Error('Dữ liệu không hợp lệ');
+
+    console.log(`📦 Đã tải ${data.bookmarks.length} bookmark từ server`);
+    if (data.filtered) {
+      console.log(`🔍 Filter: ${data.filtered}`);
+    }
+
+    // Nhóm theo test để hiển thị (tùy chọn)
+    const groups = {};
+    data.bookmarks.forEach(b => {
+      const test = b.test_id || 'Không xác định';
+      if (!groups[test]) groups[test] = [];
+      groups[test].push(b);
+    });
+    console.log('📊 Phân bố:', Object.keys(groups).map(t => `${t}: ${groups[t].length} câu`));
+
+    // Xử lý dữ liệu
+    quizData = data.bookmarks
+      .sort((a, b) => (a.question_number || '').localeCompare(b.question_number || ''))
+      .map((b, idx) => ({
+        number: idx + 1,
+        question: b.question_text || b.question_key || '',
+        options: (() => {
+          try { 
+            return typeof b.options === 'string' ? JSON.parse(b.options) : (b.options || []); 
+          } catch(e) { 
+            return []; 
+          }
+        })(),
+        answer: b.answer || '',
+        detail: b.detail || '',
+        _bookmarkId: b.id,
+        _questionKey: b.question_key,
+        _testId: b.test_id
+      }));
+
+    // Cập nhật UI
+    document.getElementById('quizCountChip').textContent = quizData.length + ' Câu hỏi';
+    currentPage = 1;
+    renderPagination();
+    renderQuiz();
+
+  } catch (error) {
+    console.error('❌ Lỗi tải dữ liệu:', error);
+    // Fallback: dùng localStorage
+    loadFromLocalStorage();
+  }
+}
+// Hàm fallback dùng localStorage
+function loadFromLocalStorage() {
+  const allBookmarks = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && key.startsWith('bookmarks:')) {
+      try {
+        const bookmarks = JSON.parse(localStorage.getItem(key) || '[]');
+        allBookmarks.push(...bookmarks);
+      } catch(e) {}
+    }
+  }
+  
+  quizData = allBookmarks.map((b, idx) => ({
+    number: idx + 1,
+    question: b.questionText || b.question_key || '',
+    options: b.options || [],
+    answer: b.answer || '',
+    detail: b.detail || '',
+    _bookmarkId: b.id,
+    _questionKey: b.question_key,
+    _testId: b.testId || 'Local'
+  }));
+  
+  renderPagination();
+  renderQuiz();
+}
 
     function getTotalPages() {
       return Math.max(1, Math.ceil(quizData.length / QUESTIONS_PER_PAGE));
