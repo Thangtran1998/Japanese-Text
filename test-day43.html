@@ -4919,6 +4919,17 @@
     function saveBookmarks(testId, userId, arr) { localStorage.setItem(storageKey(testId, userId), JSON.stringify(arr)); }
 
     async function postBookmark(bookmark) { try { const res = await fetch('https://n1-license-server.onrender.com/api/bookmarks', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(bookmark) }); return res.ok; } catch(e) { return false; } }
+    async function deleteBookmark(bookmarkId) { 
+  try { 
+    const res = await fetch('https://n1-license-server.onrender.com/api/bookmarks/' + bookmarkId, {
+      method: 'DELETE', 
+      headers: {'Content-Type':'application/json'}
+    }); 
+    return res.ok; 
+  } catch(e) { 
+    return false; 
+  } 
+}
 
     function createStar(element, questionKey, questionText, questionNumber) {
       const testId = getTestIdFromUrl();
@@ -4965,9 +4976,11 @@
         const arr = loadBookmarks(testId, userId);
         const exists = arr.findIndex(b => b.questionKey === questionKey) !== -1;
         if (exists) {
+          const existingBookmark = arr.find(b => b.questionKey === questionKey);
           const newArr = arr.filter(b => b.questionKey !== questionKey);
           saveBookmarks(testId, userId, newArr);
           btn.classList.remove('starred'); btn.innerHTML = '<i class="fa-regular fa-star"></i>';
+          if (existingBookmark) deleteBookmark(existingBookmark.id);
         } else {
           arr.push(bookmark); saveBookmarks(testId, userId, arr);
           btn.classList.add('starred'); btn.innerHTML = '<i class="fa-solid fa-star"></i>';
