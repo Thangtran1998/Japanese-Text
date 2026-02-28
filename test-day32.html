@@ -4983,7 +4983,7 @@
       }
     }
 
-    function createStar(element, questionKey, questionText, questionNumber) {
+    function createStar(element, questionKey, questionText, questionNumber, options, answer, detail) {
       const testId = getTestIdFromUrl();
       const btn = document.createElement('span');
       btn.className = 'bookmark-star';
@@ -5015,16 +5015,19 @@
         const localStored = loadBookmarks(testId, userId).find(b => b.questionKey === questionKey);
         const note = ev.shiftKey ? (prompt('Ghi chú cho câu hỏi (tùy chọn):', localStored && localStored.note ? localStored.note : '') || '') : (localStored && localStored.note ? localStored.note : '');
         const bookmark = {
-          id: `${questionKey}_${Date.now()}`,
-          questionKey: questionKey,
-          questionText: (questionText || '').slice(0, 500),
-          questionNumber: questionNumber || '',
-          testId: testId,
-          userId: userId || null,
-          timestamp: Date.now(),
-          note: note || '',
-          synced: false
-        };
+  id: `${questionKey}_${Date.now()}`,
+  questionKey: questionKey,
+  questionText: (questionText||'').slice(0,500),
+  questionNumber: questionNumber || '',
+  options: options || [],
+  answer: answer || '',
+  detail: detail || '',
+  testId: testId,
+  userId: userId || null,
+  timestamp: Date.now(),
+  note: note || '',
+  synced: false
+};
 
         const arr = loadBookmarks(testId, userId);
         const exists = arr.findIndex(b => b.questionKey === questionKey) !== -1;
@@ -5140,7 +5143,7 @@
           if (!window.quizAnswers) window.quizAnswers = {};
           window.quizAnswers[`q${index}`] = q.answer;
           // attach star for this simple question
-          createStar(div, `q${index}`, q.question || '', q.number || (index + 1).toString());
+          createStar(div, `q${index}`, q.question || '', q.number || (index+1).toString(), q.options || [], q.answer || '', q.detail || '');
         }
         form.appendChild(div);
       });
