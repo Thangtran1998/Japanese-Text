@@ -4991,17 +4991,9 @@ function loadFromLocalStorage() {
     const div = document.createElement("div");
     div.classList.add("question-block");
 
-    // Format tên nguồn (testId) - rút gọn nếu quá dài
-    let sourceName = q._testId || 'Không xác định';
-    
-    // Xử lý tên nguồn để hiển thị đẹp hơn
-    if (sourceName.includes('Từ vựng Mimikara')) {
-      sourceName = '📘 Mimikara';
-    } else if (sourceName.includes('Bài test ngày 1')) {
-      sourceName = '📝 Test 1';
-    } else if (sourceName.length > 30) {
-      sourceName = sourceName.substring(0, 27) + '...';
-    }
+    // Hiển thị nguyên bản test_id từ database
+let sourceName = q._testId || 'Không xác định';
+// KHÔNG xử lý gì thêm, giữ nguyên gốc
 
     div.innerHTML = `
       <div class="question-number">
