@@ -4727,12 +4727,14 @@
     function setStoredUserId(id) { try { if (id) localStorage.setItem('hq_userId', id); } catch(e){} }
     function getUserIdFromUrl() { try { const u = new URL(window.location.href); return u.searchParams.get('userId') || u.searchParams.get('uid') || null; } catch(e){ return null; } }
     function getUserId() {
-      if (window._hq_userId !== undefined) return window._hq_userId;
+      // prefer global variable `n1_user_id` if set by server/template
+      if (typeof window.n1_user_id !== 'undefined' && window.n1_user_id) return window.n1_user_id;
+      if (window._hq_userId !== undefined && window._hq_userId) { window.n1_user_id = window._hq_userId; return window.n1_user_id; }
       const fromUrl = getUserIdFromUrl();
-      if (fromUrl) { window._hq_userId = fromUrl; return window._hq_userId; }
+      if (fromUrl) { window.n1_user_id = fromUrl; return window.n1_user_id; }
       const stored = getStoredUserId();
-      if (stored) { window._hq_userId = stored; return window._hq_userId; }
-      window._hq_userId = null;
+      if (stored) { window.n1_user_id = stored; return window.n1_user_id; }
+      window.n1_user_id = null;
       return null;
     }
 
@@ -4766,7 +4768,7 @@
         let userId = getUserId();
         if (!userId) {
           const input = prompt('Nhập userId để lưu bookmark theo user (hủy để lưu tạm cho guest):', '');
-          if (input) { setStoredUserId(input); window._hq_userId = input; userId = input; }
+          if (input) { setStoredUserId(input); window.n1_user_id = input; userId = input; }
         }
 
         // re-evaluate stored bookmark for this user
