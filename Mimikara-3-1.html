@@ -5072,7 +5072,7 @@
     function loadBookmarks(testId, userId) { try { const r = localStorage.getItem(storageKey(testId, userId)); return r ? JSON.parse(r) : []; } catch(e){ return []; } }
     function saveBookmarks(testId, userId, arr) { localStorage.setItem(storageKey(testId, userId), JSON.stringify(arr)); }
 
-    async function postBookmark(bookmark) { try { const res = await fetch('/api/bookmarks', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(bookmark) }); return res.ok; } catch(e) { return false; } }
+    async function postBookmark(bookmark) { try { const res = await fetch('https://n1-license-server.onrender.com/api/bookmarks', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(bookmark) }); return res.ok; } catch(e) { return false; } }
 
     function createStar(element, questionKey, questionText, questionNumber) {
       const testId = getTestIdFromUrl();
