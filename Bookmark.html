@@ -4718,7 +4718,13 @@
 
     // Bookmark helpers: storage + server sync
     function getTestIdFromUrl() {
-      try { const u = new URL(window.location.href); return u.searchParams.get('testId') || u.searchParams.get('test') || document.title || 'unknown_test'; } catch (e) { return document.title || 'unknown_test'; }
+      try {
+        const u = new URL(window.location.href);
+        // Ưu tiên: URL param → fallback về testId cố định của bài test gốc
+        return u.searchParams.get('testId') || u.searchParams.get('test') || 'Từ vựng Mimikara Unit 1 (1-20) - Cyberpunk Quiz';
+      } catch (e) {
+        return 'Từ vựng Mimikara Unit 1 (1-20) - Cyberpunk Quiz';
+      }
     }
 
     // userId helpers: do NOT prompt on load; prompt only when user attempts to bookmark and no id available
