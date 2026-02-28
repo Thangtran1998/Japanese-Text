@@ -440,14 +440,17 @@
       top: 12px;
       right: 12px;
       font-size: 20px;
-      color: rgba(255,255,255,0.5);
+      color: rgba(255, 255, 255, 0.5);
       cursor: pointer;
       transition: transform 0.15s ease, color 0.15s ease;
       user-select: none;
       z-index: 5;
     }
 
-    .bookmark-star.starred { color: gold; transform: scale(1.08); }
+    .bookmark-star.starred {
+      color: gold;
+      transform: scale(1.08);
+    }
 
     .question-number {
       font-size: 20px;
@@ -4963,13 +4966,13 @@
 
     // Bookmark helpers: storage + server sync
     function getTestIdFromUrl() {
-      try { const u = new URL(window.location.href); return u.searchParams.get('testId') || u.searchParams.get('test') || document.title || 'unknown_test'; } catch(e) { return document.title || 'unknown_test'; }
+      try { const u = new URL(window.location.href); return u.searchParams.get('testId') || u.searchParams.get('test') || document.title || 'unknown_test'; } catch (e) { return document.title || 'unknown_test'; }
     }
 
     // userId helpers: do NOT prompt on load; prompt only when user attempts to bookmark and no id available
-    function getStoredUserId() { try { return localStorage.getItem('hq_userId'); } catch(e) { return null; } }
-    function setStoredUserId(id) { try { if (id) localStorage.setItem('hq_userId', id); } catch(e){} }
-    function getUserIdFromUrl() { try { const u = new URL(window.location.href); return u.searchParams.get('userId') || u.searchParams.get('uid') || null; } catch(e){ return null; } }
+    function getStoredUserId() { try { return localStorage.getItem('hq_userId'); } catch (e) { return null; } }
+    function setStoredUserId(id) { try { if (id) localStorage.setItem('hq_userId', id); } catch (e) { } }
+    function getUserIdFromUrl() { try { const u = new URL(window.location.href); return u.searchParams.get('userId') || u.searchParams.get('uid') || null; } catch (e) { return null; } }
     function getUserId() {
       // prefer global variable `n1_user_id` if set by server/template
       if (typeof window.n1_user_id !== 'undefined' && window.n1_user_id) return window.n1_user_id;
@@ -4983,27 +4986,75 @@
     }
 
     function storageKey(testId, userId) { return `bookmarks:${testId}:user:${userId || '__anon'}`; }
-    function loadBookmarks(testId, userId) { try { const r = localStorage.getItem(storageKey(testId, userId)); return r ? JSON.parse(r) : []; } catch(e){ return []; } }
+    function loadBookmarks(testId, userId) { try { const r = localStorage.getItem(storageKey(testId, userId)); return r ? JSON.parse(r) : []; } catch (e) { return []; } }
     function saveBookmarks(testId, userId, arr) { localStorage.setItem(storageKey(testId, userId), JSON.stringify(arr)); }
 
-    async function postBookmark(bookmark) { try { const res = await fetch('https://n1-license-server.onrender.com/api/bookmarks', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(bookmark) }); return res.ok; } catch(e) { return false; } }
-    async function deleteBookmark(bookmarkId) { 
-  try { 
-    const res = await fetch('https://n1-license-server.onrender.com/api/bookmarks/' + bookmarkId, {
-      method: 'DELETE', 
-      headers: {'Content-Type':'application/json'}
-    }); 
-    return res.ok; 
-  } catch(e) { 
-    return false; 
-  } 
-}
+    async function postBookmark(bookmark) { try { const res = await fetch('https://n1-license-server.onrender.com/api/bookmarks', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(bookmark) }); return res.ok; } catch (e) { return false; } }
+    async function deleteBookmark(bookmarkId) {
+      try {
+        const res = await fetch('https://n1-license-server.onrender.com/api/bookmarks/' + bookmarkId, {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' }
+        });
+        return res.ok;
+      } catch (e) {
+        return false;
+      }
+    }
+    async function syncBookmarksFromServer(testId, userId) {
+      if (!userId || !testId) return;
+      try {
+        const res = await fetch(
+          `https://n1-license-server.onrender.com/api/bookmarks?userId=${encodeURIComponent(userId)}&testId=${encodeURIComponent(testId)}`
+        );
+        if (!res.ok) return;
+
+        const data = await res.json();
+        if (!data.ok || !Array.isArray(data.bookmarks)) return;
+
+        // Chuyển đổi field từ snake_case (Neon) sang camelCase
+        const serverBookmarks = data.bookmarks.map(b => ({
+          id: b.id,
+          questionKey: b.question_key,
+          questionText: b.question_text,
+          questionNumber: b.question_number,
+          testId: b.test_id,
+          userId: b.user_id,
+          timestamp: b.timestamp,
+          note: b.note,
+          synced: true
+        }));
+
+        // Cập nhật localStorage theo dữ liệu server
+        saveBookmarks(testId, userId, serverBookmarks);
+
+        // Cập nhật UI: tắt hết ngôi sao trước
+        document.querySelectorAll('.bookmark-star').forEach(btn => {
+          btn.classList.remove('starred');
+          btn.innerHTML = '<i class="fa-regular fa-star"></i>';
+        });
+
+        // Bật lại ngôi sao cho những câu còn trên server
+        serverBookmarks.forEach(b => {
+          // Tìm star button theo questionKey được lưu trong data attribute
+          const starBtn = document.querySelector(`.bookmark-star[data-question-key="${b.questionKey}"]`);
+          if (starBtn) {
+            starBtn.classList.add('starred');
+            starBtn.innerHTML = '<i class="fa-solid fa-star"></i>';
+          }
+        });
+
+      } catch (e) {
+        console.log('[SYNC] Lỗi sync bookmark:', e);
+      }
+    }
 
     function createStar(element, questionKey, questionText, questionNumber) {
       const testId = getTestIdFromUrl();
       const btn = document.createElement('span');
       btn.className = 'bookmark-star';
-      btn.setAttribute('role','button');
+      btn.setAttribute('data-question-key', questionKey);
+      btn.setAttribute('role', 'button');
       btn.title = 'Đánh dấu (Shift+click để thêm ghi chú)';
       btn.innerHTML = '<i class="fa-regular fa-star"></i>';
 
@@ -5032,7 +5083,7 @@
         const bookmark = {
           id: `${questionKey}_${Date.now()}`,
           questionKey: questionKey,
-          questionText: (questionText||'').slice(0,500),
+          questionText: (questionText || '').slice(0, 500),
           questionNumber: questionNumber || '',
           testId: testId,
           userId: userId || null,
@@ -5052,7 +5103,7 @@
         } else {
           arr.push(bookmark); saveBookmarks(testId, userId, arr);
           btn.classList.add('starred'); btn.innerHTML = '<i class="fa-solid fa-star"></i>';
-          postBookmark(bookmark).then(ok => { if (ok) { const a = loadBookmarks(testId, userId); const idx = a.findIndex(x=>x.id===bookmark.id); if (idx!==-1){ a[idx].synced = true; saveBookmarks(testId,userId,a);} } });
+          postBookmark(bookmark).then(ok => { if (ok) { const a = loadBookmarks(testId, userId); const idx = a.findIndex(x => x.id === bookmark.id); if (idx !== -1) { a[idx].synced = true; saveBookmarks(testId, userId, a); } } });
         }
       });
 
@@ -5155,7 +5206,7 @@
           if (!window.quizAnswers) window.quizAnswers = {};
           window.quizAnswers[`q${index}`] = q.answer;
           // attach star for this simple question
-          createStar(div, `q${index}`, q.question || '', q.number || (index+1).toString());
+          createStar(div, `q${index}`, q.question || '', q.number || (index + 1).toString());
         }
         form.appendChild(div);
       });
@@ -5826,6 +5877,14 @@
         document.getElementById("rightFloatingBtn").classList.add("hidden");
         wrapper.classList.add("right-expanded");
       }
+      // Sync bookmark từ server sau khi render quiz xong
+      setTimeout(async () => {
+        const userId = getUserId();
+        const testId = getTestIdFromUrl();
+        if (userId && testId) {
+          await syncBookmarksFromServer(testId, userId);
+        }
+      }, 500); // Đợi 500ms để đảm bảo quiz đã render xong
     };
 
     // Scroll handler
@@ -6663,68 +6722,68 @@
     }
   </style>
   <script>
-// ════════════════════════════════════════════════════════════════════════════
-// ⚡ CYBERPUNK QUIZ — CPU OPTIMIZER v2.0
-// Tắt animation khi không nhìn thấy → tiết kiệm CPU, pin, nhiệt máy
-//
-// Chiến lược tổng thể:
-//   1. IntersectionObserver  → pause CSS animation toàn bộ header khi scroll qua
-//   2. Page Visibility API   → pause mọi thứ khi chuyển tab / minimize
-//   3. Scroll depth          → tắt hẳn bg scanline khi scroll > 50% trang
-//   4. Mobile detection      → giảm animation phức tạp từ đầu trên thiết bị yếu
-//   5. Interval management   → expose hooks để pause readingTimers khi tab ẩn
-//   6. Cleanup / unload      → dọn observer + RAF khi rời trang
-// ════════════════════════════════════════════════════════════════════════════
-(function () {
-  'use strict';
+    // ════════════════════════════════════════════════════════════════════════════
+    // ⚡ CYBERPUNK QUIZ — CPU OPTIMIZER v2.0
+    // Tắt animation khi không nhìn thấy → tiết kiệm CPU, pin, nhiệt máy
+    //
+    // Chiến lược tổng thể:
+    //   1. IntersectionObserver  → pause CSS animation toàn bộ header khi scroll qua
+    //   2. Page Visibility API   → pause mọi thứ khi chuyển tab / minimize
+    //   3. Scroll depth          → tắt hẳn bg scanline khi scroll > 50% trang
+    //   4. Mobile detection      → giảm animation phức tạp từ đầu trên thiết bị yếu
+    //   5. Interval management   → expose hooks để pause readingTimers khi tab ẩn
+    //   6. Cleanup / unload      → dọn observer + RAF khi rời trang
+    // ════════════════════════════════════════════════════════════════════════════
+    (function () {
+      'use strict';
 
-  // ─── Utilities ────────────────────────────────────────────────────────────
-  const $ = (sel) => document.querySelector(sel);
-  const $$ = (sel, root) => (root || document).querySelectorAll(sel);
+      // ─── Utilities ────────────────────────────────────────────────────────────
+      const $ = (sel) => document.querySelector(sel);
+      const $$ = (sel, root) => (root || document).querySelectorAll(sel);
 
-  /** Pause mọi CSS animation của element và tất cả con cháu */
-  function pauseTree(el) {
-    if (!el) return;
-    el.style.animationPlayState = 'paused';
-    $$('>*', el).forEach(child => {
-      child.style.animationPlayState = 'paused';
-    });
-    $('*', el) && $$('*', el).forEach(desc => {
-      desc.style.animationPlayState = 'paused';
-    });
-  }
+      /** Pause mọi CSS animation của element và tất cả con cháu */
+      function pauseTree(el) {
+        if (!el) return;
+        el.style.animationPlayState = 'paused';
+        $$('>*', el).forEach(child => {
+          child.style.animationPlayState = 'paused';
+        });
+        $('*', el) && $$('*', el).forEach(desc => {
+          desc.style.animationPlayState = 'paused';
+        });
+      }
 
-  /** Resume: xoá inline animationPlayState để trả về trạng thái CSS gốc */
-  function resumeTree(el) {
-    if (!el) return;
-    el.style.animationPlayState = '';
-    $$('*', el).forEach(desc => {
-      desc.style.animationPlayState = '';
-    });
-  }
+      /** Resume: xoá inline animationPlayState để trả về trạng thái CSS gốc */
+      function resumeTree(el) {
+        if (!el) return;
+        el.style.animationPlayState = '';
+        $$('*', el).forEach(desc => {
+          desc.style.animationPlayState = '';
+        });
+      }
 
-  /**
-   * Toggle .pause-animations trên element.
-   * CSS rule đã có sẵn trong file:
-   *   .pause-animations *, ::before, ::after { animation: none !important }
-   * Phù hợp với các element có pseudo-element (cyber-line::before)
-   */
-  function setClassPause(el, pause) {
-    if (!el) return;
-    el.classList.toggle('pause-animations', !!pause);
-  }
+      /**
+       * Toggle .pause-animations trên element.
+       * CSS rule đã có sẵn trong file:
+       *   .pause-animations *, ::before, ::after { animation: none !important }
+       * Phù hợp với các element có pseudo-element (cyber-line::before)
+       */
+      function setClassPause(el, pause) {
+        if (!el) return;
+        el.classList.toggle('pause-animations', !!pause);
+      }
 
-  // ─── 1. MOBILE DETECTION — Giảm animation ngay từ đầu ────────────────────
-  const isMobile = /Android|iPhone|iPad|iPod|IEMobile|Opera Mini/i.test(navigator.userAgent)
-    || ('ontouchstart' in window && window.innerWidth < 1024);
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const isLowEndDevice = isMobile || prefersReducedMotion
-    || (navigator.hardwareConcurrency != null && navigator.hardwareConcurrency <= 2);
+      // ─── 1. MOBILE DETECTION — Giảm animation ngay từ đầu ────────────────────
+      const isMobile = /Android|iPhone|iPad|iPod|IEMobile|Opera Mini/i.test(navigator.userAgent)
+        || ('ontouchstart' in window && window.innerWidth < 1024);
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const isLowEndDevice = isMobile || prefersReducedMotion
+        || (navigator.hardwareConcurrency != null && navigator.hardwareConcurrency <= 2);
 
-  if (isLowEndDevice) {
-    const mobileCSS = document.createElement('style');
-    mobileCSS.id = 'cpu-mobile-reduce';
-    mobileCSS.textContent = `
+      if (isLowEndDevice) {
+        const mobileCSS = document.createElement('style');
+        mobileCSS.id = 'cpu-mobile-reduce';
+        mobileCSS.textContent = `
       /* ── Mobile / Low-end: tắt animation trang trí nặng ── */
 
       /* Glitch effect (cực nặng vì dùng clip-path liên tục) */
@@ -6759,156 +6818,156 @@
       /* Scanline bg: ẩn trên mobile, không cần */
       .cyber-line                 { display: none !important; }
     `;
-    document.head.appendChild(mobileCSS);
-    if (window.__cpuDebug) console.log('[CPU] Mobile/low-end → reduced animations applied');
-  }
-
-  // ─── State chung ──────────────────────────────────────────────────────────
-  let headerVisible    = true;   // Là header đang trong viewport không?
-  let tabVisible       = true;   // Tab đang được focus không?
-  let deepScrolled     = false;  // Đã scroll > 50% trang chưa?
-  const allObservers   = [];     // Để disconnect khi unload
-
-  // ─── Element references (collect sau DOMContentLoaded) ────────────────────
-  let elTitleBlock, elTitleCard, elCyberLine, elGhostClock;
-
-  function collectElements() {
-    elTitleBlock = $('.hq-title-block');
-    elTitleCard  = $('.hq-title-card');
-    elCyberLine  = $('.cyber-line');
-    elGhostClock = $('#ghostClock');
-  }
-
-  // ─── Apply state logic ────────────────────────────────────────────────────
-
-  /**
-   * Header zone (hq-title-block + hq-title-card):
-   * Pause khi: không trong viewport HOẶC tab ẩn
-   */
-  function applyHeaderState() {
-    const shouldPause = !headerVisible || !tabVisible;
-    // Dùng class-based pause để cover cả ::before / ::after pseudo-elements
-    setClassPause(elTitleBlock, shouldPause);
-    setClassPause(elTitleCard,  shouldPause);
-    if (window.__cpuDebug)
-      console.log('[CPU] header', shouldPause ? '⏸ PAUSED' : '▶ RUNNING',
-        { headerVisible, tabVisible });
-  }
-
-  /**
-   * Background scanline (.cyber-line::before):
-   * Pause khi: tab ẩn HOẶC user đã scroll > 50%
-   * (cyber-grid không có animation, chỉ là static background-image → skip)
-   */
-  function applyBgState() {
-    const shouldPause = !tabVisible || deepScrolled;
-    setClassPause(elCyberLine, shouldPause);
-    if (window.__cpuDebug)
-      console.log('[CPU] bg scanline', shouldPause ? '⏸ PAUSED' : '▶ RUNNING',
-        { tabVisible, deepScrolled });
-  }
-
-  /**
-   * Ghost clock: là element fixed position, luôn hiển thị dù scroll.
-   * Chỉ pause khi tab ẩn — không pause khi scroll.
-   */
-  function applyGhostState() {
-    if (!elGhostClock) return;
-    if (!tabVisible) {
-      pauseTree(elGhostClock);
-    } else {
-      resumeTree(elGhostClock);
-    }
-    if (window.__cpuDebug)
-      console.log('[CPU] ghost clock', !tabVisible ? '⏸ PAUSED' : '▶ RUNNING');
-  }
-
-  /**
-   * readingTimers (setInterval trong quiz questions):
-   * Không nên pause các timer này khi scroll vì chúng đếm thời gian thực.
-   * Chỉ pause khi tab ẩn để không gây sai lệch timing.
-   * Các timer này nằm trong object readingTimers ở scope ngoài — access qua window ref.
-   */
-  function applyReadingTimersState() {
-    // readingTimers là const ở scope ngoài IIFE → không trực tiếp accessible
-    // Dùng custom event để notify IIFE gốc
-    const evt = new CustomEvent('cpuOptimizer:tabVisibility', { detail: { visible: tabVisible } });
-    document.dispatchEvent(evt);
-  }
-
-  // ─── 2. INTERSECTIONOBSERVER — Header zone ────────────────────────────────
-  function initHeaderObserver() {
-    if (!window.IntersectionObserver) return; // Fallback: không support → luôn chạy
-
-    // Quan sát hq-title-card (phần tử lớn nhất, chứa cả timer lẫn title)
-    // Khi nó ra khỏi viewport → header không còn nhìn thấy
-    const target = elTitleCard || elTitleBlock;
-    if (!target) return;
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        // isIntersecting = false khi toàn bộ element đã cuộn ra khỏi màn hình
-        headerVisible = entries[0].isIntersecting;
-        applyHeaderState();
-      },
-      {
-        threshold: 0,          // Trigger ngay khi bắt đầu ra/vào viewport
-        rootMargin: '0px'      // Không buffer thêm
+        document.head.appendChild(mobileCSS);
+        if (window.__cpuDebug) console.log('[CPU] Mobile/low-end → reduced animations applied');
       }
-    );
 
-    io.observe(target);
-    allObservers.push(io);
-    if (window.__cpuDebug) console.log('[CPU] IntersectionObserver → observing', target.className);
-  }
+      // ─── State chung ──────────────────────────────────────────────────────────
+      let headerVisible = true;   // Là header đang trong viewport không?
+      let tabVisible = true;   // Tab đang được focus không?
+      let deepScrolled = false;  // Đã scroll > 50% trang chưa?
+      const allObservers = [];     // Để disconnect khi unload
 
-  // ─── 3. PAGE VISIBILITY API — Tab switch ──────────────────────────────────
-  function initPageVisibility() {
-    document.addEventListener('visibilitychange', () => {
-      tabVisible = document.visibilityState === 'visible';
-      applyHeaderState();
-      applyBgState();
-      applyGhostState();
-      applyReadingTimersState();
-      if (window.__cpuDebug)
-        console.log('[CPU] Page Visibility:', tabVisible ? 'VISIBLE' : 'HIDDEN');
-    });
-  }
+      // ─── Element references (collect sau DOMContentLoaded) ────────────────────
+      let elTitleBlock, elTitleCard, elCyberLine, elGhostClock;
 
-  // ─── 4. SCROLL DEPTH — Tắt bg effects khi scroll sâu ─────────────────────
-  let scrollRAF = null;
+      function collectElements() {
+        elTitleBlock = $('.hq-title-block');
+        elTitleCard = $('.hq-title-card');
+        elCyberLine = $('.cyber-line');
+        elGhostClock = $('#ghostClock');
+      }
 
-  function onScroll() {
-    // Throttle bằng rAF để không chạy mỗi pixel
-    if (scrollRAF) return;
-    scrollRAF = requestAnimationFrame(() => {
-      scrollRAF = null;
+      // ─── Apply state logic ────────────────────────────────────────────────────
 
-      const scrollY      = window.scrollY || window.pageYOffset;
-      const maxScroll    = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollDepth  = maxScroll > 0 ? scrollY / maxScroll : 0;
-
-      const wasDeep = deepScrolled;
-      deepScrolled  = scrollDepth > 0.50; // Ngưỡng 50%
-
-      // Chỉ update nếu state thay đổi (tránh re-paint không cần thiết)
-      if (wasDeep !== deepScrolled) {
-        applyBgState();
+      /**
+       * Header zone (hq-title-block + hq-title-card):
+       * Pause khi: không trong viewport HOẶC tab ẩn
+       */
+      function applyHeaderState() {
+        const shouldPause = !headerVisible || !tabVisible;
+        // Dùng class-based pause để cover cả ::before / ::after pseudo-elements
+        setClassPause(elTitleBlock, shouldPause);
+        setClassPause(elTitleCard, shouldPause);
         if (window.__cpuDebug)
-          console.log('[CPU] Scroll depth:', Math.round(scrollDepth * 100) + '%',
-            deepScrolled ? '→ bg PAUSED' : '→ bg RESUMED');
+          console.log('[CPU] header', shouldPause ? '⏸ PAUSED' : '▶ RUNNING',
+            { headerVisible, tabVisible });
       }
-    });
-  }
 
-  window.addEventListener('scroll', onScroll, { passive: true });
+      /**
+       * Background scanline (.cyber-line::before):
+       * Pause khi: tab ẩn HOẶC user đã scroll > 50%
+       * (cyber-grid không có animation, chỉ là static background-image → skip)
+       */
+      function applyBgState() {
+        const shouldPause = !tabVisible || deepScrolled;
+        setClassPause(elCyberLine, shouldPause);
+        if (window.__cpuDebug)
+          console.log('[CPU] bg scanline', shouldPause ? '⏸ PAUSED' : '▶ RUNNING',
+            { tabVisible, deepScrolled });
+      }
 
-  // ─── 5. CSS bổ sung cho pseudo-elements ──────────────────────────────────
-  // .pause-animations đã xử lý ::before/::after của *children*, nhưng
-  // cyber-line::before là pseudo của chính element được add class → cần rule riêng
-  const extraCSS = document.createElement('style');
-  extraCSS.id = 'cpu-optimizer-extra';
-  extraCSS.textContent = `
+      /**
+       * Ghost clock: là element fixed position, luôn hiển thị dù scroll.
+       * Chỉ pause khi tab ẩn — không pause khi scroll.
+       */
+      function applyGhostState() {
+        if (!elGhostClock) return;
+        if (!tabVisible) {
+          pauseTree(elGhostClock);
+        } else {
+          resumeTree(elGhostClock);
+        }
+        if (window.__cpuDebug)
+          console.log('[CPU] ghost clock', !tabVisible ? '⏸ PAUSED' : '▶ RUNNING');
+      }
+
+      /**
+       * readingTimers (setInterval trong quiz questions):
+       * Không nên pause các timer này khi scroll vì chúng đếm thời gian thực.
+       * Chỉ pause khi tab ẩn để không gây sai lệch timing.
+       * Các timer này nằm trong object readingTimers ở scope ngoài — access qua window ref.
+       */
+      function applyReadingTimersState() {
+        // readingTimers là const ở scope ngoài IIFE → không trực tiếp accessible
+        // Dùng custom event để notify IIFE gốc
+        const evt = new CustomEvent('cpuOptimizer:tabVisibility', { detail: { visible: tabVisible } });
+        document.dispatchEvent(evt);
+      }
+
+      // ─── 2. INTERSECTIONOBSERVER — Header zone ────────────────────────────────
+      function initHeaderObserver() {
+        if (!window.IntersectionObserver) return; // Fallback: không support → luôn chạy
+
+        // Quan sát hq-title-card (phần tử lớn nhất, chứa cả timer lẫn title)
+        // Khi nó ra khỏi viewport → header không còn nhìn thấy
+        const target = elTitleCard || elTitleBlock;
+        if (!target) return;
+
+        const io = new IntersectionObserver(
+          (entries) => {
+            // isIntersecting = false khi toàn bộ element đã cuộn ra khỏi màn hình
+            headerVisible = entries[0].isIntersecting;
+            applyHeaderState();
+          },
+          {
+            threshold: 0,          // Trigger ngay khi bắt đầu ra/vào viewport
+            rootMargin: '0px'      // Không buffer thêm
+          }
+        );
+
+        io.observe(target);
+        allObservers.push(io);
+        if (window.__cpuDebug) console.log('[CPU] IntersectionObserver → observing', target.className);
+      }
+
+      // ─── 3. PAGE VISIBILITY API — Tab switch ──────────────────────────────────
+      function initPageVisibility() {
+        document.addEventListener('visibilitychange', () => {
+          tabVisible = document.visibilityState === 'visible';
+          applyHeaderState();
+          applyBgState();
+          applyGhostState();
+          applyReadingTimersState();
+          if (window.__cpuDebug)
+            console.log('[CPU] Page Visibility:', tabVisible ? 'VISIBLE' : 'HIDDEN');
+        });
+      }
+
+      // ─── 4. SCROLL DEPTH — Tắt bg effects khi scroll sâu ─────────────────────
+      let scrollRAF = null;
+
+      function onScroll() {
+        // Throttle bằng rAF để không chạy mỗi pixel
+        if (scrollRAF) return;
+        scrollRAF = requestAnimationFrame(() => {
+          scrollRAF = null;
+
+          const scrollY = window.scrollY || window.pageYOffset;
+          const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+          const scrollDepth = maxScroll > 0 ? scrollY / maxScroll : 0;
+
+          const wasDeep = deepScrolled;
+          deepScrolled = scrollDepth > 0.50; // Ngưỡng 50%
+
+          // Chỉ update nếu state thay đổi (tránh re-paint không cần thiết)
+          if (wasDeep !== deepScrolled) {
+            applyBgState();
+            if (window.__cpuDebug)
+              console.log('[CPU] Scroll depth:', Math.round(scrollDepth * 100) + '%',
+                deepScrolled ? '→ bg PAUSED' : '→ bg RESUMED');
+          }
+        });
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+
+      // ─── 5. CSS bổ sung cho pseudo-elements ──────────────────────────────────
+      // .pause-animations đã xử lý ::before/::after của *children*, nhưng
+      // cyber-line::before là pseudo của chính element được add class → cần rule riêng
+      const extraCSS = document.createElement('style');
+      extraCSS.id = 'cpu-optimizer-extra';
+      extraCSS.textContent = `
     /* Pseudo-elements của chính element mang .pause-animations */
     .cyber-line.pause-animations::before,
     .cyber-line.pause-animations::after  { animation: none !important; }
@@ -6926,71 +6985,71 @@
     /* Ghost clock: data attribute pause state */
     #ghostClock[data-paused="true"] *  { animation-play-state: paused !important; }
   `;
-  document.head.appendChild(extraCSS);
+      document.head.appendChild(extraCSS);
 
-  // ─── 6. CLEANUP — Dọn dẹp khi rời trang ─────────────────────────────────
-  function cleanup() {
-    // Disconnect tất cả IntersectionObservers
-    allObservers.forEach(io => io.disconnect());
-    allObservers.length = 0;
+      // ─── 6. CLEANUP — Dọn dẹp khi rời trang ─────────────────────────────────
+      function cleanup() {
+        // Disconnect tất cả IntersectionObservers
+        allObservers.forEach(io => io.disconnect());
+        allObservers.length = 0;
 
-    // Cancel RAF scroll throttle nếu đang pending
-    if (scrollRAF) {
-      cancelAnimationFrame(scrollRAF);
-      scrollRAF = null;
-    }
+        // Cancel RAF scroll throttle nếu đang pending
+        if (scrollRAF) {
+          cancelAnimationFrame(scrollRAF);
+          scrollRAF = null;
+        }
 
-    // Pause toàn bộ body animation để dọn sạch trước khi unload
-    document.body.style.animationPlayState = 'paused';
+        // Pause toàn bộ body animation để dọn sạch trước khi unload
+        document.body.style.animationPlayState = 'paused';
 
-    if (window.__cpuDebug) console.log('[CPU] Cleanup complete on page unload');
-  }
+        if (window.__cpuDebug) console.log('[CPU] Cleanup complete on page unload');
+      }
 
-  // pagehide đáng tin cậy hơn unload/beforeunload trên mobile
-  window.addEventListener('pagehide', cleanup);
-  // Fallback cho desktop
-  window.addEventListener('beforeunload', cleanup);
+      // pagehide đáng tin cậy hơn unload/beforeunload trên mobile
+      window.addEventListener('pagehide', cleanup);
+      // Fallback cho desktop
+      window.addEventListener('beforeunload', cleanup);
 
-  // ─── INIT ─────────────────────────────────────────────────────────────────
-  function init() {
-    collectElements();
-    initHeaderObserver();
-    initPageVisibility();
+      // ─── INIT ─────────────────────────────────────────────────────────────────
+      function init() {
+        collectElements();
+        initHeaderObserver();
+        initPageVisibility();
 
-    // Trigger scroll check ngay lập tức
-    // (phòng trường hợp trang load mà browser đã restore scroll position)
-    onScroll();
+        // Trigger scroll check ngay lập tức
+        // (phòng trường hợp trang load mà browser đã restore scroll position)
+        onScroll();
 
-    if (window.__cpuDebug) {
-      console.log('[CPU] CPU Optimizer v2.0 initialized ✅');
-      console.log('[CPU] Elements:', {
-        titleBlock: !!elTitleBlock,
-        titleCard:  !!elTitleCard,
-        cyberLine:  !!elCyberLine,
-        ghostClock: !!elGhostClock,
-      });
-      console.log('[CPU] Device:', isMobile ? 'Mobile' : 'Desktop',
-        '| Low-end:', isLowEndDevice,
-        '| Reduced motion:', prefersReducedMotion);
-    }
-  }
+        if (window.__cpuDebug) {
+          console.log('[CPU] CPU Optimizer v2.0 initialized ✅');
+          console.log('[CPU] Elements:', {
+            titleBlock: !!elTitleBlock,
+            titleCard: !!elTitleCard,
+            cyberLine: !!elCyberLine,
+            ghostClock: !!elGhostClock,
+          });
+          console.log('[CPU] Device:', isMobile ? 'Mobile' : 'Desktop',
+            '| Low-end:', isLowEndDevice,
+            '| Reduced motion:', prefersReducedMotion);
+        }
+      }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init(); // DOM đã ready (script ở cuối body)
-  }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init(); // DOM đã ready (script ở cuối body)
+      }
 
-  // ─── EXPOSE để các script khác có thể query state ────────────────────────
-  window.cpuOptimizer = {
-    isTabVisible:   () => tabVisible,
-    isHeaderVisible:() => headerVisible,
-    isDeepScrolled: () => deepScrolled,
-    isMobile:       isMobile,
-    isLowEnd:       isLowEndDevice,
-  };
+      // ─── EXPOSE để các script khác có thể query state ────────────────────────
+      window.cpuOptimizer = {
+        isTabVisible: () => tabVisible,
+        isHeaderVisible: () => headerVisible,
+        isDeepScrolled: () => deepScrolled,
+        isMobile: isMobile,
+        isLowEnd: isLowEndDevice,
+      };
 
-})();
+    })();
   </script>
 
   <!-- ===== HUD RESULT PANEL JS ===== -->
