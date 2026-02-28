@@ -470,12 +470,14 @@
       transition: all 0.3s ease;
       letter-spacing: 0.5px;
     }
+
     .da-nho-btn:hover {
       background: rgba(0, 255, 136, 0.18);
       border-color: #00ff88;
       box-shadow: 0 0 18px rgba(0, 255, 136, 0.3);
       transform: translateY(-2px);
     }
+
     .da-nho-btn:disabled {
       opacity: 0.5;
       cursor: not-allowed;
@@ -495,6 +497,7 @@
       border-radius: 12px;
       border: 1px solid var(--border-glow);
     }
+
     .page-btn {
       padding: 8px 18px;
       border-radius: 8px;
@@ -507,17 +510,20 @@
       background: rgba(0, 20, 40, 0.6);
       color: var(--text-secondary);
     }
+
     .page-btn:hover {
       border-color: var(--primary-glow);
       color: var(--primary-glow);
       box-shadow: 0 0 12px rgba(0, 168, 255, 0.2);
     }
+
     .page-btn.active {
       background: linear-gradient(135deg, var(--primary-glow), var(--secondary-glow));
       color: #0a0e17;
       border-color: transparent;
       box-shadow: 0 0 16px rgba(0, 255, 204, 0.4);
     }
+
     .page-info {
       color: var(--text-secondary);
       font-family: "Share Tech Mono", monospace;
@@ -525,6 +531,7 @@
       letter-spacing: 1px;
       margin-left: 8px;
     }
+
     .page-label {
       color: var(--text-secondary);
       font-family: "Share Tech Mono", monospace;
@@ -3200,74 +3207,198 @@
         filter: drop-shadow(0 0 8px #ff3333);
       }
     }
+
     /* ===== NGUỒN CÂU HỎI ===== */
-.question-source {
-  position: absolute;
-  bottom: 10px;
-  right: 15px;
-  font-size: 11px;
-  font-family: 'Share Tech Mono', monospace;
-  font-style: italic;
-  color: var(--text-secondary);
-  background: rgba(0, 20, 40, 0.7);
-  padding: 4px 10px;
-  border-radius: 20px;
-  border: 1px solid rgba(0, 255, 204, 0.2);
-  backdrop-filter: blur(4px);
-  letter-spacing: 0.5px;
-  z-index: 5;
-  max-width: 60%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  transition: all 0.3s ease;
-  pointer-events: none; /* Không ảnh hưởng đến click */
-}
+    .question-source {
+      position: absolute;
+      bottom: 10px;
+      right: 15px;
+      font-size: 11px;
+      font-family: 'Share Tech Mono', monospace;
+      font-style: italic;
+      color: var(--text-secondary);
+      background: rgba(0, 20, 40, 0.7);
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid rgba(0, 255, 204, 0.2);
+      backdrop-filter: blur(4px);
+      letter-spacing: 0.5px;
+      z-index: 5;
+      max-width: 60%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition: all 0.3s ease;
+      pointer-events: none;
+      /* Không ảnh hưởng đến click */
+    }
 
-.question-source:hover {
-  max-width: 90%;
-  background: rgba(0, 40, 80, 0.9);
-  border-color: var(--secondary-glow);
-  color: var(--secondary-glow);
-  box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
-  white-space: normal;
-  overflow: visible;
-  z-index: 10;
-  font-style: italic;
-}
+    .question-source:hover {
+      max-width: 90%;
+      background: rgba(0, 40, 80, 0.9);
+      border-color: var(--secondary-glow);
+      color: var(--secondary-glow);
+      box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+      white-space: normal;
+      overflow: visible;
+      z-index: 10;
+      font-style: italic;
+    }
 
-.question-source i {
-  margin-right: 5px;
-  font-size: 10px;
-  color: var(--secondary-glow);
-  opacity: 0.8;
-}
+    .question-source i {
+      margin-right: 5px;
+      font-size: 10px;
+      color: var(--secondary-glow);
+      opacity: 0.8;
+    }
 
-/* Điều chỉnh question-block để có không gian cho phần nguồn */
-.question-block {
-  position: relative;
-  padding-bottom: 45px !important; /* Tạo khoảng trống cho nguồn */
-}
-/* Màu sắc khác nhau cho các nguồn khác nhau */
-.question-source[data-source="mimikara"] {
-  border-left: 3px solid #ff9900;
-  background: rgba(255, 153, 0, 0.1);
-}
+    /* Điều chỉnh question-block để có không gian cho phần nguồn */
+    .question-block {
+      position: relative;
+      padding-bottom: 45px !important;
+      /* Tạo khoảng trống cho nguồn */
+    }
 
-.question-source[data-source="test1"] {
-  border-left: 3px solid #00a8ff;
-  background: rgba(0, 168, 255, 0.1);
-}
+    /* Màu sắc khác nhau cho các nguồn khác nhau */
+    .question-source[data-source="mimikara"] {
+      border-left: 3px solid #ff9900;
+      background: rgba(255, 153, 0, 0.1);
+    }
 
-.question-source[data-source="default"] {
-  border-left: 3px solid var(--secondary-glow);
-}
+    .question-source[data-source="test1"] {
+      border-left: 3px solid #00a8ff;
+      background: rgba(0, 168, 255, 0.1);
+    }
 
-/* Thêm icon cho từng loại nguồn */
-.question-source i.fa-book-open { color: var(--secondary-glow); }
-.question-source i.fa-graduation-cap { color: #ff9900; }
-.question-source i.fa-flask { color: #00a8ff; }
+    .question-source[data-source="default"] {
+      border-left: 3px solid var(--secondary-glow);
+    }
 
+    /* Thêm icon cho từng loại nguồn */
+    .question-source i.fa-book-open {
+      color: var(--secondary-glow);
+    }
+
+    .question-source i.fa-graduation-cap {
+      color: #ff9900;
+    }
+
+    .question-source i.fa-flask {
+      color: #00a8ff;
+    }
+
+    /* ===== Ô GHI CHÚ CÂU HỎI ===== */
+    .question-note {
+      text-align: center;
+      margin: 10px auto 15px auto;
+      padding: 12px 18px;
+      max-width: 85%;
+      background: rgba(255, 215, 0, 0.08);
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      border-radius: 12px;
+      color: #ffd700;
+      font-family: 'Exo 2', sans-serif;
+      font-size: 14px;
+      font-style: italic;
+      line-height: 1.6;
+      position: relative;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      word-break: break-word;
+      transition: all 0.3s ease;
+    }
+
+    .question-note::before {
+      content: '📌';
+      position: absolute;
+      left: -10px;
+      top: -10px;
+      font-size: 18px;
+      background: var(--bg-primary);
+      padding: 5px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .question-note:hover {
+      background: rgba(255, 215, 0, 0.12);
+      border-color: #ffd700;
+      box-shadow: 0 6px 20px rgba(255, 215, 0, 0.15);
+      transform: translateY(-2px);
+    }
+
+    /* Icon ghi chú (tùy chọn) */
+    .note-icon {
+      margin-right: 8px;
+      color: #ffd700;
+      font-size: 12px;
+      opacity: 0.8;
+    }
+
+    /* Khi không có ghi chú */
+    .question-note.empty {
+      display: none;
+    }
+
+    /* Responsive cho mobile */
+    @media (max-width: 768px) {
+      .question-note {
+        max-width: 95%;
+        padding: 10px 15px;
+        font-size: 13px;
+        margin: 8px auto 12px auto;
+      }
+
+      .question-note::before {
+        left: -8px;
+        top: -8px;
+        font-size: 14px;
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    /* Ghi chú màu xanh (thông tin thêm) */
+    .question-note.info {
+      background: rgba(0, 168, 255, 0.08);
+      border-color: rgba(0, 168, 255, 0.3);
+      color: #00a8ff;
+    }
+
+    .question-note.info::before {
+      content: 'ℹ️';
+      border-color: rgba(0, 168, 255, 0.3);
+    }
+
+    /* Ghi chú màu đỏ (cảnh báo) */
+    .question-note.warning {
+      background: rgba(255, 51, 51, 0.08);
+      border-color: rgba(255, 51, 51, 0.3);
+      color: #ff6666;
+    }
+
+    .question-note.warning::before {
+      content: '⚠️';
+      border-color: rgba(255, 51, 51, 0.3);
+    }
+
+    /* Ghi chú màu xanh lá (mẹo) */
+    .question-note.tip {
+      background: rgba(0, 255, 136, 0.08);
+      border-color: rgba(0, 255, 136, 0.3);
+      color: #00ff88;
+    }
+
+    .question-note.tip::before {
+      content: '💡';
+      border-color: rgba(0, 255, 136, 0.3);
+    }
   </style>
 
 </head>
@@ -3397,7 +3528,8 @@
       </div>
       <div class="hq-chips-row">
         <!-- SỬA: placeholder 39 được giữ nguyên -->
-        <div class="hq-chip accent-cyan"><span class="hq-chip-icon cyan"></span><span id="quizCountChip">Đang tải...</span></div>
+        <div class="hq-chip accent-cyan"><span class="hq-chip-icon cyan"></span><span id="quizCountChip">Đang
+            tải...</span></div>
         <div class="hq-chip-sep"></div>
         <div class="hq-chip accent-cyan"><span class="hq-chip-icon cyan"></span>CYBERPUNK QUIZ</div>
       </div>
@@ -3566,7 +3698,7 @@
   <!-- MAIN CONTENT -->
   <div id="mainContentWrapper" class="main-content-wrapper">
     <div class="main-quiz-container">
-<!-- H2 - SỬA: thêm placeholder cho tên bài test -->
+      <!-- H2 - SỬA: thêm placeholder cho tên bài test -->
       <h2 id="quizSectionTitle" style="
             margin-bottom: 25px;
             border-bottom: 2px solid rgba(0, 255, 204, 0.3);
@@ -4525,105 +4657,106 @@
     let currentPage = 1;
 
     async function loadQuestionsFromServer() {
-  const userId = getUserId();
-  const testId = getTestIdFromUrl(); // Có thể null
-  const form = document.getElementById('quizForm');
+      const userId = getUserId();
+      const testId = getTestIdFromUrl(); // Có thể null
+      const form = document.getElementById('quizForm');
 
-  if (!userId) {
-    // Xử lý không có userId
-    return;
-  }
+      if (!userId) {
+        // Xử lý không có userId
+        return;
+      }
 
-  try {
-    // Tạo URL: có testId hoặc không
-    let url = `https://n1-license-server.onrender.com/api/bookmarks?userId=${encodeURIComponent(userId)}`;
-    
-    // Nếu có testId trong URL thì thêm vào (tùy chọn)
-    const urlParams = new URLSearchParams(window.location.search);
-    const testIdParam = urlParams.get('testId');
-    if (testIdParam) {
-      url += `&testId=${encodeURIComponent(testIdParam)}`;
+      try {
+        // Tạo URL: có testId hoặc không
+        let url = `https://n1-license-server.onrender.com/api/bookmarks?userId=${encodeURIComponent(userId)}`;
+
+        // Nếu có testId trong URL thì thêm vào (tùy chọn)
+        const urlParams = new URLSearchParams(window.location.search);
+        const testIdParam = urlParams.get('testId');
+        if (testIdParam) {
+          url += `&testId=${encodeURIComponent(testIdParam)}`;
+        }
+
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('Server lỗi ' + res.status);
+
+        const data = await res.json();
+        if (!data.ok || !Array.isArray(data.bookmarks)) throw new Error('Dữ liệu không hợp lệ');
+
+        console.log(`📦 Đã tải ${data.bookmarks.length} bookmark từ server`);
+        if (data.filtered) {
+          console.log(`🔍 Filter: ${data.filtered}`);
+        }
+
+        // Nhóm theo test để hiển thị (tùy chọn)
+        const groups = {};
+        data.bookmarks.forEach(b => {
+          const test = b.test_id || 'Không xác định';
+          if (!groups[test]) groups[test] = [];
+          groups[test].push(b);
+        });
+        console.log('📊 Phân bố:', Object.keys(groups).map(t => `${t}: ${groups[t].length} câu`));
+
+        // Xử lý dữ liệu
+        quizData = data.bookmarks
+          .sort((a, b) => (a.question_number || '').localeCompare(b.question_number || ''))
+          .map((b, idx) => ({
+            number: idx + 1,
+            question: b.question_text || b.question_key || '',
+            options: (() => {
+              try {
+                return typeof b.options === 'string' ? JSON.parse(b.options) : (b.options || []);
+              } catch (e) {
+                return [];
+              }
+            })(),
+            answer: b.answer || '',
+            detail: b.detail || '',
+            note: b.note || '',
+            _bookmarkId: b.id,
+            _questionKey: b.question_key,
+            _testId: b.test_id
+          }));
+
+        // Cập nhật UI
+        document.getElementById('quizCountChip').textContent = quizData.length + ' Câu hỏi';
+        currentPage = 1;
+        renderPagination();
+        renderQuiz();
+
+      } catch (error) {
+        console.error('❌ Lỗi tải dữ liệu:', error);
+        // Fallback: dùng localStorage
+        loadFromLocalStorage();
+      }
     }
+    // Hàm fallback dùng localStorage
+    function loadFromLocalStorage() {
+      const allBookmarks = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith('bookmarks:')) {
+          try {
+            const bookmarks = JSON.parse(localStorage.getItem(key) || '[]');
+            allBookmarks.push(...bookmarks);
+          } catch (e) { }
+        }
+      }
 
-    const res = await fetch(url);
-    if (!res.ok) throw new Error('Server lỗi ' + res.status);
-    
-    const data = await res.json();
-    if (!data.ok || !Array.isArray(data.bookmarks)) throw new Error('Dữ liệu không hợp lệ');
-
-    console.log(`📦 Đã tải ${data.bookmarks.length} bookmark từ server`);
-    if (data.filtered) {
-      console.log(`🔍 Filter: ${data.filtered}`);
-    }
-
-    // Nhóm theo test để hiển thị (tùy chọn)
-    const groups = {};
-    data.bookmarks.forEach(b => {
-      const test = b.test_id || 'Không xác định';
-      if (!groups[test]) groups[test] = [];
-      groups[test].push(b);
-    });
-    console.log('📊 Phân bố:', Object.keys(groups).map(t => `${t}: ${groups[t].length} câu`));
-
-    // Xử lý dữ liệu
-    quizData = data.bookmarks
-      .sort((a, b) => (a.question_number || '').localeCompare(b.question_number || ''))
-      .map((b, idx) => ({
+      quizData = allBookmarks.map((b, idx) => ({
         number: idx + 1,
-        question: b.question_text || b.question_key || '',
-        options: (() => {
-          try { 
-            return typeof b.options === 'string' ? JSON.parse(b.options) : (b.options || []); 
-          } catch(e) { 
-            return []; 
-          }
-        })(),
+        question: b.questionText || b.question_key || '',
+        options: b.options || [],
         answer: b.answer || '',
         detail: b.detail || '',
         _bookmarkId: b.id,
         _questionKey: b.question_key,
-        _testId: b.test_id
+        _testId: b.testId || 'Local'
       }));
 
-    // Cập nhật UI
-    document.getElementById('quizCountChip').textContent = quizData.length + ' Câu hỏi';
-    currentPage = 1;
-    renderPagination();
-    renderQuiz();
-
-  } catch (error) {
-    console.error('❌ Lỗi tải dữ liệu:', error);
-    // Fallback: dùng localStorage
-    loadFromLocalStorage();
-  }
-}
-// Hàm fallback dùng localStorage
-function loadFromLocalStorage() {
-  const allBookmarks = [];
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    if (key && key.startsWith('bookmarks:')) {
-      try {
-        const bookmarks = JSON.parse(localStorage.getItem(key) || '[]');
-        allBookmarks.push(...bookmarks);
-      } catch(e) {}
+      renderPagination();
+      renderQuiz();
     }
-  }
-  
-  quizData = allBookmarks.map((b, idx) => ({
-    number: idx + 1,
-    question: b.questionText || b.question_key || '',
-    options: b.options || [],
-    answer: b.answer || '',
-    detail: b.detail || '',
-    _bookmarkId: b.id,
-    _questionKey: b.question_key,
-    _testId: b.testId || 'Local'
-  }));
-  
-  renderPagination();
-  renderQuiz();
-}
 
     function getTotalPages() {
       return Math.max(1, Math.ceil(quizData.length / QUESTIONS_PER_PAGE));
@@ -4654,7 +4787,7 @@ function loadFromLocalStorage() {
       container.innerHTML = html;
     }
 
-    window.goToPage = function(page) {
+    window.goToPage = function (page) {
       currentPage = page;
       renderPagination();
       renderQuiz();
@@ -4936,19 +5069,19 @@ function loadFromLocalStorage() {
         const localStored = loadBookmarks(testId, userId).find(b => b.questionKey === questionKey);
         const note = ev.shiftKey ? (prompt('Ghi chú cho câu hỏi (tùy chọn):', localStored && localStored.note ? localStored.note : '') || '') : (localStored && localStored.note ? localStored.note : '');
         const bookmark = {
-  id: `${questionKey}_${Date.now()}`,
-  questionKey: questionKey,
-  questionText: (questionText||'').slice(0,500),
-  questionNumber: questionNumber || '',
-  options: options || [],
-  answer: answer || '',
-  detail: detail || '',
-  testId: testId,
-  userId: userId || null,
-  timestamp: Date.now(),
-  note: note || '',
-  synced: false
-};
+          id: `${questionKey}_${Date.now()}`,
+          questionKey: questionKey,
+          questionText: (questionText || '').slice(0, 500),
+          questionNumber: questionNumber || '',
+          options: options || [],
+          answer: answer || '',
+          detail: detail || '',
+          testId: testId,
+          userId: userId || null,
+          timestamp: Date.now(),
+          note: note || '',
+          synced: false
+        };
 
         const arr = loadBookmarks(testId, userId);
         const exists = arr.findIndex(b => b.questionKey === questionKey) !== -1;
@@ -4969,35 +5102,35 @@ function loadFromLocalStorage() {
     }
 
     function renderQuiz() {
-  const form = document.getElementById("quizForm");
-  if (!form) return;
-  form.innerHTML = "";
-  readingComprehensionCount = 0;
-  if (!window.quizAnswers) window.quizAnswers = {};
+      const form = document.getElementById("quizForm");
+      if (!form) return;
+      form.innerHTML = "";
+      readingComprehensionCount = 0;
+      if (!window.quizAnswers) window.quizAnswers = {};
 
-  const pageOffset = (currentPage - 1) * QUESTIONS_PER_PAGE;
-  const pageData = getPageData(currentPage);
+      const pageOffset = (currentPage - 1) * QUESTIONS_PER_PAGE;
+      const pageData = getPageData(currentPage);
 
-  if (pageData.length === 0 && quizData.length === 0) {
-    form.innerHTML = `
+      if (pageData.length === 0 && quizData.length === 0) {
+        form.innerHTML = `
       <div style="text-align:center;padding:60px 20px;color:var(--text-secondary);">
         <i class="fas fa-bookmark" style="font-size:44px;color:var(--border-glow);margin-bottom:16px;display:block;opacity:0.5;"></i>
         <p style="font-family:Orbitron,sans-serif;font-size:16px;color:var(--text-secondary);">Chưa có câu hỏi nào</p>
         <p style="margin-top:8px;font-size:13px;">Đánh dấu ⭐ câu hỏi trong bài test để ôn tập tại đây.</p>
       </div>`;
-    return;
-  }
+        return;
+      }
 
-  pageData.forEach((q, localIdx) => {
-    const index = pageOffset + localIdx;
-    const div = document.createElement("div");
-    div.classList.add("question-block");
+      pageData.forEach((q, localIdx) => {
+        const index = pageOffset + localIdx;
+        const div = document.createElement("div");
+        div.classList.add("question-block");
 
-    // Hiển thị nguyên bản test_id từ database
-let sourceName = q._testId || 'Không xác định';
-// KHÔNG xử lý gì thêm, giữ nguyên gốc
+        // Hiển thị nguyên bản test_id từ database
+        let sourceName = q._testId || 'Không xác định';
+        // KHÔNG xử lý gì thêm, giữ nguyên gốc
 
-    div.innerHTML = `
+        div.innerHTML = `
       <div class="question-number">
         <span style="background:linear-gradient(135deg,var(--primary-glow),var(--secondary-glow));color:#0a0e17;padding:5px 12px;border-radius:20px;font-size:16px;">
           Câu ${q.number}
@@ -5005,43 +5138,64 @@ let sourceName = q._testId || 'Không xác định';
       </div>
       <p class="question-text">${q.question}</p>
     `;
+        // 👇 THÊM PHẦN HIỂN THỊ GHI CHÚ (NẾU CÓ)
+        if (q.note && q.note.trim() !== '') {
+          const noteDiv = document.createElement('div');
+          noteDiv.className = 'question-note';
 
-    // Thêm phần nguồn (testId) vào góc phải bên dưới
-    const sourceDiv = document.createElement('div');
-    sourceDiv.className = 'question-source';
-    sourceDiv.title = q._testId || 'Không xác định'; // Hiển thị đầy đủ khi hover
-    sourceDiv.innerHTML = `<i class="fas fa-book-open"></i> ${sourceName}`;
-    div.appendChild(sourceDiv);
+          // Xử lý note: có thể chứa emoji, xuống dòng, v.v.
+          let noteContent = q.note;
 
-    if (Array.isArray(q.options) && q.options.length > 0) {
-      q.options.forEach((opt, i) => {
-        const label = document.createElement("label");
-        label.classList.add("answer-option");
-        label.innerHTML = `<input type="radio" name="q${index}" value="${i + 1}"> ${opt}`;
-        div.appendChild(label);
+          // Tự động xuống dòng nếu có dấu xuống dòng trong note
+          if (noteContent.includes('\n')) {
+            noteContent = noteContent.replace(/\n/g, '<br>');
+          }
+
+          // Thêm icon và nội dung
+          noteDiv.innerHTML = `<span class="note-icon"><i class="fas fa-pencil-alt"></i></span> ${noteContent}`;
+
+          // Thêm title để hiển thị đầy đủ khi hover
+          noteDiv.title = q.note;
+
+          div.appendChild(noteDiv);
+        }
+
+        // Thêm phần nguồn (testId) vào góc phải bên dưới
+        const sourceDiv = document.createElement('div');
+        sourceDiv.className = 'question-source';
+        sourceDiv.title = q._testId || 'Không xác định'; // Hiển thị đầy đủ khi hover
+        sourceDiv.innerHTML = `<i class="fas fa-book-open"></i> ${sourceName}`;
+        div.appendChild(sourceDiv);
+
+        if (Array.isArray(q.options) && q.options.length > 0) {
+          q.options.forEach((opt, i) => {
+            const label = document.createElement("label");
+            label.classList.add("answer-option");
+            label.innerHTML = `<input type="radio" name="q${index}" value="${i + 1}"> ${opt}`;
+            div.appendChild(label);
+          });
+        }
+
+        if (q.detail) {
+          const detailBtn = document.createElement("button");
+          detailBtn.classList.add("detail-btn");
+          detailBtn.innerHTML = '<i class="fas fa-info-circle"></i> Xem chi tiết';
+          detailBtn.addEventListener("click", (e) => {
+            e.preventDefault(); e.stopPropagation();
+            showQuestionDetail(index);
+          });
+          div.appendChild(detailBtn);
+        }
+
+        // Nút Đã nhớ thay thế ngôi sao
+        if (q._bookmarkId) {
+          createDaNhoBtn(div, q._bookmarkId, index);
+        }
+
+        window.quizAnswers[`q${index}`] = q.answer;
+        form.appendChild(div);
       });
     }
-
-    if (q.detail) {
-      const detailBtn = document.createElement("button");
-      detailBtn.classList.add("detail-btn");
-      detailBtn.innerHTML = '<i class="fas fa-info-circle"></i> Xem chi tiết';
-      detailBtn.addEventListener("click", (e) => {
-        e.preventDefault(); e.stopPropagation();
-        showQuestionDetail(index);
-      });
-      div.appendChild(detailBtn);
-    }
-
-    // Nút Đã nhớ thay thế ngôi sao
-    if (q._bookmarkId) {
-      createDaNhoBtn(div, q._bookmarkId, index);
-    }
-
-    window.quizAnswers[`q${index}`] = q.answer;
-    form.appendChild(div);
-  });
-}
 
     // ==================== NÚT ĐÃ NHỚ ====================
     function createDaNhoBtn(element, bookmarkId, quizIndex) {
