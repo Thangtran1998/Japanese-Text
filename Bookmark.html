@@ -3290,21 +3290,25 @@
 .question-source i.fa-flask { color: #00a8ff; }
 /* ===== Ô GHI CHÚ CÂU HỎI ===== */
 .question-note {
-  text-align: left;
-  margin: 0;
-  padding: 12px 18px;
-  max-width: 50%;
+  text-align: left;              /* Căn chữ về bên trái trong ô */
+  margin-left: auto;              /* Đẩy ô về phía bên phải */
+  margin-right: 0;                /* Xóa margin phải */
+  margin-top: 0;
+  margin-bottom: 15px;
+  padding: 8px 15px;              /* Giảm padding để ô ngắn lại */
+  max-width: 35%;                 /* Giới hạn chiều rộng tối đa 35% */
+  width: fit-content;             /* Chiều rộng vừa với nội dung */
   background: rgba(255, 215, 0, 0.08);
   border: 1px solid rgba(255, 215, 0, 0.3);
-  border-radius: 12px;
+  border-radius: 20px;            /* Bo tròn nhiều hơn cho đẹp */
   color: #ffd700;
   font-family: 'Exo 2', sans-serif;
-  font-size: 14px;
+  font-size: 13px;                /* Giảm nhẹ kích thước chữ */
   font-style: italic;
-  line-height: 1.6;
+  line-height: 1.5;
   position: relative;
   backdrop-filter: blur(5px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* Giảm shadow */
   word-break: break-word;
   transition: all 0.3s ease;
 }
