@@ -10,6 +10,48 @@
     href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@300;400;600&family=Share+Tech+Mono&display=swap"
     rel="stylesheet" />
   <style>
+    /* ===== ACCESS DENIED OVERLAY ===== */
+    #accessDeniedOverlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 8, 18, 0.98);
+      backdrop-filter: blur(12px);
+      z-index: 9999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #accessDeniedOverlay .access-box {
+      background: rgba(0, 15, 30, 0.95);
+      border: 1px solid rgba(255, 51, 102, 0.6);
+      border-radius: 16px;
+      padding: 48px 40px;
+      max-width: 480px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 0 60px rgba(255, 51, 102, 0.2);
+    }
+    #accessDeniedOverlay .access-icon {
+      font-size: 56px;
+      color: #ff3366;
+      margin-bottom: 20px;
+      filter: drop-shadow(0 0 12px #ff3366);
+    }
+    #accessDeniedOverlay .access-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #ff3366;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+    #accessDeniedOverlay .access-msg {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 15px;
+      color: #a0c8e0;
+      line-height: 1.7;
+    }
+
     /* ===== CYBER LOADING - ĐẶT TRONG HEAD ĐỂ HIỆN NGAY TỪ PIXEL ĐẦU TIÊN ===== */
     #cyberLoading {
       position: fixed;
@@ -3312,6 +3354,14 @@
 </head>
 
 <body>
+  <!-- ACCESS DENIED OVERLAY -->
+  <div id="accessDeniedOverlay" style="display:none;">
+    <div class="access-box">
+      <div class="access-icon"><i class="fas fa-ban"></i></div>
+      <div class="access-title">TRUY CẬP BỊ TỪ CHỐI</div>
+      <div class="access-msg">Thiết bị chưa được cấp quyền truy cập hoặc bị thu hồi.<br>Hãy liên hệ Admin.</div>
+    </div>
+  </div>
   <!-- CYBER LOADING: phần tử đầu tiên trong body, hiển thị ngay trước mọi nội dung khác -->
   <div id="cyberLoading">
     <div class="cyber-loading-box">
@@ -4949,8 +4999,8 @@
         // determine userId (ask user if none found)
         let userId = getUserId();
         if (!userId) {
-          const input = prompt('Nhập userId để lưu bookmark theo user (hủy để lưu tạm cho guest):', '');
-          if (input) { setStoredUserId(input); window.n1_user_id = input; userId = input; }
+          alert('Thiết bị của bạn không hỗ trợ tính năng này, hãy liên hệ Admin');
+          return;
         }
 
         // re-evaluate stored bookmark for this user
@@ -5734,6 +5784,15 @@
 
     // ==================== INITIALIZATION ====================
     window.onload = function () {
+      // ===== KIỂM TRA LICENSE =====
+      const activated = localStorage.getItem('n1_activated_once') === '1';
+      const license = localStorage.getItem('n1_license') || '';
+      if (!activated || !license) {
+        document.getElementById('accessDeniedOverlay').style.display = 'flex';
+        return; // Dừng, không render gì thêm
+      }
+      // ============================
+
       renderQuiz();
       if (typeof updateTimerDisplay === "function") updateTimerDisplay();
       displayWrongAnswers();
