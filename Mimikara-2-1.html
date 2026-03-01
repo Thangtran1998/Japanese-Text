@@ -5398,9 +5398,7 @@
       try { const u = new URL(window.location.href); return u.searchParams.get('testId') || u.searchParams.get('test') || document.title || 'unknown_test'; } catch (e) { return document.title || 'unknown_test'; }
     }
 
-    // userId helpers: do NOT prompt on load; prompt only when user attempts to bookmark and no id available
-    function getStoredUserId() { try { return localStorage.getItem('hq_userId'); } catch (e) { return null; } }
-    function setStoredUserId(id) { try { if (id) localStorage.setItem('hq_userId', id); } catch (e) { } }
+    // userId helpers
     function getUserIdFromUrl() { try { const u = new URL(window.location.href); return u.searchParams.get('userId') || u.searchParams.get('uid') || null; } catch (e) { return null; } }
     function getUserId() {
       // prefer global variable `n1_user_id` if set by server/template
@@ -5408,8 +5406,6 @@
       if (window._hq_userId !== undefined && window._hq_userId) { window.n1_user_id = window._hq_userId; return window.n1_user_id; }
       const fromUrl = getUserIdFromUrl();
       if (fromUrl) { window.n1_user_id = fromUrl; return window.n1_user_id; }
-      const stored = getStoredUserId();
-      if (stored) { window.n1_user_id = stored; return window.n1_user_id; }
       window.n1_user_id = null;
       return null;
     }
