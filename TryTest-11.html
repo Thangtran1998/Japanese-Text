@@ -5222,7 +5222,7 @@
       btn.className = 'bookmark-star';
       btn.setAttribute('data-question-key', questionKey);
       btn.setAttribute('role', 'button');
-      btn.title = 'Đánh dấu (Shift+click để thêm ghi chú)';
+      btn.title = 'Đánh dấu (Shift+click hoặc nhấn giữ để thêm ghi chú)';
       btn.innerHTML = '<i class="fa-regular fa-star"></i>';
 
       // ensure star is positioned relative to the element it's attached to
@@ -5235,33 +5235,33 @@
       const stored = loadBookmarks(testId, storedUserId).find(b => b.questionKey === questionKey);
       if (stored) { btn.classList.add('starred'); btn.innerHTML = '<i class="fa-solid fa-star"></i>'; }
 
-      btn.addEventListener('click', async (ev) => {
-        ev.stopPropagation();
-        // determine userId (ask user if none found)
+      // long press support (for iPad/mobile)
+      let longPressTimer = null;
+      let longPressTriggered = false;
+
+      async function doBookmark(withNote, ev) {
+        if (ev) ev.stopPropagation();
         let userId = getUserId();
         if (!userId) {
           alert('Thiết bị của bạn không hỗ trợ tính năng này, hãy liên hệ Admin');
           return;
         }
-
-        // re-evaluate stored bookmark for this user
         const localStored = loadBookmarks(testId, userId).find(b => b.questionKey === questionKey);
-        const note = ev.shiftKey ? (prompt('Ghi chú cho câu hỏi (tùy chọn):', localStored && localStored.note ? localStored.note : '') || '') : (localStored && localStored.note ? localStored.note : '');
+        const note = withNote ? (prompt('Ghi chú cho câu hỏi (tùy chọn):', localStored && localStored.note ? localStored.note : '') || '') : (localStored && localStored.note ? localStored.note : '');
         const bookmark = {
-  id: `${questionKey}_${Date.now()}`,
-  questionKey: questionKey,
-  questionText: (questionText||'').slice(0,500),
-  questionNumber: questionNumber || '',
-  options: options || [],
-  answer: answer || '',
-  detail: detail || '',
-  testId: testId,
-  userId: userId || null,
-  timestamp: Date.now(),
-  note: note || '',
-  synced: false
-};
-
+          id: `${questionKey}_${Date.now()}`,
+          questionKey: questionKey,
+          questionText: (questionText||'').slice(0,500),
+          questionNumber: questionNumber || '',
+          options: options || [],
+          answer: answer || '',
+          detail: detail || '',
+          testId: testId,
+          userId: userId || null,
+          timestamp: Date.now(),
+          note: note || '',
+          synced: false
+        };
         const arr = loadBookmarks(testId, userId);
         const exists = arr.findIndex(b => b.questionKey === questionKey) !== -1;
         if (exists) {
@@ -5275,7 +5275,24 @@
           btn.classList.add('starred'); btn.innerHTML = '<i class="fa-solid fa-star"></i>';
           postBookmark(bookmark).then(ok => { if (ok) { const a = loadBookmarks(testId, userId); const idx = a.findIndex(x => x.id === bookmark.id); if (idx !== -1) { a[idx].synced = true; saveBookmarks(testId, userId, a); } } });
         }
+      }
+
+      btn.addEventListener('click', async (ev) => {
+        if (longPressTriggered) { longPressTriggered = false; return; }
+        ev.stopPropagation();
+        await doBookmark(ev.shiftKey, ev);
       });
+
+      btn.addEventListener('touchstart', (ev) => {
+        longPressTriggered = false;
+        longPressTimer = setTimeout(() => {
+          longPressTriggered = true;
+          doBookmark(true, null);
+        }, 500);
+      }, { passive: true });
+
+      btn.addEventListener('touchend', () => { clearTimeout(longPressTimer); });
+      btn.addEventListener('touchmove', () => { clearTimeout(longPressTimer); });
 
       element.appendChild(btn);
     }
