@@ -11,6 +11,8 @@
     rel="stylesheet" />
   <style>
     /* ===== ACCESS DENIED OVERLAY ===== */
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600&display=swap');
+
     #accessDeniedOverlay {
       position: fixed;
       inset: 0;
@@ -20,37 +22,167 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
     }
-    #accessDeniedOverlay .access-box {
-      background: rgba(0, 15, 30, 0.95);
-      border: 1px solid rgba(255, 51, 102, 0.6);
-      border-radius: 16px;
-      padding: 48px 40px;
-      max-width: 480px;
-      width: 90%;
-      text-align: center;
-      box-shadow: 0 0 60px rgba(255, 51, 102, 0.2);
+    /* Ambient orbs */
+    #accessDeniedOverlay::before,
+    #accessDeniedOverlay::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.13;
+      animation: adOrbFloat 7s ease-in-out infinite;
+      pointer-events: none;
     }
-    #accessDeniedOverlay .access-icon {
-      font-size: 56px;
-      color: #ff3366;
-      margin-bottom: 20px;
-      filter: drop-shadow(0 0 12px #ff3366);
+    #accessDeniedOverlay::before {
+      width: 500px; height: 500px;
+      background: #ff1744;
+      top: -160px; left: -160px;
     }
-    #accessDeniedOverlay .access-title {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 18px;
-      font-weight: 700;
-      color: #ff3366;
-      letter-spacing: 2px;
-      margin-bottom: 16px;
+    #accessDeniedOverlay::after {
+      width: 360px; height: 360px;
+      background: #00e5ff;
+      bottom: -100px; right: -100px;
+      animation-delay: -3.5s;
     }
-    #accessDeniedOverlay .access-msg {
-      font-family: 'Exo 2', sans-serif;
-      font-size: 15px;
-      color: #a0c8e0;
-      line-height: 1.7;
+    @keyframes adOrbFloat { 0%,100%{transform:scale(1)} 50%{transform:scale(1.07)} }
+
+    /* Grid background inside overlay */
+    #accessDeniedOverlay .ad-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,229,255,0.042) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,255,0.042) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
     }
+
+    /* Panel wrapper with drop-shadow glow */
+    #accessDeniedOverlay .ad-panel-shell {
+      position: relative;
+      z-index: 1;
+      filter:
+        drop-shadow(0 0 30px rgba(255,23,68,0.5))
+        drop-shadow(0 0 70px rgba(255,23,68,0.18))
+        drop-shadow(0 0 16px rgba(0,229,255,0.2));
+      animation: adPanelIn 0.7s cubic-bezier(0.2,0.8,0.3,1) forwards;
+    }
+    @keyframes adPanelIn {
+      from{opacity:0;transform:scale(0.9) translateY(18px)}
+      to{opacity:1;transform:scale(1) translateY(0)}
+    }
+
+    #accessDeniedOverlay .ad-panel {
+      position: relative;
+      width: 500px;
+      max-width: 92vw;
+    }
+    #accessDeniedOverlay .ad-frame-svg {
+      display: block;
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: visible;
+    }
+    #accessDeniedOverlay .ad-content {
+      position: relative;
+      z-index: 1;
+      padding: 46px 52px 42px;
+    }
+
+    /* Scan line */
+    #accessDeniedOverlay .ad-scan {
+      position: absolute; left:0; right:0; height:1px;
+      background: linear-gradient(90deg,transparent,rgba(0,229,255,.25),transparent);
+      animation: adScan 4s linear infinite;
+      pointer-events: none; z-index: 30;
+    }
+    @keyframes adScan {
+      from{top:0;opacity:0} 8%{opacity:1} 92%{opacity:1} to{top:100%;opacity:0}
+    }
+
+    /* Icon */
+    #accessDeniedOverlay .ad-icon-wrap {
+      display: flex; justify-content: center; margin-bottom: 22px;
+    }
+    #accessDeniedOverlay .ad-ban-icon {
+      width: 90px; height: 90px; position: relative;
+    }
+    #accessDeniedOverlay .ad-ban-circle {
+      width:100%;height:100%;border-radius:50%;
+      border:5px solid #ff1744;position:absolute;
+      box-shadow:0 0 18px #ff1744,0 0 45px rgba(255,23,68,.4),inset 0 0 18px rgba(255,23,68,.15);
+      animation: adIconPulse 1.8s ease-in-out infinite;
+    }
+    @keyframes adIconPulse {
+      0%,100%{box-shadow:0 0 18px #ff1744,0 0 45px rgba(255,23,68,.35),inset 0 0 18px rgba(255,23,68,.15)}
+      50%{box-shadow:0 0 32px #ff1744,0 0 75px rgba(255,23,68,.55),inset 0 0 30px rgba(255,23,68,.3)}
+    }
+    #accessDeniedOverlay .ad-ban-line {
+      position:absolute;width:5px;height:78%;
+      background:linear-gradient(to bottom,#ff1744,#ff4081);
+      top:11%;left:calc(50% - 2.5px);transform:rotate(45deg);
+      border-radius:3px;box-shadow:0 0 10px #ff1744;
+    }
+    #accessDeniedOverlay .ad-sparks {
+      position:absolute;inset:10px;border-radius:50%;overflow:hidden;
+    }
+    #accessDeniedOverlay .ad-spark {
+      position:absolute;width:2px;
+      background:linear-gradient(to bottom,transparent,#ff4081,transparent);
+      border-radius:1px;animation:adSpark .9s ease-in-out infinite;
+    }
+    #accessDeniedOverlay .ad-spark:nth-child(1){height:36px;left:28%;top:22%;animation-delay:0s;transform:rotate(22deg)}
+    #accessDeniedOverlay .ad-spark:nth-child(2){height:28px;left:54%;top:28%;animation-delay:-.3s;transform:rotate(-18deg)}
+    #accessDeniedOverlay .ad-spark:nth-child(3){height:44px;left:18%;top:38%;animation-delay:-.6s;transform:rotate(38deg)}
+    #accessDeniedOverlay .ad-spark:nth-child(4){height:22px;left:64%;top:16%;animation-delay:-.2s;transform:rotate(-32deg)}
+    @keyframes adSpark{0%,100%{opacity:.25}50%{opacity:1}}
+    #accessDeniedOverlay .ad-rings {
+      position:absolute;inset:-14px;border-radius:50%;
+      animation:adRingsRot 4s linear infinite;
+    }
+    #accessDeniedOverlay .ad-rings::before,
+    #accessDeniedOverlay .ad-rings::after {
+      content:'';position:absolute;border-radius:50%;border:1px solid rgba(255,23,68,.22);
+    }
+    #accessDeniedOverlay .ad-rings::before{inset:4px}
+    #accessDeniedOverlay .ad-rings::after{inset:14px;border-color:rgba(255,64,129,.14)}
+    @keyframes adRingsRot{to{transform:rotate(360deg)}}
+
+    /* Title */
+    #accessDeniedOverlay .ad-title {
+      text-align:center;
+      font-family:'Orbitron',sans-serif;
+      font-size:22px;font-weight:900;
+      color:#ff1744;letter-spacing:3px;
+      text-shadow:0 0 8px #ff1744,0 0 28px rgba(255,23,68,.65),0 0 55px rgba(255,23,68,.3);
+      margin-bottom:18px;
+      animation:adFlicker 5s ease-in-out infinite;
+    }
+    @keyframes adFlicker{0%,93%,95.5%,97.5%,100%{opacity:1}94%,96.5%,98.5%{opacity:.8}}
+
+    /* Separator */
+    #accessDeniedOverlay .ad-sep {
+      height:1px;
+      background:linear-gradient(90deg,transparent,rgba(255,23,68,.7),rgba(0,229,255,.4),rgba(255,23,68,.7),transparent);
+      margin:0 0 18px;opacity:.8;
+    }
+
+    /* Message */
+    #accessDeniedOverlay .ad-msg {
+      text-align:center;
+      color:#c8d8e8;
+      font-family:'Rajdhani',sans-serif;
+      font-size:16px;line-height:1.75;letter-spacing:.4px;
+    }
+    #accessDeniedOverlay .ad-cursor {
+      animation:adBlink 1s step-end infinite;color:#00e5ff;
+    }
+    @keyframes adBlink{0%,100%{opacity:1}50%{opacity:0}}
 
     /* ===== CYBER LOADING - ĐẶT TRONG HEAD ĐỂ HIỆN NGAY TỪ PIXEL ĐẦU TIÊN ===== */
     #cyberLoading {
@@ -3356,10 +3488,33 @@
 <body>
   <!-- ACCESS DENIED OVERLAY -->
   <div id="accessDeniedOverlay" style="display:none;">
-    <div class="access-box">
-      <div class="access-icon"><i class="fas fa-ban"></i></div>
-      <div class="access-title">TRUY CẬP BỊ TỪ CHỐI</div>
-      <div class="access-msg">Thiết bị chưa được cấp quyền truy cập hoặc bị thu hồi.<br>Hãy liên hệ Admin.</div>
+    <div class="ad-grid"></div>
+    <div class="ad-panel-shell">
+      <div class="ad-panel">
+        <svg class="ad-frame-svg" id="adFrameSvg" xmlns="http://www.w3.org/2000/svg"></svg>
+        <div class="ad-content">
+          <div class="ad-scan"></div>
+          <div class="ad-icon-wrap">
+            <div class="ad-ban-icon">
+              <div class="ad-rings"></div>
+              <div class="ad-ban-circle"></div>
+              <div class="ad-ban-line"></div>
+              <div class="ad-sparks">
+                <div class="ad-spark"></div>
+                <div class="ad-spark"></div>
+                <div class="ad-spark"></div>
+                <div class="ad-spark"></div>
+              </div>
+            </div>
+          </div>
+          <div class="ad-title">TRUY CẬP BỊ TỪ CHỐI</div>
+          <div class="ad-sep"></div>
+          <div class="ad-msg">
+            Thiết bị chưa được cấp quyền truy cập hoặc bị thu hồi.<br>
+            Hãy liên hệ Admin.<span class="ad-cursor">_</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <!-- CYBER LOADING: phần tử đầu tiên trong body, hiển thị ngay trước mọi nội dung khác -->
@@ -3754,7 +3909,153 @@
     </div>
   </div>
 
-  <!-- ================================================================
+  <!-- ===== ACCESS DENIED SVG FRAME SCRIPT ===== -->
+  <script>
+  (function() {
+    function makeNotchedPath(W, H, C, N, D, nc) {
+      var mx = W/2, my = H/2, ic = 4;
+      return [
+        'M '+C+' 0',
+        'L '+(mx-N-nc)+' 0',
+        'L '+(mx-N)+' '+nc,
+        'L '+(mx-N)+' '+(D-ic),
+        'L '+(mx-N+ic)+' '+D,
+        'L '+(mx+N-ic)+' '+D,
+        'L '+(mx+N)+' '+(D-ic),
+        'L '+(mx+N)+' '+nc,
+        'L '+(mx+N+nc)+' 0',
+        'L '+(W-C)+' 0',
+        'L '+W+' '+C,
+        'L '+W+' '+(my-N-nc),
+        'L '+(W-nc)+' '+(my-N),
+        'L '+(W-D+ic)+' '+(my-N),
+        'L '+(W-D)+' '+(my-N+ic),
+        'L '+(W-D)+' '+(my+N-ic),
+        'L '+(W-D+ic)+' '+(my+N),
+        'L '+(W-nc)+' '+(my+N),
+        'L '+W+' '+(my+N+nc),
+        'L '+W+' '+(H-C),
+        'L '+(W-C)+' '+H,
+        'L '+(mx+N+nc)+' '+H,
+        'L '+(mx+N)+' '+(H-nc),
+        'L '+(mx+N)+' '+(H-D+ic),
+        'L '+(mx+N-ic)+' '+(H-D),
+        'L '+(mx-N+ic)+' '+(H-D),
+        'L '+(mx-N)+' '+(H-D+ic),
+        'L '+(mx-N)+' '+(H-nc),
+        'L '+(mx-N-nc)+' '+H,
+        'L '+C+' '+H,
+        'L 0 '+(H-C),
+        'L 0 '+(my+N+nc),
+        'L '+nc+' '+(my+N),
+        'L '+(D-ic)+' '+(my+N),
+        'L '+D+' '+(my+N-ic),
+        'L '+D+' '+(my-N+ic),
+        'L '+(D-ic)+' '+(my-N),
+        'L '+nc+' '+(my-N),
+        'L 0 '+(my-N-nc),
+        'L 0 '+C,
+        'L '+C+' 0 Z'
+      ].join(' ');
+    }
+
+    function buildAdFrame() {
+      var svg = document.getElementById('adFrameSvg');
+      if (!svg) return;
+      svg.innerHTML = '';
+      var panel = svg.parentElement;
+      var W = panel.offsetWidth, H = panel.offsetHeight;
+      if (!W || !H) return;
+      svg.setAttribute('viewBox', '0 0 '+W+' '+H);
+
+      var ns = 'http://www.w3.org/2000/svg';
+      var mk = function(tag, attrs) {
+        var el = document.createElementNS(ns, tag);
+        Object.keys(attrs).forEach(function(k){ el.setAttribute(k, attrs[k]); });
+        return el;
+      };
+
+      var C=16, N=30, D=18, nc=8, gap=7;
+      var C2=Math.max(4,C-gap), N2=N-gap, D2=D-gap, nc2=Math.max(3,nc-gap/2);
+      var outerPath = makeNotchedPath(W, H, C, N, D, nc);
+      var innerPath = makeNotchedPath(W-gap*2, H-gap*2, C2, N2, D2, nc2);
+
+      var defs = document.createElementNS(ns,'defs');
+      defs.innerHTML =
+        '<filter id="adGlow" x="-40%" y="-40%" width="180%" height="180%">' +
+          '<feGaussianBlur in="SourceGraphic" stdDeviation="3.5" result="b"/>' +
+          '<feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>' +
+        '</filter>' +
+        '<radialGradient id="adSheen" cx="50%" cy="28%" r="62%">' +
+          '<stop offset="0%" stop-color="rgba(0,229,255,0.06)"/>' +
+          '<stop offset="100%" stop-color="rgba(0,0,0,0)"/>' +
+        '</radialGradient>';
+      svg.appendChild(defs);
+
+      // Glass fill
+      svg.appendChild(mk('path', {d:outerPath, fill:'rgba(3,16,32,0.93)'}));
+      svg.appendChild(mk('path', {d:outerPath, fill:'url(#adSheen)'}));
+
+      // Outer metal border
+      svg.appendChild(mk('path', {d:outerPath, fill:'none', stroke:'#28404f', 'stroke-width':'4.5', 'stroke-linejoin':'miter'}));
+
+      // Inner neon border (translated by gap)
+      var innerG = document.createElementNS(ns,'g');
+      innerG.setAttribute('transform','translate('+gap+','+gap+')');
+      var neon = mk('path', {d:innerPath, fill:'none', stroke:'rgba(0,229,255,0.75)', 'stroke-width':'1.2', 'stroke-linejoin':'miter', filter:'url(#adGlow)'});
+      innerG.appendChild(neon);
+      svg.appendChild(innerG);
+
+      // Corner dots
+      [[C/2,C/2],[W-C/2,C/2],[W-C/2,H-C/2],[C/2,H-C/2]].forEach(function(p){
+        svg.appendChild(mk('circle',{cx:p[0],cy:p[1],r:3.5,fill:'#00e5ff',filter:'url(#adGlow)'}));
+      });
+
+      // Notch midpoint dots
+      var mx=W/2, my=H/2;
+      [[mx-N-nc/2,nc/2],[mx+N+nc/2,nc/2],
+       [W-nc/2,my-N-nc/2],[W-nc/2,my+N+nc/2],
+       [mx+N+nc/2,H-nc/2],[mx-N-nc/2,H-nc/2],
+       [nc/2,my+N+nc/2],[nc/2,my-N-nc/2]
+      ].forEach(function(p){
+        svg.appendChild(mk('circle',{cx:p[0],cy:p[1],r:2,fill:'rgba(0,229,255,0.55)',filter:'url(#adGlow)'}));
+      });
+
+      // Animate neon
+      var t = 0;
+      (function pulse(){
+        t += 0.018;
+        neon.setAttribute('stroke','rgba(0,229,255,'+(0.38+0.62*Math.sin(t)).toFixed(2)+')');
+        requestAnimationFrame(pulse);
+      })();
+    }
+
+    // Build when overlay becomes visible
+    var _origOnload = window.onload;
+    window.addEventListener('load', function(){
+      // Try to build if overlay is shown immediately
+      setTimeout(buildAdFrame, 50);
+    });
+
+    // Also observe when display changes (when license check triggers it)
+    var adObs = new MutationObserver(function(muts){
+      muts.forEach(function(m){
+        var el = m.target;
+        if (el.id === 'accessDeniedOverlay' && el.style.display !== 'none') {
+          setTimeout(buildAdFrame, 30);
+        }
+      });
+    });
+    document.addEventListener('DOMContentLoaded', function(){
+      var overlay = document.getElementById('accessDeniedOverlay');
+      if (overlay) adObs.observe(overlay, {attributes:true, attributeFilter:['style']});
+    });
+
+    window.addEventListener('resize', buildAdFrame);
+  })();
+  </script>
+
+    <!-- ================================================================
          HUD TIMER + GHOST CLOCK SCRIPT
     ================================================================ -->
   <script>
