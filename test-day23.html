@@ -5193,9 +5193,9 @@
     function getUserId() {
       // prefer global variable `n1_user_id` if set by server/template
       if (typeof window.n1_user_id !== 'undefined' && window.n1_user_id) return window.n1_user_id;
-      if (window._hq_userId !== undefined && window._hq_userId) { window.n1_user_id = window._hq_userId; return window.n1_user_id; }
       const fromUrl = getUserIdFromUrl();
       if (fromUrl) { window.n1_user_id = fromUrl; return window.n1_user_id; }
+      try { const fromStorage = localStorage.getItem('n1_user_id'); if (fromStorage) { window.n1_user_id = fromStorage; return window.n1_user_id; } } catch (e) { }
       window.n1_user_id = null;
       return null;
     }
