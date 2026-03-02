@@ -4712,8 +4712,8 @@
             stats: "Đã học: 126/2000 từ",
           },
           {
-            title: "Từ đồng nghĩa/Trái nghĩa",
-            desc: "500 cặp từ đồng nghĩa và trái nghĩa N1",
+            title: "Ôn tập từ vựng N1",
+            desc: "Ôn tập các từ vựng đã bookmark",
             progress: 28,
             stats: "Đã học: 140/500 cặp từ",
           },
@@ -5100,52 +5100,6 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
           },
         ],
       },
-      // Bài test cho "Từ đồng nghĩa/Trái nghĩa"
-      "Từ đồng nghĩa/Trái nghĩa": {
-        title: "Từ đồng nghĩa - Trái nghĩa N1",
-        tests: [
-          {
-            id: 1,
-            name: "Bài test Đồng nghĩa phần 1",
-            questions: 20,
-            time: "15 phút",
-            difficulty: "Trung bình",
-            url: "test-synonym1.html",
-          },
-          {
-            id: 2,
-            name: "Bài test Đồng nghĩa phần 2",
-            questions: 20,
-            time: "15 phút",
-            difficulty: "Khó",
-            url: "test-synonym2.html",
-          },
-          {
-            id: 3,
-            name: "Bài test Trái nghĩa phần 1",
-            questions: 20,
-            time: "15 phút",
-            difficulty: "Trung bình",
-            url: "test-antonym1.html",
-          },
-          {
-            id: 4,
-            name: "Bài test Trái nghĩa phần 2",
-            questions: 20,
-            time: "15 phút",
-            difficulty: "Khó",
-            url: "test-antonym2.html",
-          },
-          {
-            id: 5,
-            name: "Bài test tổng hợp Đồng nghĩa - Trái nghĩa",
-            questions: 40,
-            time: "30 phút",
-            difficulty: "Khó",
-            url: "test-synonym-antonym.html",
-          },
-        ],
-      },
       // Bài test cho "Từ vựng khó"
       "Từ vựng khó": {
         title: "Từ vựng khó N1",
@@ -5184,6 +5138,14 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
               time: "42 phút",
               difficulty: "Khó",
               url: "Vocab-Hard-1-4.html",
+            },
+{
+              id: 1005,
+              name: "Từ vựng khó Unit 1 phần 5",
+              questions: 41,
+              time: "41 phút",
+              difficulty: "Khó",
+              url: "Vocab-Hard-1-5.html",
             }
               ],
           },
@@ -5201,6 +5163,20 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
               ],
             }
             ]
+      },
+      // Bài test cho các từ đã bookmark, lấy từ server
+      "Ôn tập": {
+        title: "ÔN TẬP TỪ VỰNG BOOKMARK",
+        tests: [
+          {
+            id: 1,
+            name: "TỪ VỰNG ĐÃ BOOKMARK",
+            questions: 20,
+            time: "15 phút",
+            difficulty: "Trung bình",
+            url: "Bookmark.html",
+          },
+        ],
       },
     };
     //Kết thúc test data
