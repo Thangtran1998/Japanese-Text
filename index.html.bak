@@ -4971,6 +4971,19 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
               url: "Mimikara-3-5.html",
             }
               ],
+            },
+{
+              name: "Unit 4",
+              tests: [
+{
+              id: 4001,
+              name: "Từ vựng Mimikara Unit 4 (281-300)",
+              questions: 40,
+              time: "40 phút",
+              difficulty: "Khó",
+              url: "Mimikara-4-1.html",
+            }
+              ],
             }
             ],
       },
