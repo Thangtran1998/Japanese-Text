@@ -6,18 +6,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>N1 CyberSphere - JLPT N1 2026/07</title>
   <style>
-  /* PRELOAD: Ẩn modal cho đến khi JavaScript khởi tạo xong */
-  .module-display-frame, .test-modal-frame {
-    opacity: 0 !important;
-    visibility: hidden !important;
-    transition: none !important;
-  }
-  
-  /* Đảm bảo nội dung chính hiển thị ngay */
-  #appRoot {
-    display: block;
-  }
-</style>
+    /* PRELOAD: Ẩn modal cho đến khi JavaScript khởi tạo xong */
+    .module-display-frame,
+    .test-modal-frame {
+      opacity: 0 !important;
+      visibility: hidden !important;
+      transition: none !important;
+    }
+
+    /* Đảm bảo nội dung chính hiển thị ngay */
+    #appRoot {
+      display: block;
+    }
+  </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link
     href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@300;400;600&display=swap"
@@ -3359,18 +3360,58 @@
     body.reduce-motion .settings-gear-btn.active .fa-gear {
       animation: none !important;
     }
+
     /* ===== GIẤU MODAL KHI LOAD TRANG ===== */
-.module-display-frame,
-.test-modal-frame {
-  opacity: 0 !important;
-  visibility: hidden !important;
-  transition: none !important;
+    .module-display-frame,
+    .test-modal-frame {
+      opacity: 0 !important;
+      visibility: hidden !important;
+      transition: none !important;
+    }
+
+    .module-display-frame.show,
+    .test-modal-frame.show {
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+    /* ===== RESTORE LOADING INDICATOR ===== */
+#restoreLoading {
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  user-select: none;
+  text-transform: lowercase;
+  font-family: 'Exo 2', sans-serif;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
-.module-display-frame.show,
-.test-modal-frame.show {
-  opacity: 1 !important;
-  visibility: visible !important;
+#restoreLoading i {
+  animation: slowSpin 1.5s linear infinite;
+}
+
+@keyframes slowSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Hiệu ứng fade in/out */
+#restoreLoading[style*="display: flex"] {
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
   </style>
 </head>
@@ -5552,7 +5593,7 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
       testModal.classList.remove("show");
       testBackdrop.classList.remove("show");
       localStorage.removeItem(LS_OPEN_ITEM);
-  localStorage.removeItem(LS_OPEN_UNIT);
+      localStorage.removeItem(LS_OPEN_UNIT);
       // ✅ Cập nhật lại % tiến độ module chính sau khi đóng popup bài test
       updateMainModulesProgress();
     }
@@ -5949,36 +5990,38 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
         // Nếu đã kích hoạt: Ẩn gate và HIỂN THỊ APP ngay lập tức
         showGate(false);
         runAppUI();
-         requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      const savedModule = localStorage.getItem(LS_OPEN_MODULE);
-      if (savedModule && moduleContents[savedModule]) {
-        // Mở module
-        lockAndOpen(savedModule).then(() => {
-          // Sau khi mở module xong, kiểm tra và khôi phục test modal
-          const savedItem = localStorage.getItem(LS_OPEN_ITEM);
-          const savedUnit = localStorage.getItem(LS_OPEN_UNIT);
-          
-          if (savedItem && testData[savedItem]) {
-            // Mở test modal
-            openTestModal(savedItem).then(() => {
-              // Nếu có unit đã chọn, active unit đó
-              if (savedUnit !== null) {
-                const unitTabs = document.querySelectorAll('.unit-tab');
-                const unitIndex = parseInt(savedUnit, 10);
-                if (unitTabs[unitIndex]) {
-                  // Giả lập click vào tab
-                  setTimeout(() => {
-                    unitTabs[unitIndex].click();
-                  }, 100);
+         showRestoreLoading();
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            const savedModule = localStorage.getItem(LS_OPEN_MODULE);
+            if (savedModule && moduleContents[savedModule]) {
+              // Mở module
+              lockAndOpen(savedModule).then(() => {
+                // Sau khi mở module xong, kiểm tra và khôi phục test modal
+                const savedItem = localStorage.getItem(LS_OPEN_ITEM);
+                const savedUnit = localStorage.getItem(LS_OPEN_UNIT);
+
+                if (savedItem && testData[savedItem]) {
+                  // Mở test modal
+                  openTestModal(savedItem).then(() => {
+                    // Nếu có unit đã chọn, active unit đó
+                    if (savedUnit !== null) {
+                      const unitTabs = document.querySelectorAll('.unit-tab');
+                      const unitIndex = parseInt(savedUnit, 10);
+                      if (unitTabs[unitIndex]) {
+                        // Giả lập click vào tab
+                        setTimeout(() => {
+                          unitTabs[unitIndex].click();
+                          setTimeout(hideRestoreLoading, 300);
+                        }, 100);
+                      }
+                    }
+                  });
                 }
-              }
-            });
-          }
+              });
+            }
+          });
         });
-      }
-    });
-  });
         startBackgroundRecheck(deviceId);
       } else {
         // Nếu chưa kích hoạt: Hiện gate
@@ -6003,30 +6046,30 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
         showGate(false);
         runAppUI();
         requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      const savedModule = localStorage.getItem(LS_OPEN_MODULE);
-      if (savedModule && moduleContents[savedModule]) {
-        lockAndOpen(savedModule).then(() => {
-          const savedItem = localStorage.getItem(LS_OPEN_ITEM);
-          const savedUnit = localStorage.getItem(LS_OPEN_UNIT);
-          
-          if (savedItem && testData[savedItem]) {
-            openTestModal(savedItem).then(() => {
-              if (savedUnit !== null) {
-                const unitTabs = document.querySelectorAll('.unit-tab');
-                const unitIndex = parseInt(savedUnit, 10);
-                if (unitTabs[unitIndex]) {
-                  setTimeout(() => {
-                    unitTabs[unitIndex].click();
-                  }, 100);
+          requestAnimationFrame(() => {
+            const savedModule = localStorage.getItem(LS_OPEN_MODULE);
+            if (savedModule && moduleContents[savedModule]) {
+              lockAndOpen(savedModule).then(() => {
+                const savedItem = localStorage.getItem(LS_OPEN_ITEM);
+                const savedUnit = localStorage.getItem(LS_OPEN_UNIT);
+
+                if (savedItem && testData[savedItem]) {
+                  openTestModal(savedItem).then(() => {
+                    if (savedUnit !== null) {
+                      const unitTabs = document.querySelectorAll('.unit-tab');
+                      const unitIndex = parseInt(savedUnit, 10);
+                      if (unitTabs[unitIndex]) {
+                        setTimeout(() => {
+                          unitTabs[unitIndex].click();
+                        }, 100);
+                      }
+                    }
+                  });
                 }
-              }
-            });
-          }
+              });
+            }
+          });
         });
-      }
-    });
-  });
         startBackgroundRecheck(deviceId);
       }
 
@@ -6877,26 +6920,28 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
 
     })();
   </script>
-  <!-- LOADING INDICATOR NHẸ -->
+  <!-- LOADING INDICATOR NHẸ - ĐÃ LÀM MỜ -->
 <div id="restoreLoading" style="
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background: rgba(0, 20, 40, 0.9);
-  border: 1px solid #00a8ff;
+  background: rgba(0, 20, 40, 0.5);
+  border: 1px solid rgba(0, 168, 255, 0.3);
   border-radius: 30px;
-  padding: 8px 16px;
-  font-size: 12px;
-  color: #00ffcc;
+  padding: 6px 14px;
+  font-size: 11px;
+  color: rgba(0, 255, 204, 0.6);
   display: none;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   z-index: 100000;
-  box-shadow: 0 0 15px rgba(0, 168, 255, 0.3);
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(4px);
+  letter-spacing: 0.5px;
+  font-weight: 300;
+  box-shadow: 0 0 10px rgba(0, 168, 255, 0.1);
 ">
-  <i class="fas fa-sync-alt fa-spin"></i>
-  <span>Đang khôi phục phiên làm việc...</span>
+  <i class="fas fa-circle-notch fa-spin" style="font-size: 10px; opacity: 0.7;"></i>
+  <span style="opacity: 0.8;">đang khôi phục phiên làm việc</span>
 </div>
 
 <script>
@@ -6911,16 +6956,18 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
     if (el) el.style.display = 'none';
   }
   
-  // Gọi trong quá trình khôi phục
-  const originalLockAndOpen = lockAndOpen;
-  lockAndOpen = async function(moduleId) {
-    showRestoreLoading();
-    try {
-      await originalLockAndOpen(moduleId);
-    } finally {
-      setTimeout(hideRestoreLoading, 500);
-    }
-  };
+  // Ghi đè hàm lockAndOpen để hiển thị loading
+  const originalLockAndOpen = window.lockAndOpen;
+  if (originalLockAndOpen) {
+    window.lockAndOpen = async function(moduleId) {
+      showRestoreLoading();
+      try {
+        await originalLockAndOpen(moduleId);
+      } finally {
+        setTimeout(hideRestoreLoading, 500);
+      }
+    };
+  }
 </script>
 </body>
 
