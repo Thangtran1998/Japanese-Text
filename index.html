@@ -452,7 +452,7 @@
       position: fixed;
       inset: 0;
       background: rgba(2, 8, 18, 0.78);
-      backdrop-filter: blur(4px);
+      /* backdrop-filter: blur(4px); */
       z-index: 9998;
       display: none;
       opacity: 0;
@@ -478,7 +478,7 @@
       opacity: 0;
       z-index: 9999;
       display: none;
-      backdrop-filter: blur(15px);
+      /* backdrop-filter: blur(15px); */
       overflow: hidden;
       box-shadow:
         0 15px 40px rgba(0, 0, 0, 0.8),
@@ -888,13 +888,18 @@
     .license-gate {
       position: fixed;
       inset: 0;
-      background: rgba(2, 8, 18, 0.88);
-      backdrop-filter: blur(10px);
+      background: rgba(10, 14, 23, 0.95);
+      /* backdrop-filter: blur(10px); */
       z-index: 9999;
-      display: none;
+      display: flex; /* Hiển thị mặc định khi chưa có JS */
       align-items: center;
       justify-content: center;
       padding: 20px;
+    }
+
+    /* Ẩn app mặc định, chỉ hiện khi đã kích hoạt */
+    #appRoot {
+      display: none;
     }
 
     .license-panel {
@@ -1615,7 +1620,7 @@
       position: fixed;
       inset: 0;
       background: rgba(2, 8, 18, 0.85);
-      backdrop-filter: blur(6px);
+      /* backdrop-filter: blur(6px); */
       z-index: 10000;
       display: none;
       opacity: 0;
@@ -1641,7 +1646,7 @@
       opacity: 0;
       z-index: 10001;
       display: none;
-      backdrop-filter: blur(15px);
+      /* backdrop-filter: blur(15px); */
       overflow: hidden;
       box-shadow:
         0 15px 40px rgba(0, 0, 0, 0.9),
@@ -5986,6 +5991,8 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
     Boot
   ========================================================= */
     (async function boot() {
+      console.log("🚀 Boot starting...");
+
       const deviceId = getOrCreateDeviceId();
       fillDeviceUI(deviceId);
 
@@ -6001,7 +6008,10 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
 
       // [QUAN TRỌNG] Kiểm tra trạng thái kích hoạt NGAY LẬP TỨC
       const activatedOnce = localStorage.getItem(LS_ACTIVATED) === "1";
+      console.log("📋 Checking activation:", { activatedOnce, savedLicense: !!savedLicense });
+
       if (activatedOnce && savedLicense) {
+        console.log("✅ Already activated, showing app...");
         // Nếu đã kích hoạt: Ẩn gate và HIỂN THỊ APP ngay lập tức
         showGate(false);
         runAppUI();
@@ -6011,6 +6021,7 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
 
         startBackgroundRecheck(deviceId);
       } else {
+        console.log("❌ Not activated, showing gate...");
         // Nếu chưa kích hoạt: Hiện gate
         showGate(true);
       }
