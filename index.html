@@ -452,18 +452,16 @@
       position: fixed;
       inset: 0;
       background: rgba(2, 8, 18, 0.78);
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(4px);
       z-index: 9998;
       display: none;
       opacity: 0;
-      visibility: hidden;
       transition: opacity 220ms ease;
     }
 
     .module-display-backdrop.show {
       display: block;
       opacity: 1;
-      visibility: visible;
     }
 
     .module-display-frame {
@@ -478,7 +476,6 @@
       top: 50%;
       transform: translate(-50%, -50%) scale(0.92);
       opacity: 0;
-      visibility: hidden;
       z-index: 9999;
       display: none;
       backdrop-filter: blur(15px);
@@ -1618,18 +1615,16 @@
       position: fixed;
       inset: 0;
       background: rgba(2, 8, 18, 0.85);
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(6px);
       z-index: 10000;
       display: none;
       opacity: 0;
-      visibility: hidden;
       transition: opacity 220ms ease;
     }
 
     .test-modal-backdrop.show {
       display: block;
       opacity: 1;
-      visibility: visible;
     }
 
     .test-modal-frame {
@@ -1644,7 +1639,6 @@
       top: 50%;
       transform: translate(-50%, -50%) scale(0.92);
       opacity: 0;
-      visibility: hidden;
       z-index: 10001;
       display: none;
       backdrop-filter: blur(15px);
@@ -5945,9 +5939,15 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
         // Khôi phục modal cấp 1
         await lockAndOpen(openModule);
 
+        // Delay nhỏ để tránh hiện modal cấp 2 ngay lập tức
+        await new Promise(resolve => setTimeout(resolve, 200));
+
         if (openItem && testData[openItem]) {
           // Khôi phục modal cấp 2
           await openTestModal(openItem);
+
+          // Delay nhỏ trước khi khôi phục unit
+          await new Promise(resolve => setTimeout(resolve, 300));
 
           if (openUnit && !isNaN(parseInt(openUnit))) {
             const unitIndex = parseInt(openUnit);
@@ -5977,7 +5977,7 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
             setTimeout(() => {
               loadingEl.style.display = "none";
             }, 300);
-          }, 500); // Giữ hiển thị 500ms để user thấy
+          }, 800); // Tăng thời gian giữ hiển thị để user thấy rõ hơn
         }
       }
     }
