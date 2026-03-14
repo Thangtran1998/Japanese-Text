@@ -452,7 +452,7 @@
       position: fixed;
       inset: 0;
       background: rgba(2, 8, 18, 0.78);
-      /* backdrop-filter: blur(4px); */
+      backdrop-filter: blur(8px);
       z-index: 9998;
       display: none;
       opacity: 0;
@@ -478,7 +478,7 @@
       opacity: 0;
       z-index: 9999;
       display: none;
-      /* backdrop-filter: blur(15px); */
+      backdrop-filter: blur(15px);
       overflow: hidden;
       box-shadow:
         0 15px 40px rgba(0, 0, 0, 0.8),
@@ -888,18 +888,13 @@
     .license-gate {
       position: fixed;
       inset: 0;
-      background: rgba(10, 14, 23, 0.95);
-      /* backdrop-filter: blur(10px); */
+      background: rgba(2, 8, 18, 0.88);
+      backdrop-filter: blur(10px);
       z-index: 9999;
-      display: flex; /* Hiển thị mặc định khi chưa có JS */
+      display: none;
       align-items: center;
       justify-content: center;
       padding: 20px;
-    }
-
-    /* Ẩn app mặc định, chỉ hiện khi đã kích hoạt */
-    #appRoot {
-      display: none;
     }
 
     .license-panel {
@@ -1620,7 +1615,7 @@
       position: fixed;
       inset: 0;
       background: rgba(2, 8, 18, 0.85);
-      /* backdrop-filter: blur(6px); */
+      backdrop-filter: blur(12px);
       z-index: 10000;
       display: none;
       opacity: 0;
@@ -1646,7 +1641,7 @@
       opacity: 0;
       z-index: 10001;
       display: none;
-      /* backdrop-filter: blur(15px); */
+      backdrop-filter: blur(15px);
       overflow: hidden;
       box-shadow:
         0 15px 40px rgba(0, 0, 0, 0.9),
@@ -4068,11 +4063,6 @@
     const LS_EXAM_DATE = "n1_exam_date";
     const LS_USER_ID = "n1_user_id";
 
-    // Các biến lưu trạng thái modal 3 cấp
-    const LS_OPEN_MODULE = "n1_open_module";
-    const LS_OPEN_ITEM = "n1_open_item";
-    const LS_OPEN_UNIT = "n1_open_unit";
-
     function uuidv4() {
       return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
         const r = (Math.random() * 16) | 0;
@@ -5244,9 +5234,6 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
       const testList = document.getElementById("testList");
       const testModalTitle = document.getElementById("testModalTitle");
 
-      // Lưu trạng thái item đang mở
-      localStorage.setItem(LS_OPEN_ITEM, itemTitle);
-
       // Lấy dữ liệu test tương ứng
       const testInfo = testData[itemTitle];
 
@@ -5382,11 +5369,6 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
               .querySelectorAll(".unit-tab")
               .forEach((t) => t.classList.remove("active"));
             tab.classList.add("active");
-
-            // Lưu trạng thái unit đang chọn (chỉ khi không đang khôi phục)
-            if (!isRestoringState) {
-              localStorage.setItem(LS_OPEN_UNIT, index.toString());
-            }
 
             await showUnitTests(index);
           });
@@ -5536,11 +5518,6 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
       const testBackdrop = document.getElementById("testModalBackdrop");
       testModal.classList.remove("show");
       testBackdrop.classList.remove("show");
-
-      // Xóa trạng thái item và unit
-      localStorage.removeItem(LS_OPEN_ITEM);
-      localStorage.removeItem(LS_OPEN_UNIT);
-
       // ✅ Cập nhật lại % tiến độ module chính sau khi đóng popup bài test
       updateMainModulesProgress();
     }
@@ -5803,20 +5780,12 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
       if (card) card.classList.add("locked");
       openModal();
       await renderModuleToModal(moduleId);
-
-      // Lưu trạng thái module đang mở
-      localStorage.setItem(LS_OPEN_MODULE, moduleId);
     }
 
     function unlockAndClose() {
       lockedModule = null;
       clearAllCardStates();
       closeModal();
-
-      // Xóa trạng thái modal
-      localStorage.removeItem(LS_OPEN_MODULE);
-      localStorage.removeItem(LS_OPEN_ITEM);
-      localStorage.removeItem(LS_OPEN_UNIT);
     }
 
     function setupModuleInteractions() {
@@ -5913,86 +5882,9 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
     }
 
     /* =========================================================
-    Modal State Restoration
-  ========================================================= */
-    let isRestoringState = false;
-
-    async function restoreModalState() {
-      const openModule = localStorage.getItem(LS_OPEN_MODULE);
-      const openItem = localStorage.getItem(LS_OPEN_ITEM);
-      const openUnit = localStorage.getItem(LS_OPEN_UNIT);
-
-      if (!openModule) return; // Không có gì để khôi phục
-
-      isRestoringState = true;
-
-      // Hiển thị loading indicator
-      const loadingEl = document.getElementById("restoreLoading");
-      if (loadingEl) {
-        loadingEl.style.display = "flex";
-        // Thêm hiệu ứng fade in
-        loadingEl.style.opacity = "0";
-        loadingEl.style.transform = "translateY(10px)";
-        requestAnimationFrame(() => {
-          loadingEl.style.transition = "all 0.3s ease";
-          loadingEl.style.opacity = "1";
-          loadingEl.style.transform = "translateY(0)";
-        });
-      }
-
-      try {
-        // Khôi phục modal cấp 1
-        await lockAndOpen(openModule);
-
-        // Delay nhỏ để tránh hiện modal cấp 2 ngay lập tức
-        await new Promise(resolve => setTimeout(resolve, 200));
-
-        if (openItem && testData[openItem]) {
-          // Khôi phục modal cấp 2
-          await openTestModal(openItem);
-
-          // Delay nhỏ trước khi khôi phục unit
-          await new Promise(resolve => setTimeout(resolve, 300));
-
-          if (openUnit && !isNaN(parseInt(openUnit))) {
-            const unitIndex = parseInt(openUnit);
-            const testInfo = testData[openItem];
-
-            if (testInfo && testInfo.units && testInfo.units[unitIndex]) {
-              // Khôi phục unit tab
-              const tabs = document.querySelectorAll(".unit-tab");
-              if (tabs[unitIndex]) {
-                // Simulate click để trigger logic
-                tabs[unitIndex].click();
-              }
-            }
-          }
-        }
-      } catch (error) {
-        console.error("Lỗi khôi phục trạng thái modal:", error);
-      } finally {
-        isRestoringState = false;
-
-        // Ẩn loading indicator sau khi khôi phục xong
-        if (loadingEl) {
-          setTimeout(() => {
-            loadingEl.style.transition = "all 0.3s ease";
-            loadingEl.style.opacity = "0";
-            loadingEl.style.transform = "translateY(10px)";
-            setTimeout(() => {
-              loadingEl.style.display = "none";
-            }, 300);
-          }, 800); // Tăng thời gian giữ hiển thị để user thấy rõ hơn
-        }
-      }
-    }
-
-    /* =========================================================
     Boot
   ========================================================= */
     (async function boot() {
-      console.log("🚀 Boot starting...");
-
       const deviceId = getOrCreateDeviceId();
       fillDeviceUI(deviceId);
 
@@ -6008,20 +5900,12 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
 
       // [QUAN TRỌNG] Kiểm tra trạng thái kích hoạt NGAY LẬP TỨC
       const activatedOnce = localStorage.getItem(LS_ACTIVATED) === "1";
-      console.log("📋 Checking activation:", { activatedOnce, savedLicense: !!savedLicense });
-
       if (activatedOnce && savedLicense) {
-        console.log("✅ Already activated, showing app...");
         // Nếu đã kích hoạt: Ẩn gate và HIỂN THỊ APP ngay lập tức
         showGate(false);
         runAppUI();
-
-        // Khôi phục trạng thái modal sau khi UI đã render
-        setTimeout(() => restoreModalState(), 100);
-
         startBackgroundRecheck(deviceId);
       } else {
-        console.log("❌ Not activated, showing gate...");
         // Nếu chưa kích hoạt: Hiện gate
         showGate(true);
       }
@@ -6043,10 +5927,6 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
 
         showGate(false);
         runAppUI();
-
-        // Khôi phục trạng thái modal sau khi UI đã render
-        setTimeout(() => restoreModalState(), 100);
-
         startBackgroundRecheck(deviceId);
       }
 
@@ -6897,20 +6777,6 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
 
     })();
   </script>
-
-  <!-- Loading indicator cho khôi phục phiên làm việc -->
-  <div id="restoreLoading" style="
-    position: fixed; bottom: 20px; right: 20px;
-    background: rgba(0, 20, 40, 0.5);
-    border: 1px solid rgba(0, 168, 255, 0.3);
-    border-radius: 30px; padding: 6px 14px;
-    font-size: 11px; color: rgba(0, 255, 204, 0.6);
-    display: none; align-items: center; gap: 6px;
-    z-index: 100000; backdrop-filter: blur(4px);
-    letter-spacing: 0.5px; font-weight: 300;">
-    <i class="fas fa-circle-notch fa-spin" style="font-size: 10px; opacity: 0.7;"></i>
-    <span style="opacity: 0.8;">đang khôi phục phiên làm việc</span>
-  </div>
 </body>
 
 </html>
