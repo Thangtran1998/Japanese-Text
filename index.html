@@ -3483,7 +3483,7 @@
       <main class="main-content">
         <section class="mission-panel">
           <h2 class="panel-title">
-            <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC1
+            <i class="fas fa-bullseye"></i> MỤC TIÊU CHIẾN LƯỢC
           </h2>
 
           <div class="target-info">
@@ -5667,21 +5667,11 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
         .forEach((c) => c.classList.remove("locked"));
     }
 
-    function openModal(immediate = false) {
+    function openModal() {
       const modal = document.getElementById("moduleDisplay");
       const backdrop = document.getElementById("moduleBackdrop");
-      if (immediate) {
-        modal.style.display = "flex";
-        backdrop.style.display = "block";
-        modal.style.opacity = "1";
-        backdrop.style.opacity = "1";
-        modal.style.transform = "translate(-50%, -50%) scale(1)";
-        modal.classList.add("show");
-        backdrop.classList.add("show");
-      } else {
-        modal.classList.add("show");
-        backdrop.classList.add("show");
-      }
+      modal.classList.add("show");
+      backdrop.classList.add("show");
       modal.setAttribute("aria-hidden", "false");
     }
 
@@ -5691,7 +5681,6 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
       modal.classList.remove("show");
       backdrop.classList.remove("show");
       modal.setAttribute("aria-hidden", "true");
-      localStorage.removeItem("n1_modal_open");
     }
 
     async function renderModuleToModal(moduleId) {
@@ -5783,14 +5772,13 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
       }
     }
 
-    async function lockAndOpen(moduleId, immediate = false) {
+    async function lockAndOpen(moduleId) {
       lockedModule = moduleId;
 
       clearAllCardStates();
       const card = getModuleCard(moduleId);
       if (card) card.classList.add("locked");
-      openModal(immediate);
-      localStorage.setItem("n1_modal_open", moduleId);
+      openModal();
       await renderModuleToModal(moduleId);
     }
 
@@ -5885,12 +5873,6 @@ TEST MODAL LOGIC - BÀI KIỂM TRA TRONG MODULE TỪ VỰNG
       setupModuleInteractions();
       setupTestModalInteractions();
       updateMainModulesProgress();
-
-      // Khôi phục modal nếu có trạng thái lưu
-      const savedModal = localStorage.getItem("n1_modal_open");
-      if (savedModal) {
-        lockAndOpen(savedModal, true); // immediate = true
-      }
 
       // Expiry check khi mở app
       const savedExpiry = localStorage.getItem("n1_expiry_date");
